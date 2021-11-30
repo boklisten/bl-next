@@ -7,6 +7,7 @@
     "start": "next start",
     "prepare": "husky install",
     "prettier": "prettier --write '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
+    "prettier:check": "prettier --check '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
     "lint": "next lint",
     "test": "jest"
   },
