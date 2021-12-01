@@ -3,28 +3,81 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import Link from "next/link";
+import Image from "next/image";
+import { Button, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-export default function ButtonAppBar() {
+export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <Link href="https://www.boklisten.no/welcome" passHref>
+            <Box
+              sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+              color="secondary"
+            >
+              <Image
+                src="/boklisten_logo_v2_icon_white_lg.png"
+                width={40}
+                height={40}
+                alt="logo"
+              />
+              <Typography
+                variant="h5"
+                component="div"
+                noWrap
+                sx={{
+                  flexGrow: 1,
+                  marginLeft: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
+                Boklisten.no
+              </Typography>
+            </Box>
+          </Link>
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <Link href="https://www.boklisten.no/info/general" passHref>
+            <Button
+              sx={{
+                display: "flex",
+                color: "white",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              color="secondary"
+            >
+              Info
+            </Button>
+          </Link>
+
+          <Link href="https://www.boklisten.no/fastbuy/regions" passHref>
+            <Button
+              sx={{
+                display: "flex",
+                color: "white",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              color="secondary"
+            >
+              Bestill bøker
+            </Button>
+          </Link>
+
           <IconButton
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
+            aria-label="open drawer"
+            sx={{ ml: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
