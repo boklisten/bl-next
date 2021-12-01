@@ -29,6 +29,7 @@ module.exports = {
         cases: {
           camelCase: true,
           pascalCase: true,
+          kebabCase: true,
         },
       },
     ],
