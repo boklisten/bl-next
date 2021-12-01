@@ -1,5 +1,5 @@
 import React from "react";
-import Counter from "../../components/Counter";
+import Counter from "../../src/components/Counter";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 test("can count", async () => {
