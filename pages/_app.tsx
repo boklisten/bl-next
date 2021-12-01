@@ -11,6 +11,9 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { Container } from "@mui/material";
+import { Box } from "@mui/system";
+import Footer from "components/Footer";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -28,8 +31,22 @@ export default function MyApp(props: AppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <NavBar />
-        <Component {...pageProps} />
+        <Box
+          sx={{
+            minHeight: "100vh",
+            backgroundColor: "#FFFAFA",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <NavBar />
+          <Container
+            sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+          >
+            <Component {...pageProps} />
+          </Container>
+        </Box>
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   );

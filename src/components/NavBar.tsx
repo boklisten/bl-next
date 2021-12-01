@@ -10,8 +10,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export default function NavBar() {
   return (
-    <Box sx={{ flexGrow: 1 }} data-testid="nav-bar">
-      <AppBar position="static">
+    <Box data-testid="nav-bar">
+      <AppBar position="fixed">
         <Toolbar>
           <Link href="https://www.boklisten.no/welcome" passHref>
             <Box
@@ -80,6 +80,7 @@ export default function NavBar() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </Box>
   );
 }
