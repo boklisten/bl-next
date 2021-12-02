@@ -4,11 +4,55 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
-import { Divider } from "@mui/material";
+import {
+  Divider,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface LinkTabProps {
   label: string;
   href: string;
+}
+
+function NativeSelectWrapper({
+  tabs,
+  activeTabIndex,
+}: {
+  tabs: LinkTabProps[];
+  activeTabIndex: number;
+}) {
+  const router = useRouter();
+  const handleChange = (event: SelectChangeEvent) => {
+    router.push(event.target.value);
+  };
+
+  return (
+    <Box sx={{ minWidth: 120, marginX: 10, marginY: 3 }}>
+      <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Side
+        </InputLabel>
+        <NativeSelect
+          value={tabs[activeTabIndex]?.href}
+          onChange={handleChange as any}
+          defaultValue={30}
+          inputProps={{
+            name: "page",
+            id: "uncontrolled-native",
+          }}
+        >
+          {tabs.map((tab) => (
+            <option key={tab.href} value={tab.href}>
+              {tab.label}
+            </option>
+          ))}
+        </NativeSelect>
+      </FormControl>
+    </Box>
+  );
 }
 
 function LinkTab({ label, href }: LinkTabProps) {
@@ -37,20 +81,35 @@ export default function NavTabs() {
     tabs.findIndex((tab) => router.route.includes(tab.href)) ?? 0;
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <Tabs value={activeTabIndex} aria-label="info page tabs row 1">
-        {tabs.slice(0, 4).map((tab) => (
-          <LinkTab key={tab.href} label={tab.label} href={tab.href} />
-        ))}
-      </Tabs>
-      <Tabs value={activeTabIndex - 4} aria-label="info page tabs row 2">
-        {tabs.slice(4, 8).map((tab) => (
-          <LinkTab key={tab.href} label={tab.label} href={tab.href} />
-        ))}
-      </Tabs>
-      <Divider variant="middle" style={{ width: "95%" }} />
-    </Box>
+    <>
+      <Box
+        sx={{
+          display: { xs: "none", sm: "none", lg: "flex" },
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Tabs value={activeTabIndex} aria-label="info page tabs row 1">
+          {tabs.slice(0, 4).map((tab) => (
+            <LinkTab key={tab.href} label={tab.label} href={tab.href} />
+          ))}
+        </Tabs>
+        <Tabs value={activeTabIndex - 4} aria-label="info page tabs row 2">
+          {tabs.slice(4, 8).map((tab) => (
+            <LinkTab key={tab.href} label={tab.label} href={tab.href} />
+          ))}
+        </Tabs>
+        <Divider variant="middle" style={{ width: "95%" }} />
+      </Box>
+      <Box
+        sx={{
+          display: { sm: "flex", lg: "none" },
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <NativeSelectWrapper tabs={tabs} activeTabIndex={activeTabIndex} />
+      </Box>
+    </>
   );
 }
