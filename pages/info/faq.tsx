@@ -1,12 +1,22 @@
 import { Box } from "@mui/material";
 import type { NextPage } from "next";
 import InfoNav from "../../src/components/InfoNav";
+import Head from "next/head";
 
 const FAQ: NextPage = () => {
   return (
-    <Box>
-      <InfoNav />
-    </Box>
+    <>
+      <Head>
+        <title>Spørsmål og svar | Boklisten.no</title>
+        <meta
+          name="description"
+          content="Hva betyr det at Boklisten alltid leverer riktig bok? Hvordan bestiller jeg bøker som privatist?"
+        />
+      </Head>
+      <Box>
+        <InfoNav />
+      </Box>
+    </>
   );
 };
 
