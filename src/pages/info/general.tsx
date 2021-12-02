@@ -1,7 +1,7 @@
 import { Card } from "@mui/material";
-import Editor from "../../src/components/Editor";
+import Editor from "../../components/Editor";
 import type { NextPage } from "next";
-import InfoNav from "../../src/components/InfoNav";
+import InfoNav from "../../components/InfoNav";
 import Head from "next/head";
 
 const General: NextPage = () => {

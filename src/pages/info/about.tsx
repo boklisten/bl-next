@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import type { NextPage } from "next";
-import InfoNav from "../../src/components/InfoNav";
+import InfoNav from "../../components/InfoNav";
 import Head from "next/head";
 
 const About: NextPage = () => {
