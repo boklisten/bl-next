@@ -43,7 +43,9 @@ export default function MyApp(props: AppProps) {
           <Container
             sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
           >
-            <Component {...pageProps} />
+            <Box sx={{ width: "100%" }}>
+              <Component {...pageProps} />
+            </Box>
           </Container>
         </Box>
         <Footer />

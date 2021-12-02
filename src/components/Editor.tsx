@@ -2,6 +2,7 @@ import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { Button, Container } from "@mui/material";
 
 const Editor = dynamic(
   // @ts-ignore
@@ -12,7 +13,7 @@ const Editor = dynamic(
 const CustomEditor = () => {
   // These two needs to be set
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const readOnly = false;
+  const [readOnly, setReadOnly] = useState(true);
 
   // TODO: Store this in mongodb
   // const rawState = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
@@ -27,14 +28,23 @@ const CustomEditor = () => {
   };
   const display = readOnly ? "none" : "flex";
   return (
-    <Editor
-      // @ts-ignore
-      editorState={editorState}
-      toolbarStyle={{ display: display }}
-      editorStyle={{ border: "1px solid black", padding: "10px" }}
-      onEditorStateChange={onEditorStateChange}
-      readOnly={readOnly}
-    />
+    <Container
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Button
+        sx={{ width: { xs: "100%", sm: "" }, paddingX: 5 }}
+        onClick={() => setReadOnly(!readOnly)}
+      >
+        {readOnly ? "Rediger" : "Lagre"}
+      </Button>
+      <Editor
+        // @ts-ignore
+        editorState={editorState}
+        toolbarStyle={{ display: display }}
+        onEditorStateChange={onEditorStateChange}
+        readOnly={readOnly}
+      />
+    </Container>
   );
 };
 

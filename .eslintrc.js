@@ -33,5 +33,14 @@ module.exports = {
         },
       },
     ],
+    "unicorn/no-keyword-prefix": "off",
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        replacements: {
+          props: false,
+        },
+      },
+    ],
   },
 };

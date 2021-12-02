@@ -41,7 +41,7 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Link href="https://www.boklisten.no/info/general" passHref>
+          <Link href="/info/general" passHref>
             <Button
               sx={{
                 display: "flex",
