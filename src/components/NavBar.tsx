@@ -1,12 +1,11 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Image from "next/image";
-import { Button, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Button } from "@mui/material";
+import DropDownMenu from "./DropdownMenu";
 
 export default function NavBar() {
   return (
@@ -31,7 +30,6 @@ export default function NavBar() {
                 sx={{
                   flexGrow: 1,
                   marginLeft: 1,
-                  display: { xs: "none", md: "flex" },
                 }}
               >
                 Boklisten.no
@@ -44,7 +42,7 @@ export default function NavBar() {
           <Link href="/info/general" passHref>
             <Button
               sx={{
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 color: "white",
                 alignItems: "center",
                 cursor: "pointer",
@@ -58,7 +56,7 @@ export default function NavBar() {
           <Link href="https://www.boklisten.no/fastbuy/regions" passHref>
             <Button
               sx={{
-                display: "flex",
+                display: { xs: "none", md: "flex" },
                 color: "white",
                 alignItems: "center",
                 cursor: "pointer",
@@ -69,15 +67,7 @@ export default function NavBar() {
             </Button>
           </Link>
 
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ ml: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <DropDownMenu />
         </Toolbar>
       </AppBar>
       <Toolbar />

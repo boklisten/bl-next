@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -95,7 +94,7 @@ export default function NavTabs() {
           ))}
         </Tabs>
         <Tabs value={activeTabIndex - 4} aria-label="info page tabs row 2">
-          {tabs.slice(4, 8).map((tab) => (
+          {tabs.slice(4).map((tab) => (
             <LinkTab key={tab.href} label={tab.label} href={tab.href} />
           ))}
         </Tabs>
