@@ -1,10 +1,4 @@
-import {
-  convertFromRaw,
-  convertToRaw,
-  EditorState,
-  KeyBindingUtil,
-  RichUtils,
-} from "draft-js";
+import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -16,13 +10,14 @@ const Editor = dynamic(
   { ssr: false }
 );
 
+const sanitizeRawState = (raw: string) => {
+  return raw.replaceAll("\n", "\\n");
+};
+
 // TODO: Write tests for editor
 const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
   // TODO: handle fetching and storing in api
   //
-  const sanitizeRawState = (raw: string) => {
-    return raw.replaceAll("\n", "\\n");
-  };
 
   // TODO: Use this func to get the state from the raw in mongodb
   const getEditorStateFromRaw = (rawState: string) => {
