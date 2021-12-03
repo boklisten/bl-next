@@ -10,6 +10,7 @@ import {
   NativeSelect,
   SelectChangeEvent,
 } from "@mui/material";
+import { useEffect } from "react";
 
 interface LinkTabProps {
   label: string;
@@ -24,6 +25,13 @@ function NativeSelectWrapper({
   activeTabIndex: number;
 }) {
   const router = useRouter();
+
+  useEffect(() => {
+    for (const tab of tabs) {
+      router.prefetch(tab.href);
+    }
+  }, [router, tabs]);
+
   const handleChange = (event: SelectChangeEvent) => {
     router.push(event.target.value);
   };
@@ -37,7 +45,6 @@ function NativeSelectWrapper({
         <NativeSelect
           value={tabs[activeTabIndex]?.href}
           onChange={handleChange as any}
-          defaultValue={30}
           inputProps={{
             name: "page",
             id: "uncontrolled-native",
@@ -79,6 +86,10 @@ export default function NavTabs() {
   const activeTabIndex =
     tabs.findIndex((tab) => router.route.includes(tab.href)) ?? 0;
 
+  // A hack to be able to use two rows of tabs
+  const rowOneIndex = activeTabIndex < 4 ? activeTabIndex + 1 : 0;
+  const rowTwoIndex = activeTabIndex >= 4 ? activeTabIndex - 3 : 0;
+
   return (
     <>
       <Box
@@ -88,12 +99,14 @@ export default function NavTabs() {
           alignItems: "center",
         }}
       >
-        <Tabs value={activeTabIndex} aria-label="info page tabs row 1">
+        <Tabs value={rowOneIndex} aria-label="info page tabs row 1">
+          <Tab label={"Hidden"} sx={{ display: "none" }} />
           {tabs.slice(0, 4).map((tab) => (
             <LinkTab key={tab.href} label={tab.label} href={tab.href} />
           ))}
         </Tabs>
-        <Tabs value={activeTabIndex - 4} aria-label="info page tabs row 2">
+        <Tabs value={rowTwoIndex} aria-label="info page tabs row 2">
+          <Tab label={"Hidden"} sx={{ display: "none" }} />
           {tabs.slice(4).map((tab) => (
             <LinkTab key={tab.href} label={tab.label} href={tab.href} />
           ))}
