@@ -1,6 +1,7 @@
 import { Card } from "@mui/material";
 import type { NextPage } from "next";
-import InfoNav from "../../components/InfoNav";
+import DynamicNav from "../../components/DynamicNav";
+import { infoPageTabs } from "../../constants";
 import Head from "next/head";
 import Editor from "../../components/Editor";
 import { editorData } from "../../mockData";
@@ -16,7 +17,7 @@ const About: NextPage = () => {
         />
       </Head>
       <Card>
-        <InfoNav />
+        <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.about} />
       </Card>
     </>

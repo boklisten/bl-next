@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import type { NextPage } from "next";
-import InfoNav from "../../components/InfoNav";
+import DynamicNav from "../../components/DynamicNav";
+import { infoPageTabs } from "../../constants";
 import Head from "next/head";
 
 const Contact: NextPage = () => {
@@ -14,7 +15,7 @@ const Contact: NextPage = () => {
         />
       </Head>
       <Box>
-        <InfoNav />
+        <DynamicNav tabs={infoPageTabs} twoRows />
       </Box>
     </>
   );
