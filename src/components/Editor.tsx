@@ -1,4 +1,10 @@
-import { EditorState } from "draft-js";
+import {
+  convertFromRaw,
+  convertToRaw,
+  EditorState,
+  KeyBindingUtil,
+  RichUtils,
+} from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -10,23 +16,46 @@ const Editor = dynamic(
   { ssr: false }
 );
 
-const CustomEditor = () => {
-  // These two needs to be set
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [readOnly, setReadOnly] = useState(true);
-
-  // TODO: Store this in mongodb
-  // const rawState = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+// TODO: Write tests for editor
+const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
+  // TODO: handle fetching and storing in api
+  //
+  const sanitizeRawState = (raw: string) => {
+    return raw.replaceAll("\n", "\\n");
+  };
 
   // TODO: Use this func to get the state from the raw in mongodb
-  // const getEditorStateFromRaw = (rawState: string) => EditorState.createWithContent(convertFromRaw(JSON.parse(rawState)));
+  const getEditorStateFromRaw = (rawState: string) => {
+    try {
+      return EditorState.createWithContent(
+        convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
+      );
+    } catch {
+      // TODO: display error: illegal symbol
+      return EditorState.createEmpty();
+    }
+  };
+
+  const initialEditorState = rawEditorState
+    ? getEditorStateFromRaw(rawEditorState)
+    : EditorState.createEmpty();
+  const [editorState, setEditorState] = useState(initialEditorState);
+
+  // TODO: Store this in mongodb
+  const rawState = JSON.stringify(
+    convertToRaw(editorState.getCurrentContent())
+  );
+
+  // TODO: fetch permission
+  const [readOnly, setReadOnly] = useState(true);
 
   const onEditorStateChange = (changedState: EditorState) => {
     // Store in db?
 
     setEditorState(changedState);
+    console.log(rawState);
   };
-  const display = readOnly ? "none" : "flex";
+
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -40,9 +69,10 @@ const CustomEditor = () => {
       <Editor
         // @ts-ignore
         editorState={editorState}
-        toolbarStyle={{ display: display }}
+        toolbarHidden={readOnly}
         onEditorStateChange={onEditorStateChange}
         readOnly={readOnly}
+        wrapperStyle={{ width: "100%" }}
       />
     </Container>
   );

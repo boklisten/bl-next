@@ -1,7 +1,9 @@
-import { Box } from "@mui/material";
+import { Card } from "@mui/material";
 import type { NextPage } from "next";
 import InfoNav from "../../components/InfoNav";
 import Head from "next/head";
+import Editor from "../../components/Editor";
+import { editorData } from "../../mockData";
 
 const Pupils: NextPage = () => {
   return (
@@ -13,9 +15,10 @@ const Pupils: NextPage = () => {
           content="Er du videregående-elev? Finn dine kontaktelever og når utdeling og innsamling skjer."
         />
       </Head>
-      <Box>
+      <Card>
         <InfoNav />
-      </Box>
+        <Editor rawEditorState={editorData.pupils} />
+      </Card>
     </>
   );
 };

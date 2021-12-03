@@ -1,8 +1,9 @@
 import { Card } from "@mui/material";
-import Editor from "../../components/Editor";
 import type { NextPage } from "next";
 import InfoNav from "../../components/InfoNav";
 import Head from "next/head";
+import Editor from "../../components/Editor";
+import { editorData } from "../../mockData";
 
 const General: NextPage = () => {
   return (
@@ -16,7 +17,7 @@ const General: NextPage = () => {
       </Head>
       <Card>
         <InfoNav />
-        <Editor />
+        <Editor rawEditorState={editorData.general} />
       </Card>
     </>
   );
