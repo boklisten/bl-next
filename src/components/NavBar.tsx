@@ -13,7 +13,7 @@ export default function NavBar() {
     <Box data-testid="nav-bar">
       <AppBar position="fixed">
         <Toolbar>
-          <Link href="https://www.boklisten.no/welcome" passHref>
+          <Link href="/" passHref>
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
               color="secondary"
@@ -54,7 +54,7 @@ export default function NavBar() {
             </Button>
           </Link>
 
-          <Link href="https://www.boklisten.no/fastbuy/regions" passHref>
+          <Link href="/" passHref>
             <Button
               sx={{
                 display: { xs: "none", md: "flex" },

@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import type { NextPage } from "next";
-import ConstructionIcon from "@mui/icons-material/Construction";
 import Head from "next/head";
+import Image from "next/image";
+import NextLink from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -22,11 +23,26 @@ const Home: NextPage = () => {
           textAlign: "center",
         }}
       >
-        <ConstructionIcon color="warning" fontSize="large" />
-        <Typography variant="h4" sx={{ margin: 5 }}>
-          Her kommer nye Boklisten.no!
-        </Typography>
-        <ConstructionIcon color="warning" fontSize="large" />
+        <Box sx={{ position: "fixed" }}>
+          <Image
+            src="/banner-placeholder.jpg"
+            width={960}
+            height={250}
+            alt="Banner"
+          />
+        </Box>
+        <Box sx={{ zIndex: 100 }}>
+          <Typography variant="h2" sx={{ margin: 5 }}>
+            Alltid riktig bok!
+          </Typography>
+          <Typography variant="subtitle1" sx={{ margin: 5 }}>
+            Vi i Boklisten.no er veldig opptatt av lærebøker, derfor vil vi
+            gjøre det så enkelt som mulig for deg å få tak i dem.
+          </Typography>
+          <NextLink href="https://www.boklisten.no/welcome" passHref>
+            <Link>Til gamle boklisten.no</Link>
+          </NextLink>
+        </Box>
       </Box>
     </>
   );

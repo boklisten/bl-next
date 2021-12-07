@@ -45,7 +45,7 @@ export default function SwipeableTemporaryDrawer() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <Link href="https://www.boklisten.no/fastbuy/regions" passHref>
+        <Link href="/" passHref>
           <ListItem button>
             <ListItemIcon>
               <BookIcon />
@@ -54,7 +54,7 @@ export default function SwipeableTemporaryDrawer() {
           </ListItem>
         </Link>
 
-        <Link href="https://www.boklisten.no/u/items" passHref>
+        <Link href="/" passHref>
           <ListItem button>
             <ListItemIcon>
               <MenuBookIcon />
@@ -63,7 +63,7 @@ export default function SwipeableTemporaryDrawer() {
           </ListItem>
         </Link>
 
-        <Link href="https://www.boklisten.no/u/order" passHref>
+        <Link href="/" passHref>
           <ListItem button>
             <ListItemIcon>
               <ReceiptIcon />
