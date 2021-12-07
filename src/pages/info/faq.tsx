@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Card } from "@mui/material";
 import type { NextPage } from "next";
 import DynamicNav from "../../components/DynamicNav";
-import { infoPageTabs } from "../../constants";
+import { infoPageTabs, QNAs } from "../../constants";
 import Head from "next/head";
+import EditableQNA from "components/EditableQNA";
 
 const FAQ: NextPage = () => {
   return (
@@ -14,9 +15,10 @@ const FAQ: NextPage = () => {
           content="Hva betyr det at Boklisten alltid leverer riktig bok? Hvordan bestiller jeg bøker som privatist?"
         />
       </Head>
-      <Box>
+      <Card>
         <DynamicNav tabs={infoPageTabs} twoRows />
-      </Box>
+        <EditableQNA QNAs={QNAs} />
+      </Card>
     </>
   );
 };
