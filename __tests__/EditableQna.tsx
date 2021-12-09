@@ -1,5 +1,5 @@
 import React from "react";
-import EditableQNA from "../src/components/EditableQNA";
+import EditableQNA from "../src/components/EditableQna";
 import { QNAs } from "../src/mockData";
 import { render, within } from "../utils/test-utils";
 
