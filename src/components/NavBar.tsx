@@ -42,6 +42,7 @@ export default function NavBar() {
 
           <Link href="/info/general" passHref>
             <Button
+              data-testid="infoBtnNav"
               sx={{
                 display: { xs: "none", md: "flex" },
                 color: "white",

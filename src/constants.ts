@@ -26,3 +26,9 @@ export const termsAndConditionsTabs: LinkTabProps[] = [
     label: "Personvernavtale",
   },
 ];
+
+export const contactInfo = {
+  email: "info@boklisten.no",
+  phone: "91002211",
+  address: "Postboks 8, 1316 Eiksmarka",
+};

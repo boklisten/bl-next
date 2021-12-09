@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import DynamicNav from "../../components/DynamicNav";
 import { infoPageTabs } from "../../constants";
 import Head from "next/head";
+import ContactInfo from "components/ContactInfo";
 
 const Contact: NextPage = () => {
   return (
@@ -14,9 +15,16 @@ const Contact: NextPage = () => {
           content="Vi er tilgjengelig for spørsmål og henvendelser både på epost og telefon. Se vår kontaktinformasjon, med epost-adresse, telefonnummer og gateadresse."
         />
       </Head>
-      <Box>
+      <Card>
         <DynamicNav tabs={infoPageTabs} twoRows />
-      </Box>
+        <Typography
+          variant="h4"
+          sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
+        >
+          Kontakt oss
+        </Typography>
+        <ContactInfo />
+      </Card>
     </>
   );
 };

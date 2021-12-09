@@ -66,7 +66,7 @@ function NativeSelectWrapper({
 function LinkTab({ label, href }: LinkTabProps) {
   return (
     <Link href={href} passHref>
-      <Tab component="a" label={label} />
+      <Tab data-testid="link-tab" component="a" label={label} />
     </Link>
   );
 }
