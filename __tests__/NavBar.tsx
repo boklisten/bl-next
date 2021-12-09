@@ -1,6 +1,6 @@
 import React from "react";
-import NavBar from "../../src/components/NavBar";
-import { render } from "../../utils/test-utils";
+import NavBar from "../src/components/NavBar";
+import { render } from "../utils/test-utils";
 import { screen, within } from "@testing-library/react";
 
 test("displays the navigation links", async () => {

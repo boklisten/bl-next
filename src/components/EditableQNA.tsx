@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -42,6 +43,7 @@ const QuestionWithAnswer = ({
 
   return (
     <Accordion
+      data-testid="qna-entry"
       expanded={expanded}
       sx={{ width: "100%" }}
       onChange={() => handleExpand(id)}

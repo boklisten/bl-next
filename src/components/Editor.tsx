@@ -1,3 +1,4 @@
+import React from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
@@ -20,7 +21,8 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
       return EditorState.createWithContent(
         convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
       );
-    } catch {
+    } catch (error) {
+      console.error(error);
       return EditorState.createEmpty();
     }
   };
@@ -38,7 +40,11 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
 
   const onEditorStateChange = (changedState: EditorState) => {
     setEditorState(changedState);
+  };
+
+  const onSave = () => {
     console.log(rawState);
+    setReadOnly(!readOnly);
   };
 
   return (
@@ -47,7 +53,7 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
     >
       <Button
         sx={{ width: { xs: "100%", sm: "" }, paddingX: 5 }}
-        onClick={() => setReadOnly(!readOnly)}
+        onClick={onSave}
       >
         {readOnly ? "Rediger" : "Lagre"}
       </Button>

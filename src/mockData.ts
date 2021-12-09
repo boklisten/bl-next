@@ -27,9 +27,7 @@ export const QNAs = [
   {
     id: "3",
     question: "Hvordan bestiller jeg bøker som elev på videregående?",
-    answer: `Du bruker nettbutikken som en vanlig nettbutikk. Når du har fullført din bestilling vil du få en kontrakt på e-post. Denne må underskrives av deg, og en av dine foresatte dersom du er under 18 år. Ta med underskrevet kontrakt når du kommer på skolen på utleveringsdagen. Du må ta med legitimasjon når du skal hente bøkene. Bøkene blir utlevert til deg, og du leverer dem inn igjen til Boklisten.no eller den Boklisten.no har oppnevnt når skoleåret er over.
-
-Du skal ikke betale for bøkene når du får dem, bare dersom du mister eller ødelegger bøkene.`,
+    answer: `Du bruker nettbutikken som en vanlig nettbutikk. Når du har fullført din bestilling vil du få en kontrakt på e-post. Denne må underskrives av deg, og en av dine foresatte dersom du er under 18 år. Ta med underskrevet kontrakt når du kommer på skolen på utleveringsdagen. Du må ta med legitimasjon når du skal hente bøkene. Bøkene blir utlevert til deg, og du leverer dem inn igjen til Boklisten.no eller den Boklisten.no har oppnevnt når skoleåret er over. Du skal ikke betale for bøkene når du får dem, bare dersom du mister eller ødelegger bøkene.`,
   },
   {
     id: "4",
@@ -55,17 +53,7 @@ Du skal ikke betale for bøkene når du får dem, bare dersom du mister eller ø
   {
     id: "8",
     question: "Hvordan fungerer innlevering av bøker for elever?",
-    answer: `Innlevering av bøker vil skje på bestemte dager på hver skole. Bøker som ikke leveres inn disse dagene kan sendes til oss i posten. Husk at det er dyrt å sende bøker i posten - derfor anbefales det på det sterkeste å komme innom på stand!
-
-Fristen for å levere bøker til Boklisten.no er 1. juli i vårsemesteret og 20. desember i høstsemesteret. Etter dette sender vi faktura for å erstatte bøker i henhold til låneavtalen.
-
-Hvis du sender bøker i posten, må du huske å legge ved et ark med informasjon om deg: Navn og telefonnummer er et minimum. Legg også ved en liste over hvilke bøker det er du leverer. Dersom det ikke er mulig å identifisere avsender av en pakke, kan vi heller ikke registrere innleveringen - og vil sende ut erstatningsfaktura på vanlig måte.
-
-Dersom du skal sende bøker, anbefales det på det sterkeste å sende en pakke med sporing eller kollinummer. Da kan både du som kunde og vi sjekke hvor pakken er, og hva som eventuelt har skjedd med den dersom den mot formodning ikke har kommet frem.
-
-Adresse for innsending av bøker (vi godtar ingen bøker som er sendt etter fristen):
-
-Boklisten.no AS, Postboks 8, 1316 Eiksmarka`,
+    answer: `Innlevering av bøker vil skje på bestemte dager på hver skole. Bøker som ikke leveres inn disse dagene kan sendes til oss i posten. Husk at det er dyrt å sende bøker i posten - derfor anbefales det på det sterkeste å komme innom på stand! Fristen for å levere bøker til Boklisten.no er 1. juli i vårsemesteret og 20. desember i høstsemesteret. Etter dette sender vi faktura for å erstatte bøker i henhold til låneavtalen. Hvis du sender bøker i posten, må du huske å legge ved et ark med informasjon om deg: Navn og telefonnummer er et minimum. Legg også ved en liste over hvilke bøker det er du leverer. Dersom det ikke er mulig å identifisere avsender av en pakke, kan vi heller ikke registrere innleveringen - og vil sende ut erstatningsfaktura på vanlig måte. Dersom du skal sende bøker, anbefales det på det sterkeste å sende en pakke med sporing eller kollinummer. Da kan både du som kunde og vi sjekke hvor pakken er, og hva som eventuelt har skjedd med den dersom den mot formodning ikke har kommet frem. Adresse for innsending av bøker (vi godtar ingen bøker som er sendt etter fristen): Boklisten.no AS, Postboks 8, 1316 Eiksmarka`,
   },
   {
     id: "9",
@@ -80,9 +68,7 @@ Boklisten.no AS, Postboks 8, 1316 Eiksmarka`,
   {
     id: "11",
     question: "Kan jeg beholde bøkene?",
-    answer: `Privatister: Boken er din så snart andre delbetaling er gjort. Hvis du ikke ønsker å beholde boken kjøper vi inn de fleste bøker for rundt 1/3 av nypris på våre stands på slutten av semesteret.
-
-Elever: Ja, men hvis du ikke leverer bøkene innen fristen vil du få erstatningsfaktura fra oss. Denne er på bokens nypris + 10% + 90 kroner i gebyr. Dette er dyrt og anbefales ikke! Utkjøp koster 100% av nypris for videregående-elever. For å unngå erstatningsfaktura, må utkjøpet gjøres innen innleveringsfristens utløp – som er 1.juli for vårsemester og 20.desember for høstsemester.`,
+    answer: `Privatister: Boken er din så snart andre delbetaling er gjort. Hvis du ikke ønsker å beholde boken kjøper vi inn de fleste bøker for rundt 1/3 av nypris på våre stands på slutten av semesteret. Elever: Ja, men hvis du ikke leverer bøkene innen fristen vil du få erstatningsfaktura fra oss. Denne er på bokens nypris + 10% + 90 kroner i gebyr. Dette er dyrt og anbefales ikke! Utkjøp koster 100% av nypris for videregående-elever. For å unngå erstatningsfaktura, må utkjøpet gjøres innen innleveringsfristens utløp – som er 1.juli for vårsemester og 20.desember for høstsemester.`,
   },
   {
     id: "12",
@@ -107,9 +93,7 @@ Elever: Ja, men hvis du ikke leverer bøkene innen fristen vil du få erstatning
   {
     id: "16",
     question: "Kan jeg streke i bøkene?",
-    answer: `Ja, men husk at boken skal brukes av noen etter deg. Hvis du har streket så mye at den er ubrukelig må du erstatte boken. Bruk blyant hvis du streker svært mye i bøkene!
-
-Vi kjøper inn bøker fra privatister selv om de er streket i.`,
+    answer: `Ja, men husk at boken skal brukes av noen etter deg. Hvis du har streket så mye at den er ubrukelig må du erstatte boken. Bruk blyant hvis du streker svært mye i bøkene! Vi kjøper inn bøker fra privatister selv om de er streket i.`,
   },
   {
     id: "17",
