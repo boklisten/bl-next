@@ -26,17 +26,7 @@ jobs:
       - name: eslint
         run: yarn lint
 
-  unit_tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: c-hive/gha-yarn-cache@v2
-      - name: Install deps
-        run: yarn install
-      - name: jest
-        run: yarn test
-
-  e2e:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

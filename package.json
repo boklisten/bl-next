@@ -8,8 +8,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
     "prettier:check": "prettier --check '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
-    "lint": "next lint",
-    "test": "jest"
+    "lint": "next lint"
   },
   "cacheDirectories": [
     ".next/cache"
@@ -22,7 +21,6 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "draft-js": "^0.11.7",
-    "eslint-plugin-promise": "^5.2.0",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -36,7 +34,6 @@
     "@commitlint/config-conventional": "^15.0.0",
     "@testing-library/react": "^12.1.2",
     "@types/draft-js": "^0.11.7",
-    "@types/jest": "^27.0.3",
     "@types/node": "16.11.12",
     "@types/react": "17.0.37",
     "@types/react-draft-wysiwyg": "^1.13.3",
@@ -48,14 +45,12 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-compat": "^4.0.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-unicorn": "^39.0.0",
     "husky": "^7.0.0",
-    "jest": "^27.4.3",
     "prettier": "^2.5.1",
     "pretty-quick": "^3.1.2",
-    "ts-jest": "^27.1.1",
     "typescript": "^4.5.2"
   }
 }

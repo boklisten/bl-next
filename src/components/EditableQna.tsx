@@ -33,8 +33,11 @@ const QuestionWithAnswer = ({
   deleteQuestion,
 }: QNA & {
   expanded: boolean;
+  // eslint-disable-next-line no-unused-vars
   handleExpand: (questionId: string) => void;
+  // eslint-disable-next-line no-unused-vars
   updateQuestion: (QNA: QNA) => void;
+  // eslint-disable-next-line no-unused-vars
   deleteQuestion: (questionId: string) => void;
 }) => {
   const [edit, setEdit] = useState(false);
