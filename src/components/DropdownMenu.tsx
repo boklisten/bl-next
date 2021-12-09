@@ -35,8 +35,6 @@ export default function SwipeableTemporaryDrawer() {
       setOpen(open);
     };
 
-  // TODO: Fix href on enter press
-  // TODO: Ide, hvis admin, vis lenker ti admin-sider
   const list = () => (
     <Box
       sx={{ width: 250 }}

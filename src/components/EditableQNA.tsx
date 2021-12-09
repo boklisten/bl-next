@@ -107,13 +107,11 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
   };
 
   const updateQuestion = (QNA: QNA) => {
-    // TODO: update DB
     const questionIndex = QNAs.findIndex((q) => q.id === QNA.id);
     QNAs[questionIndex] = QNA;
   };
 
   const deleteQuestion = (questionId: string) => {
-    // TODO: update DB
     QNAs = QNAs.filter((QNA) => QNA.id !== questionId);
   };
   return (
@@ -137,9 +135,6 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
         />
       ))}
       <Tooltip title="Legg til spørsmål">
-        {
-          // TODO: update db
-        }
         <IconButton
           onClick={() =>
             QNAs.push({

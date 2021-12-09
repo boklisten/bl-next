@@ -14,19 +14,13 @@ const sanitizeRawState = (raw: string) => {
   return raw.replaceAll("\n", "\\n");
 };
 
-// TODO: Write tests for editor
 const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
-  // TODO: handle fetching and storing in api
-  //
-
-  // TODO: Use this func to get the state from the raw in mongodb
   const getEditorStateFromRaw = (rawState: string) => {
     try {
       return EditorState.createWithContent(
         convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
       );
     } catch {
-      // TODO: display error: illegal symbol
       return EditorState.createEmpty();
     }
   };
@@ -36,17 +30,13 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
     : EditorState.createEmpty();
   const [editorState, setEditorState] = useState(initialEditorState);
 
-  // TODO: Store this in mongodb
   const rawState = JSON.stringify(
     convertToRaw(editorState.getCurrentContent())
   );
 
-  // TODO: fetch permission
   const [readOnly, setReadOnly] = useState(true);
 
   const onEditorStateChange = (changedState: EditorState) => {
-    // Store in db?
-
     setEditorState(changedState);
     console.log(rawState);
   };
