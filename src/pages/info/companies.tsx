@@ -16,7 +16,7 @@ const Companies: NextPage = () => {
           content="Er du ansvarlig for en videregående eller privatist-skole? Vi tilbyr en rekke nyttige tjenester til dere! Les om våre tilbud til skoler, hvordan utlånsordningen fungrer og hvordan dere kan kjøpe bøker fra skyvearkivet."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.companies} />
       </Card>

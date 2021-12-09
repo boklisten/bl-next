@@ -16,7 +16,7 @@ const About: NextPage = () => {
           content="Boklisten har mange års erfaring med kjøp og salg av pensumbøker. Les om vår historie, hvem vi er, og hva vi tilbyr."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.about} />
       </Card>

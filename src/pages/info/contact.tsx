@@ -15,7 +15,7 @@ const Contact: NextPage = () => {
           content="Vi er tilgjengelig for spørsmål og henvendelser både på epost og telefon. Se vår kontaktinformasjon, med epost-adresse, telefonnummer og gateadresse."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Typography
           variant="h4"

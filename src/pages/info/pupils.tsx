@@ -16,7 +16,7 @@ const Pupils: NextPage = () => {
           content="Er du videregående-elev? Finn dine kontaktelever og når utdeling og innsamling skjer."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.pupils} />
       </Card>

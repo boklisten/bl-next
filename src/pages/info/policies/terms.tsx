@@ -16,7 +16,7 @@ const Terms: NextPage = () => {
           content="Når du handler hos oss gjelder noen vilkår. Disse er her for å gi alle parter trygghet for hvilke regler som gjelder."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <DynamicNav tabs={termsAndConditionsTabs} />
         <Editor rawEditorState={editorData.terms} />

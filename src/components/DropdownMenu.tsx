@@ -13,8 +13,9 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import InfoIcon from "@mui/icons-material/Info";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import EmailIcon from "@mui/icons-material/Email";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import Link from "next/link";
 
@@ -93,7 +94,7 @@ export default function SwipeableTemporaryDrawer() {
         <Link href="/info/contact" passHref>
           <ListItem button>
             <ListItemIcon>
-              <AlternateEmailIcon />
+              <EmailIcon />
             </ListItemIcon>
             <ListItemText primary={"Kontaktinformasjon"} />
           </ListItem>
@@ -110,12 +111,21 @@ export default function SwipeableTemporaryDrawer() {
           </ListItem>
         </Link>
 
-        <Link href="/" passHref>
+        <Link href="/auth/register" passHref>
+          <ListItem button>
+            <ListItemIcon>
+              <PersonAddIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Registrer"} />
+          </ListItem>
+        </Link>
+
+        <Link href="/auth/login" passHref data-testid="dropdown-login-link">
           <ListItem button>
             <ListItemIcon>
               <LoginIcon />
             </ListItemIcon>
-            <ListItemText primary={"Logg inn / ut (registrer)"} />
+            <ListItemText primary={"Logg inn"} />
           </ListItem>
         </Link>
       </List>

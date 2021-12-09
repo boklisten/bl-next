@@ -16,7 +16,7 @@ const Policies: NextPage = () => {
           content="Vi tar kundene våre på alvor. Derfor har vi laget detaljerte betingelser, slik at du vet hva som gjelder for din ordre."
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <DynamicNav tabs={termsAndConditionsTabs} />
         <Editor rawEditorState={editorData.conditions} />

@@ -16,7 +16,7 @@ const FAQ: NextPage = () => {
           content="Hva betyr det at Boklisten alltid leverer riktig bok? Hvordan bestiller jeg bøker som privatist?"
         />
       </Head>
-      <Card>
+      <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <EditableQNA QNAs={QNAs} />
       </Card>
