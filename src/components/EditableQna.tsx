@@ -96,7 +96,9 @@ const QuestionWithAnswer = ({
             defaultValue={answer}
           />
         )}
-        {!edit && <Typography>{answer}</Typography>}
+        {!edit && (
+          <Typography data-testid="qna-entry-answer">{answer}</Typography>
+        )}
       </AccordionDetails>
     </Accordion>
   );
@@ -124,6 +126,7 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography
+        data-testid="qna-title"
         variant="h4"
         sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
       >

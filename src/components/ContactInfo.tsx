@@ -9,16 +9,13 @@ import { contactInfo } from "../constants";
 
 const ContactInfo = () => {
   return (
-    <Box
-      data-testid="contact-info"
-      sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-    >
+    <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
       <Box sx={{ display: "flex", alignItems: "center", padding: 1 }}>
         <PhoneIphoneIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Ring oss</Typography>
           <NextLink href={`tel:+${contactInfo.phone}`} passHref>
-            <Link variant="body2" underline="none">
+            <Link variant="body2" underline="none" data-testid="contact-phone">
               {contactInfo.phone}
             </Link>
           </NextLink>
@@ -30,7 +27,7 @@ const ContactInfo = () => {
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Send oss en epost</Typography>
           <NextLink href={`mailto:${contactInfo.email}`} passHref>
-            <Link variant="body2" underline="none">
+            <Link variant="body2" underline="none" data-testid="contact-email">
               {contactInfo.email}
             </Link>
           </NextLink>
@@ -40,7 +37,9 @@ const ContactInfo = () => {
       <Box sx={{ display: "flex", alignItems: "center", padding: 1 }}>
         <LocationOnIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
-          <Typography variant="body1">Vår adresse</Typography>
+          <Typography variant="body1" data-testid="contact-address">
+            Vår adresse
+          </Typography>
           {contactInfo.address}
         </Box>
       </Box>

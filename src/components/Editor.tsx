@@ -50,6 +50,7 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      data-testid="editor"
     >
       <Button
         sx={{ width: { xs: "100%", sm: "" }, paddingX: 5 }}

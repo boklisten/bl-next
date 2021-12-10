@@ -1,5 +1,5 @@
-describe("as a customer I can", () => {
-  it("navigate to the login page", () => {
+describe("Login", () => {
+  it("displays all important elements", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
     cy.get(".MuiListItem-button").eq(8).click();
@@ -13,7 +13,7 @@ describe("as a customer I can", () => {
     cy.getBySel("forgot-password").should("be.visible");
   });
 
-  it("enter a legal email and password", () => {
+  it("accepts a legal email and password", () => {
     cy.getBySel("email-field").type("petter@hansen.no");
     cy.getBySel("error-message").should("not.exist");
 
@@ -23,7 +23,7 @@ describe("as a customer I can", () => {
     cy.getBySel("login-submit").should("not.be.disabled");
   });
 
-  it("get feedback when I enter illegal data", () => {
+  it("rejects badly formatted emails and passwords", () => {
     cy.getBySel("email-field").clear();
     cy.getBySel("login-submit").click();
     cy.getBySel("login-submit").should("be.disabled");
