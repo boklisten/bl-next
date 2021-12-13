@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -13,58 +13,21 @@ import GoogleIcon from "@mui/icons-material/Google";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NextLink from "next/link";
 import Image from "next/image";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type SignInFields = {
+  email: string;
+  password: string;
+};
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassord] = useState("");
-  const [errors, setErrors] = useState<FieldError[]>([]);
-
-  type FieldErrorType = "email" | "password";
-  interface FieldError {
-    message: string;
-    type: FieldErrorType;
-  }
-
-  const validate = (type: FieldErrorType, value: string) => {
-    let isValid = true;
-
-    if (type === "email") {
-      if (value.length === 0) {
-        isValid = false;
-        setErrors([...errors, { type, message: "Du må fylle inn epost!" }]);
-      }
-
-      if (!isEmail(value)) {
-        isValid = false;
-        setErrors([
-          ...errors,
-          { type, message: "Du må fylle inn en gyldig epost!" },
-        ]);
-      }
-    }
-
-    if (type === "password" && value.length === 0) {
-      isValid = false;
-      setErrors([...errors, { type, message: "Du må fylle inn passord!" }]);
-    }
-
-    if (isValid) {
-      setErrors(errors.filter((error) => error.type !== type));
-    }
-    return isValid;
-  };
-
-  const validateAll = () =>
-    validate("email", email) && validate("password", password);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (validateAll()) {
-      console.log({
-        email,
-        password,
-      });
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFields>({ mode: "onTouched" });
+  const onSubmit: SubmitHandler<SignInFields> = (data) => {
+    console.log(data);
   };
 
   return (
@@ -124,54 +87,38 @@ export default function SignIn() {
         <Divider sx={{ width: "100%", mt: 3 }}>
           Eller, logg inn med epost
         </Divider>
-        <Box component="form" onSubmit={handleSubmit}>
-          {errors.length > 0 && (
-            <Alert severity="error" data-testid="error-message">
-              {errors[0]?.message}
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+          {Object.entries(errors).map(([type, message]) => (
+            <Alert key={type} severity="error" data-testid="error-message">
+              {message.message}
             </Alert>
-          )}
+          ))}
           <TextField
             data-testid="email-field"
-            onBlur={(event) => {
-              validate("email", event.target.value);
-              setEmail(event.target.value);
-            }}
-            onChange={(event) => {
-              if (errors.some((error) => error.type === "email")) {
-                validate("email", event.target.value);
-                setEmail(event.target.value);
-              }
-            }}
-            error={errors.some((error) => error.type === "email")}
-            margin="normal"
             required
+            margin="normal"
             fullWidth
             id="email"
             label="Epost"
-            name="email"
             autoComplete="email"
+            error={errors.email ? true : false}
+            {...register("email", {
+              required: "Du må fylle inn epost",
+              validate: (v) =>
+                isEmail(v) ? true : "Du må fylle inn en gyldig epost",
+            })}
           />
           <TextField
             data-testid="password-field"
-            onBlur={(event) => {
-              setPassord(event.target.value);
-              validate("password", event.target.value);
-            }}
-            onChange={(event) => {
-              if (errors.some((error) => error.type === "password")) {
-                validate("password", event.target.value);
-                setEmail(event.target.value);
-              }
-            }}
-            error={errors.some((error) => error.type === "password")}
-            margin="normal"
             required
+            margin="normal"
             fullWidth
-            name="password"
             label="Passord"
             type="password"
             id="password"
+            error={errors.password ? true : false}
             autoComplete="current-password"
+            {...register("password", { required: "Du må fylle inn passord" })}
           />
           <Button
             data-testid="login-submit"
@@ -179,7 +126,7 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={errors.length > 0}
+            disabled={Object.entries(errors).length > 0}
           >
             Logg inn
           </Button>

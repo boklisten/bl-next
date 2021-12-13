@@ -25,27 +25,27 @@ describe("Login", () => {
 
   it("rejects badly formatted emails and passwords", () => {
     cy.getBySel("email-field").clear();
-    cy.getBySel("login-submit").click();
+    cy.getBySel("error-message").should("contain", "Du må fylle inn epost");
     cy.getBySel("login-submit").should("be.disabled");
-    cy.getBySel("error-message").should(
-      "contain",
-      "Du må fylle inn en gyldig epost!"
-    );
 
     cy.getBySel("email-field").type("petter@");
     cy.getBySel("error-message").should(
       "contain",
-      "Du må fylle inn en gyldig epost!"
+      "Du må fylle inn en gyldig epost"
     );
     cy.getBySel("login-submit").should("be.disabled");
 
     cy.getBySel("email-field").type("hansen.no");
     cy.getBySel("error-message").should("not.exist");
+    cy.getBySel("login-submit").should("not.be.disabled");
 
     cy.getBySel("password-field").clear();
 
-    cy.getBySel("login-submit").click();
+    cy.getBySel("error-message").should("contain", "Du må fylle inn passord");
     cy.getBySel("login-submit").should("be.disabled");
-    cy.getBySel("error-message").should("contain", "Du må fylle inn passord!");
+
+    cy.getBySel("password-field").type("password");
+    cy.getBySel("error-message").should("not.exist");
+    cy.getBySel("login-submit").should("not.be.disabled");
   });
 });

@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import SignIn from "components/SignIn";
+import SignIn from "components/user/SignIn";
 import type { NextPage } from "next";
 import Head from "next/head";
 

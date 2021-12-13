@@ -22,6 +22,12 @@ module.exports = {
   plugins: ["cypress"],
   ignorePatterns: ["cypress/support", "cypress/plugins"],
   rules: {
+    "unicorn/consistent-function-scoping": [
+      "error",
+      {
+        checkArrowFunctions: false,
+      },
+    ],
     "unicorn/filename-case": [
       "error",
       {

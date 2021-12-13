@@ -14,6 +14,26 @@ import "@fontsource/roboto/700.css";
 import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import Footer from "components/Footer";
+import DateAdapter from "@mui/lab/AdapterMoment";
+import { LocalizationProvider } from "@mui/lab";
+import { Moment } from "moment";
+
+class OverriddenAdapter extends DateAdapter {
+  // Get years in decending order
+  override getYearRange = (start: Moment, end: Moment) => {
+    const startDate = this.moment(start).startOf("year");
+    const endDate = this.moment(end).endOf("year");
+    const years: Moment[] = [];
+
+    let current = startDate;
+    while (current.isBefore(endDate)) {
+      years.push(current);
+      current = current.clone().add(1, "year");
+    }
+
+    return years.reverse();
+  };
+}
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -28,28 +48,31 @@ export default function MyApp(props: AppProps) {
         <title>Boklisten.no</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Box
-          sx={{
-            minHeight: "100vh",
-            backgroundColor: "#FFFAFA",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <NavBar />
-          <Container
-            sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+
+      <LocalizationProvider dateAdapter={OverriddenAdapter}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Box
+            sx={{
+              minHeight: "100vh",
+              backgroundColor: "#FFFAFA",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <Box sx={{ width: "100%" }}>
-              <Component {...pageProps} />
-            </Box>
-          </Container>
-        </Box>
-        <Footer />
-      </ThemeProvider>
+            <NavBar />
+            <Container
+              sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+            >
+              <Box sx={{ width: "100%" }}>
+                <Component {...pageProps} />
+              </Box>
+            </Container>
+          </Box>
+          <Footer />
+        </ThemeProvider>
+      </LocalizationProvider>
     </CacheProvider>
   );
 }

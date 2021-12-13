@@ -10,7 +10,7 @@ const Terms: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Betingelser | Boklisten.no</title>
+        <title>Vilkår | Boklisten.no</title>
         <meta
           name="description"
           content="Når du handler hos oss gjelder noen vilkår. Disse er her for å gi alle parter trygghet for hvilke regler som gjelder."
