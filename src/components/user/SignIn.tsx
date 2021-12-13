@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -7,13 +7,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import isEmail from "validator/lib/isEmail";
-import { Alert, Divider } from "@mui/material";
+import { Alert, Divider, IconButton, InputAdornment } from "@mui/material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NextLink from "next/link";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type SignInFields = {
   email: string;
@@ -21,6 +22,7 @@ type SignInFields = {
 };
 
 export default function SignIn() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -108,18 +110,37 @@ export default function SignIn() {
                 isEmail(v) ? true : "Du må fylle inn en gyldig epost",
             })}
           />
-          <TextField
-            data-testid="password-field"
-            required
-            margin="normal"
-            fullWidth
-            label="Passord"
-            type="password"
-            id="password"
-            error={errors.password ? true : false}
-            autoComplete="current-password"
-            {...register("password", { required: "Du må fylle inn passord" })}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <TextField
+              data-testid="password-field"
+              required
+              margin="normal"
+              fullWidth
+              label="Passord"
+              type={showPassword ? "text" : "password"}
+              id="password"
+              error={errors.password ? true : false}
+              autoComplete="current-password"
+              {...register("password", { required: "Du må fylle inn passord" })}
+            />
+            <InputAdornment position="end" sx={{ position: "absolute", mr: 1 }}>
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+                  event.preventDefault();
+                }}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          </Box>
           <Button
             data-testid="login-submit"
             type="submit"
