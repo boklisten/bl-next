@@ -7,7 +7,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import isEmail from "validator/lib/isEmail";
-import { Alert, Divider, IconButton, InputAdornment } from "@mui/material";
+import {
+  Alert,
+  Divider,
+  IconButton,
+  InputAdornment,
+  Tooltip,
+} from "@mui/material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import GoogleIcon from "@mui/icons-material/Google";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -89,7 +95,11 @@ export default function SignIn() {
         <Divider sx={{ width: "100%", mt: 3 }}>
           Eller, logg inn med epost
         </Divider>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ width: "100%" }}
+        >
           {Object.entries(errors).map(([type, message]) => (
             <Alert key={type} severity="error" data-testid="error-message">
               {message.message}
@@ -129,16 +139,21 @@ export default function SignIn() {
               autoComplete="current-password"
               {...register("password", { required: "Du må fylle inn passord" })}
             />
-            <InputAdornment position="end" sx={{ position: "absolute", mr: 1 }}>
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-                  event.preventDefault();
-                }}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
+            <InputAdornment
+              position="end"
+              sx={{ position: "absolute", mr: 1, mt: 1 }}
+            >
+              <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    event.preventDefault();
+                  }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </Tooltip>
             </InputAdornment>
           </Box>
           <Button

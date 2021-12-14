@@ -15,6 +15,7 @@ import {
   IconButton,
   InputAdornment,
   Skeleton,
+  Tooltip,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
@@ -191,15 +192,19 @@ const UserDetailEditor = ({
                 position="end"
                 sx={{ position: "absolute", mr: 1 }}
               >
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShowPassword(!showPassword)}
-                  onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-                    event.preventDefault();
-                  }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
+                <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                    onMouseDown={(
+                      event: React.MouseEvent<HTMLButtonElement>
+                    ) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </Tooltip>
               </InputAdornment>
             </Grid>
             {showDetails && (
