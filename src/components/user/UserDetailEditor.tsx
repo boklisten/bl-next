@@ -9,7 +9,13 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Alert, Divider, IconButton, InputAdornment } from "@mui/material";
+import {
+  Alert,
+  Divider,
+  IconButton,
+  InputAdornment,
+  Skeleton,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -48,6 +54,7 @@ const UserDetailEditor = ({
   const [showPassword, setShowPassword] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [postalCity, setPostalCity] = useState("");
+  const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
 
   // eslint-disable-next-line unicorn/no-null
   const [birthday, setBirthday] = useState<Moment | null>(null);
@@ -291,11 +298,13 @@ const UserDetailEditor = ({
                           return;
                         }
 
+                        setWaitingForPostalCity(true);
                         const response = await fetchData(
                           "/api/delivery/postal-code",
                           "POST",
                           event.target.value
                         );
+                        setWaitingForPostalCity(false);
 
                         if (!response.postalCity) {
                           setPostalCity("");
@@ -331,6 +340,13 @@ const UserDetailEditor = ({
                     variant="subtitle1"
                     color="gray"
                   >
+                    {waitingForPostalCity && (
+                      <Skeleton
+                        variant="rectangular"
+                        width={50}
+                        height="1rem"
+                      />
+                    )}
                     {postalCity}
                   </Typography>
                 </Grid>
