@@ -147,6 +147,7 @@ const UserDetailEditor = ({
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                data-testid="email-field"
                 onFocus={() => setShowDetails(true)}
                 required
                 fullWidth
@@ -172,6 +173,7 @@ const UserDetailEditor = ({
               }}
             >
               <TextField
+                data-testid="password-field"
                 onFocus={() => setShowDetails(true)}
                 required
                 fullWidth
@@ -215,6 +217,7 @@ const UserDetailEditor = ({
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    data-testid="first-name-field"
                     required
                     autoComplete="given-name"
                     fullWidth
@@ -228,6 +231,7 @@ const UserDetailEditor = ({
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
+                    data-testid="last-name-field"
                     required
                     fullWidth
                     id="lastName"
@@ -241,6 +245,7 @@ const UserDetailEditor = ({
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    data-testid="phone-field"
                     required
                     fullWidth
                     id="phoneNumber"
@@ -268,6 +273,7 @@ const UserDetailEditor = ({
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
+                    data-testid="address-field"
                     required
                     fullWidth
                     id="address"
@@ -289,6 +295,7 @@ const UserDetailEditor = ({
                   }}
                 >
                   <TextField
+                    data-testid="postal-code-field"
                     required
                     fullWidth
                     id="postalCode"
@@ -344,6 +351,7 @@ const UserDetailEditor = ({
                     sx={{ position: "absolute", mr: 3 }}
                     variant="subtitle1"
                     color="gray"
+                    data-testid="postal-city-preview"
                   >
                     {waitingForPostalCity && (
                       <Skeleton
@@ -383,6 +391,7 @@ const UserDetailEditor = ({
                     }
                     renderInput={(parameters) => (
                       <TextField
+                        data-testid="birthday-field"
                         autoComplete="bday"
                         required
                         fullWidth
@@ -403,6 +412,7 @@ const UserDetailEditor = ({
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        data-testid="guardian-name-field"
                         required
                         fullWidth
                         id="lastName"
@@ -416,6 +426,7 @@ const UserDetailEditor = ({
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        data-testid="guardian-email-field"
                         required
                         fullWidth
                         id="email"
@@ -433,6 +444,7 @@ const UserDetailEditor = ({
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        data-testid="guardian-phone-field"
                         required
                         fullWidth
                         id="phoneNumber"
@@ -466,6 +478,7 @@ const UserDetailEditor = ({
                     <FormControlLabel
                       control={
                         <Checkbox
+                          data-testid="tos-field"
                           sx={{
                             color: errors.agreeToTermsAndConditions
                               ? "red"
@@ -499,6 +512,7 @@ const UserDetailEditor = ({
             )}
           </Grid>
           <Button
+            data-testid="submit-button"
             type="submit"
             fullWidth
             variant="contained"
@@ -510,7 +524,9 @@ const UserDetailEditor = ({
           <Grid container justifyContent="flex-end">
             <Grid item>
               <NextLink href="/auth/login" passHref>
-                <Link variant="body2">Har du allerede en konto? Logg inn</Link>
+                <Link variant="body2" data-testid="login-link">
+                  Har du allerede en konto? Logg inn
+                </Link>
               </NextLink>
             </Grid>
           </Grid>
