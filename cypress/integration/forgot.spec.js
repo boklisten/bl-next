@@ -1,8 +1,8 @@
-describe("Login", () => {
+describe("Forgot password", () => {
   it("can navidate to and from forgot page", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(8).click();
+    cy.get(".MuiListItem-button").eq(7).click();
     cy.getBySel("forgot-password").click();
     cy.url().should("include", "forgot");
     cy.getBySel("login").click();

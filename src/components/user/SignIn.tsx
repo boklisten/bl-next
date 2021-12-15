@@ -21,6 +21,8 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { login } from "auth/login";
+import { useRouter } from "next/router";
 
 type SignInFields = {
   email: string;
@@ -29,13 +31,21 @@ type SignInFields = {
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFields>({ mode: "onTouched" });
-  const onSubmit: SubmitHandler<SignInFields> = (data) => {
+  const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     console.log(data);
+    try {
+      await login(data.email, data.password);
+      console.log("Success! Redirecting to index");
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

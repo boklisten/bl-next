@@ -17,7 +17,9 @@ import EmailIcon from "@mui/icons-material/Email";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
+import { isLoggedIn, logout } from "auth/auth-login";
 
 export default function SwipeableTemporaryDrawer() {
   const [open, setOpen] = useState(false);
@@ -102,32 +104,49 @@ export default function SwipeableTemporaryDrawer() {
 
         <Divider />
 
-        <Link href="/" passHref>
-          <ListItem button>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Brukerinnstillinger"} />
-          </ListItem>
-        </Link>
+        {isLoggedIn() && (
+          <>
+            <Link href="/" passHref>
+              <ListItem button>
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Brukerinnstillinger"} />
+              </ListItem>
+            </Link>
 
-        <Link href="/auth/register" passHref>
-          <ListItem button>
-            <ListItemIcon>
-              <PersonAddIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Registrer"} />
-          </ListItem>
-        </Link>
+            <Link href="/" passHref>
+              <ListItem button onClick={logout}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Logg ut"} />
+              </ListItem>
+            </Link>
+          </>
+        )}
 
-        <Link href="/auth/login" passHref data-testid="dropdown-login-link">
-          <ListItem button>
-            <ListItemIcon>
-              <LoginIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Logg inn"} />
-          </ListItem>
-        </Link>
+        {!isLoggedIn() && (
+          <>
+            <Link href="/auth/register" passHref>
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Registrer"} />
+              </ListItem>
+            </Link>
+
+            <Link href="/auth/login" passHref data-testid="dropdown-login-link">
+              <ListItem button>
+                <ListItemIcon>
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Logg inn"} />
+              </ListItem>
+            </Link>
+          </>
+        )}
       </List>
     </Box>
   );
