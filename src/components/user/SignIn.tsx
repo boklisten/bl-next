@@ -31,6 +31,7 @@ type SignInFields = {
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [apiError, setApiError] = useState("");
   const router = useRouter();
   const {
     register,
@@ -38,13 +39,12 @@ export default function SignIn() {
     formState: { errors },
   } = useForm<SignInFields>({ mode: "onTouched" });
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
-    console.log(data);
+    setApiError("");
     try {
       await login(data.email, data.password);
-      console.log("Success! Redirecting to index");
       router.push("/");
     } catch (error) {
-      console.error(error);
+      setApiError(String(error));
     }
   };
 
@@ -110,8 +110,18 @@ export default function SignIn() {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ width: "100%" }}
         >
+          {apiError && (
+            <Alert severity="error" data-testid="api-error" sx={{ mt: 1 }}>
+              {apiError}
+            </Alert>
+          )}
           {Object.entries(errors).map(([type, message]) => (
-            <Alert key={type} severity="error" data-testid="error-message">
+            <Alert
+              key={type}
+              severity="error"
+              sx={{ mt: 1 }}
+              data-testid="error-message"
+            >
               {message.message}
             </Alert>
           ))}
