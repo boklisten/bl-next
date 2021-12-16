@@ -45,6 +45,7 @@ function NativeSelectWrapper({
           Velg side
         </InputLabel>
         <NativeSelect
+          data-testid="select-info-page"
           value={tabs[activeTabIndex]?.href}
           onChange={handleChange as any}
           inputProps={{

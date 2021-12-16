@@ -48,4 +48,16 @@ describe("Login", () => {
     cy.getBySel("error-message").should("not.exist");
     cy.getBySel("login-submit").should("not.be.disabled");
   });
+
+  it("displays an error message when username and password is wrong", () => {
+    cy.getBySel("email-field").clear();
+    cy.getBySel("password-field").clear();
+    cy.getBySel("email-field").type("ola@halvorsen.no");
+    cy.getBySel("password-field").type("0977 det er livet min");
+    cy.getBySel("login-submit").click();
+    cy.getBySel("api-error").should(
+      "contain",
+      "Error: username or password is wrong"
+    );
+  });
 });
