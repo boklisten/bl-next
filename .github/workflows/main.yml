@@ -31,8 +31,54 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Clone backend
+        uses: actions/checkout@v2
+        with:
+          repository: boklisten/bl-api
+          path: "./bl-api"
+      - name: Start backend
+        run: |
+          cd bl-api
+          yarn install
+          yarn start &
+        env:
+          PORT: 1337
+          BLAPI_HOST: localhost
+          BLAPI_PORT: 1337
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          SERVER_PATH: /
+          NODE_ENV: dev
+          LOG_LEVEL: silly
+          URI_WHITELIST: localhost:3000 http://localhost:3000
+          ACCESS_TOKEN_SECRET: not_secret_at_all
+          BL_API_URI: http://localhost:1337/
+          CLIENT_URI: http://localhost:3000/
+          REFRESH_TOKEN_SECRET: not_the_prod_secret
+          DIBS_CHECKOUT_KEY: ${{ secrets.DIBS_CHECKOUT_KEY }}
+          DIBS_SECRET_KEY: ${{ secrets.DIBS_CHECKOUT_SECRET }}
+          DIBS_URI: https://test.api.dibspayment.eu/v1/
+          FACEBOOK_CLIENT_ID: 123
+          FACEBOOK_SECRET: 123
+          FEIDE_AUTHORIZATION_URL: https://auth.dataporten.no/oauth/authorization
+          FEIDE_CLIENT_ID: yello
+          FEIDE_SECRET: foo
+          FEIDE_TOKEN_URL: https://auth.dataporten.no/oauth/token
+          FEIDE_USER_INFO_URL: https://auth.dataporten.no/userinfo
+          GOOGLE_CLIENT_ID: totally_legit
+          GOOGLE_SECRET: nope
+          SENDGRID_API_KEY: foo
+          TWILIO_SMS_AUTH_TOKEN: foo
+          TWILIO_SMS_SID: foo
+          TWILIO_STATUS_CALLBACK_URL: foo
+          BRING_API_KEY: ${{ secrets.BRING_API_KEY }}
+          BRING_API_ID: ${{ secrets.BRING_API_ID }}
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           build: yarn build
           start: yarn start
+          record: true
+          parallel: true
+          group: "UI - Electron"
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

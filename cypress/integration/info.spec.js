@@ -9,7 +9,7 @@ describe("Info pages", () => {
   });
 
   it("displays qna", () => {
-    cy.getBySel("link-tab").eq(1).click();
+    cy.get(".MuiNativeSelect-select").select("/info/faq");
     cy.getBySel("qna-title").should("be.visible");
     cy.getBySel("qna-entry").should("have.length", 22);
     cy.getBySel("qna-entry")
@@ -28,7 +28,7 @@ describe("Info pages", () => {
   });
 
   it("displays contact info", () => {
-    cy.getBySel("link-tab").eq(8).click();
+    cy.get(".MuiNativeSelect-select").select("/info/contact");
     cy.getBySel("contact-phone").should("be.visible");
     cy.getBySel("contact-email").should("be.visible");
     cy.getBySel("contact-address").should("be.visible");
