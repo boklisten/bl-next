@@ -82,3 +82,5 @@ jobs:
           group: "UI - Electron"
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          BRING_API_KEY: ${{ secrets.BRING_API_KEY }}
+          BRING_API_ID: ${{ secrets.BRING_API_ID }}
