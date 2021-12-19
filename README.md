@@ -1,34 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# bl-next
 
-## Getting Started
+[![bl-next](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/1mzays/main&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/1mzays/runs)
 
-First, run the development server:
+Library and book management services and administration for upper secondary schools. Built with Next.js with Material UI using an express backend. This project is the successor for the bl-web and bl-admin projects, with the aim to unify the administration site with the customer site.
+
+## Setup and development
 
 ```bash
-npm run dev
-# or
-yarn dev
+# Install dependencies
+$ yarn install
+
+# Copy .env.example to .env and fill in the correct keys to access the required apis
+
+# Run the development server on http://localhost:3000
+$ yarn dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Code style, linting and tests
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+# Prettier code style
+$ yarn prettier
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Linting with Eslint
+$ yarn lint
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# E2E tests with Cypress
+$ yarn cypress run
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Branches
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+There are two active branches, `main` and `develop`. You should use `develop` for all
+development and treat `main` as the public live version.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### `main`
 
-## Deploy on Vercel
+This branch should be treated as the production branch and should not have
+failing code.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When you push code to `main` the code is also pushed to our production
+environment on Vercel. Be aware that any commit you push to `main` will be
+viewable and executed on our live production server. The `main` branch is
+currently running on [next.boklisten.no](https://next.boklisten.no).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### `develop`
+
+This branch should be treated as a development branch, but it does not need to have runnable code. By default, CI will run when pushing to this branch, which is nice for testing your code.
+To create a production preview, please use the [Vercel CLI](https://vercel.com/docs/cli)
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[AGPL-3.0](LICENSE)

@@ -1,6 +1,22 @@
 {
   "name": "bl-next",
-  "private": true,
+  "description": "Library and book management services and administration for upper secondary schools. Built with Next.js with Material UI using an express backend. This project is the successor for the bl-web and bl-admin projects, with the aim to unify the administration site with the customer site.",
+  "version": "0.0.1",
+  "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/boklisten/bl-next#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boklisten/bl-next.git"
+  },
+  "url": "https://github.com/boklisten/bl-next/issues",
+  "email": "info@boklisten.no",
+  "contributors": [
+    {
+      "name": "Adrian Andersen",
+      "email": "adrianandersen@protonmail.com",
+      "url": "https://adrianandersen.no"
+    }
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,9 +26,6 @@
     "prettier:check": "prettier --check '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
     "lint": "next lint"
   },
-  "cacheDirectories": [
-    ".next/cache"
-  ],
   "dependencies": {
     "@date-io/moment": "^2.11.0",
     "@emotion/react": "^11.7.0",
