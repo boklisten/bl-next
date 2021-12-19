@@ -1,6 +1,9 @@
 # bl-next
 
 [![bl-next](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/1mzays/main&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/1mzays/runs)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m790106369-0ed2a627f24343cf93d2bba7)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/boklisten/bl-next)
+![License badge](https://img.shields.io/github/license/boklisten/bl-next)
 
 Library and book management services and administration for upper secondary schools. Built with Next.js with Material UI using an express backend. This project is the successor for the bl-web and bl-admin projects, with the aim to unify the administration site with the customer site.
 
