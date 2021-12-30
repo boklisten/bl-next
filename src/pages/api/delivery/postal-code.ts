@@ -4,6 +4,10 @@ const PostalCode = async (
   request: NextApiRequest,
   response: NextApiResponse
 ) => {
+  if (!process.env["BRING_API_ID"] || !process.env["BRING_API_KEY"]) {
+    throw new Error("Bring API env variables are undefined");
+  }
+
   const bringHeaders = new Headers({
     "X-MyBring-API-Uid": process.env["BRING_API_ID"] ?? "",
     "X-MyBring-API-Key": process.env["BRING_API_KEY"] ?? "",

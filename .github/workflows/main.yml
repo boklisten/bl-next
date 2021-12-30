@@ -91,7 +91,7 @@ jobs:
       - name: Compile
         run: |
           cd bl-api
-          yarn install --frozen-lockfile --production
+          yarn install --frozen-lockfile
           yarn tsc -p tsconfig.build.json
       - name: Cache backend
         uses: actions/cache@v2
@@ -128,15 +128,20 @@ jobs:
         with:
           path: ./bl-api/
           key: ${{ github.sha }}-backend
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: "4.4"
       - name: Start backend
         run: |
           cd bl-api
-          yarn node ./dist/index.js &
+          yarn load_fixtures
+          yarn node ./dist/src/index.js &
         env:
           PORT: 1337
           BLAPI_HOST: localhost
           BLAPI_PORT: 1337
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_URI: mongodb://localhost:27017/test
           SERVER_PATH: /
           NODE_ENV: dev
           LOG_LEVEL: silly
