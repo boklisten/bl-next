@@ -92,7 +92,7 @@ jobs:
         run: |
           cd bl-api
           yarn install --frozen-lockfile
-          yarn tsc -p tsconfig.build.json
+          yarn build
       - name: Cache backend
         uses: actions/cache@v2
         with:
@@ -136,7 +136,7 @@ jobs:
         run: |
           cd bl-api
           yarn load_fixtures
-          yarn node ./dist/src/index.js &
+          yarn start &
         env:
           PORT: 1337
           BLAPI_HOST: localhost
