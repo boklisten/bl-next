@@ -28,7 +28,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
-import { fetchData } from "requests";
+import { fetchData } from "../../api/requests";
 
 type UserEditorFields = {
   email: string;

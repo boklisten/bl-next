@@ -21,7 +21,7 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { login } from "auth/login";
+import { login } from "api/login";
 import { useRouter } from "next/router";
 
 type SignInFields = {

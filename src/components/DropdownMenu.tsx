@@ -19,7 +19,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
-import { isLoggedIn, logout } from "auth/auth-login";
+import { isLoggedIn, logout } from "api/auth-login";
 
 export default function SwipeableTemporaryDrawer() {
   const [open, setOpen] = useState(false);

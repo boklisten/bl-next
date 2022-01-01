@@ -1,4 +1,4 @@
-import BL_CONFIG from "./bl-config";
+import BL_CONFIG from "../utils/bl-config";
 import { getAccessToken, haveAccessToken } from "./token";
 
 export const apiPath = (collection: string, query?: string) => {

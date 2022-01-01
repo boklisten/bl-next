@@ -5,7 +5,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import NextLink from "next/link";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { contactInfo } from "../constants";
+import { contactInfo } from "../utils/constants";
 
 const ContactInfo = () => {
   return (

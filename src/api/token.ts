@@ -1,5 +1,5 @@
 import { add, get, remove } from "./storage";
-import BL_CONFIG from "./bl-config";
+import BL_CONFIG from "../utils/bl-config";
 
 const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;
