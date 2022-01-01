@@ -1,4 +1,5 @@
 import {
+  Alert,
   Paper,
   Skeleton,
   Table,
@@ -10,19 +11,25 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { AxiosError } from "axios";
 
 interface SimpleItem {
   title: string;
   isbn: string;
 }
 
-const BuybackList = ({ items }: { items?: SimpleItem[] }) => {
+const BuybackList = ({
+  items,
+  error,
+}: {
+  items?: SimpleItem[];
+  error: AxiosError;
+}) => {
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography
-        data-testid="qna-title"
         variant="h4"
         sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
       >
@@ -42,9 +49,11 @@ const BuybackList = ({ items }: { items?: SimpleItem[] }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items &&
+            {!error &&
+              items &&
               items.map((item) => (
                 <TableRow
+                  data-testid="table-row"
                   key={item.isbn}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
@@ -56,9 +65,27 @@ const BuybackList = ({ items }: { items?: SimpleItem[] }) => {
               ))}
           </TableBody>
         </Table>
-        {[...Array.from({ length: 25 })].map((_element, index) => (
-          <Skeleton key={index} animation="wave" sx={{ marginX: 1 }} />
-        ))}
+        {!error &&
+          !items &&
+          [...Array.from({ length: 25 })].map((_element, index) => (
+            <Skeleton
+              key={index}
+              height="40px"
+              animation="wave"
+              sx={{ marginX: 1 }}
+            />
+          ))}
+        {error &&
+          (error?.response?.status === 404 ? (
+            <Alert severity="info" data-testid="missing-error">
+              Ingen bøker i listen. Kom tilbake senere for å se en oppdatert
+              liste.
+            </Alert>
+          ) : (
+            <Alert severity="error" data-testid="api-error">
+              Noe gikk galt! Vennligst prøv igjen senere.
+            </Alert>
+          ))}
       </TableContainer>
     </Box>
   );

@@ -27,6 +27,15 @@ describe("Info pages", () => {
     cy.getBySel("qna-entry-answer").eq(1).should("be.visible");
   });
 
+  it("displays buyback list", () => {
+    cy.get(".MuiNativeSelect-select").select("/info/buyback");
+    cy.intercept(`http://localhost:1337/items*`).as("fetchItems");
+    cy.wait("@fetchItems");
+    cy.getBySel("missing-error").should("not.exist");
+    cy.getBySel("api-error").should("not.exist");
+    cy.getBySel("table-row").should("have.length", 2);
+  });
+
   it("displays contact info", () => {
     cy.get(".MuiNativeSelect-select").select("/info/contact");
     cy.getBySel("contact-phone").should("be.visible");

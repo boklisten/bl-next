@@ -1,47 +1,20 @@
 import { Card } from "@mui/material";
-import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
+import type { NextPage } from "next";
 import DynamicNav from "../../components/DynamicNav";
 import { infoPageTabs } from "../../utils/constants";
 import Head from "next/head";
 import BuybackList from "components/BuybackList";
-import { get } from "api/api";
 import { Item } from "utils/types";
+import useSWR, { SWRResponse } from "swr";
+import BL_CONFIG from "utils/bl-config";
+import axios from "axios";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  let response;
-  try {
-    response = await get(
-      "items",
-      "?buyback=true&og=title&og=price&og=info.isbn"
-    );
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        data: [],
-      },
-    };
-  }
-  if (!response.data) {
-    return {
-      props: {
-        data: [],
-      },
-    };
-  }
-
-  return {
-    props: response.data,
-  };
-};
-
-const Buyback: NextPage = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Buyback: NextPage = () => {
+  const { data, error }: SWRResponse = useSWR(
+    `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=price&og=info.isbn`,
+    axios.get
+  );
+  const items = data?.data?.data;
   return (
     <>
       <Head>
@@ -54,9 +27,10 @@ const Buyback: NextPage = ({
       <Card>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <BuybackList
-          items={data
+          items={items
             ?.sort((a: Item, b: Item) => a.title.localeCompare(b.title))
             .map((item: Item) => ({ isbn: item.info.isbn, title: item.title }))}
+          error={error}
         />
       </Card>
     </>
