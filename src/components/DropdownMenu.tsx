@@ -55,24 +55,27 @@ export default function SwipeableTemporaryDrawer() {
           </ListItem>
         </Link>
 
-        <Link href="/" passHref>
-          <ListItem button>
-            <ListItemIcon>
-              <MenuBookIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Dine bøker"} />
-          </ListItem>
-        </Link>
+        {isLoggedIn() && (
+          <>
+            <Link href="/" passHref>
+              <ListItem button>
+                <ListItemIcon>
+                  <MenuBookIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Dine bøker"} />
+              </ListItem>
+            </Link>
 
-        <Link href="/" passHref>
-          <ListItem button>
-            <ListItemIcon>
-              <ReceiptIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Ordrehistorikk"} />
-          </ListItem>
-        </Link>
-
+            <Link href="/" passHref>
+              <ListItem button>
+                <ListItemIcon>
+                  <ReceiptIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Ordrehistorikk"} />
+              </ListItem>
+            </Link>
+          </>
+        )}
         <Divider />
 
         <Link href="/info/branch" passHref>
