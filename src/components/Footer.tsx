@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 export default function Footer() {
   return (
     <Box
+      data-testid="footer"
       sx={{
         backgroundColor: "black",
         display: "flex",

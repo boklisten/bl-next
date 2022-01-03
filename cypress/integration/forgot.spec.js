@@ -1,5 +1,5 @@
 describe("Forgot password", () => {
-  it("can navidate to and from forgot page", () => {
+  it("can navigate to and from forgot page", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
     cy.get(".MuiListItem-button").eq(5).click();

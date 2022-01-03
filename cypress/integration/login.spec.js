@@ -64,15 +64,10 @@ describe("Login", () => {
   });
 
   it("can log in with registered user", () => {
-    cy.getBySel("email-field").clear();
-    cy.getBySel("password-field").clear();
-    cy.getBySel("email-field").type("richard.stallman@protonmail.com");
-    cy.getBySel("password-field").type(
+    cy.login(
+      "richard.stallman@protonmail.com",
       "Programming is not a science. Programming is a craft."
     );
-    cy.intercept("/auth/local/login").as("login");
-    cy.getBySel("login-submit").click();
-    cy.wait("@login").its("response.statusCode").should("eq", 200);
     cy.url().should("not.include", "login");
     cy.getBySel("MenuIcon").click();
     cy.get(".MuiListItem-button").eq(7).should("contain", "Logg ut");

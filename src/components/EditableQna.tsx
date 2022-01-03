@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useRef, useState } from "react";
 import { Box } from "@mui/system";
+import { isAdmin } from "api/auth";
 
 interface QNA {
   id: string;
@@ -64,29 +65,34 @@ const QuestionWithAnswer = ({
           />
         )}
         {!edit && <Typography sx={{ flexGrow: 1 }}>{question}</Typography>}
-        <Tooltip title={edit ? "Lagre" : "Rediger"}>
-          <IconButton
-            onClick={() => {
-              if (edit) {
-                updateQuestion({
-                  id: id,
-                  //@ts-ignore
-                  question: questionInput.current.value,
-                  //@ts-ignore
-                  answer: answerInput.current.value,
-                });
-              }
-              setEdit(!edit);
-            }}
-          >
-            {edit ? <SaveIcon /> : <EditIcon />}
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Slett">
-          <IconButton onClick={() => deleteQuestion(id)}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        {isAdmin() && (
+          <>
+            <Tooltip title={edit ? "Lagre" : "Rediger"}>
+              <IconButton
+                data-testid="question-edit-button"
+                onClick={() => {
+                  if (edit) {
+                    updateQuestion({
+                      id: id,
+                      //@ts-ignore
+                      question: questionInput.current.value,
+                      //@ts-ignore
+                      answer: answerInput.current.value,
+                    });
+                  }
+                  setEdit(!edit);
+                }}
+              >
+                {edit ? <SaveIcon /> : <EditIcon />}
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Slett">
+              <IconButton onClick={() => deleteQuestion(id)}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        )}
       </AccordionSummary>
       <AccordionDetails>
         {edit && (
@@ -142,19 +148,23 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
           {...QNA}
         />
       ))}
-      <Tooltip title="Legg til spørsmål">
-        <IconButton
-          onClick={() =>
-            QNAs.push({
-              id: "foo",
-              question: "nytt spørsmål",
-              answer: "nytt svar",
-            })
-          }
-        >
-          <AddCircleIcon />
-        </IconButton>
-      </Tooltip>
+
+      {isAdmin() && (
+        <Tooltip title="Legg til spørsmål">
+          <IconButton
+            data-testid="add-question-button"
+            onClick={() =>
+              QNAs.push({
+                id: "foo",
+                question: "nytt spørsmål",
+                answer: "nytt svar",
+              })
+            }
+          >
+            <AddCircleIcon />
+          </IconButton>
+        </Tooltip>
+      )}
     </Box>
   );
 };

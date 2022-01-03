@@ -1,5 +1,7 @@
 import { add, get, remove } from "./storage";
 import BL_CONFIG from "../utils/bl-config";
+import { decodeToken } from "react-jwt";
+import { AccessToken } from "utils/types";
 
 const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;
@@ -38,6 +40,23 @@ export const getAccessToken = (): string => {
 export const removeTokens = (): void => {
   remove(accessTokenName);
   remove(refreshTokenName);
+};
+
+export const getAccessTokenBody = (): AccessToken => {
+  const token = getAccessToken();
+
+  if (!token) {
+    throw new Error("could not get accessToken");
+  }
+
+  let decodedToken;
+  try {
+    decodedToken = decodeToken(token);
+  } catch (error) {
+    throw new Error("accessToken is not valid: " + error);
+  }
+
+  return decodedToken as AccessToken;
 };
 
 export const parseTokensFromResponseDataAndStore = (
