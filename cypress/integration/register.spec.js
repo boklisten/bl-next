@@ -2,7 +2,7 @@ describe("Register", () => {
   it("displays correct initial elements", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(6).click();
+    cy.get(".MuiListItem-button").eq(4).click();
 
     cy.getBySel("facebook-button").should("be.visible");
     cy.getBySel("google-button").should("be.visible");

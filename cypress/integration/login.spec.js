@@ -2,7 +2,7 @@ describe("Login", () => {
   it("displays all important elements", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(7).click();
+    cy.get(".MuiListItem-button").eq(5).click();
 
     cy.getBySel("facebook-button").should("be.visible");
     cy.getBySel("google-button").should("be.visible");
