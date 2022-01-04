@@ -1,3 +1,5 @@
+import axios, { AxiosError } from "axios";
+
 export const fetchData = async (url: string, method: string, data: unknown) => {
   try {
     // eslint-disable-next-line compat/compat
@@ -12,5 +14,16 @@ export const fetchData = async (url: string, method: string, data: unknown) => {
     });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const fetcher = async (url: string) => {
+  try {
+    return await axios.get(url).then((response) => response.data.data);
+  } catch (error) {
+    if (!((error as AxiosError).response?.status === 404)) {
+      throw error;
+    }
+    return [];
   }
 };

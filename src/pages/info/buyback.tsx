@@ -3,18 +3,24 @@ import type { NextPage } from "next";
 import DynamicNav from "../../components/DynamicNav";
 import { infoPageTabs } from "../../utils/constants";
 import Head from "next/head";
-import BuybackList from "components/BuybackList";
+import BuybackList, { buybackUrl } from "components/BuybackList";
+import { SWRConfig } from "swr";
+import { fetcher } from "api/requests";
 import { Item } from "utils/types";
-import useSWR, { SWRResponse } from "swr";
-import BL_CONFIG from "utils/bl-config";
-import axios from "axios";
 
-const Buyback: NextPage = () => {
-  const { data, error }: SWRResponse = useSWR(
-    `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=price&og=info.isbn`,
-    axios.get
-  );
-  const items = data?.data?.data;
+export const getStaticProps = async () => {
+  return {
+    props: {
+      fallback: {
+        [buybackUrl]: await fetcher(buybackUrl),
+      },
+    },
+  };
+};
+
+const Buyback: NextPage<{ fallback: { [key: string]: Item[] } }> = ({
+  fallback,
+}) => {
   return (
     <>
       <Head>
@@ -26,12 +32,9 @@ const Buyback: NextPage = () => {
       </Head>
       <Card>
         <DynamicNav tabs={infoPageTabs} twoRows />
-        <BuybackList
-          items={items
-            ?.sort((a: Item, b: Item) => a.title.localeCompare(b.title))
-            .map((item: Item) => ({ isbn: item.info.isbn, title: item.title }))}
-          error={error}
-        />
+        <SWRConfig value={{ fallback }}>
+          <BuybackList />
+        </SWRConfig>
       </Card>
     </>
   );

@@ -1,7 +1,6 @@
 import {
   Alert,
   Paper,
-  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -11,20 +10,16 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { AxiosError } from "axios";
+import { fetcher } from "api/requests";
+import useSWR, { SWRResponse } from "swr";
+import BL_CONFIG from "utils/bl-config";
+import { Item } from "utils/types";
 
-interface SimpleItem {
-  title: string;
-  isbn: string;
-}
+export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`;
 
-const BuybackList = ({
-  items,
-  error,
-}: {
-  items?: SimpleItem[];
-  error: AxiosError;
-}) => {
+const BuybackList = () => {
+  const { data, error }: SWRResponse = useSWR(buybackUrl, fetcher);
+  const items = data as Item[];
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -50,42 +45,31 @@ const BuybackList = ({
           </TableHead>
           <TableBody>
             {!error &&
-              items &&
               items.map((item) => (
                 <TableRow
                   data-testid="table-row"
-                  key={item.isbn}
+                  key={item.info.isbn}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
                     {item.title}
                   </TableCell>
-                  <TableCell>{item.isbn}</TableCell>
+                  <TableCell>{item.info.isbn}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
-        {!error &&
-          !items &&
-          [...Array.from({ length: 25 })].map((_element, index) => (
-            <Skeleton
-              key={index}
-              height="40px"
-              animation="wave"
-              sx={{ marginX: 1 }}
-            />
-          ))}
-        {error &&
-          (error?.response?.status === 404 ? (
-            <Alert severity="info" data-testid="missing-error">
-              Ingen bøker i listen. Kom tilbake senere for å se en oppdatert
-              liste.
-            </Alert>
-          ) : (
-            <Alert severity="error" data-testid="api-error">
-              Noe gikk galt! Vennligst prøv igjen senere.
-            </Alert>
-          ))}
+        {!error && items.length === 0 && (
+          <Alert severity="info" data-testid="missing-error">
+            Ingen bøker i listen. Kom tilbake senere for å se en oppdatert
+            liste.
+          </Alert>
+        )}
+        {error && (
+          <Alert severity="error" data-testid="api-error">
+            Noe gikk galt! Vennligst prøv igjen senere.
+          </Alert>
+        )}
       </TableContainer>
     </Box>
   );
