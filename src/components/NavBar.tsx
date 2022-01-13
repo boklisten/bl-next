@@ -7,12 +7,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@mui/material";
 import DropDownMenu from "./DropdownMenu";
+import BranchSelect from "./BranchSelect";
 
 export default function NavBar() {
   return (
     <Box data-testid="nav-bar">
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar sx={{ paddingY: "10px" }}>
           <Link href="/" passHref>
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
@@ -29,6 +30,7 @@ export default function NavBar() {
                 component="div"
                 noWrap
                 sx={{
+                  display: { xs: "none", md: "flex" },
                   flexGrow: 1,
                   marginLeft: 1,
                 }}
@@ -68,6 +70,8 @@ export default function NavBar() {
               Bestill bøker
             </Button>
           </Link>
+
+          <BranchSelect />
 
           <DropDownMenu />
         </Toolbar>

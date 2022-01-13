@@ -250,6 +250,13 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@boklisten/bl-model@^0.25.7":
+  version "0.25.7"
+  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.7.tgz#080bcda0b23398ff930cf900757aab7eb7c11fa5"
+  integrity sha512-DlS1+8BgxPej0WGjOAFmYNW+ONBrWObtBKKpJ8OiOuDa8+qW/G4TIZDfjINiCS2tePdbVJjs7jvKmS3O5aFIvQ==
+  dependencies:
+    typescript "^4.5.2"
+
 "@commitlint/cli@^16.0.1":
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-16.0.1.tgz#21905c898ebece7da42277209022b1bc80c4fb39"
@@ -5698,7 +5705,7 @@ type-fest@^0.8.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
-typescript@^4.4.3, typescript@^4.5.4:
+typescript@^4.4.3, typescript@^4.5.2, typescript@^4.5.4:
   version "4.5.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
   integrity sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==
