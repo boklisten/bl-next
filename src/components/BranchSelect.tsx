@@ -7,32 +7,43 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { fetcher } from "api/requests";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
 import BL_CONFIG from "utils/bl-config";
 import { Branch } from "@boklisten/bl-model";
 import { add, get } from "api/storage";
+import { selectBranch, setSelectedBranch } from "redux/selectedBranch";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
+import { useRouter } from "next/router";
 
 export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
 
-const BranchSelect = () => {
+const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const { data }: SWRResponse = useSWR(branchListUrl, fetcher);
   const branches = data as Branch[];
 
-  const [selectedBranch, setSelectedBranch] = useState("");
+  const selectedBranch = useAppSelector(selectBranch);
+  const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   useEffect(() => {
     try {
-      setSelectedBranch(get("bl-current-branch-id"));
+      const storedBranchId = get("bl-current-branch-id");
+      dispatch(setSelectedBranch(storedBranchId));
     } catch {
       // no stored branch
     }
-  }, []);
+  }, [dispatch, branches]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    const branch = event.target.value as string;
-    setSelectedBranch(branch);
-    add("bl-current-branch-id", branch);
+    const branchId = event.target.value as string;
+    dispatch(setSelectedBranch(branchId));
+    add("bl-current-branch-id", branchId);
+
+    if (router.pathname.includes("info/branch")) {
+      router.push(`/info/branch/${branchId}`);
+    }
   };
 
   return (
@@ -41,14 +52,14 @@ const BranchSelect = () => {
         <InputLabel
           data-testid="branchSelectLabel"
           id="demo-simple-select-label"
-          sx={{ color: "white" }}
+          sx={{ color: isNav ? "white" : "inherit" }}
         >
-          {!selectedBranch ? "Velg skole" : "Valgt skole"}
+          {!selectedBranch.id ? "Velg skole" : "Valgt skole"}
         </InputLabel>
         <Select
           data-testid="branchSelect"
-          sx={{ color: "white" }}
-          value={selectedBranch}
+          sx={{ color: isNav ? "white" : "inherit" }}
+          value={selectedBranch.id}
           label="Valgt skole"
           onChange={handleChange}
         >

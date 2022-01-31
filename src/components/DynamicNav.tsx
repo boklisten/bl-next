@@ -11,7 +11,6 @@ import {
   NativeSelect,
   SelectChangeEvent,
 } from "@mui/material";
-import { useEffect } from "react";
 import stringSimilarity from "string-similarity";
 
 export interface LinkTabProps {
@@ -27,12 +26,6 @@ function NativeSelectWrapper({
   activeTabIndex: number;
 }) {
   const router = useRouter();
-
-  useEffect(() => {
-    for (const tab of tabs) {
-      router.prefetch(tab.href);
-    }
-  }, [router, tabs]);
 
   const handleChange = (event: SelectChangeEvent) => {
     router.push(event.target.value);

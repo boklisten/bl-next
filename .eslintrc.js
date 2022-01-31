@@ -18,7 +18,6 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "plugin:compat/recommended",
     "plugin:cypress/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:promise/recommended",

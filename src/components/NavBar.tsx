@@ -71,12 +71,12 @@ export default function NavBar() {
             </Button>
           </Link>
 
-          <BranchSelect />
+          <BranchSelect isNav />
 
           <DropDownMenu />
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar sx={{ marginBottom: "10px" }} />
     </Box>
   );
 }

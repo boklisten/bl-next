@@ -17,6 +17,8 @@ import Footer from "components/Footer";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import { LocalizationProvider } from "@mui/lab";
 import { Moment } from "moment";
+import { Provider } from "react-redux";
+import store from "redux/store";
 
 class OverriddenAdapter extends DateAdapter {
   // Get years in decending order
@@ -49,30 +51,32 @@ export default function MyApp(props: AppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <LocalizationProvider dateAdapter={OverriddenAdapter}>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Box
-            sx={{
-              minHeight: "100vh",
-              backgroundColor: "#FFFAFA",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <NavBar />
-            <Container
-              sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+      <Provider store={store}>
+        <LocalizationProvider dateAdapter={OverriddenAdapter}>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Box
+              sx={{
+                minHeight: "100vh",
+                backgroundColor: "#FFFAFA",
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
-              <Box sx={{ width: "100%" }}>
-                <Component {...pageProps} />
-              </Box>
-            </Container>
-          </Box>
-          <Footer />
-        </ThemeProvider>
-      </LocalizationProvider>
+              <NavBar />
+              <Container
+                sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+              >
+                <Box sx={{ width: "100%" }}>
+                  <Component {...pageProps} />
+                </Box>
+              </Container>
+            </Box>
+            <Footer />
+          </ThemeProvider>
+        </LocalizationProvider>
+      </Provider>
     </CacheProvider>
   );
 }

@@ -2,7 +2,6 @@ import axios, { AxiosError } from "axios";
 
 export const fetchData = async (url: string, method: string, data: unknown) => {
   try {
-    // eslint-disable-next-line compat/compat
     return await fetch(url, {
       method: method,
       headers: {

@@ -78,7 +78,7 @@ export default function SwipeableTemporaryDrawer() {
         )}
         <Divider />
 
-        <Link href="/info/branch" passHref>
+        <Link href="/info/branch/select" passHref>
           <ListItem button>
             <ListItemIcon>
               <AccessTimeIcon />

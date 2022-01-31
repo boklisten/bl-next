@@ -15,7 +15,6 @@ const PostalCode = async (
   });
   let result;
   try {
-    // eslint-disable-next-line compat/compat
     const postalLookupResult = await fetch(
       `https://api.bring.com/pickuppoint/api/postalCode/NO/getCityAndType/${request.body}.json`,
       { method: "GET", headers: bringHeaders }
