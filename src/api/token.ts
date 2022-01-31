@@ -2,6 +2,7 @@ import { add, get, remove } from "./storage";
 import BL_CONFIG from "../utils/bl-config";
 import { decodeToken } from "react-jwt";
 import { AccessToken } from "utils/types";
+import axios from "axios";
 
 const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;
@@ -9,6 +10,15 @@ const refreshTokenName = BL_CONFIG.token.refreshToken;
 export const haveAccessToken = (): boolean => {
   try {
     get(accessTokenName);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const haveRefreshToken = (): boolean => {
+  try {
+    get(refreshTokenName);
     return true;
   } catch {
     return false;
@@ -34,6 +44,14 @@ export const getAccessToken = (): string => {
     return get(accessTokenName);
   } catch (error) {
     throw new Error("could not get accessToken: " + error);
+  }
+};
+
+export const getRefreshToken = (): string => {
+  try {
+    return get(refreshTokenName);
+  } catch (error) {
+    throw new Error("could not get refreshToken: " + error);
   }
 };
 
@@ -104,4 +122,15 @@ export const parseTokensFromResponseDataAndStore = (
   addRefreshToken(refreshToken);
 
   return true;
+};
+
+export const fetchNewTokens = async () => {
+  if (!haveRefreshToken()) {
+    throw new Error("Login required");
+  }
+  const response = await axios.post(BL_CONFIG.api.basePath + "token", {
+    refreshToken: getRefreshToken(),
+  });
+  addAccessToken(response.data.data[0].accessToken);
+  addRefreshToken(response.data.data[1].refreshToken);
 };

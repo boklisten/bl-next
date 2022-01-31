@@ -29,6 +29,7 @@ import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import { fetchData } from "../../api/requests";
+import { UserDetail } from "@boklisten/bl-model";
 
 type UserEditorFields = {
   email: string;
@@ -47,20 +48,65 @@ type UserEditorFields = {
 
 const UserDetailEditor = ({
   isSignUp,
-  defaultValues = {},
+  userDetails = {} as UserDetail,
 }: {
   isSignUp?: boolean;
-  defaultValues?: Partial<UserEditorFields>;
+  userDetails?: UserDetail;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
-  const [postalCity, setPostalCity] = useState("");
+  const [showDetails, setShowDetails] = useState(!isSignUp);
+  const [postalCity, setPostalCity] = useState(userDetails?.postCity ?? "");
   const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
 
   // eslint-disable-next-line unicorn/no-null
-  const [birthday, setBirthday] = useState<Moment | null>(null);
+  const [birthday, setBirthday] = useState<Moment | null>(
+    // eslint-disable-next-line unicorn/no-null
+    userDetails?.dob ? moment(userDetails.dob) : null
+  );
 
   const isUnder18 = (): boolean => moment().diff(birthday, "years") < 18;
+
+  const extractFirstName = (fullName: string): string => {
+    if (!fullName || fullName.length <= 0) {
+      return "";
+    }
+
+    const fullNameSplit = fullName.split(" ");
+
+    if (fullNameSplit.length === 1) {
+      return fullNameSplit[0] as string;
+    }
+
+    return fullName
+      .split(" ")
+      .slice(0, fullNameSplit.length - 1)
+      .join(" ");
+  };
+
+  const extractLastName = (fullName: string): string => {
+    if (!fullName || fullName.length <= 0) {
+      return "";
+    }
+
+    const fullNameSplit = fullName.split(" ");
+
+    if (fullNameSplit.length > 1) {
+      return fullNameSplit.slice(-1).join(" ");
+    }
+    return "";
+  };
+
+  const defaultValues = {
+    email: userDetails.email,
+    firstName: extractFirstName(userDetails.name),
+    lastName: extractLastName(userDetails.name),
+    phoneNumber: userDetails.phone,
+    address: userDetails.address,
+    postalCode: userDetails.postCode,
+    guardianName: userDetails.guardian?.name as string,
+    guardianEmail: userDetails.guardian?.email as string,
+    guardianPhoneNumber: userDetails.guardian?.phone as string,
+  };
 
   const {
     register,
@@ -89,7 +135,7 @@ const UserDetailEditor = ({
           alt="logo"
         />
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
-          Registrer deg
+          {isSignUp ? "Registrer deg" : "Innstillinger"}
         </Typography>
         {isSignUp && (
           <>
@@ -150,6 +196,7 @@ const UserDetailEditor = ({
                 data-testid="email-field"
                 onFocus={() => setShowDetails(true)}
                 required
+                disabled={!isSignUp}
                 fullWidth
                 id="email"
                 label="Epost"
@@ -163,52 +210,56 @@ const UserDetailEditor = ({
                 })}
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{
-                display: "flex",
-                justifyContent: "end",
-                alignItems: "center",
-              }}
-            >
-              <TextField
-                data-testid="password-field"
-                onFocus={() => setShowDetails(true)}
-                required
-                fullWidth
-                type={showPassword ? "text" : "password"}
-                id="password"
-                label="Passord"
-                autoComplete="new-password"
-                error={errors.password ? true : false}
-                {...register("password", {
-                  required: "Du må fylle inn passord",
-                  minLength: {
-                    value: 10,
-                    message: "Passordet må minst ha 10 tegn",
-                  },
-                })}
-              />
-              <InputAdornment
-                position="end"
-                sx={{ position: "absolute", mr: 1 }}
+            {isSignUp && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "center",
+                }}
               >
-                <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword(!showPassword)}
-                    onMouseDown={(
-                      event: React.MouseEvent<HTMLButtonElement>
-                    ) => {
-                      event.preventDefault();
-                    }}
+                <TextField
+                  data-testid="password-field"
+                  onFocus={() => setShowDetails(true)}
+                  required
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  label="Passord"
+                  autoComplete="new-password"
+                  error={errors.password ? true : false}
+                  {...register("password", {
+                    required: "Du må fylle inn passord",
+                    minLength: {
+                      value: 10,
+                      message: "Passordet må minst ha 10 tegn",
+                    },
+                  })}
+                />
+                <InputAdornment
+                  position="end"
+                  sx={{ position: "absolute", mr: 1 }}
+                >
+                  <Tooltip
+                    title={showPassword ? "Skjul passord" : "Vis passord"}
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </Tooltip>
-              </InputAdornment>
-            </Grid>
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(
+                        event: React.MouseEvent<HTMLButtonElement>
+                      ) => {
+                        event.preventDefault();
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </Tooltip>
+                </InputAdornment>
+              </Grid>
+            )}
             {showDetails && (
               <>
                 <Grid item xs={12} sm={12} mt={1}>
@@ -519,17 +570,19 @@ const UserDetailEditor = ({
             sx={{ mt: 3, mb: 2 }}
             disabled={!showDetails || Object.entries(errors).length > 0}
           >
-            Registrer deg
+            {isSignUp ? "Registrer deg" : "Lagre"}
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <NextLink href="/auth/login" passHref>
-                <Link variant="body2" data-testid="login-link">
-                  Har du allerede en konto? Logg inn
-                </Link>
-              </NextLink>
+          {isSignUp && (
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <NextLink href="/auth/login" passHref>
+                  <Link variant="body2" data-testid="login-link">
+                    Har du allerede en konto? Logg inn
+                  </Link>
+                </NextLink>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Box>
       </Box>
     </Container>

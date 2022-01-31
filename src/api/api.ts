@@ -1,5 +1,11 @@
 import axios from "axios";
 import { apiPath, getHeaders } from "./apiRequest";
+import { fetchNewTokens } from "./token";
+
+const fetchTokensAndGet: any = async (url: string) => {
+  await fetchNewTokens();
+  return get(url);
+};
 
 export const get = async (url: string, query?: string) => {
   if (!url || url.length === 0) {
@@ -15,7 +21,7 @@ export const get = async (url: string, query?: string) => {
         throw new Error("Not found");
       }
 
-      throw new Error("API error");
+      return fetchTokensAndGet(url);
     });
 };
 
