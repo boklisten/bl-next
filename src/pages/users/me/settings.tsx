@@ -18,7 +18,6 @@ const Register: NextPage = () => {
     };
     fetchDetails();
   }, []);
-  console.log(userDetails);
   return (
     <>
       <Head>
@@ -26,6 +25,7 @@ const Register: NextPage = () => {
         <meta name="description" content="Endre din informasjon" />
       </Head>
       <Card sx={{ paddingBottom: "2rem" }}>
+        {!userDetails && <UserDetailEditor />}
         {userDetails && <UserDetailEditor userDetails={userDetails} />}
       </Card>
     </>
