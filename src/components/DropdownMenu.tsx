@@ -66,7 +66,7 @@ export default function SwipeableTemporaryDrawer() {
               </ListItem>
             </Link>
 
-            <Link href="/" passHref>
+            <Link href="/users/me/orders" passHref>
               <ListItem button>
                 <ListItemIcon>
                   <ReceiptIcon />
