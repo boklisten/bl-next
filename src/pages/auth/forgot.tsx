@@ -15,6 +15,8 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
+import { add } from "../../api/api";
+import { useState } from "react";
 
 type ForgotFields = {
   email: string;
@@ -26,13 +28,22 @@ const Login: NextPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ForgotFields>({ mode: "onTouched" });
-  const onSubmit: SubmitHandler<ForgotFields> = (data) => {
-    console.log(data);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const onSubmit: SubmitHandler<ForgotFields> = async (data) => {
+    try {
+      setError(false);
+      setSuccess(false);
+      await add("passwordresets", { email: data.email });
+      setSuccess(true);
+    } catch {
+      setError(true);
+    }
   };
   return (
     <>
       <Head>
-        <title>Logg inn | Boklisten.no</title>
+        <title>Glemt passord | Boklisten.no</title>
         <meta
           name="description"
           content="Har du glemt passordet ditt? Få hjep til å opprette et nytt!"
@@ -72,6 +83,18 @@ const Login: NextPage = () => {
                   {message.message}
                 </Alert>
               ))}
+              {error && (
+                <Alert severity="error">
+                  Noe gikk galt, vi kunne ikke sende nullstillingslenke. Er du
+                  sikker på at du har skrevet inn korrekt e-postadresse?
+                </Alert>
+              )}
+              {success && (
+                <Alert severity="success">
+                  En e-post med instruksjoner for hvordan du kan endre passordet
+                  ditt er blitt sendt til deg.
+                </Alert>
+              )}
               <TextField
                 data-testid="email-field"
                 required
