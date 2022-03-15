@@ -57,7 +57,7 @@ export default function SwipeableTemporaryDrawer() {
 
         {isLoggedIn() && (
           <>
-            <Link href="/" passHref>
+            <Link href="/users/me/items" passHref>
               <ListItem button>
                 <ListItemIcon>
                   <MenuBookIcon />
