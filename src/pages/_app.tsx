@@ -73,6 +73,9 @@ export default function MyApp(props: AppProps) {
                 </Box>
               </Container>
             </Box>
+            <Box
+              sx={{ backgroundColor: "#FFFAFA", height: "1rem", width: "100%" }}
+            />
             <Footer />
           </ThemeProvider>
         </LocalizationProvider>

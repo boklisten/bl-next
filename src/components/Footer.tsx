@@ -1,19 +1,26 @@
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import ContactInfo from "./ContactInfo";
+import { Card } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import CopyrightIcon from "@mui/icons-material/Copyright";
+import moment from "moment";
 
 export default function Footer() {
   return (
-    <Box
+    <Card
       data-testid="footer"
       sx={{
-        backgroundColor: "black",
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "1rem",
       }}
     >
-      <Typography variant="h6" component="div" color="white">
-        Footer
+      <ContactInfo />
+      <Typography sx={{ display: "flex", gap: ".4rem" }}>
+        Boklisten.no AS
+        <CopyrightIcon />
+        {moment().format("YYYY")}
       </Typography>
-    </Box>
+    </Card>
   );
 }
