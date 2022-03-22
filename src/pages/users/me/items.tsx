@@ -12,10 +12,11 @@ const Orders: NextPage = () => {
 
   useEffect(() => {
     const { details } = getAccessTokenBody();
-    const customerItemsUrl = `customerItems?customer=${details}&sort=-creationTime`;
+    const customerItemsUrl = `customerItems?customer=${details}&sort=-deadline`;
     const fetchDetails = async () => {
       const data = await get(customerItemsUrl);
       const customerItems = data.data.data as CustomerItem[];
+      console.log(customerItems);
       const populatedCustomerItems = await Promise.all(
         customerItems.map(async (customerItem) => {
           const itemsUrl = `items/${customerItem.item}`;

@@ -7,6 +7,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -14,6 +15,7 @@ import { CustomerItem, Item } from "@boklisten/bl-model";
 import moment from "moment";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const CustomerItemOverview = ({
   customerItems,
@@ -31,7 +33,6 @@ const CustomerItemOverview = ({
 
     if (customerItem.cancel) return orderTypes.cancel;
 
-    console.log(customerItem);
     return "test";
   };
 
@@ -41,7 +42,8 @@ const CustomerItemOverview = ({
     cancel: "kansellert",
     buyback: "tilbakekjøp",
   };
-  console.log(customerItems);
+  const canExtend = (customerItem: CustomerItem) =>
+    (customerItem.periodExtends?.length ?? 0) === 0;
 
   return (
     <Container
@@ -87,8 +89,14 @@ const CustomerItemOverview = ({
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="center">
-                        <b>Igjen å betale</b>
+                      <TableCell
+                        align="center"
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <b>Igjen å betale </b>
+                        <Tooltip title="Dersom du leverer tilbake boken før fristen, slipper du å betale dette beløpet.">
+                          <HelpOutlineIcon />
+                        </Tooltip>
                       </TableCell>
                       <TableCell align="center">
                         {customerItem.amountLeftToPay} kr
@@ -107,7 +115,16 @@ const CustomerItemOverview = ({
               </TableContainer>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 {/** Vise bøker som har utgått frist her???*/}
-                <Button>Forleng</Button>
+                <Tooltip
+                  title={
+                    "Du kan forlenge fristen for bøker 1 gang per bok. " +
+                    (canExtend(customerItem)
+                      ? ""
+                      : "Du har allerede forlenget bokem-")
+                  }
+                >
+                  <Button disabled={!canExtend(customerItem)}>Forleng</Button>
+                </Tooltip>
                 <Button>Kjøp ut</Button>
               </Box>
             </Card>

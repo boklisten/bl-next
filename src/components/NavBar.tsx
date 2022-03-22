@@ -57,7 +57,7 @@ export default function NavBar() {
             </Button>
           </Link>
 
-          <Link href="/" passHref>
+          <Link href="/order" passHref>
             <Button
               sx={{
                 display: { xs: "none", md: "flex" },

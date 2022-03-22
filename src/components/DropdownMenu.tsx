@@ -46,7 +46,7 @@ export default function SwipeableTemporaryDrawer() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <Link href="/" passHref>
+        <Link href="/order" passHref>
           <ListItem button>
             <ListItemIcon>
               <BookIcon />

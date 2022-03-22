@@ -128,7 +128,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                         loading={wait}
                         onClick={() => printReceipt(order.id)}
                       >
-                        Skriv ut kvitering
+                        Skriv ut kvittering
                       </LoadingButton>
                       <Table>
                         <TableBody>
@@ -233,6 +233,14 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                               </Typography>
                               <Table>
                                 <TableBody>
+                                  <TableRow>
+                                    <TableCell align={"center"}>
+                                      <b>BL-ID</b>
+                                    </TableCell>
+                                    <TableCell align={"center"}>
+                                      {orderItem.blid ?? "ingen ID tilknyttet"}
+                                    </TableCell>
+                                  </TableRow>
                                   <TableRow>
                                     <TableCell align={"center"}>
                                       <b>Type</b>
