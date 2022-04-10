@@ -8,7 +8,7 @@ import { useAppSelector } from "../redux/hooks";
 import { selectBranch } from "../redux/selectedBranch";
 import BranchSelect from "../components/BranchSelect";
 import Typography from "@mui/material/Typography";
-import BranchItemSelect from "../components/BranchItemSelect";
+import SubjectSelect from "../components/SubjectSelect";
 
 const Orders: NextPage = () => {
   const selectedBranch = useAppSelector(selectBranch);
@@ -20,7 +20,6 @@ const Orders: NextPage = () => {
       const data = await get(branchItemsUrl);
       const branchItems = data.data.data as BranchItem[];
       setBranchItems(branchItems);
-      console.log(branchItems);
     };
     if (selectedBranch.id.length > 0) {
       fetchDetails();
@@ -41,7 +40,7 @@ const Orders: NextPage = () => {
             >
               Velg din skole
             </Typography>
-            <BranchSelect></BranchSelect>
+            <BranchSelect />
           </>
         )}
         {branchItems && (
@@ -52,7 +51,7 @@ const Orders: NextPage = () => {
             >
               Velg fag
             </Typography>
-            <BranchItemSelect branchItems={branchItems}></BranchItemSelect>
+            <SubjectSelect branchItems={branchItems} />
           </>
         )}
       </Card>
