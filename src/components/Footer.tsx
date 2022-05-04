@@ -20,7 +20,7 @@ export default function Footer() {
       }}
     >
       <ContactInfo />
-      <Box sx={{ marginBottom: ".2rem" }}>
+      <Box sx={{ marginBottom: ".7rem" }}>
         <NextLink href="/info/policies/conditions" passHref>
           <Link variant="body2" underline="none">
             Betingelser
@@ -45,7 +45,7 @@ export default function Footer() {
         src="/DIBS_shop_vertical_EN_10.png"
         alt="Dibs easy logo"
       />
-      <Typography sx={{ marginTop: ".2rem" }}>
+      <Typography sx={{ marginTop: ".7rem" }}>
         Organisasjonsnummer: 912047385 MVA
       </Typography>
       <Typography sx={{ display: "flex", gap: ".4rem" }}>

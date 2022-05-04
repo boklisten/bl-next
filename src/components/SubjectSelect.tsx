@@ -8,9 +8,59 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { selectBranch } from "../redux/selectedBranch";
+import Typography from "@mui/material/Typography";
+
+const SubjectCheckbox = ({
+  subject,
+  selectedSubjects,
+  setSelectedSubjects,
+}: {
+  subject: string;
+  selectedSubjects: string[];
+  setSelectedSubjects: React.Dispatch<SetStateAction<string[]>>;
+}) => {
+  const removeSubject = (subject: string) => {
+    setSelectedSubjects(
+      selectedSubjects.filter((selectedSubject) => selectedSubject != subject)
+    );
+  };
+
+  const selectSubject = (subject: string) => {
+    setSelectedSubjects([...new Set([...selectedSubjects, subject])]);
+  };
+  return (
+    <ListItem
+      sx={{
+        width: { xs: "100%", md: "50%" },
+      }}
+      key={subject}
+      disablePadding
+    >
+      <ListItemButton
+        role={undefined}
+        onClick={() =>
+          selectedSubjects.includes(subject)
+            ? removeSubject(subject)
+            : selectSubject(subject)
+        }
+        dense
+      >
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={selectedSubjects.includes(subject)}
+            tabIndex={-1}
+            disableRipple
+          />
+        </ListItemIcon>
+        <ListItemText primary={subject} />
+      </ListItemButton>
+    </ListItem>
+  );
+};
 
 const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
   const selectedBranch = useAppSelector(selectBranch);
@@ -42,28 +92,20 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
     return commonSubjects.filter((subject) => subject != COMMON_SUBJECT);
   };
 
-  const [selectedSubjects, setSelectedSubjects] = useState<String[]>([]);
-
-  const removeSubject = (subject: string) => {
-    setSelectedSubjects(
-      selectedSubjects.filter((selectedSubject) => selectedSubject != subject)
+  const getOptionalSubjects = (): string[] => {
+    const commonSubjects = getCommonSubjects();
+    return getUniqueSubjects().filter(
+      (subject) => !commonSubjects.includes(subject)
     );
   };
 
-  const selectSubject = (subject: string) => {
-    setSelectedSubjects([...new Set([...selectedSubjects, subject])]);
-  };
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
   const selectCommonSubjects = () => {
     setSelectedSubjects([
       ...new Set([...selectedSubjects, ...getCommonSubjects()]),
     ]);
   };
-
-  const getSubjectLabel = (subject: string): string =>
-    getCommonSubjects().includes(subject)
-      ? `${subject} (${COMMON_SUBJECT})`
-      : subject;
 
   useEffect(() => {
     setSelectedSubjects([]);
@@ -75,47 +117,48 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
+        paddingBottom: "3rem",
       }}
     >
-      <Box sx={{ display: "flex" }}>
-        {getCommonSubjects().length > 0 && (
-          <Button onClick={selectCommonSubjects}>Legg til fellesfag</Button>
-        )}
-
-        {selectedSubjects.length > 0 && (
-          <Button onClick={() => setSelectedSubjects([])}>Fjern alle</Button>
-        )}
-      </Box>
-      {getUniqueSubjects().map((subject) => (
-        <ListItem
-          sx={{
-            width: { xs: "100%", md: "50%" },
-          }}
+      {selectedSubjects.length > 0 && (
+        <Button onClick={() => setSelectedSubjects([])} color="error">
+          Fjern valgte
+        </Button>
+      )}
+      {getCommonSubjects().length > 0 && (
+        <Typography variant="h6">Fellesfag</Typography>
+      )}
+      {getCommonSubjects().length > 0 && (
+        <Button onClick={selectCommonSubjects}>Legg til fellesfag</Button>
+      )}
+      {getCommonSubjects().map((subject) => (
+        <SubjectCheckbox
           key={subject}
-          disablePadding
-        >
-          <ListItemButton
-            role={undefined}
-            onClick={() =>
-              selectedSubjects.includes(subject)
-                ? removeSubject(subject)
-                : selectSubject(subject)
-            }
-            dense
-          >
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={selectedSubjects.includes(subject)}
-                tabIndex={-1}
-                disableRipple
-              />
-            </ListItemIcon>
-            <ListItemText primary={getSubjectLabel(subject)} />
-          </ListItemButton>
-        </ListItem>
+          subject={subject}
+          selectedSubjects={selectedSubjects}
+          setSelectedSubjects={setSelectedSubjects}
+        />
       ))}
-      <Button>Gå til kassen</Button>
+      {getCommonSubjects().length > 0 && (
+        <Typography variant="h6">Valgfag</Typography>
+      )}
+      {getOptionalSubjects().map((subject) => (
+        <SubjectCheckbox
+          key={subject}
+          subject={subject}
+          selectedSubjects={selectedSubjects}
+          setSelectedSubjects={setSelectedSubjects}
+        />
+      ))}
+      {selectedSubjects.length > 0 && (
+        <Button
+          color="success"
+          variant="contained"
+          sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+        >
+          Gå til kassen
+        </Button>
+      )}
     </Box>
   );
 };
