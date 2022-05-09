@@ -33,6 +33,7 @@ import { selectSubjects } from "../../redux/selectedSubjects";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import Typography from "@mui/material/Typography";
+import { isLoggedIn } from "../../api/auth";
 
 const getDeadline = (period: Period, branch: Branch) => {
   const deadline =
@@ -236,6 +237,13 @@ const Cart = () => {
         color="success"
         variant="contained"
         sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+        onClick={() => {
+          if (isLoggedIn()) {
+            // go to checkout
+          } else {
+            router.push("/auth/login?redirect=checkout");
+          }
+        }}
       >
         Til betaling
       </LoadingButton>

@@ -59,7 +59,7 @@ export default function MyApp(props: AppProps) {
             <Box
               sx={{
                 minHeight: "100vh",
-                backgroundColor: "#FFFAFA",
+                backgroundColor: "#efefef",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -74,7 +74,7 @@ export default function MyApp(props: AppProps) {
               </Container>
             </Box>
             <Box
-              sx={{ backgroundColor: "#FFFAFA", height: "1rem", width: "100%" }}
+              sx={{ backgroundColor: "#efefef", height: "1rem", width: "100%" }}
             />
             <Footer />
           </ThemeProvider>

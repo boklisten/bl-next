@@ -42,7 +42,7 @@ export default function SignIn() {
     setApiError("");
     try {
       await login(data.email, data.password);
-      router.push("/");
+      router.push("/" + router.query?.["redirect"] ?? "");
     } catch (error) {
       setApiError(String(error));
     }

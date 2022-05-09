@@ -32,28 +32,14 @@ const Orders: NextPage = () => {
         <meta name="description" content="Bestill bøkene du trenger." />
       </Head>
       <Card sx={{ paddingBottom: "2rem" }}>
-        {selectedBranch.id.length === 0 && (
-          <>
-            <Typography
-              variant="h4"
-              sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-            >
-              Velg din skole
-            </Typography>
-            <BranchSelect />
-          </>
-        )}
-        {branchItems && (
-          <>
-            <Typography
-              variant="h4"
-              sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-            >
-              Velg fag
-            </Typography>
-            <SubjectSelect branchItems={branchItems} />
-          </>
-        )}
+        <Typography
+          variant="h4"
+          sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
+        >
+          {selectedBranch.id.length === 0 ? "Velg din skole" : "Velg fag"}
+        </Typography>
+        {selectedBranch.id.length === 0 && <BranchSelect />}
+        {branchItems && <SubjectSelect branchItems={branchItems} />}
       </Card>
     </>
   );

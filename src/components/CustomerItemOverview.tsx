@@ -3,7 +3,6 @@ import {
   ButtonGroup,
   Card,
   Collapse,
-  Container,
   Table,
   TableBody,
   TableCell,
@@ -180,15 +179,7 @@ const CustomerItemOverview = ({
   };
 
   return (
-    <Container
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <Typography
-        variant="h4"
-        sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-      >
-        Mine bøker
-      </Typography>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -460,7 +451,7 @@ const CustomerItemOverview = ({
           Til handlekurv ({itemActions.length})
         </LoadingButton>
       )}
-    </Container>
+    </>
   );
 };
 
