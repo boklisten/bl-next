@@ -20,6 +20,7 @@ export const get = async (url: string, query?: string) => {
       if (error.status === 404) {
         throw new Error("Not found");
       }
+      console.log(error);
 
       return fetchTokensAndGet(url);
     });

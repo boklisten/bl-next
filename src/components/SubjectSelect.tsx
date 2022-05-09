@@ -8,29 +8,31 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import React, { SetStateAction, useEffect, useState } from "react";
-import { useAppSelector } from "../redux/hooks";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectBranch } from "../redux/selectedBranch";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
+import { selectSubjects, setSelectedSubjects } from "../redux/selectedSubjects";
+import { generateCartItemsFromSubjects } from "../utils/cartUtils";
+import { setCart } from "../redux/cart";
+import { LoadingButton } from "@mui/lab";
 
-const SubjectCheckbox = ({
-  subject,
-  selectedSubjects,
-  setSelectedSubjects,
-}: {
-  subject: string;
-  selectedSubjects: string[];
-  setSelectedSubjects: React.Dispatch<SetStateAction<string[]>>;
-}) => {
+const SubjectCheckbox = ({ subject }: { subject: string }) => {
+  const dispatch = useAppDispatch();
+  const selectedSubjects = useAppSelector(selectSubjects);
   const removeSubject = (subject: string) => {
-    setSelectedSubjects(
-      selectedSubjects.filter((selectedSubject) => selectedSubject != subject)
+    dispatch(
+      setSelectedSubjects(
+        selectedSubjects.filter((selectedSubject) => selectedSubject != subject)
+      )
     );
   };
 
   const selectSubject = (subject: string) => {
-    setSelectedSubjects([...new Set([...selectedSubjects, subject])]);
+    dispatch(setSelectedSubjects([...new Set([...selectedSubjects, subject])]));
   };
+
   return (
     <ListItem
       sx={{
@@ -63,7 +65,11 @@ const SubjectCheckbox = ({
 };
 
 const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
+  const [loadingCart, setLoadingCart] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const selectedBranch = useAppSelector(selectBranch);
+  const selectedSubjects = useAppSelector(selectSubjects);
   const COMMON_SUBJECT = "Fellesfag";
 
   const getUniqueSubjects = (): string[] => {
@@ -99,17 +105,13 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
     );
   };
 
-  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
-
   const selectCommonSubjects = () => {
-    setSelectedSubjects([
-      ...new Set([...selectedSubjects, ...getCommonSubjects()]),
-    ]);
+    dispatch(
+      setSelectedSubjects([
+        ...new Set([...selectedSubjects, ...getCommonSubjects()]),
+      ])
+    );
   };
-
-  useEffect(() => {
-    setSelectedSubjects([]);
-  }, [selectedBranch]);
 
   return (
     <Box
@@ -121,7 +123,7 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
       }}
     >
       {selectedSubjects.length > 0 && (
-        <Button onClick={() => setSelectedSubjects([])} color="error">
+        <Button onClick={() => dispatch(setSelectedSubjects([]))} color="error">
           Fjern valgte
         </Button>
       )}
@@ -132,32 +134,33 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
         <Button onClick={selectCommonSubjects}>Legg til fellesfag</Button>
       )}
       {getCommonSubjects().map((subject) => (
-        <SubjectCheckbox
-          key={subject}
-          subject={subject}
-          selectedSubjects={selectedSubjects}
-          setSelectedSubjects={setSelectedSubjects}
-        />
+        <SubjectCheckbox key={subject} subject={subject} />
       ))}
       {getCommonSubjects().length > 0 && (
         <Typography variant="h6">Valgfag</Typography>
       )}
       {getOptionalSubjects().map((subject) => (
-        <SubjectCheckbox
-          key={subject}
-          subject={subject}
-          selectedSubjects={selectedSubjects}
-          setSelectedSubjects={setSelectedSubjects}
-        />
+        <SubjectCheckbox key={subject} subject={subject} />
       ))}
       {selectedSubjects.length > 0 && (
-        <Button
+        <LoadingButton
+          loading={loadingCart}
           color="success"
           variant="contained"
           sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+          onClick={async () => {
+            setLoadingCart(true);
+            const cartItems = await generateCartItemsFromSubjects(
+              selectedSubjects,
+              selectedBranch.id
+            );
+            dispatch(setCart(cartItems));
+            setLoadingCart(false);
+            router.push("/cart");
+          }}
         >
-          Gå til kassen
-        </Button>
+          Til handlekurv
+        </LoadingButton>
       )}
     </Box>
   );

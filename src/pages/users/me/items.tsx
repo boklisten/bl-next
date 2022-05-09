@@ -4,19 +4,25 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { get } from "api/api";
 import { getAccessTokenBody } from "api/token";
-import { CustomerItem, Item } from "@boklisten/bl-model";
+import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
 import CustomerItemOverview from "../../../components/CustomerItemOverview";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectBranch } from "../../../redux/selectedBranch";
 
 const Orders: NextPage = () => {
   const [customerItems, setCustomerItems] = useState<CustomerItem[]>();
+  const [branchInfo, setBranchInfo] = useState<Branch>({} as Branch);
+  const selectedBranch = useAppSelector(selectBranch);
 
   useEffect(() => {
     const { details } = getAccessTokenBody();
     const customerItemsUrl = `customerItems?customer=${details}&sort=-deadline`;
+    const branchUrl = `branches/${selectedBranch.id}`;
     const fetchDetails = async () => {
+      const branchData = await get(branchUrl);
+      setBranchInfo(branchData.data.data[0] as Branch);
       const data = await get(customerItemsUrl);
       const customerItems = data.data.data as CustomerItem[];
-      console.log(customerItems);
       const populatedCustomerItems = await Promise.all(
         customerItems.map(async (customerItem) => {
           const itemsUrl = `items/${customerItem.item}`;
@@ -29,7 +35,7 @@ const Orders: NextPage = () => {
       setCustomerItems(populatedCustomerItems);
     };
     fetchDetails();
-  }, []);
+  }, [selectedBranch.id]);
   return (
     <>
       <Head>
@@ -38,7 +44,10 @@ const Orders: NextPage = () => {
       </Head>
       <Card sx={{ paddingBottom: "2rem" }}>
         {customerItems && (
-          <CustomerItemOverview customerItems={customerItems} />
+          <CustomerItemOverview
+            customerItems={customerItems}
+            branchInfo={branchInfo}
+          />
         )}
       </Card>
     </>
