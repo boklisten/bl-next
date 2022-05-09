@@ -239,7 +239,7 @@ const Cart = () => {
         sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
         onClick={() => {
           if (isLoggedIn()) {
-            // go to checkout
+            router.push("/checkout");
           } else {
             router.push("/auth/login?redirect=checkout");
           }
