@@ -73,9 +73,11 @@ const canBuyout = (customerItem: CustomerItem) => {
 const CustomerItemOverview = ({
   customerItems,
   branchInfo,
+  branchNames,
 }: {
   customerItems: CustomerItem[];
   branchInfo: Branch;
+  branchNames: Branch[];
 }) => {
   const [showInactive, setShowInactive] = useState(false);
   const itemActions = useAppSelector(selectCustomerItemActions);
@@ -254,75 +256,105 @@ const CustomerItemOverview = ({
                   motta informasjon om hva du skal gjøre.
                 </Alert>
               )}
-              {!isDeadlineExpired(customerItem.deadline.toString()) && (
-                <ButtonGroup
-                  sx={{
-                    display: "flex",
-                    gap: ".2rem",
-                    justifyContent: "center",
-                    paddingY: ".7rem",
-                  }}
-                >
-                  {/** TODO: Vise bøker som har utgått frist her???*/}
-                  <Tooltip
-                    title={
-                      "Du kan forlenge fristen for bøker 1 gang per bok. " +
-                      (canExtend(customerItem)
-                        ? ""
-                        : "Du har allerede forlenget boken.")
-                    }
+              {!isDeadlineExpired(customerItem.deadline.toString()) &&
+                customerItem.handoutInfo?.handoutById !== branchInfo.id && (
+                  <Alert severity="warning">
+                    Denne boken er utdelt på en annen skole. Velg{" "}
+                    {
+                      (
+                        branchNames.find(
+                          (branch) =>
+                            branch.id === customerItem.handoutInfo?.handoutById
+                        ) as Branch
+                      ).name
+                    }{" "}
+                    for å gjøre endringer.
+                  </Alert>
+                )}
+              {customerItem.handoutInfo?.handoutById === branchInfo.id &&
+                !isDeadlineExpired(customerItem.deadline.toString()) && (
+                  <ButtonGroup
+                    sx={{
+                      display: "flex",
+                      gap: ".2rem",
+                      justifyContent: "center",
+                      paddingY: ".7rem",
+                    }}
                   >
-                    <span>
-                      <Button
-                        onClick={() =>
-                          updateItemActions({ customerItem, action: "extend" })
-                        }
-                        variant={
-                          hasItemAction({ customerItem, action: "extend" })
-                            ? "contained"
-                            : "outlined"
-                        }
-                        color={
-                          hasItemAction({ customerItem, action: "extend" })
-                            ? "success"
-                            : "primary"
-                        }
-                        disabled={!canExtend(customerItem)}
-                      >
-                        Forleng
-                      </Button>
-                    </span>
-                  </Tooltip>
-                  <Tooltip
-                    title={
-                      !canBuyout(customerItem)
-                        ? "Du kan ikke kjøpe ut denne boken før det har gått 2 uker"
-                        : ""
-                    }
-                  >
-                    <Box>
-                      <Button
-                        disabled={!canBuyout(customerItem)}
-                        onClick={() =>
-                          updateItemActions({ customerItem, action: "buyout" })
-                        }
-                        variant={
-                          hasItemAction({ customerItem, action: "buyout" })
-                            ? "contained"
-                            : "outlined"
-                        }
-                        color={
-                          hasItemAction({ customerItem, action: "buyout" })
-                            ? "success"
-                            : "primary"
-                        }
-                      >
-                        Kjøp ut
-                      </Button>
-                    </Box>
-                  </Tooltip>
-                </ButtonGroup>
-              )}
+                    {branchInfo.paymentInfo?.extendPeriods &&
+                      branchInfo.paymentInfo.extendPeriods.length > 0 && (
+                        <Tooltip
+                          title={
+                            "Du kan forlenge fristen for bøker 1 gang per bok. " +
+                            (canExtend(customerItem)
+                              ? ""
+                              : "Du har allerede forlenget boken.")
+                          }
+                        >
+                          <span>
+                            <Button
+                              onClick={() =>
+                                updateItemActions({
+                                  customerItem,
+                                  action: "extend",
+                                })
+                              }
+                              variant={
+                                hasItemAction({
+                                  customerItem,
+                                  action: "extend",
+                                })
+                                  ? "contained"
+                                  : "outlined"
+                              }
+                              color={
+                                hasItemAction({
+                                  customerItem,
+                                  action: "extend",
+                                })
+                                  ? "success"
+                                  : "primary"
+                              }
+                              disabled={!canExtend(customerItem)}
+                            >
+                              Forleng
+                            </Button>
+                          </span>
+                        </Tooltip>
+                      )}
+                    <Tooltip
+                      title={
+                        !canBuyout(customerItem)
+                          ? "Du kan ikke kjøpe ut denne boken før det har gått 2 uker"
+                          : ""
+                      }
+                    >
+                      <Box>
+                        <Button
+                          disabled={!canBuyout(customerItem)}
+                          onClick={() =>
+                            updateItemActions({
+                              customerItem,
+                              action: "buyout",
+                            })
+                          }
+                          variant={
+                            hasItemAction({ customerItem, action: "buyout" })
+                              ? "contained"
+                              : "outlined"
+                          }
+                          color={
+                            hasItemAction({ customerItem, action: "buyout" })
+                              ? "success"
+                              : "primary"
+                          }
+                        >
+                          Kjøp ut
+                        </Button>
+                      </Box>
+                    </Tooltip>
+                  </ButtonGroup>
+                )}
               {hasItemAction({ customerItem, action: "buyout" }) && (
                 <ActionInfo
                   customerItemAction={{ customerItem, action: "buyout" }}

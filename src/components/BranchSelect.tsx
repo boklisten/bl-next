@@ -17,6 +17,7 @@ import { useAppSelector, useAppDispatch } from "redux/hooks";
 import { useRouter } from "next/router";
 import { setCart } from "../redux/cart";
 import { setSelectedSubjects } from "../redux/selectedSubjects";
+import { setSelectedCustomerItemActions } from "../redux/selectedCustomerItemActions";
 
 export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
 
@@ -41,6 +42,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const handleChange = (event: SelectChangeEvent) => {
     dispatch(setCart([]));
     dispatch(setSelectedSubjects([]));
+    dispatch(setSelectedCustomerItemActions([]));
     const branchId = event.target.value as string;
     dispatch(setSelectedBranch(branchId));
     add("bl-current-branch-id", branchId);

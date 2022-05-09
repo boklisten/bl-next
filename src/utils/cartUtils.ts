@@ -269,8 +269,6 @@ export const createOrderItem = (
 ): OrderItem => {
   const info = calculateInfo(branch, item, orderItemType, period, customerItem);
 
-  console.log("create order item");
-  console.log(customerItem);
   const unitPrice = customerItem
     ? calculateCustomerItemUnitPrice(customerItem, item, branch, orderItemType)
     : calculateItemUnitPrice(item, branch, orderItemType, period);

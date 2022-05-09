@@ -89,7 +89,7 @@ const CartItemRow = ({ cartItem }: { cartItem: CartItem }) => {
     orderItemType === "extend" ? "forlenging" : "utkjøp";
 
   /* @ts-ignore */
-  const amountLeftToPay = cartItem.orderItem.info?.amountLeftToPay ?? "";
+  const amountLeftToPay = cartItem.orderItem.info?.amountLeftToPay ?? 0;
 
   return (
     <>
@@ -132,10 +132,11 @@ const CartItemRow = ({ cartItem }: { cartItem: CartItem }) => {
           }
         >
           <TableCell>
-            {cartItem.customerItem
-              ? cartItem.orderItem.unitPrice
-              : amountLeftToPay}{" "}
-            kr
+            {cartItem.orderItem.amount !== 0 &&
+              (cartItem.customerItem
+                ? cartItem.orderItem.unitPrice
+                : amountLeftToPay)}
+            {cartItem.orderItem.amount !== 0 && " kr"}
           </TableCell>
         </Tooltip>
         <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
@@ -176,9 +177,13 @@ const CartItemRow = ({ cartItem }: { cartItem: CartItem }) => {
 const hasCustomerItemsInCart = (cartItems: CartItem[]) =>
   cartItems.some((cartItem) => cartItem.customerItem);
 
+const branchCoversCosts = (cartItems: CartItem[]) =>
+  cartItems.every((cartItem) => cartItem.orderItem.amount === 0);
+
 const Cart = () => {
   const cartItems = useAppSelector(selectCartItems);
   const router = useRouter();
+  console.log(cartItems);
 
   return (
     <Box
@@ -206,7 +211,8 @@ const Cart = () => {
                   {hasCustomerItemsInCart(cartItems) ? "Handling" : "Betal nå"}
                 </TableCell>
                 <TableCell>
-                  {hasCustomerItemsInCart(cartItems) ? "Pris" : "2. avdrag"}
+                  {!branchCoversCosts(cartItems) &&
+                    (hasCustomerItemsInCart(cartItems) ? "Pris" : "2. avdrag")}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
                   {hasCustomerItemsInCart(cartItems) ? "Ny frist" : "Frist"}

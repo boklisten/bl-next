@@ -8,10 +8,13 @@ import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
 import CustomerItemOverview from "../../../components/CustomerItemOverview";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectBranch } from "../../../redux/selectedBranch";
+import { branchListUrl } from "../../../components/BranchSelect";
+import { fetcher } from "../../../api/requests";
 
 const Orders: NextPage = () => {
   const [customerItems, setCustomerItems] = useState<CustomerItem[]>();
   const [branchInfo, setBranchInfo] = useState<Branch>({} as Branch);
+  const [branchNames, setBranchNames] = useState<Branch[]>([]);
   const selectedBranch = useAppSelector(selectBranch);
 
   useEffect(() => {
@@ -20,6 +23,8 @@ const Orders: NextPage = () => {
     const branchUrl = `branches/${selectedBranch.id}`;
     const fetchDetails = async () => {
       const branchData = await get(branchUrl);
+      const branchNames: Branch[] = await fetcher(branchListUrl);
+      setBranchNames(branchNames);
       setBranchInfo(branchData.data.data[0] as Branch);
       const data = await get(customerItemsUrl);
       const customerItems = data.data.data as CustomerItem[];
@@ -47,6 +52,7 @@ const Orders: NextPage = () => {
           <CustomerItemOverview
             customerItems={customerItems}
             branchInfo={branchInfo}
+            branchNames={branchNames}
           />
         )}
       </Card>
