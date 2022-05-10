@@ -46,6 +46,39 @@ type UserEditorFields = {
   agreeToTermsAndConditions: boolean;
 };
 
+export const extractFirstName = (fullName: string): string => {
+  if (!fullName || fullName.length <= 0) {
+    return "";
+  }
+
+  const fullNameSplit = fullName.split(" ");
+
+  if (fullNameSplit.length === 1) {
+    return fullNameSplit[0] as string;
+  }
+
+  return fullName
+    .split(" ")
+    .slice(0, fullNameSplit.length - 1)
+    .join(" ");
+};
+
+export const extractLastName = (fullName: string): string => {
+  if (!fullName || fullName.length <= 0) {
+    return "";
+  }
+
+  const fullNameSplit = fullName.split(" ");
+
+  if (fullNameSplit.length > 1) {
+    return fullNameSplit.slice(-1).join(" ");
+  }
+  return "";
+};
+
+const isUnder18 = (birthday: moment.Moment | null): boolean =>
+  moment().diff(birthday, "years") < 18;
+
 const UserDetailEditor = ({
   isSignUp,
   userDetails = {} as UserDetail,
@@ -63,38 +96,6 @@ const UserDetailEditor = ({
     // eslint-disable-next-line unicorn/no-null
     userDetails?.dob ? moment(userDetails.dob) : null
   );
-
-  const isUnder18 = (): boolean => moment().diff(birthday, "years") < 18;
-
-  const extractFirstName = (fullName: string): string => {
-    if (!fullName || fullName.length <= 0) {
-      return "";
-    }
-
-    const fullNameSplit = fullName.split(" ");
-
-    if (fullNameSplit.length === 1) {
-      return fullNameSplit[0] as string;
-    }
-
-    return fullName
-      .split(" ")
-      .slice(0, fullNameSplit.length - 1)
-      .join(" ");
-  };
-
-  const extractLastName = (fullName: string): string => {
-    if (!fullName || fullName.length <= 0) {
-      return "";
-    }
-
-    const fullNameSplit = fullName.split(" ");
-
-    if (fullNameSplit.length > 1) {
-      return fullNameSplit.slice(-1).join(" ");
-    }
-    return "";
-  };
 
   const defaultValues = {
     email: userDetails.email,
@@ -115,6 +116,7 @@ const UserDetailEditor = ({
     clearErrors,
     formState: { errors },
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
+
   const onSubmit: SubmitHandler<UserEditorFields> = (data) => {
     console.log(data);
   };
@@ -201,7 +203,7 @@ const UserDetailEditor = ({
                 id="email"
                 label="Epost"
                 autoComplete="email"
-                error={errors.email ? true : false}
+                error={!!errors.email}
                 //@ts-ignore
                 {...register("email", {
                   required: "Du må fylle inn epost",
@@ -274,7 +276,7 @@ const UserDetailEditor = ({
                     fullWidth
                     id="firstName"
                     label="Fornavn"
-                    error={errors.firstName ? true : false}
+                    error={!!errors.firstName}
                     {...register("firstName", {
                       required: "Du må fylle inn fornavn",
                     })}
@@ -288,7 +290,7 @@ const UserDetailEditor = ({
                     id="lastName"
                     label="Etternavn"
                     autoComplete="family-name"
-                    error={errors.lastName ? true : false}
+                    error={!!errors.lastName}
                     {...register("lastName", {
                       required: "Du må fylle inn etternavn",
                     })}
@@ -302,7 +304,7 @@ const UserDetailEditor = ({
                     id="phoneNumber"
                     label="Telefonnummer"
                     autoComplete="tel-national"
-                    error={errors.phoneNumber ? true : false}
+                    error={!!errors.phoneNumber}
                     {...register("phoneNumber", {
                       required: "Du må fylle inn telefonnummer",
                       validate: (v) =>
@@ -330,7 +332,7 @@ const UserDetailEditor = ({
                     id="address"
                     label="Adresse"
                     autoComplete="street-address"
-                    error={errors.address ? true : false}
+                    error={!!errors.address}
                     {...register("address", {
                       required: "Du må fylle inn adresse",
                     })}
@@ -352,7 +354,7 @@ const UserDetailEditor = ({
                     id="postalCode"
                     label="Postnummer"
                     autoComplete="postal-code"
-                    error={errors.postalCode ? true : false}
+                    error={!!errors.postalCode}
                     {...register("postalCode", {
                       // Need to have a separate onChange because of autofill not triggering validation
                       onChange: async (event) => {
@@ -426,7 +428,7 @@ const UserDetailEditor = ({
                     onChange={(newValue) => {
                       setBirthday(newValue);
 
-                      if (!isUnder18()) {
+                      if (!isUnder18(birthday)) {
                         clearErrors("guardianName");
                         clearErrors("guardianEmail");
                         clearErrors("guardianPhoneNumber");
@@ -452,7 +454,7 @@ const UserDetailEditor = ({
                     )}
                   />
                 </Grid>
-                {isUnder18() && (
+                {isUnder18(birthday) && (
                   <>
                     <Grid item xs={12} sm={12} mt={1}>
                       <Typography variant="body1">
@@ -469,7 +471,7 @@ const UserDetailEditor = ({
                         id="lastName"
                         label="Foresatt sitt fulle navn"
                         autoComplete="name"
-                        error={errors.guardianName ? true : false}
+                        error={!!errors.guardianName}
                         {...register("guardianName", {
                           required: "Du må fylle inn foresatt sitt fulle navn",
                         })}
@@ -483,7 +485,7 @@ const UserDetailEditor = ({
                         id="email"
                         label="Foresatt sin epost"
                         autoComplete="email"
-                        error={errors.guardianEmail ? true : false}
+                        error={!!errors.guardianEmail}
                         {...register("guardianEmail", {
                           required: "Du må fylle inn foresatt sin epost",
                           validate: (v) =>
@@ -501,7 +503,7 @@ const UserDetailEditor = ({
                         id="phoneNumber"
                         label="Foresatt sitt telefonnummer"
                         autoComplete="tel-national"
-                        error={errors.guardianPhoneNumber ? true : false}
+                        error={!!errors.guardianPhoneNumber}
                         {...register("guardianPhoneNumber", {
                           required:
                             "Du må fylle inn foresatt sitt telefonnummer",

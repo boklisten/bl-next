@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useAppSelector } from "../../redux/hooks";
-import { selectCartItems } from "../../redux/cart";
+import { selectCartItems, selectDeliveryPrice } from "../../redux/cart";
 import moment from "moment";
 
 const readableOrderItemTypes = {
@@ -27,6 +27,7 @@ const readableOrderItemTypes = {
 };
 const PaymentSummary = () => {
   const cartItems = useAppSelector(selectCartItems);
+  const deliveryPrice = useAppSelector(selectDeliveryPrice);
 
   return (
     <TableContainer component={Paper}>
@@ -59,6 +60,13 @@ const PaymentSummary = () => {
           })}
         </TableBody>
         <TableHead>
+          {deliveryPrice > 0 && (
+            <TableRow>
+              <TableCell>Levering</TableCell>
+              <TableCell></TableCell>
+              <TableCell>{deliveryPrice} kr</TableCell>
+            </TableRow>
+          )}
           <TableRow>
             <TableCell>Sum</TableCell>
             <TableCell></TableCell>
@@ -66,7 +74,8 @@ const PaymentSummary = () => {
               {cartItems.reduce(
                 (previous, next) => previous + next.orderItem.amount,
                 0
-              )}{" "}
+              ) + deliveryPrice}
+              {"\u00A0"}
               kr
             </TableCell>
           </TableRow>

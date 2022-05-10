@@ -5,6 +5,7 @@ import {
   Branch,
   BranchItem,
   CustomerItem,
+  DeliveryMethod,
   Item,
   OrderItem,
   Period,
@@ -19,8 +20,16 @@ export interface CartItem {
   branch: Branch;
 }
 
-const initialState: { cartItems: CartItem[] } = {
+const initialState: {
+  cartItems: CartItem[];
+  orderID: string;
+  deliveryMethod: DeliveryMethod | undefined;
+  deliveryPrice: number;
+} = {
   cartItems: [],
+  orderID: "",
+  deliveryMethod: undefined,
+  deliveryPrice: 0,
 };
 
 export const cartSlice = createSlice({
@@ -31,6 +40,18 @@ export const cartSlice = createSlice({
       state.cartItems = action.payload.sort((a, b) =>
         a.item.title.localeCompare(b.item.title)
       );
+    },
+    setOrderID: (state, action: PayloadAction<string>) => {
+      state.orderID = action.payload;
+    },
+    setDeliveryMethod: (
+      state,
+      action: PayloadAction<DeliveryMethod | undefined>
+    ) => {
+      state.deliveryMethod = action.payload;
+    },
+    setDeliveryPrice: (state, action: PayloadAction<number>) => {
+      state.deliveryPrice = action.payload;
     },
     updatePeriod: (
       state,
@@ -60,8 +81,23 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { setCart, updatePeriod, removeCartItem } = cartSlice.actions;
+export const {
+  setCart,
+  updatePeriod,
+  removeCartItem,
+  setOrderID,
+  setDeliveryMethod,
+  setDeliveryPrice,
+} = cartSlice.actions;
 
 export const selectCartItems = (state: AppState) => state.cart.cartItems;
+
+export const selectOrderID = (state: AppState) => state.cart.orderID;
+
+export const selectDeliveryMethod = (state: AppState) =>
+  state.cart.deliveryMethod;
+
+export const selectDeliveryPrice = (state: AppState) =>
+  state.cart.deliveryPrice;
 
 export default cartSlice.reducer;

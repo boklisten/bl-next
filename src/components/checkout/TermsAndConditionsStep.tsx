@@ -1,8 +1,17 @@
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import Button from "@mui/material/Button";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import Box from "@mui/material/Box";
+import NextLink from "next/link";
 
-const TermsAndConditionsStep = () => {
+const TermsAndConditionsStep = ({
+  setWait,
+}: {
+  setWait: Dispatch<SetStateAction<boolean>>;
+}) => {
+  useEffect(() => {
+    setWait(false);
+  }, [setWait]);
   return (
     <>
       <Typography variant="h4">
@@ -12,11 +21,13 @@ const TermsAndConditionsStep = () => {
         Ved å gå videre godtar du Boklistens betingelser for utlån og salg av
         bøker på avdrag.
       </Typography>
-      <Link href="/info/policies/conditions" passHref>
-        <Button sx={{ width: "100px", mt: ".5rem" }} variant="outlined">
-          Les mer
-        </Button>
-      </Link>
+      <Box sx={{ width: "100px", mt: ".5rem" }}>
+        <NextLink href="/info/policies/conditions" passHref>
+          <a href="/" target="_blank">
+            <Button>Les mer</Button>
+          </a>
+        </NextLink>
+      </Box>
     </>
   );
 };

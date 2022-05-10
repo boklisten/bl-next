@@ -233,20 +233,22 @@ const Cart = () => {
       ) : (
         <Typography>Ingen bøker i handlekurv</Typography>
       )}
-      <LoadingButton
-        color="success"
-        variant="contained"
-        sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
-        onClick={() => {
-          if (isLoggedIn()) {
-            router.push("/checkout");
-          } else {
-            router.push("/auth/login?redirect=checkout");
-          }
-        }}
-      >
-        Til betaling
-      </LoadingButton>
+      {cartItems.length > 0 && (
+        <LoadingButton
+          color="success"
+          variant="contained"
+          sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+          onClick={() => {
+            if (isLoggedIn()) {
+              router.push("/checkout");
+            } else {
+              router.push("/auth/login?redirect=checkout");
+            }
+          }}
+        >
+          Til betaling
+        </LoadingButton>
+      )}
     </Box>
   );
 };

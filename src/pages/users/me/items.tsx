@@ -29,7 +29,6 @@ const Orders: NextPage = () => {
         fetcher(branchListUrl),
         get(customerItemsUrl),
       ]);
-      console.log(branchData);
       const customerItems = data.data.data as CustomerItem[];
       const populatedCustomerItems = await Promise.all(
         customerItems.map(async (customerItem) => {

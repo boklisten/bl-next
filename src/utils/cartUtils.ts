@@ -5,11 +5,13 @@ import {
   BranchItem,
   CustomerItem,
   Item,
+  Order,
   OrderItem,
   OrderItemType,
   Period,
 } from "@boklisten/bl-model";
 import { CustomerItemAction } from "../redux/selectedCustomerItemActions";
+import { getAccessTokenBody } from "../api/token";
 
 export const getExtendTime = (branchInfo: Branch) =>
   (
@@ -258,6 +260,25 @@ const calculateInfo = (
     // No default
   }
   return info;
+};
+
+export const createOrder = (branchID: string, cartItems: CartItem[]): Order => {
+  if (cartItems.length <= 0) {
+    throw new Error("order can not be created, cart is empty");
+  }
+
+  return {
+    id: "",
+    amount: cartItems.reduce(
+      (previous, next) => previous + next.orderItem.amount,
+      0
+    ),
+    branch: branchID,
+    customer: getAccessTokenBody().details,
+    orderItems: cartItems.map((cartItem) => cartItem.orderItem),
+    byCustomer: true,
+    payments: [],
+  };
 };
 
 export const createOrderItem = (

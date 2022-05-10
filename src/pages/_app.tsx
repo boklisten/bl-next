@@ -66,7 +66,12 @@ export default function MyApp(props: AppProps) {
             >
               <NavBar />
               <Container
-                sx={{ display: "flex", flexGrow: 1, alignItems: "stretch" }}
+                sx={{
+                  display: "flex",
+                  flexGrow: 1,
+                  alignItems: "stretch",
+                  paddingX: 0,
+                }}
               >
                 <Box sx={{ width: "100%" }}>
                   <Component {...pageProps} />

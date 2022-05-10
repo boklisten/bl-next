@@ -15,7 +15,7 @@ import { add, get } from "api/storage";
 import { selectBranch, setSelectedBranch } from "redux/selectedBranch";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
 import { useRouter } from "next/router";
-import { setCart } from "../redux/cart";
+import { setCart, setDeliveryMethod } from "../redux/cart";
 import { setSelectedSubjects } from "../redux/selectedSubjects";
 import { setSelectedCustomerItemActions } from "../redux/selectedCustomerItemActions";
 
@@ -43,6 +43,8 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
     dispatch(setCart([]));
     dispatch(setSelectedSubjects([]));
     dispatch(setSelectedCustomerItemActions([]));
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    dispatch(setDeliveryMethod(undefined));
     const branchId = event.target.value as string;
     dispatch(setSelectedBranch(branchId));
     add("bl-current-branch-id", branchId);
