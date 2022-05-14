@@ -6,8 +6,43 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@mui/material";
-import DropDownMenu from "./DropdownMenu";
+import DropDownMenu from "./SideMenuDrawer";
 import BranchSelect from "./BranchSelect";
+
+interface TabLinkProps {
+  title: string;
+  href: string;
+}
+
+const TabLink = ({ title, href }: TabLinkProps) => {
+  return (
+    <Link href={href} passHref>
+      <Button
+        data-testid="infoBtnNav"
+        sx={{
+          display: { xs: "none", md: "flex" },
+          color: "white",
+          alignItems: "center",
+          cursor: "pointer",
+        }}
+        color="secondary"
+      >
+        {title}
+      </Button>
+    </Link>
+  );
+};
+
+const TAB_LINKS: TabLinkProps[] = [
+  {
+    href: "/info/general",
+    title: "Info",
+  },
+  {
+    href: "/order",
+    title: "Bestill bøker",
+  },
+];
 
 export default function NavBar() {
   return (
@@ -42,34 +77,13 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <Link href="/info/general" passHref>
-            <Button
-              data-testid="infoBtnNav"
-              sx={{
-                display: { xs: "none", md: "flex" },
-                color: "white",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-              color="secondary"
-            >
-              Info
-            </Button>
-          </Link>
-
-          <Link href="/order" passHref>
-            <Button
-              sx={{
-                display: { xs: "none", md: "flex" },
-                color: "white",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-              color="secondary"
-            >
-              Bestill bøker
-            </Button>
-          </Link>
+          {TAB_LINKS.map((tabLink) => (
+            <TabLink
+              key={tabLink.href}
+              title={tabLink.title}
+              href={tabLink.href}
+            />
+          ))}
 
           <BranchSelect isNav />
 
