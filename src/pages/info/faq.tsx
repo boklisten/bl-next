@@ -1,9 +1,9 @@
 import { Card } from "@mui/material";
 import type { NextPage } from "next";
-import DynamicNav from "../../components/DynamicNav";
+import DynamicNav from "../../components/info/DynamicNav";
 import { infoPageTabs } from "../../utils/constants";
 import Head from "next/head";
-import EditableQNA from "components/EditableQna";
+import EditableQNA from "components/info/EditableQna";
 import { QNAs } from "utils/mockData";
 
 const FAQ: NextPage = () => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -14,15 +13,14 @@ import {
   InputAdornment,
   Tooltip,
 } from "@mui/material";
-import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-import GoogleIcon from "@mui/icons-material/Google";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import NextLink from "next/link";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "api/login";
 import { useRouter } from "next/router";
+import FacebookButton from "./FacebookButton";
+import GoogleButton from "./GoogleButton";
+import DynamicLink from "../DynamicLink";
 
 type SignInFields = {
   email: string;
@@ -67,40 +65,8 @@ export default function SignIn() {
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           Logg inn
         </Typography>
-        <Button
-          data-testid="facebook-button"
-          fullWidth
-          variant="contained"
-          sx={{
-            mt: 1,
-            padding: 2,
-            background: "#1877F2",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          startIcon={<FacebookRoundedIcon />}
-          endIcon={<ChevronRightIcon />}
-        >
-          Logg inn med Facebook
-          <Box sx={{ flexGrow: 1 }}></Box>
-        </Button>
-        <Button
-          data-testid="google-button"
-          fullWidth
-          variant="contained"
-          sx={{
-            mt: 1,
-            padding: 2,
-            background: "#ea4335",
-            display: "flex",
-            justifyContent: "left",
-          }}
-          startIcon={<GoogleIcon />}
-          endIcon={<ChevronRightIcon />}
-        >
-          Logg inn med Google
-          <Box sx={{ flexGrow: 1 }}></Box>
-        </Button>
+        <FacebookButton label={"Logg inn med Facebook"} />
+        <GoogleButton label={"Logg inn med Google"} />
 
         <Divider sx={{ width: "100%", mt: 3 }}>
           Eller, logg inn med epost
@@ -133,7 +99,7 @@ export default function SignIn() {
             id="email"
             label="Epost"
             autoComplete="email"
-            error={errors.email ? true : false}
+            error={!!errors.email}
             {...register("email", {
               required: "Du må fylle inn epost",
               validate: (v) =>
@@ -155,7 +121,7 @@ export default function SignIn() {
               label="Passord"
               type={showPassword ? "text" : "password"}
               id="password"
-              error={errors.password ? true : false}
+              error={!!errors.password}
               autoComplete="current-password"
               {...register("password", { required: "Du må fylle inn passord" })}
             />
@@ -188,16 +154,17 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <NextLink href="/auth/forgot" passHref>
-                <Link variant="body2" data-testid="forgot-password">
-                  Glemt passord?
-                </Link>
-              </NextLink>
+              <DynamicLink
+                href={"/auth/forgot"}
+                label={"Glemt passord?"}
+                testID={"forgot-password"}
+              />
             </Grid>
             <Grid item>
-              <NextLink href="/auth/register" passHref>
-                <Link variant="body2">Har du ikke konto? Registrer deg</Link>
-              </NextLink>
+              <DynamicLink
+                href={"/auth/register"}
+                label={"Har du ikke konto? Registrer deg"}
+              />
             </Grid>
           </Grid>
         </Box>

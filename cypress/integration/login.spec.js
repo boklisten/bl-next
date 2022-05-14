@@ -2,7 +2,7 @@ describe("Login", () => {
   it("displays all important elements", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(5).click();
+    cy.get(".MuiListItemButton-root").eq(5).click();
 
     cy.getBySel("facebook-button").should("be.visible");
     cy.getBySel("google-button").should("be.visible");
@@ -70,6 +70,6 @@ describe("Login", () => {
     );
     cy.url().should("not.include", "login");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(7).should("contain", "Logg ut");
+    cy.get(".MuiListItemButton-root").eq(7).should("contain", "Logg ut");
   });
 });

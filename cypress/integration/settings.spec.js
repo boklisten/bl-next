@@ -8,7 +8,7 @@ describe("Settings page", () => {
   it("displays correct inital elements", () => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
-    cy.get(".MuiListItem-button").eq(6).click();
+    cy.get(".MuiListItemButton-root").eq(6).click();
 
     cy.getBySel("facebook-button").should("not.to.exist");
     cy.getBySel("google-button").should("not.to.exist");

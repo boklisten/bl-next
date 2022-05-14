@@ -12,13 +12,14 @@ import BranchSelect from "./BranchSelect";
 interface TabLinkProps {
   title: string;
   href: string;
+  testID: string;
 }
 
-const TabLink = ({ title, href }: TabLinkProps) => {
+const TabLink = ({ title, href, testID }: TabLinkProps) => {
   return (
     <Link href={href} passHref>
       <Button
-        data-testid="infoBtnNav"
+        data-testid={testID}
         sx={{
           display: { xs: "none", md: "flex" },
           color: "white",
@@ -37,10 +38,12 @@ const TAB_LINKS: TabLinkProps[] = [
   {
     href: "/info/general",
     title: "Info",
+    testID: "infoBtnNav",
   },
   {
     href: "/order",
     title: "Bestill bøker",
+    testID: "",
   },
 ];
 
@@ -82,6 +85,7 @@ export default function NavBar() {
               key={tabLink.href}
               title={tabLink.title}
               href={tabLink.href}
+              testID={tabLink.testID}
             />
           ))}
 

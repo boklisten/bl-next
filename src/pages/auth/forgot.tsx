@@ -5,18 +5,17 @@ import {
   Container,
   Grid,
   Typography,
-  Link,
   TextField,
   Alert,
 } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import NextLink from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import { add } from "../../api/api";
 import { useState } from "react";
+import DynamicLink from "../../components/DynamicLink";
 
 type ForgotFields = {
   email: string;
@@ -103,7 +102,7 @@ const Login: NextPage = () => {
                 id="email"
                 label="Epost"
                 autoComplete="email"
-                error={errors.email ? true : false}
+                error={!!errors.email}
                 {...register("email", {
                   required: "Du må fylle inn epost",
                   validate: (v) =>
@@ -122,11 +121,11 @@ const Login: NextPage = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <NextLink href="/auth/login" passHref>
-                    <Link variant="body2" data-testid="login">
-                      Tilbake til innloggingssiden
-                    </Link>
-                  </NextLink>
+                  <DynamicLink
+                    href={"/auth/login"}
+                    label={"Tilbake til innloggingssiden"}
+                    testID={"login"}
+                  />
                 </Grid>
               </Grid>
             </Box>

@@ -18,7 +18,7 @@ export interface LinkTabProps {
   href: string;
 }
 
-function NativeSelectWrapper({
+function SelectTab({
   tabs,
   activeTabIndex,
 }: {
@@ -123,7 +123,7 @@ const DynamicNav = ({
           alignItems: "center",
         }}
       >
-        <NativeSelectWrapper tabs={tabs} activeTabIndex={activeTabIndex} />
+        <SelectTab tabs={tabs} activeTabIndex={activeTabIndex} />
       </Box>
     </>
   );

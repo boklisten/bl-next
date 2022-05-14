@@ -1,7 +1,7 @@
 import { Branch, OpeningHour } from "@boklisten/bl-model";
 import { Box, Typography, Alert } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ContactInfo from "components/ContactInfo";
+import ContactInfo from "components/info/ContactInfo";
 import moment from "moment";
 import "moment/locale/nb";
 import Table from "@mui/material/Table";

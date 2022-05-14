@@ -1,8 +1,8 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import NextLink from "next/link";
+import DynamicLink from "../components/DynamicLink";
 
 const Home: NextPage = () => {
   return (
@@ -39,9 +39,10 @@ const Home: NextPage = () => {
             Vi i Boklisten.no er veldig opptatt av lærebøker, derfor vil vi
             gjøre det så enkelt som mulig for deg å få tak i dem.
           </Typography>
-          <NextLink href="https://www.boklisten.no/welcome" passHref>
-            <Link>Til gamle boklisten.no</Link>
-          </NextLink>
+          <DynamicLink
+            href={"https://www.boklisten.no/welcome"}
+            label={"Til gamle boklisten.no"}
+          />
         </Box>
       </Box>
     </>

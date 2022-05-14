@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Image from "next/image";
@@ -18,10 +17,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-import GoogleIcon from "@mui/icons-material/Google";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import NextLink from "next/link";
 import { DatePicker } from "@mui/lab";
 import moment, { Moment } from "moment";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -30,6 +25,9 @@ import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import { fetchData } from "../../api/requests";
 import { UserDetail } from "@boklisten/bl-model";
+import FacebookButton from "./FacebookButton";
+import GoogleButton from "./GoogleButton";
+import DynamicLink from "../DynamicLink";
 
 type UserEditorFields = {
   email: string;
@@ -141,40 +139,8 @@ const UserDetailEditor = ({
         </Typography>
         {isSignUp && (
           <>
-            <Button
-              data-testid="facebook-button"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 1,
-                padding: 2,
-                background: "#1877F2",
-                display: "flex",
-                justifyContent: "left",
-              }}
-              startIcon={<FacebookRoundedIcon />}
-              endIcon={<ChevronRightIcon />}
-            >
-              Registrer deg med Facebook
-              <Box sx={{ flexGrow: 1 }}></Box>
-            </Button>
-            <Button
-              data-testid="google-button"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 1,
-                padding: 2,
-                background: "#ea4335",
-                display: "flex",
-                justifyContent: "left",
-              }}
-              startIcon={<GoogleIcon />}
-              endIcon={<ChevronRightIcon />}
-            >
-              Registrer deg med Google
-              <Box sx={{ flexGrow: 1 }}></Box>
-            </Button>
+            <FacebookButton label={"Registrer deg med Facebook"} />
+            <GoogleButton label={"Registrer deg med Google"} />
             <Divider sx={{ width: "100%", mt: 3, mb: 1 }}>
               Eller, registrer deg med med epost
             </Divider>
@@ -544,18 +510,18 @@ const UserDetailEditor = ({
                       }
                       label={
                         <Typography>
-                          Jeg godtar Boklistens
-                          <NextLink href="/info/policies/conditions" passHref>
-                            <Link sx={{ marginX: 0.4 }} target="_blank">
-                              betingelser
-                            </Link>
-                          </NextLink>
-                          og
-                          <NextLink href="/info/policies/terms" passHref>
-                            <Link sx={{ marginX: 0.4 }} target="_blank">
-                              vilkår
-                            </Link>
-                          </NextLink>
+                          Jeg godtar Boklistens{" "}
+                          <DynamicLink
+                            href={"/info/policies/conditions"}
+                            label={"betingelser"}
+                            target={"_blank"}
+                          />{" "}
+                          og{" "}
+                          <DynamicLink
+                            href={"/info/policies/terms"}
+                            label={"vilkår"}
+                            target={"_blank"}
+                          />
                         </Typography>
                       }
                     />
@@ -577,11 +543,11 @@ const UserDetailEditor = ({
           {isSignUp && (
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <NextLink href="/auth/login" passHref>
-                  <Link variant="body2" data-testid="login-link">
-                    Har du allerede en konto? Logg inn
-                  </Link>
-                </NextLink>
+                <DynamicLink
+                  href={"/auth/login"}
+                  label={"Har du allerede en konto? Logg inn"}
+                  testID={"login-link"}
+                />
               </Grid>
             </Grid>
           )}

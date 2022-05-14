@@ -1,11 +1,11 @@
 Cypress.Commands.add("logout", () => {
   cy.getBySel("MenuIcon").click();
-  cy.get(".MuiListItem-button")
+  cy.get(".MuiListItemButton-root")
     .eq(5)
     .invoke("text")
     .then((btn) => {
       if (!btn.includes("Logg inn")) {
-        cy.get(".MuiListItem-button").eq(7).click();
+        cy.get(".MuiListItemButton-root").eq(7).click();
       } else {
         cy.get("html").click("topLeft");
       }

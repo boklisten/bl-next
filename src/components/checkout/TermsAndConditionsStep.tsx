@@ -1,8 +1,7 @@
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import Box from "@mui/material/Box";
-import NextLink from "next/link";
+import DynamicLink from "../DynamicLink";
 
 const TermsAndConditionsStep = ({
   setWait,
@@ -22,11 +21,12 @@ const TermsAndConditionsStep = ({
         bøker på avdrag.
       </Typography>
       <Box sx={{ width: "100px", mt: ".5rem" }}>
-        <NextLink href="/info/policies/conditions" passHref>
-          <a href="/" target="_blank">
-            <Button>Les mer</Button>
-          </a>
-        </NextLink>
+        <DynamicLink
+          href={"/info/policies/conditions"}
+          label={"Les mer"}
+          underline={"none"}
+          target={"_blank"}
+        />
       </Box>
     </>
   );

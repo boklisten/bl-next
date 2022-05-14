@@ -1,11 +1,11 @@
 import React from "react";
-import { Typography, Link } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import NextLink from "next/link";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { contactInfo } from "../utils/constants";
+import { contactInfo } from "../../utils/constants";
+import DynamicLink from "../DynamicLink";
 
 const ContactInfo = () => {
   return (
@@ -14,11 +14,12 @@ const ContactInfo = () => {
         <PhoneIphoneIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Ring oss</Typography>
-          <NextLink href={`tel:+${contactInfo.phone}`} passHref>
-            <Link variant="body2" underline="none" data-testid="contact-phone">
-              {contactInfo.phone}
-            </Link>
-          </NextLink>
+          <DynamicLink
+            href={`tel:+${contactInfo.phone}`}
+            label={contactInfo.phone}
+            underline={"none"}
+            testID={"contact-phone"}
+          />
         </Box>
       </Box>
 
@@ -26,11 +27,12 @@ const ContactInfo = () => {
         <EmailIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Send oss en epost</Typography>
-          <NextLink href={`mailto:${contactInfo.email}`} passHref>
-            <Link variant="body2" underline="none" data-testid="contact-email">
-              {contactInfo.email}
-            </Link>
-          </NextLink>
+          <DynamicLink
+            href={`mailto:${contactInfo.email}`}
+            label={contactInfo.email}
+            underline={"none"}
+            testID={"contact-email"}
+          />
         </Box>
       </Box>
 

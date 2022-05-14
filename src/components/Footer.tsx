@@ -1,12 +1,12 @@
-import ContactInfo from "./ContactInfo";
-import { Card, Link } from "@mui/material";
+import ContactInfo from "./info/ContactInfo";
+import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 import moment from "moment";
-import NextLink from "next/link";
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
+import DynamicLink from "./DynamicLink";
 
 export default function Footer() {
   return (
@@ -21,23 +21,23 @@ export default function Footer() {
     >
       <ContactInfo />
       <Box sx={{ marginBottom: ".7rem" }}>
-        <NextLink href="/info/policies/conditions" passHref>
-          <Link variant="body2" underline="none">
-            Betingelser
-          </Link>
-        </NextLink>
+        <DynamicLink
+          href={"/info/policies/conditions"}
+          label={"Betingelser"}
+          underline={"none"}
+        />
         {" | "}
-        <NextLink href="/info/policies/terms" passHref>
-          <Link variant="body2" underline="none">
-            Vilkår
-          </Link>
-        </NextLink>
+        <DynamicLink
+          href={"/info/policies/terms"}
+          label={"Vilkår"}
+          underline={"none"}
+        />
         {" | "}
-        <NextLink href="/info/policies/privacy" passHref>
-          <Link variant="body2" underline="none">
-            Personvernserklæring
-          </Link>
-        </NextLink>
+        <DynamicLink
+          href={"/info/policies/privacy"}
+          label={"Personvernserklæring"}
+          underline={"none"}
+        />
       </Box>
       <Image
         width={200}

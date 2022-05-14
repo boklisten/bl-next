@@ -1,9 +1,9 @@
 import { Card } from "@mui/material";
 import type { NextPage } from "next";
-import DynamicNav from "../../components/DynamicNav";
+import DynamicNav from "../../components/info/DynamicNav";
 import { infoPageTabs } from "../../utils/constants";
 import Head from "next/head";
-import BuybackList, { buybackUrl } from "components/BuybackList";
+import BuybackList, { buybackUrl } from "components/info/BuybackList";
 import { SWRConfig } from "swr";
 import { fetcher } from "api/requests";
 import { Item } from "utils/types";

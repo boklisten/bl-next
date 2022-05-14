@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { selectSubjects, setSelectedSubjects } from "../redux/selectedSubjects";
 import { generateCartItemsFromSubjects } from "../utils/cartUtils";
 import { setCart } from "../redux/cart";
-import { LoadingButton } from "@mui/lab";
+import FixedSuccessButton from "./FixedSuccessButton";
 
 const SubjectCheckbox = ({ subject }: { subject: string }) => {
   const dispatch = useAppDispatch();
@@ -143,11 +143,8 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
         <SubjectCheckbox key={subject} subject={subject} />
       ))}
       {selectedSubjects.length > 0 && (
-        <LoadingButton
-          loading={loadingCart}
-          color="success"
-          variant="contained"
-          sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+        <FixedSuccessButton
+          label={"Til handlekurv"}
           onClick={async () => {
             setLoadingCart(true);
             const cartItems = await generateCartItemsFromSubjects(
@@ -158,9 +155,8 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
             setLoadingCart(false);
             router.push("/cart");
           }}
-        >
-          Til handlekurv
-        </LoadingButton>
+          loading={loadingCart}
+        />
       )}
     </Box>
   );

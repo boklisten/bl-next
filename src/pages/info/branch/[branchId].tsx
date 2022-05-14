@@ -1,14 +1,14 @@
 import { Alert, Card, Typography } from "@mui/material";
 import type { NextPage } from "next";
-import DynamicNav from "../../../components/DynamicNav";
+import DynamicNav from "../../../components/info/DynamicNav";
 import { infoPageTabs } from "../../../utils/constants";
 import Head from "next/head";
 import { fetcher } from "api/requests";
-import BranchInfo from "components/BranchInfo";
+import BranchInfo from "components/info/BranchInfo";
 import BL_CONFIG from "utils/bl-config";
 import { useRouter } from "next/router";
 import { Branch, OpeningHour } from "@boklisten/bl-model";
-import ContactInfo from "components/ContactInfo";
+import ContactInfo from "components/info/ContactInfo";
 import BranchSelect from "components/BranchSelect";
 import { Box } from "@mui/system";
 import { selectBranch } from "redux/selectedBranch";
