@@ -16,21 +16,22 @@ const sanitizeRawState = (raw: string) => {
   return raw.replaceAll("\n", "\\n");
 };
 
-const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
-  const getEditorStateFromRaw = (rawState: string) => {
-    try {
-      return EditorState.createWithContent(
-        convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
-      );
-    } catch (error) {
-      console.error(error);
-      return EditorState.createEmpty();
-    }
-  };
+const getEditorStateFromRaw = (rawState: string) => {
+  try {
+    return EditorState.createWithContent(
+      convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
+    );
+  } catch (error) {
+    console.error(error);
+    return EditorState.createEmpty();
+  }
+};
 
+const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
   const initialEditorState = rawEditorState
     ? getEditorStateFromRaw(rawEditorState)
     : EditorState.createEmpty();
+
   const [editorState, setEditorState] = useState(initialEditorState);
 
   const rawState = JSON.stringify(

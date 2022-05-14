@@ -69,6 +69,25 @@ const canBuyout = (customerItem: CustomerItem) => {
   );
 };
 
+const getStatus = (customerItem: CustomerItem) => {
+  if (customerItem.buyout) return orderTypes.buyout;
+
+  if (customerItem.buyback) return orderTypes.buyback;
+
+  if (customerItem.returned) return orderTypes.return;
+
+  if (customerItem.cancel) return orderTypes.cancel;
+
+  return "test";
+};
+
+const orderTypes = {
+  buyout: "kjøpt ut",
+  return: "returnert",
+  cancel: "kansellert",
+  buyback: "tilbakekjøp",
+};
+
 const CustomerItemOverview = ({
   customerItems,
   branchInfo,
@@ -115,25 +134,6 @@ const CustomerItemOverview = ({
           customerItem.deadline !== extendPeriod.date
       )
     );
-  };
-
-  const getStatus = (customerItem: CustomerItem) => {
-    if (customerItem.buyout) return orderTypes.buyout;
-
-    if (customerItem.buyback) return orderTypes.buyback;
-
-    if (customerItem.returned) return orderTypes.return;
-
-    if (customerItem.cancel) return orderTypes.cancel;
-
-    return "test";
-  };
-
-  const orderTypes = {
-    buyout: "kjøpt ut",
-    return: "returnert",
-    cancel: "kansellert",
-    buyback: "tilbakekjøp",
   };
 
   const hasItemAction = (customerItemAction: CustomerItemAction) => {

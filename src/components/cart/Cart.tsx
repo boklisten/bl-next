@@ -79,15 +79,15 @@ const SelectDeadline = ({ cartItem }: { cartItem: CartItem }) => {
   );
 };
 
+const getReadableOrderType = (orderItemType: OrderItemType) =>
+  orderItemType === "extend" ? "forlenging" : "utkjøp";
+
 const CartItemRow = ({ cartItem }: { cartItem: CartItem }) => {
   const selectedSubjects = useAppSelector(selectSubjects);
   const getItemSubjects = (item: BranchItem) =>
     item.categories?.filter((category) =>
       selectedSubjects.includes(category)
     ) ?? [];
-
-  const getReadableOrderType = (orderItemType: OrderItemType) =>
-    orderItemType === "extend" ? "forlenging" : "utkjøp";
 
   /* @ts-ignore */
   const amountLeftToPay = cartItem.orderItem.info?.amountLeftToPay ?? 0;

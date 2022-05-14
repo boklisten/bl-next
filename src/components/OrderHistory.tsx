@@ -20,15 +20,42 @@ import { get } from "../api/api";
 import Button from "@mui/material/Button";
 import { LoadingButton } from "@mui/lab";
 
+// fetchPayments(orders);
+// types are from a business POV
+const orderTypes = {
+  rent: "leie",
+  buy: "solgt til oss",
+  extend: "forlenget frist",
+  sell: "kjøpt",
+  buyout: "kjøpt ut",
+  return: "returnert",
+  cancel: "kansellert",
+  "partly-payment": "delbetaling",
+  loan: "lånt",
+  buyback: "tilbakekjøp",
+  "invoice-paid": "betalt faktura",
+};
+
+const paymentTypes = {
+  dibs: "Kort",
+  card: "Kort",
+  vipps: "Vipps",
+  cash: "Kontant",
+  branch: "På filial",
+  later: "Betal senere",
+  cashout: "Uttak",
+};
+
+const fetchPayment = async (payment: string) => {
+  const paymentsUrl = `payments/${payment}`;
+  const data = await get(paymentsUrl);
+  return data.data.data[0] as Payment;
+};
+
 const OrderHistory = ({ orders }: { orders: Order[] }) => {
   const [wait, setWait] = useState(false);
   const [openOrder, setOpenOrder] = useState("");
   const [openPayment, setOpenPayment] = useState<Payment | undefined>();
-  const fetchPayment = async (payment: string) => {
-    const paymentsUrl = `payments/${payment}`;
-    const data = await get(paymentsUrl);
-    return data.data.data[0] as Payment;
-  };
 
   const printReceipt = async (orderId: string) => {
     setWait(true);
@@ -46,32 +73,6 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
     });
     setWait(false);
     window.open(URL.createObjectURL(blob));
-  };
-
-  // fetchPayments(orders);
-  // types are from a business POV
-  const orderTypes = {
-    rent: "leie",
-    buy: "solgt til oss",
-    extend: "forlenget frist",
-    sell: "kjøpt",
-    buyout: "kjøpt ut",
-    return: "returnert",
-    cancel: "kansellert",
-    "partly-payment": "delbetaling",
-    loan: "lånt",
-    buyback: "tilbakekjøp",
-    "invoice-paid": "betalt faktura",
-  };
-
-  const paymentTypes = {
-    dibs: "Kort",
-    card: "Kort",
-    vipps: "Vipps",
-    cash: "Kontant",
-    branch: "På filial",
-    later: "Betal senere",
-    cashout: "Uttak",
   };
 
   return (

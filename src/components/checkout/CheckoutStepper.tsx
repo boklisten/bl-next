@@ -14,10 +14,11 @@ const stepLabels = {
 
 const CheckoutStepper = ({ steps }: { steps: CheckoutSteps[] }) => {
   const [wait, setWait] = useState(false);
-  const isPreviousStep = (step: CheckoutSteps) =>
-    steps.indexOf(step) < activeStep;
 
   const [activeStep, setActiveStep] = useState(0);
+
+  const isPreviousStep = (step: CheckoutSteps) =>
+    steps.indexOf(step) < activeStep;
 
   return (
     <Stepper orientation="vertical" activeStep={activeStep} sx={{ ml: 1 }}>
