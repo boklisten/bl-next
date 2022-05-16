@@ -2,9 +2,7 @@ import * as React from "react";
 import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { CacheProvider } from "@emotion/react";
 import theme from "../utils/theme";
-import createEmotionCache from "../utils/createEmotionCache";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import NavBar from "../components/NavBar";
 import "@fontsource/roboto/300.css";
@@ -37,15 +35,12 @@ class OverriddenAdapter extends DateAdapter {
   };
 }
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
-
 // eslint-disable-next-line unicorn/prevent-abbreviations
 export default function MyApp(props: AppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, pageProps } = props;
 
   return (
-    <CacheProvider value={emotionCache}>
+    <>
       <Head>
         <title>Boklisten.no</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -85,6 +80,6 @@ export default function MyApp(props: AppProps) {
           </ThemeProvider>
         </LocalizationProvider>
       </Provider>
-    </CacheProvider>
+    </>
   );
 }
