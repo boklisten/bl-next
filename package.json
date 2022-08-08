@@ -31,7 +31,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
-    "@fontsource/roboto": "^4.5.3",
+    "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.68",
     "@mui/material": "^5.4.0",
