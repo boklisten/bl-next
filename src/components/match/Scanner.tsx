@@ -32,7 +32,6 @@ const Scanner = () => {
   const [scanModalOpen, setScanModalOpen] = useState(false);
   const [manualModalOpen, setManualModalOpen] = useState(false);
   const [manualInput, setManualInput] = useState("");
-  const myConstraints = {};
 
   const handleOpenManualInput = () => {
     setManualInput("");
@@ -117,7 +116,7 @@ const Scanner = () => {
               setTimeout(() => {});
             }}
             containerStyle={{ width: "100%" }}
-            constraints={myConstraints}
+            constraints={{ facingMode: "environment" }}
           />
         </Box>
       </Modal>
