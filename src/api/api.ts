@@ -17,7 +17,7 @@ export const get = async (url: string, query?: string) => {
       headers: getHeaders(),
     })
     .catch((error) => {
-      if (error.status === 404) {
+      if (error.status === 404 || error.response.status === 404) {
         throw new Error("Not found");
       }
       console.log(error);

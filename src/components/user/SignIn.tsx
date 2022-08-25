@@ -6,20 +6,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import isEmail from "validator/lib/isEmail";
-import {
-  Alert,
-  Divider,
-  IconButton,
-  InputAdornment,
-  Tooltip,
-} from "@mui/material";
+import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "api/login";
 import { useRouter } from "next/router";
+/*
+Temporary disable for P2P test
 import FacebookButton from "./FacebookButton";
 import GoogleButton from "./GoogleButton";
+ */
 import DynamicLink from "../DynamicLink";
 
 type SignInFields = {
@@ -65,12 +62,15 @@ export default function SignIn() {
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           Logg inn
         </Typography>
+        {/*
+        Temporary hide social login for P2P test
         <FacebookButton label={"Logg inn med Facebook"} />
         <GoogleButton label={"Logg inn med Google"} />
 
         <Divider sx={{ width: "100%", mt: 3 }}>
           Eller, logg inn med epost
         </Divider>
+*/}
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}

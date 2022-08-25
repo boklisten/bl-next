@@ -24,7 +24,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
     "prettier:check": "prettier --check '**/*.{js,ts,tsx,md,json,yml,css}' --ignore-path=.gitignore",
-    "lint": "next lint"
+    "lint": "next lint --ignore-path=.gitignore"
   },
   "dependencies": {
     "@date-io/moment": "^2.13.1",
@@ -45,6 +45,7 @@
     "react-draft-wysiwyg": "^1.14.7",
     "react-hook-form": "^7.25.3",
     "react-jwt": "^1.1.4",
+    "react-qr-reader": "^3.0.0-beta-1",
     "react-redux": "^8.0.1",
     "sharp": "^0.30.0",
     "string-similarity": "^4.0.4",

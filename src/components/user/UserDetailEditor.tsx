@@ -25,8 +25,10 @@ import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 import { fetchData } from "../../api/requests";
 import { UserDetail } from "@boklisten/bl-model";
+/*
 import FacebookButton from "./FacebookButton";
 import GoogleButton from "./GoogleButton";
+*/
 import DynamicLink from "../DynamicLink";
 
 type UserEditorFields = {
@@ -137,6 +139,7 @@ const UserDetailEditor = ({
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           {isSignUp ? "Registrer deg" : "Innstillinger"}
         </Typography>
+        {/*
         {isSignUp && (
           <>
             <FacebookButton label={"Registrer deg med Facebook"} />
@@ -146,6 +149,7 @@ const UserDetailEditor = ({
             </Divider>
           </>
         )}
+          */}
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           {Object.entries(errors).map(([type, message]) => (
             <Alert
