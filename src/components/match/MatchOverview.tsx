@@ -12,6 +12,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import React from "react";
 import { Match } from "@boklisten/bl-model";
 import Scanner from "./Scanner";
+import moment from "moment";
 
 const MATCH_INFO = {
   receive: {
@@ -36,7 +37,6 @@ const MatchOverview = ({
   receive: boolean;
 }) => {
   const matchInfo = receive ? MATCH_INFO.receive : MATCH_INFO.deliver;
-  console.log(match);
 
   return (
     <>
@@ -47,24 +47,24 @@ const MatchOverview = ({
       >
         Disse bøkene
       </Typography>
-      {match.items.map((item) => (
-        <TableContainer key={item.customerItem} component={Box}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Tittel</TableCell>
-                <TableCell>{matchInfo.statusHeader}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
+      <TableContainer component={Box}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Tittel</TableCell>
+              <TableCell>{matchInfo.statusHeader}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {match.items.map((item) => (
+              <TableRow key={item.customerItem}>
                 <TableCell>{item.title}</TableCell>
-                <TableCell>TODO</TableCell>
+                <TableCell>{item.reciever === "ok" ? "Ja" : "Nei"}</TableCell>
               </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ))}
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Typography
         variant="h6"
         sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
@@ -89,8 +89,12 @@ const MatchOverview = ({
       >
         Dere møtes ved
       </Typography>
-      <Typography>Ved siden av Boklistens stand klokken TODO</Typography>
-      {receive && <Scanner />}
+      {/*@ts-ignore*/}
+      <Typography>{`${match.meetingPoint[0].location.name} klokken ${moment(
+        // @ts-ignore
+        match.meetingPoint[0].time
+      ).format("HH:mm DD/MM/YY")}`}</Typography>
+      {receive && <Scanner match={match} />}
     </>
   );
 };

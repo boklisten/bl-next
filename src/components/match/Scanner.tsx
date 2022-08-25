@@ -11,6 +11,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Match } from "@boklisten/bl-model";
+import { add } from "../../api/api";
+import { useRouter } from "next/router";
 
 const ScannerFeedback = ({ open }: { open: boolean }) => {
   return (
@@ -27,15 +30,32 @@ const ScannerFeedback = ({ open }: { open: boolean }) => {
   );
 };
 
-const Scanner = () => {
+const Scanner = ({ match }: { match: Match }) => {
   const [result, setResult] = useState<string>("");
   const [scanModalOpen, setScanModalOpen] = useState(false);
   const [manualModalOpen, setManualModalOpen] = useState(false);
-  const [manualInput, setManualInput] = useState("");
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   const handleOpenManualInput = () => {
-    setManualInput("");
+    setResult("");
     setManualModalOpen(!scanModalOpen);
+  };
+
+  const handleBookScan = async (scannedBlid: string) => {
+    match.events.push({
+      type: "items-sent",
+      time: new Date(),
+      // @ts-ignore
+      blid: scannedBlid,
+    });
+    try {
+      await add("matches", match);
+      setSuccess(true);
+      router.reload();
+    } catch {
+      router.reload();
+    }
   };
 
   return (
@@ -51,7 +71,7 @@ const Scanner = () => {
       <Button variant={"contained"} onClick={handleOpenManualInput}>
         Skriv inn unik ID manuelt
       </Button>
-      <ScannerFeedback open={result.length > 0} />
+      <ScannerFeedback open={success} />
 
       <Modal open={manualModalOpen}>
         <Container
@@ -66,10 +86,10 @@ const Scanner = () => {
         >
           <Typography variant="h4">Skriv inn bokas unike ID</Typography>
           <TextField
-            value={manualInput}
+            value={result}
             label="unik ID"
             sx={{ marginTop: "2rem", marginBottom: "1rem" }}
-            onChange={(event) => setManualInput(event.target.value)}
+            onChange={(event) => setResult(event.target.value)}
           />
           <Box sx={{ marginBottom: "1rem" }}>
             <Button
@@ -82,7 +102,7 @@ const Scanner = () => {
             </Button>
             <Button
               variant={"contained"}
-              onClick={() => setResult(manualInput)}
+              onClick={() => handleBookScan(result)}
             >
               Lever
             </Button>
@@ -112,6 +132,7 @@ const Scanner = () => {
             onResult={(result) => {
               if (result) {
                 setResult(result.getText());
+                handleBookScan(result.getText());
               }
               setTimeout(() => {});
             }}
