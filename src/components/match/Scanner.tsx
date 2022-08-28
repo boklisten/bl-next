@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { QrReader } from "react-qr-reader";
 import {
   Alert,
+  AlertColor,
   Box,
   Button,
+  Card,
   Container,
   Modal,
   Paper,
@@ -13,67 +15,57 @@ import {
 } from "@mui/material";
 import { Match } from "@boklisten/bl-model";
 import { add } from "../../api/api";
-import { useRouter } from "next/router";
+import Image from "next/image";
 
-const ScannerFeedback = ({ open }: { open: boolean }) => {
+const ScannerFeedback = ({
+  feedback,
+  severity,
+  open,
+  handleClose,
+}: {
+  feedback: string;
+  severity: AlertColor;
+  open: boolean;
+  handleClose: () => void;
+}) => {
+  const autoClose = (
+    _event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    handleClose();
+  };
+
   return (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      onClose={autoClose}
+      autoHideDuration={4000}
       anchorOrigin={{
         vertical: "top",
         horizontal: "center",
       }}
     >
-      <Alert severity={"success"}>Boken ble scannet!</Alert>
+      <Alert severity={severity}>{feedback}</Alert>
     </Snackbar>
   );
 };
 
-const Scanner = ({ match }: { match: Match }) => {
-  const [result, setResult] = useState<string>("");
-  const [scanModalOpen, setScanModalOpen] = useState(false);
-  const [manualModalOpen, setManualModalOpen] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const router = useRouter();
-
-  const handleOpenManualInput = () => {
-    setResult("");
-    setManualModalOpen(!scanModalOpen);
-  };
-
-  const handleBookScan = async (scannedBlid: string) => {
-    match.events.push({
-      type: "items-sent",
-      time: new Date(),
-      // @ts-ignore
-      blid: scannedBlid,
-    });
-    try {
-      await add("matches", match);
-      setSuccess(true);
-      router.reload();
-    } catch {
-      router.reload();
-    }
-  };
-
+const ScannerTutorial = () => {
+  const [tutorialOpen, setTutorialOpen] = useState(false);
   return (
     <>
       <Button
-        sx={{ marginTop: "1rem" }}
         variant={"contained"}
-        onClick={() => setScanModalOpen(!scanModalOpen)}
+        sx={{ background: "green", mb: "2rem" }}
+        onClick={() => setTutorialOpen(true)}
       >
-        Scan bøker
+        Vis instruksjoner
       </Button>
-      <p>eller</p>
-      <Button variant={"contained"} onClick={handleOpenManualInput}>
-        Skriv inn unik ID manuelt
-      </Button>
-      <ScannerFeedback open={success} />
-
-      <Modal open={manualModalOpen}>
+      <Modal open={tutorialOpen}>
         <Container
           component={Paper}
           sx={{
@@ -84,63 +76,275 @@ const Scanner = ({ match }: { match: Match }) => {
             marginTop: "4rem",
           }}
         >
-          <Typography variant="h4">Skriv inn bokas unike ID</Typography>
-          <TextField
-            value={result}
-            label="unik ID"
-            sx={{ marginTop: "2rem", marginBottom: "1rem" }}
-            onChange={(event) => setResult(event.target.value)}
-          />
-          <Box sx={{ marginBottom: "1rem" }}>
-            <Button
-              sx={{ marginRight: "1rem" }}
-              color={"error"}
-              variant={"contained"}
-              onClick={() => setManualModalOpen(!manualModalOpen)}
-            >
-              Lukk
-            </Button>
-            <Button
-              variant={"contained"}
-              onClick={() => handleBookScan(result)}
-            >
-              Lever
-            </Button>
-          </Box>
-        </Container>
-      </Modal>
+          <Typography variant="h4">Hvordan scanne bøker</Typography>
 
-      <Modal open={scanModalOpen}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "100vh",
-          }}
-        >
+          <Card sx={{ padding: "1rem", bgcolor: "#fefefa" }}>
+            <Typography>
+              1. Scan en bok sin unike ID, som ser slik ut:{" "}
+            </Typography>
+            <Image
+              style={{ borderRadius: "2%" }}
+              src={"/ullernUID.png"}
+              alt={"Ullern VGS unik ID"}
+              width={"300px"}
+              height={"150px"}
+            />
+          </Card>
+
+          <Card sx={{ padding: "1rem", bgcolor: "#fefefa", mt: "1rem" }}>
+            <Typography>2. Scan bokas ISBN, som ser slik ut: </Typography>
+            <Image
+              style={{ borderRadius: "2%" }}
+              src={"/isbn.png"}
+              alt={"Eksempel på ISBN"}
+              width={"300px"}
+              height={"150px"}
+            />
+          </Card>
+
+          <Card sx={{ padding: "1rem", bgcolor: "#fefefa", mt: "1rem" }}>
+            <Typography>3. Gjenta til du har scannet alle bøkene </Typography>
+          </Card>
           <Button
+            sx={{ marginY: "1rem" }}
             color={"error"}
-            sx={{ position: "absolute", top: 80, zIndex: 100 }}
             variant={"contained"}
-            onClick={() => setScanModalOpen(!scanModalOpen)}
+            onClick={() => setTutorialOpen(false)}
           >
             Lukk
           </Button>
-          <QrReader
-            onResult={(result) => {
-              if (result) {
-                setResult(result.getText());
-                handleBookScan(result.getText());
-              }
-              setTimeout(() => {});
-            }}
-            containerStyle={{ width: "100%" }}
-            constraints={{ facingMode: "environment" }}
-          />
-        </Box>
+        </Container>
       </Modal>
+    </>
+  );
+};
+
+const ScannerModal = ({
+  open,
+  handleClose,
+  handleSubmit,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  // eslint-disable-next-line no-unused-vars
+  handleSubmit: (blid: string, isbn: string) => void;
+}) => {
+  return (
+    <Modal open={open}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: "100vh",
+        }}
+      >
+        <Button
+          color={"error"}
+          sx={{ position: "absolute", top: 80, zIndex: 100 }}
+          variant={"contained"}
+          onClick={handleClose}
+        >
+          Lukk
+        </Button>
+        <QrReader
+          onResult={(result) => {
+            if (result) {
+              handleSubmit(result.getText(), result.getText());
+            }
+            setTimeout(() => {});
+          }}
+          containerStyle={{ width: "100%" }}
+          constraints={{ facingMode: "environment" }}
+        />
+      </Box>
+    </Modal>
+  );
+};
+
+const ManualRegistrationModal = ({
+  open,
+  handleClose,
+  handleSubmit,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  // eslint-disable-next-line no-unused-vars
+  handleSubmit: (blid: string, isbn: string) => void;
+}) => {
+  const [isbn, setIsbn] = useState("");
+  const [blid, setBlid] = useState("");
+  return (
+    <Modal open={open}>
+      <Container
+        component={Paper}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          marginTop: "4rem",
+        }}
+      >
+        <Typography variant="h4">Manuell registrering</Typography>
+        <TextField
+          value={blid}
+          label="unik ID"
+          sx={{ marginTop: "2rem", marginBottom: "1rem" }}
+          onChange={(event) => setBlid(event.target.value)}
+        />
+        <TextField
+          value={isbn}
+          label="ISBN"
+          sx={{ marginTop: "2rem", marginBottom: "1rem" }}
+          onChange={(event) => setIsbn(event.target.value)}
+        />
+        <Box sx={{ marginBottom: "1rem" }}>
+          <Button
+            sx={{ marginRight: "1rem" }}
+            color={"error"}
+            variant={"contained"}
+            onClick={handleClose}
+          >
+            Lukk
+          </Button>
+          <Button
+            variant={"contained"}
+            onClick={() => {
+              handleSubmit(blid, isbn);
+              setBlid("");
+              setIsbn("");
+            }}
+          >
+            Bekreft
+          </Button>
+        </Box>
+      </Container>
+    </Modal>
+  );
+};
+
+const invalidBlid = (blid: string) =>
+  blid.length !== 8 || Number.isNaN(Number(blid));
+
+const invalidISBN = (isbn: string) =>
+  isbn.length !== 13 || Number.isNaN(Number(isbn));
+
+const Scanner = ({
+  match,
+  forceUpdate,
+}: {
+  match: Match;
+  forceUpdate: () => void;
+}) => {
+  const [scanModalOpen, setScanModalOpen] = useState(false);
+  const [manualRegistrationModalOpen, setManualRegistrationModalOpen] =
+    useState(false);
+
+  const [feedback, setFeedback] = useState("");
+  const [feedbackSeverity, setFeedbackSeverity] =
+    useState<AlertColor>("success");
+  const [feedbackVisible, setFeedbackVisible] = useState(false);
+
+  const displayFeedback = (feedback: string, severity: AlertColor) => {
+    setFeedback(feedback);
+    setFeedbackSeverity(severity);
+    setFeedbackVisible(true);
+  };
+
+  const handleManualRegistration = async (blid: string, isbn: string) => {
+    if (invalidBlid(blid)) {
+      displayFeedback("Unik ID er feilformatert!", "error");
+      return;
+    }
+
+    if (invalidISBN(isbn)) {
+      displayFeedback("ISBN er feilformatert!", "error");
+      return;
+    }
+
+    // @ts-ignore
+    const matchItem = match.items.find((item) => String(item.isbn) === isbn);
+    if (!matchItem) {
+      displayFeedback("ISBN samsvarer ikke med bestilte bøker", "error");
+      return;
+    }
+
+    // @ts-ignore
+    if (matchItem.blid) {
+      displayFeedback("Denne boken har allerede blitt registrert", "error");
+      return;
+    }
+
+    // @ts-ignore
+    if (match.items.some((item) => item.blid === blid)) {
+      displayFeedback(
+        "Denne unike IDen er allerede registrert på en annen bok",
+        "error"
+      );
+      return;
+    }
+
+    match.events.push({
+      type: "items-sent",
+      time: new Date(),
+    });
+
+    // @ts-ignore
+    matchItem.blid = blid;
+
+    try {
+      await add("matches", match);
+    } catch (error) {
+      console.log(error);
+    }
+
+    forceUpdate();
+
+    displayFeedback("Boken ble registrert!", "success");
+
+    setManualRegistrationModalOpen(false);
+  };
+
+  return (
+    <>
+      <ScannerTutorial />
+      <ScannerFeedback
+        open={feedbackVisible}
+        severity={feedbackSeverity}
+        feedback={feedback}
+        handleClose={() => setFeedbackVisible(false)}
+      />
+      <Button variant={"contained"} onClick={() => setScanModalOpen(true)}>
+        Scan bøker
+      </Button>
+      <p>eller</p>
+      <Button
+        variant={"contained"}
+        onClick={() => setManualRegistrationModalOpen(true)}
+      >
+        Manuell registrering
+      </Button>
+      <ManualRegistrationModal
+        open={manualRegistrationModalOpen}
+        handleClose={() => {
+          setManualRegistrationModalOpen(false);
+          setFeedbackVisible(false);
+        }}
+        handleSubmit={handleManualRegistration}
+      />
+      <ScannerModal
+        open={scanModalOpen}
+        handleClose={() => {
+          setScanModalOpen(false);
+          setFeedbackVisible(false);
+        }}
+        handleSubmit={(blid, isbn) => {
+          console.log("blid:", blid);
+          console.log("isbn", isbn);
+        }}
+      />
     </>
   );
 };

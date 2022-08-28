@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Table,
   TableBody,
@@ -6,13 +7,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import React from "react";
+import React, { ReactNode, useCallback, useState } from "react";
 import { Match } from "@boklisten/bl-model";
 import Scanner from "./Scanner";
 import moment from "moment";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import ErrorIcon from "@mui/icons-material/Error";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+
+interface MatchInfo {
+  intro: string;
+  statusHeader: string;
+  deliveryHeader: string;
+}
 
 const MATCH_INFO = {
   receive: {
@@ -29,48 +40,60 @@ const MATCH_INFO = {
   },
 };
 
-const MatchOverview = ({
+const MatchItemTable = ({
   match,
-  receive = false,
+  matchInfo,
+}: {
+  match: Match;
+  matchInfo: MatchInfo;
+}) => {
+  return (
+    <TableContainer component={Box}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Tittel</TableCell>
+            <TableCell>{matchInfo.statusHeader}</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {match.items.map((item) => (
+            <TableRow key={item.customerItem}>
+              <TableCell>{item.title}</TableCell>
+              <Tooltip
+                title={
+                  // @ts-ignore
+                  item.blid
+                    ? "Denne boken er registrert som mottatt"
+                    : "Dette boken har ikke blitt registrert som mottatt"
+                }
+              >
+                <TableCell>
+                  {/*@ts-ignore*/}
+                  {item.blid ? (
+                    <CheckBoxIcon sx={{ color: "green" }} />
+                  ) : (
+                    <ErrorIcon sx={{ color: "orange" }} />
+                  )}
+                </TableCell>
+              </Tooltip>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+const OtherPersonContact = ({
+  match,
+  receive,
 }: {
   match: Match;
   receive: boolean;
 }) => {
-  const matchInfo = receive ? MATCH_INFO.receive : MATCH_INFO.deliver;
-
   return (
     <>
-      <Typography>{matchInfo.intro}</Typography>
-      <Typography
-        variant="h6"
-        sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-      >
-        Disse bøkene
-      </Typography>
-      <TableContainer component={Box}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Tittel</TableCell>
-              <TableCell>{matchInfo.statusHeader}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {match.items.map((item) => (
-              <TableRow key={item.customerItem}>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.reciever === "ok" ? "Ja" : "Nei"}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Typography
-        variant="h6"
-        sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-      >
-        {matchInfo.deliveryHeader}
-      </Typography>
       {(receive ? [match.sender] : match.recievers).map((otherPerson) => (
         <Box
           key={otherPerson.userId}
@@ -83,18 +106,80 @@ const MatchOverview = ({
           </Box>
         </Box>
       ))}
-      <Typography
-        variant="h6"
-        sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
-      >
-        Dere møtes ved
-      </Typography>
+    </>
+  );
+};
+
+const MatchHeader = ({ children }: { children: ReactNode }) => {
+  return (
+    <Typography
+      variant="h6"
+      sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
+    >
+      {children}
+    </Typography>
+  );
+};
+
+const MeetingInfo = ({ match }: { match: Match }) => {
+  // @ts-ignore
+  const meetingTime = moment(match.meetingPoint[0].time);
+  // @ts-ignore
+  const meetingLocation = match.meetingPoint[0].location.description;
+
+  return (
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Typography>{meetingLocation}</Typography>
+      <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
+        <ScheduleIcon sx={{ marginRight: ".2rem" }} />
+        <Typography
+          fontWeight="bold"
+          variant={"subtitle1"}
+        >{`mandag ${meetingTime.format(
+          "DD/MM/YYYY"
+        )} klokken ${meetingTime.format("HH:mm")}`}</Typography>
+      </Box>
+    </Box>
+  );
+};
+
+const MatchOverview = ({
+  match,
+  receive = false,
+}: {
+  match: Match;
+  receive: boolean;
+}) => {
+  const matchInfo: MatchInfo = receive
+    ? MATCH_INFO.receive
+    : MATCH_INFO.deliver;
+
+  const [, updateState] = useState({});
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  return (
+    <>
+      <Typography>{matchInfo.intro}</Typography>
       {/*@ts-ignore*/}
-      <Typography>{`${match.meetingPoint[0].location.name} klokken ${moment(
-        // @ts-ignore
-        match.meetingPoint[0].time
-      ).format("HH:mm DD/MM/YY")}`}</Typography>
-      {receive && <Scanner match={match} />}
+      {match.items.every((item) => item.blid) && (
+        <Alert sx={{ marginTop: "1rem" }}>
+          Du har mottatt alle bøkene dine. Lykke til med skolestart!
+        </Alert>
+      )}
+
+      <MatchHeader>Disse bøkene</MatchHeader>
+      <MatchItemTable match={match} matchInfo={matchInfo} />
+
+      <MatchHeader>{matchInfo.deliveryHeader}</MatchHeader>
+      <OtherPersonContact match={match} receive={receive} />
+
+      <MatchHeader>Dere møtes ved</MatchHeader>
+      <MeetingInfo match={match} />
+
+      <MatchHeader>Når du skal motta bøkene</MatchHeader>
+      {receive && <Scanner match={match} forceUpdate={forceUpdate} />}
     </>
   );
 };

@@ -7,12 +7,11 @@ import {
   Card,
   Container,
   Skeleton,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import ContactInfo from "../info/ContactInfo";
 import MatchOverview from "./MatchOverview";
-import { haveAccessToken } from "../../api/token";
-import { useRouter } from "next/router";
 
 const MatchPage = ({
   matchID,
@@ -23,14 +22,8 @@ const MatchPage = ({
 }) => {
   const [match, setMatch] = useState<Match>();
   const [error, setError] = useState<boolean>();
-  const router = useRouter();
 
   useEffect(() => {
-    if (!haveAccessToken()) {
-      router.push(
-        `/auth/login?redirect=/match/${receive ? "r" : "d"}/${matchID}`
-      );
-    }
     const matchUrl = `matches/${matchID}`;
     const fetchInfo = async () => {
       try {
@@ -43,7 +36,7 @@ const MatchPage = ({
     };
 
     fetchInfo();
-  }, [matchID, receive, router]);
+  }, [matchID]);
 
   return (
     <Card sx={{ paddingBottom: "2rem" }}>
@@ -59,7 +52,28 @@ const MatchPage = ({
           sx={{ textAlign: "center", marginTop: 4, marginBottom: 2 }}
         >
           Overlevering av bøker
+          <Tooltip title="Din klasse har blitt valgt ut til å teste Boklistens nye system for bokoverlevering.">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: ".4rem",
+              }}
+            >
+              <Typography
+                sx={{
+                  background: "#9acd32",
+                  color: "white",
+                  borderRadius: "6%",
+                  width: "4rem",
+                }}
+              >
+                BETA
+              </Typography>
+            </Box>
+          </Tooltip>
         </Typography>
+
         {!error &&
           !match &&
           [0, 1, 2].map((id) => (
@@ -68,6 +82,7 @@ const MatchPage = ({
               <Skeleton variant="rectangular" width={500} height={60} />
             </Box>
           ))}
+
         {error && (
           <Alert severity="error" data-testid="api-error">
             Noe gikk galt under innlasting av overlevering. Dersom du mener
@@ -75,6 +90,7 @@ const MatchPage = ({
             <ContactInfo />
           </Alert>
         )}
+
         {!error && match && <MatchOverview match={match} receive={receive} />}
       </Container>
     </Card>
