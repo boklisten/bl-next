@@ -46,7 +46,7 @@
     "react-hook-form": "^7.25.3",
     "react-jwt": "^1.1.4",
     "react-qr-barcode-scanner": "^1.0.6",
-    "react-redux": "^8.0.1",
+    "react-redux": "^8.0.2",
     "sharp": "^0.30.0",
     "string-similarity": "^4.0.4",
     "swr": "^1.2.0",
