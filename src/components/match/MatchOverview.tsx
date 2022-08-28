@@ -18,6 +18,7 @@ import moment from "moment";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ErrorIcon from "@mui/icons-material/Error";
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import DynamicLink from "../DynamicLink";
 
 interface MatchInfo {
   intro: string;
@@ -102,7 +103,12 @@ const OtherPersonContact = ({
           <PhoneIphoneIcon sx={{ marginRight: ".2rem" }} />
           <Box>
             <Typography>{otherPerson.name}</Typography>
-            <Typography>{otherPerson.phone}</Typography>
+
+            <DynamicLink
+              href={`tel:+${otherPerson.phone}`}
+              label={otherPerson.phone}
+              underline={"none"}
+            />
           </Box>
         </Box>
       ))}

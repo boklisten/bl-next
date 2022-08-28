@@ -16,6 +16,10 @@ import {
 import { Match } from "@boklisten/bl-model";
 import { add } from "../../api/api";
 import Image from "next/image";
+import { LoadingButton } from "@mui/lab";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import CreateIcon from "@mui/icons-material/Create";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 
 const ScannerFeedback = ({
   feedback,
@@ -62,6 +66,7 @@ const ScannerTutorial = () => {
         variant={"contained"}
         sx={{ background: "green", mb: "2rem" }}
         onClick={() => setTutorialOpen(true)}
+        startIcon={<QuestionMarkIcon />}
       >
         Vis instruksjoner
       </Button>
@@ -171,10 +176,11 @@ const ManualRegistrationModal = ({
   open: boolean;
   handleClose: () => void;
   // eslint-disable-next-line no-unused-vars
-  handleSubmit: (blid: string, isbn: string) => void;
+  handleSubmit: (blid: string, isbn: string) => Promise<boolean>;
 }) => {
   const [isbn, setIsbn] = useState("");
   const [blid, setBlid] = useState("");
+  const [loading, setLoading] = useState(false);
   return (
     <Modal open={open}>
       <Container
@@ -209,16 +215,21 @@ const ManualRegistrationModal = ({
           >
             Lukk
           </Button>
-          <Button
+          <LoadingButton
+            loading={loading}
             variant={"contained"}
-            onClick={() => {
-              handleSubmit(blid, isbn);
-              setBlid("");
-              setIsbn("");
+            onClick={async () => {
+              setLoading(true);
+              const success = await handleSubmit(blid, isbn);
+              setLoading(false);
+              if (success) {
+                setBlid("");
+                setIsbn("");
+              }
             }}
           >
             Bekreft
-          </Button>
+          </LoadingButton>
         </Box>
       </Container>
     </Modal>
@@ -253,28 +264,31 @@ const Scanner = ({
     setFeedbackVisible(true);
   };
 
-  const handleManualRegistration = async (blid: string, isbn: string) => {
+  const handleManualRegistration = async (
+    blid: string,
+    isbn: string
+  ): Promise<boolean> => {
     if (invalidBlid(blid)) {
       displayFeedback("Unik ID er feilformatert!", "error");
-      return;
+      return false;
     }
 
     if (invalidISBN(isbn)) {
       displayFeedback("ISBN er feilformatert!", "error");
-      return;
+      return false;
     }
 
     // @ts-ignore
     const matchItem = match.items.find((item) => String(item.isbn) === isbn);
     if (!matchItem) {
       displayFeedback("ISBN samsvarer ikke med bestilte bøker", "error");
-      return;
+      return false;
     }
 
     // @ts-ignore
     if (matchItem.blid) {
       displayFeedback("Denne boken har allerede blitt registrert", "error");
-      return;
+      return false;
     }
 
     // @ts-ignore
@@ -283,7 +297,7 @@ const Scanner = ({
         "Denne unike IDen er allerede registrert på en annen bok",
         "error"
       );
-      return;
+      return false;
     }
 
     match.events.push({
@@ -305,6 +319,7 @@ const Scanner = ({
     displayFeedback("Boken ble registrert!", "success");
 
     setManualRegistrationModalOpen(false);
+    return true;
   };
 
   return (
@@ -316,11 +331,16 @@ const Scanner = ({
         feedback={feedback}
         handleClose={() => setFeedbackVisible(false)}
       />
-      <Button variant={"contained"} onClick={() => setScanModalOpen(true)}>
+      <Button
+        startIcon={<QrCodeScannerIcon />}
+        variant={"contained"}
+        onClick={() => setScanModalOpen(true)}
+      >
         Scan bøker
       </Button>
       <p>eller</p>
       <Button
+        startIcon={<CreateIcon />}
         variant={"contained"}
         onClick={() => setManualRegistrationModalOpen(true)}
       >
