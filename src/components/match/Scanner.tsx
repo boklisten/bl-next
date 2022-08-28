@@ -48,7 +48,7 @@ const ScannerFeedback = ({
     <Snackbar
       open={open}
       onClose={autoClose}
-      autoHideDuration={4000}
+      autoHideDuration={6000}
       anchorOrigin={{
         vertical: "top",
         horizontal: "center",
@@ -155,12 +155,20 @@ const ScannerModal = ({
   );
 
   useEffect(() => {
+    if (isbn && !blid) {
+      setIsbn("");
+      displayFeedback(
+        "Du må scanne Unik ID først! Se instruksjonene om du er usikker.",
+        "error"
+      );
+    }
     if (blid && isbn) {
       handleSubmit(blid, isbn);
       setBlid("");
       setIsbn("");
     }
-  }, [blid, isbn, handleSubmit]);
+    // Future: when blid && !isbn => check if they are already connected
+  }, [blid, isbn, handleSubmit, displayFeedback]);
 
   return (
     <Modal open={open}>
