@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { QrReader } from "react-qr-reader";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
   AlertColor,
@@ -20,6 +19,8 @@ import { LoadingButton } from "@mui/lab";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import CreateIcon from "@mui/icons-material/Create";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import CropFreeIcon from "@mui/icons-material/CropFree";
+import BarcodeQrScanner from "./BarcodeQrScanner";
 
 const ScannerFeedback = ({
   feedback,
@@ -70,7 +71,7 @@ const ScannerTutorial = () => {
       >
         Vis instruksjoner
       </Button>
-      <Modal open={tutorialOpen}>
+      <Modal open={tutorialOpen} sx={{ overflow: "scroll" }}>
         <Container
           component={Paper}
           sx={{
@@ -128,15 +129,42 @@ const ScannerModal = ({
   open,
   handleClose,
   handleSubmit,
+  displayFeedback,
 }: {
   open: boolean;
   handleClose: () => void;
   // eslint-disable-next-line no-unused-vars
-  handleSubmit: (blid: string, isbn: string) => void;
+  handleSubmit: (blid: string, isbn: string) => Promise<boolean>;
+  // eslint-disable-next-line no-unused-vars
+  displayFeedback: (feedback: string, severity: AlertColor) => void;
 }) => {
+  const [blid, setBlid] = useState("");
+  const [isbn, setIsbn] = useState("");
+
+  const handleScan = useCallback(
+    (result: string) => {
+      if (result.length === 8) {
+        setBlid(result);
+        displayFeedback("Unik ID registrert! Scan bokas ISBN", "success");
+      } else if (result.length === 13) {
+        setIsbn(result);
+        displayFeedback("ISBN er registrert!", "success");
+      }
+    },
+    [displayFeedback, setBlid]
+  );
+
+  useEffect(() => {
+    if (blid && isbn) {
+      handleSubmit(blid, isbn);
+      setBlid("");
+      setIsbn("");
+    }
+  }, [blid, isbn, handleSubmit]);
+
   return (
     <Modal open={open}>
-      <Box
+      <Container
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -145,25 +173,26 @@ const ScannerModal = ({
           height: "100vh",
         }}
       >
+        <Typography variant={"h4"} sx={{ zIndex: 100 }}>
+          {blid === "" ? "Unik ID" : "ISBN"}
+        </Typography>
+        <CropFreeIcon sx={{ zIndex: 100, fontSize: "200px" }} />
         <Button
           color={"error"}
           sx={{ position: "absolute", top: 80, zIndex: 100 }}
           variant={"contained"}
-          onClick={handleClose}
+          onClick={() => {
+            setBlid("");
+            setIsbn("");
+            handleClose();
+          }}
         >
           Lukk
         </Button>
-        <QrReader
-          onResult={(result) => {
-            if (result) {
-              handleSubmit(result.getText(), result.getText());
-            }
-            setTimeout(() => {});
-          }}
-          containerStyle={{ width: "100%" }}
-          constraints={{ facingMode: "environment" }}
-        />
-      </Box>
+        <Box sx={{ position: "absolute" }}>
+          <BarcodeQrScanner handleScan={handleScan} />
+        </Box>
+      </Container>
     </Modal>
   );
 };
@@ -264,7 +293,7 @@ const Scanner = ({
     setFeedbackVisible(true);
   };
 
-  const handleManualRegistration = async (
+  const handleRegistration = async (
     blid: string,
     isbn: string
   ): Promise<boolean> => {
@@ -319,6 +348,7 @@ const Scanner = ({
     displayFeedback("Boken ble registrert!", "success");
 
     setManualRegistrationModalOpen(false);
+    setScanModalOpen(false);
     return true;
   };
 
@@ -352,7 +382,7 @@ const Scanner = ({
           setManualRegistrationModalOpen(false);
           setFeedbackVisible(false);
         }}
-        handleSubmit={handleManualRegistration}
+        handleSubmit={handleRegistration}
       />
       <ScannerModal
         open={scanModalOpen}
@@ -360,10 +390,8 @@ const Scanner = ({
           setScanModalOpen(false);
           setFeedbackVisible(false);
         }}
-        handleSubmit={(blid, isbn) => {
-          console.log("blid:", blid);
-          console.log("isbn", isbn);
-        }}
+        handleSubmit={handleRegistration}
+        displayFeedback={displayFeedback}
       />
     </>
   );
