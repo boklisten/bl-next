@@ -47,7 +47,7 @@
     "react-jwt": "^1.1.4",
     "react-qr-barcode-scanner": "^1.0.6",
     "react-redux": "^8.0.1",
-    "sharp": "^0.30.0",
+    "sharp": "^0.31.1",
     "string-similarity": "^4.0.4",
     "swr": "^1.2.0",
     "validator": "^13.7.0"
