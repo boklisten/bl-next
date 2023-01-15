@@ -30,20 +30,24 @@ const CheckoutStep = ({
   }, []);
 
   switch (step) {
-    case "tos":
+    case "tos": {
       return <TermsAndConditionsStep setWait={setWait} />;
-    case "payment":
+    }
+    case "payment": {
       return <PaymentStep />;
-    case "delivery":
+    }
+    case "delivery": {
       return (
         <DeliveryStep wait={wait} setWait={setWait} userDetails={userDetails} />
       );
-    default:
+    }
+    default: {
       return (
         <Alert severity="error">
           Noe gikk galt! Vennligst prøv igjen senere.
         </Alert>
       );
+    }
   }
 };
 

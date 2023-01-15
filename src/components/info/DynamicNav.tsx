@@ -60,7 +60,7 @@ function SelectTab({
 function LinkTab({ label, href }: LinkTabProps) {
   return (
     <Link href={href} passHref>
-      <Tab data-testid="link-tab" component="a" label={label} />
+      <Tab data-testid="link-tab" label={label} />
     </Link>
   );
 }

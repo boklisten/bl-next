@@ -42,11 +42,11 @@ const PaymentSummary = () => {
         <TableBody>
           {cartItems.map((cartItem) => {
             const periodInfo =
-              cartItem.orderItem.type !== "buyout"
-                ? ` til ${moment(cartItem.orderItem.info?.to).format(
+              cartItem.orderItem.type === "buyout"
+                ? ""
+                : ` til ${moment(cartItem.orderItem.info?.to).format(
                     "DD/MM/YY"
-                  )}`
-                : "";
+                  )}`;
             return (
               <TableRow key={cartItem.item.id}>
                 <TableCell>{cartItem.orderItem.title}</TableCell>

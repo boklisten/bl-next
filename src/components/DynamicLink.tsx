@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { Link } from "@mui/material";
+import { Link as MuiLink } from "@mui/material";
 import React, { HTMLAttributeAnchorTarget } from "react";
 
 interface LinkProps {
@@ -17,16 +17,16 @@ const DynamicLink = ({
   underline = "always",
   testID,
 }: LinkProps) => (
-  <NextLink href={href} passHref>
-    <Link
-      variant="body2"
-      underline={underline}
-      data-testid={testID}
-      target={target}
-    >
-      {label}
-    </Link>
-  </NextLink>
+  <MuiLink
+    component={NextLink}
+    href={href}
+    variant="body2"
+    underline={underline}
+    data-testid={testID}
+    target={target}
+  >
+    {label}
+  </MuiLink>
 );
 
 export default DynamicLink;

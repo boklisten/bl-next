@@ -1,11 +1,14 @@
 describe("Register", () => {
-  it("displays correct initial elements", () => {
+  beforeEach(() => {
     cy.visit("/");
     cy.getBySel("MenuIcon").click();
     cy.get(".MuiListItemButton-root").eq(4).click();
+  });
 
-    cy.getBySel("facebook-button").should("be.visible");
-    cy.getBySel("google-button").should("be.visible");
+  it("displays correct initial elements", () => {
+    // TODO: fix me when fb is enabled
+    cy.getBySel("facebook-button").should("not.exist");
+    cy.getBySel("google-button").should("not.exist");
     cy.getBySel("email-field").should("be.visible");
     cy.getBySel("password-field").should("be.visible");
     cy.getBySel("submit-button").should("be.visible");
@@ -59,6 +62,11 @@ describe("Register", () => {
   });
 
   it("correctly validates an underage user", () => {
+    cy.getBySel("email-field").type("richard.stallman@protonmail.com");
+    cy.getBySel("password-field").type(
+      "Programming is not a science. Programming is a craft."
+    );
+
     cy.getBySel("birthday-field").clear();
     cy.getBySel("birthday-field").type("16032010");
     cy.getBySel("guardian-name-field").type("Linus Thorvalds");
@@ -70,6 +78,10 @@ describe("Register", () => {
   });
 
   it("correctly displays postal city", () => {
+    cy.getBySel("email-field").type("richard.stallman@protonmail.com");
+    cy.getBySel("password-field").type(
+      "Programming is not a science. Programming is a craft."
+    );
     cy.getBySel("postal-code-field").clear();
     cy.getBySel("postal-code-field").type("7032");
     cy.getBySel("postal-city-preview").should("contain", "TRONDHEIM");

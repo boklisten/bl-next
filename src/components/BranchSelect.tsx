@@ -62,7 +62,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
           id="demo-simple-select-label"
           sx={{ color: isNav ? "white" : "inherit" }}
         >
-          {!selectedBranch.id ? "Velg skole" : "Valgt skole"}
+          {selectedBranch.id ? "Valgt skole" : "Velg skole"}
         </InputLabel>
         <Select
           data-testid="branchSelect"

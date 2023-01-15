@@ -55,9 +55,9 @@ const DeliveryStep = ({
       <Tabs value={tabIndex} aria-label="select delivery method">
         <Tooltip
           title={
-            !deliveryMethods.branch
-              ? "Henting på filial er ikke tilgjengelig på denne filialen."
-              : ""
+            deliveryMethods.branch
+              ? ""
+              : "Henting på filial er ikke tilgjengelig på denne filialen."
           }
         >
           <span>
@@ -75,9 +75,9 @@ const DeliveryStep = ({
         </Tooltip>
         <Tooltip
           title={
-            !deliveryMethods.byMail
-              ? "Sending per post er ikke tilgjengelig på denne filialen."
-              : ""
+            deliveryMethods.byMail
+              ? ""
+              : "Sending per post er ikke tilgjengelig på denne filialen."
           }
         >
           <span>

@@ -1,4 +1,5 @@
 Cypress.Commands.add("logout", () => {
+  cy.visit("/");
   cy.getBySel("MenuIcon").click();
   cy.get(".MuiListItemButton-root")
     .eq(5)
@@ -13,6 +14,7 @@ Cypress.Commands.add("logout", () => {
 });
 
 Cypress.Commands.add("login", (username, password) => {
+  cy.visit("/");
   cy.logout();
   cy.visit("/auth/login");
   cy.getBySel("email-field").type(username);

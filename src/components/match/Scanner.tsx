@@ -92,8 +92,8 @@ const ScannerTutorial = () => {
               style={{ borderRadius: "2%" }}
               src={"/ullernUID.png"}
               alt={"Ullern VGS unik ID"}
-              width={"300px"}
-              height={"150px"}
+              width={300}
+              height={150}
             />
           </Card>
 
@@ -103,8 +103,8 @@ const ScannerTutorial = () => {
               style={{ borderRadius: "2%" }}
               src={"/isbn.png"}
               alt={"Eksempel på ISBN"}
-              width={"300px"}
-              height={"150px"}
+              width={300}
+              height={150}
             />
           </Card>
 

@@ -12,11 +12,12 @@ import "@fontsource/roboto/700.css";
 import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import Footer from "components/Footer";
-import DateAdapter from "@mui/lab/AdapterMoment";
-import { LocalizationProvider } from "@mui/lab";
+import { AdapterMoment as DateAdapter } from "@mui/x-date-pickers/AdapterMoment";
 import { Moment } from "moment";
 import { Provider } from "react-redux";
 import store from "redux/store";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import "@mui/lab";
 
 class OverriddenAdapter extends DateAdapter {
   // Get years in decending order

@@ -1,10 +1,10 @@
 describe("Info pages", () => {
-  before(() => {
-    cy.visit("/");
-    cy.getBySel("infoBtnNav").click();
-  });
-
   describe("as a customer", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      cy.getBySel("infoBtnNav").click();
+    });
+
     it("displays editor info", () => {
       cy.getBySel("editor").should("be.visible");
     });

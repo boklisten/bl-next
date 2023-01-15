@@ -315,9 +315,9 @@ const CustomerItemOverview = ({
                       )}
                     <Tooltip
                       title={
-                        !canBuyout(customerItem)
-                          ? "Du kan ikke kjøpe ut denne boken før det har gått 2 uker"
-                          : ""
+                        canBuyout(customerItem)
+                          ? ""
+                          : "Du kan ikke kjøpe ut denne boken før det har gått 2 uker"
                       }
                     >
                       <Box>

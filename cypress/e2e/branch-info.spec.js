@@ -1,8 +1,6 @@
 describe("Info pages", () => {
-  before(() => {
-    cy.visit("/");
-    cy.getBySel("infoBtnNav").click();
-    cy.get(".MuiNativeSelect-select").select("/info/branch/select");
+  beforeEach(() => {
+    cy.visit("/info/branch/select");
   });
 
   describe("as a customer", () => {
@@ -19,7 +17,7 @@ describe("Info pages", () => {
     });
 
     it("only displays future opening hours for current branch", () => {
-      cy.getBySel("branchSelect").click();
+      cy.getBySel("branchSelect").eq(1).click();
       cy.getBySel("branchOption").eq(2).click();
       cy.getBySel("openingHourRow").should("have.length", 2);
       cy.getBySel("branch-address").should("exist");
