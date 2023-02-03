@@ -597,10 +597,10 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
-"@mui/x-date-pickers@^5.0.13":
-  version "5.0.13"
-  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.13.tgz#0188f17483984ffe3f615444bff225256f7b4a0c"
-  integrity sha512-nUc35Zvah/l4bEWcPNRtSvWBL+7uAlokd6G6PzQfLe2TQo4GNlK1JVRfoVpBY5FsdM09uWLrpvfWLbka87k7GA==
+"@mui/x-date-pickers@^5.0.17":
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.17.tgz#92a5ba3dec828ea1cdb6e5d3e96c7b0523507bb8"
+  integrity sha512-Rxm2OqSLGXijdwCpt8dzbuDIWNids7bUsuxB/ci66MB4ULfTswhFXZTcVvEm/SKZvtkUmDPQmMemdNg78440iA==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@date-io/core" "^2.15.0"
