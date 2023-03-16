@@ -104,7 +104,7 @@ jobs:
         run: |
           cd bl-api
           yarn load_fixtures
-          yarn start &
+          yarn serve &
         env:
           PORT: 1337
           BLAPI_HOST: localhost
@@ -181,7 +181,7 @@ jobs:
         run: |
           cd bl-api
           yarn load_fixtures
-          yarn start &
+          yarn serve &
         env:
           PORT: 1337
           BLAPI_HOST: localhost
@@ -214,10 +214,10 @@ jobs:
           BRING_API_KEY: ${{ secrets.BRING_API_KEY }}
           BRING_API_ID: ${{ secrets.BRING_API_ID }}
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5.3.1
         with:
           install: false
-          start: yarn start
+          start: yarn serve
           record: true
           parallel: true
           group: "UI - Electron"
