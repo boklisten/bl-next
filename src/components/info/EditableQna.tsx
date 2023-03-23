@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -44,6 +44,10 @@ const QuestionWithAnswer = ({
   const [edit, setEdit] = useState(false);
   const questionInput = useRef();
   const answerInput = useRef();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   return (
     <Accordion
@@ -65,7 +69,7 @@ const QuestionWithAnswer = ({
           />
         )}
         {!edit && <Typography sx={{ flexGrow: 1 }}>{question}</Typography>}
-        {isAdmin() && (
+        {hydrated && isAdmin() && (
           <>
             <Tooltip title={edit ? "Lagre" : "Rediger"}>
               <IconButton
@@ -127,6 +131,12 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
   const deleteQuestion = (questionId: string) => {
     QNAs = QNAs.filter((QNA) => QNA.id !== questionId);
   };
+
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -149,7 +159,7 @@ const EditableQNA = ({ QNAs }: { QNAs: QNA[] }) => {
         />
       ))}
 
-      {isAdmin() && (
+      {hydrated && isAdmin() && (
         <Tooltip title="Legg til spørsmål">
           <IconButton
             data-testid="add-question-button"

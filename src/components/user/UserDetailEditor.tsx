@@ -113,6 +113,7 @@ const UserDetailEditor = ({
   const {
     register,
     handleSubmit,
+    trigger,
     setError,
     clearErrors,
     formState: { errors },
@@ -330,6 +331,7 @@ const UserDetailEditor = ({
                       // Need to have a separate onChange because of autofill not triggering validation
                       onChange: async (event) => {
                         if (!isPostalCode(event.target.value, "NO")) {
+                          trigger("postalCode");
                           setPostalCity("");
                           return;
                         }
@@ -416,6 +418,7 @@ const UserDetailEditor = ({
                     renderInput={(parameters) => (
                       <TextField
                         data-testid="birthday-field"
+                        id="birthday"
                         autoComplete="bday"
                         required
                         fullWidth

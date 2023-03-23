@@ -84,19 +84,19 @@ describe("Register", () => {
     );
     cy.getBySel("postal-code-field").clear();
     cy.getBySel("postal-code-field").type("7032");
-    cy.getBySel("postal-city-preview").should("contain", "TRONDHEIM");
+    cy.getBySel("postal-city-preview").should("contain", "Trondheim");
 
-    cy.getBySel("postal-code-field").clear();
-    cy.getBySel("postal-code-field").type("1234");
+    cy.get("#postalCode").clear();
+    cy.get("#postalCode").type("1234");
     cy.getBySel("submit-button").should("be.disabled");
     cy.getBySel("error-message").should(
       "contain",
       "Du må oppgi et gyldig norsk postnummer"
     );
 
-    cy.getBySel("postal-code-field").clear();
-    cy.getBySel("postal-code-field").type("0977");
-    cy.getBySel("postal-city-preview").should("contain", "OSLO");
+    cy.get("#postalCode").clear();
+    cy.get("#postalCode").type("0977").blur();
+    cy.getBySel("postal-city-preview").should("contain", "Oslo");
     cy.getBySel("submit-button").should("not.be.disabled");
     cy.getBySel("error-message").should("not.exist");
   });
@@ -111,7 +111,7 @@ describe("Register", () => {
     cy.getBySel("postal-code-field").clear();
     cy.getBySel("birthday-field").clear();
     cy.getBySel("tos-field").click();
-    cy.getBySel("error-message").should("have.length", 8);
+    cy.getBySel("error-message").should("have.length", 7);
     cy.getBySel("submit-button").should("be.disabled");
 
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
@@ -124,40 +124,41 @@ describe("Register", () => {
     cy.getBySel("address-field").type("Cali");
     cy.getBySel("postal-code-field").type("7032");
     cy.getBySel("birthday-field").type("16032010");
-    cy.getBySel("tos-field").click();
+    cy.getBySel("tos-field").dblclick();
 
     cy.getBySel("submit-button").should("not.be.disabled");
     cy.getBySel("error-message").should("not.exist");
   });
 
   it("cannot register when email is invalid", () => {
-    cy.getBySel("email-field").clear();
     cy.getBySel("email-field").type("richard stallman");
+    cy.getBySel("footer").click();
     cy.getBySel("error-message").should("be.visible");
     cy.getBySel("submit-button").should("be.disabled");
-    cy.getBySel("email-field").clear();
+    cy.get("#email").clear();
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
+    cy.getBySel("footer").click();
     cy.getBySel("error-message").should("not.exist");
     cy.getBySel("submit-button").should("not.be.disabled");
   });
 
   it("cannot register when passord is invalid", () => {
-    cy.getBySel("password-field").clear();
-    cy.getBySel("password-field").type("pass");
+    cy.get("#password").clear();
+    cy.get("#password").type("pass").blur();
     cy.getBySel("error-message").should("be.visible");
     cy.getBySel("submit-button").should("be.disabled");
-    cy.getBySel("password-field").clear();
     cy.getBySel("password-field").type("battery horse staple");
     cy.getBySel("error-message").should("not.exist");
     cy.getBySel("submit-button").should("not.be.disabled");
   });
 
   it("cannot register when birthday is invalid", () => {
-    cy.getBySel("birthday-field").clear();
+    cy.getBySel("email-field").type("richard.stallman@protonmail.com");
+    cy.get("#birthday").clear();
     cy.getBySel("birthday-field").type("23. januar 2002");
     cy.getBySel("error-message").should("be.visible");
     cy.getBySel("submit-button").should("be.disabled");
-    cy.getBySel("birthday-field").clear();
+    cy.get("#birthday").clear();
     cy.getBySel("birthday-field").type("23/01/2002");
     cy.getBySel("error-message").should("not.exist");
     cy.getBySel("submit-button").should("not.be.disabled");
