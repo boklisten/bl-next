@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import dynamic from "next/dynamic";
@@ -49,12 +49,17 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
     setReadOnly(!readOnly);
   };
 
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   return (
     <Container
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       data-testid="editor"
     >
-      {isAdmin() && (
+      {hydrated && isAdmin() && (
         <Button
           data-testid="edit-button"
           sx={{ width: { xs: "100%", sm: "" }, paddingX: 5 }}

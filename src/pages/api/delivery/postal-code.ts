@@ -25,7 +25,7 @@ const PostalCode = async (
     return response.status(500).json({ postalCity: " ", error });
   }
 
-  if (result["error"]) {
+  if (result["error"] || !result["postalCode"]) {
     return response.status(200).json({});
   }
 
