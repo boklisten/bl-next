@@ -21,23 +21,15 @@ export default function Footer() {
     >
       <ContactInfo />
       <Box sx={{ marginBottom: ".7rem" }}>
-        <DynamicLink
-          href={"/info/policies/conditions"}
-          label={"Betingelser"}
-          underline={"none"}
-        />
+        <DynamicLink href={"/info/policies/conditions"}>
+          Betingelser
+        </DynamicLink>
         {" | "}
-        <DynamicLink
-          href={"/info/policies/terms"}
-          label={"Vilkår"}
-          underline={"none"}
-        />
+        <DynamicLink href={"/info/policies/terms"}>Vilkår</DynamicLink>
         {" | "}
-        <DynamicLink
-          href={"/info/policies/privacy"}
-          label={"Personvernserklæring"}
-          underline={"none"}
-        />
+        <DynamicLink href={"/info/policies/privacy"}>
+          Personvernserklæring
+        </DynamicLink>
       </Box>
       <Image
         width={200}

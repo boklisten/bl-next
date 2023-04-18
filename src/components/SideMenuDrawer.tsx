@@ -17,8 +17,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Link from "next/link";
 import { isLoggedIn, logout } from "api/auth";
+import DynamicLink from "./DynamicLink";
 
 interface DrawerLinkProps {
   title: string;
@@ -28,12 +28,12 @@ interface DrawerLinkProps {
 }
 
 const DrawerLink = ({ title, href, icon, onClick }: DrawerLinkProps) => (
-  <Link href={href} passHref>
+  <DynamicLink href={href} style={{ color: "inherit" }}>
     <ListItemButton onClick={onClick}>
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText primary={title} />
     </ListItemButton>
-  </Link>
+  </DynamicLink>
 );
 
 export default function SideMenuDrawer() {

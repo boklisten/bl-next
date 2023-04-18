@@ -21,12 +21,9 @@ const TermsAndConditionsStep = ({
         bøker på avdrag.
       </Typography>
       <Box sx={{ width: "100px", mt: ".5rem" }}>
-        <DynamicLink
-          href={"/info/policies/conditions"}
-          label={"Les mer"}
-          underline={"none"}
-          target={"_blank"}
-        />
+        <DynamicLink href={"/info/policies/conditions"} target={"_blank"}>
+          Les mer
+        </DynamicLink>
       </Box>
     </>
   );

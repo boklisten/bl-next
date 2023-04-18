@@ -121,11 +121,9 @@ const Login: NextPage = () => {
               </Button>
               <Grid container>
                 <Grid item>
-                  <DynamicLink
-                    href={"/auth/login"}
-                    label={"Tilbake til innloggingssiden"}
-                    testID={"login"}
-                  />
+                  <DynamicLink href={"/auth/login"} testID={"login"}>
+                    Tilbake til innloggingssiden
+                  </DynamicLink>
                 </Grid>
               </Grid>
             </Box>

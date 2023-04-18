@@ -3,11 +3,11 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@mui/material";
 import DropDownMenu from "./SideMenuDrawer";
 import BranchSelect from "./BranchSelect";
+import DynamicLink from "./DynamicLink";
 
 interface TabLinkProps {
   title: string;
@@ -17,7 +17,7 @@ interface TabLinkProps {
 
 const TabLink = ({ title, href, testID }: TabLinkProps) => {
   return (
-    <Link href={href} passHref>
+    <DynamicLink href={href}>
       <Button
         data-testid={testID}
         sx={{
@@ -30,7 +30,7 @@ const TabLink = ({ title, href, testID }: TabLinkProps) => {
       >
         {title}
       </Button>
-    </Link>
+    </DynamicLink>
   );
 };
 
@@ -52,7 +52,7 @@ export default function NavBar() {
     <Box data-testid="nav-bar">
       <AppBar position="fixed">
         <Toolbar sx={{ paddingY: "10px" }}>
-          <Link href="/" passHref>
+          <DynamicLink href="/">
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
               color="secondary"
@@ -71,12 +71,13 @@ export default function NavBar() {
                   display: { xs: "none", md: "flex" },
                   flexGrow: 1,
                   marginLeft: 1,
+                  color: "white",
                 }}
               >
                 Boklisten.no
               </Typography>
             </Box>
-          </Link>
+          </DynamicLink>
 
           <Box sx={{ flexGrow: 1 }} />
 
