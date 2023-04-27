@@ -2,7 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
 import {
   Divider,
@@ -12,6 +11,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import stringSimilarity from "string-similarity";
+import DynamicLink from "../DynamicLink";
 
 export interface LinkTabProps {
   label: string;
@@ -59,9 +59,9 @@ function SelectTab({
 
 function LinkTab({ label, href }: LinkTabProps) {
   return (
-    <Link href={href} passHref>
+    <DynamicLink href={href} style={{ color: "inherit" }}>
       <Tab data-testid="link-tab" label={label} />
-    </Link>
+    </DynamicLink>
   );
 }
 

@@ -518,18 +518,24 @@ const UserDetailEditor = ({
                       }
                       label={
                         <Typography>
-                          Jeg godtar Boklistens{" "}
+                          {"Jeg godtar Boklistens "}
                           <DynamicLink
                             href={"/info/policies/conditions"}
-                            label={"betingelser"}
                             target={"_blank"}
-                          />{" "}
-                          og{" "}
+                            variant={"body1"}
+                            underline={"hover"}
+                          >
+                            betingelser
+                          </DynamicLink>
+                          {" og "}
                           <DynamicLink
                             href={"/info/policies/terms"}
-                            label={"vilkår"}
                             target={"_blank"}
-                          />
+                            variant={"body1"}
+                            underline={"hover"}
+                          >
+                            vilkår
+                          </DynamicLink>
                         </Typography>
                       }
                     />
@@ -551,11 +557,9 @@ const UserDetailEditor = ({
           {isSignUp && (
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <DynamicLink
-                  href={"/auth/login"}
-                  label={"Har du allerede en konto? Logg inn"}
-                  testID={"login-link"}
-                />
+                <DynamicLink href={"/auth/login"} testID={"login-link"}>
+                  Har du allerede en konto? Logg inn
+                </DynamicLink>
               </Grid>
             </Grid>
           )}

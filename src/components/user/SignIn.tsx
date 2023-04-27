@@ -154,17 +154,14 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <DynamicLink
-                href={"/auth/forgot"}
-                label={"Glemt passord?"}
-                testID={"forgot-password"}
-              />
+              <DynamicLink href={"/auth/forgot"} testID={"forgot-password"}>
+                Glemt passord?
+              </DynamicLink>
             </Grid>
             <Grid item>
-              <DynamicLink
-                href={"/auth/register"}
-                label={"Har du ikke konto? Registrer deg"}
-              />
+              <DynamicLink href={"/auth/register"}>
+                Har du ikke konto? Registrer deg
+              </DynamicLink>
             </Grid>
           </Grid>
         </Box>

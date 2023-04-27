@@ -16,10 +16,10 @@ const ContactInfo = () => {
           <Typography variant="body1">Ring oss</Typography>
           <DynamicLink
             href={`tel:+${contactInfo.phone}`}
-            label={contactInfo.phone}
-            underline={"none"}
             testID={"contact-phone"}
-          />
+          >
+            {contactInfo.phone}
+          </DynamicLink>
         </Box>
       </Box>
 
@@ -29,10 +29,10 @@ const ContactInfo = () => {
           <Typography variant="body1">Send oss en epost</Typography>
           <DynamicLink
             href={`mailto:${contactInfo.email}`}
-            label={contactInfo.email}
-            underline={"none"}
             testID={"contact-email"}
-          />
+          >
+            {contactInfo.email}
+          </DynamicLink>
         </Box>
       </Box>
 

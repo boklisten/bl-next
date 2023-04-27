@@ -39,10 +39,9 @@ const Home: NextPage = () => {
             Vi i Boklisten.no er veldig opptatt av lærebøker, derfor vil vi
             gjøre det så enkelt som mulig for deg å få tak i dem.
           </Typography>
-          <DynamicLink
-            href={"https://www.boklisten.no/welcome"}
-            label={"Til gamle boklisten.no"}
-          />
+          <DynamicLink href={"https://www.boklisten.no/welcome"}>
+            Til gamle boklisten.no
+          </DynamicLink>
         </Box>
       </Box>
     </>

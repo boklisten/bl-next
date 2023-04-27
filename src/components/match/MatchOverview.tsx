@@ -104,11 +104,9 @@ const OtherPersonContact = ({
           <Box>
             <Typography>{otherPerson.name}</Typography>
 
-            <DynamicLink
-              href={`tel:+${otherPerson.phone}`}
-              label={otherPerson.phone}
-              underline={"none"}
-            />
+            <DynamicLink href={`tel:+${otherPerson.phone}`}>
+              {otherPerson.phone}
+            </DynamicLink>
           </Box>
         </Box>
       ))}
