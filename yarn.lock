@@ -63,10 +63,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@boklisten/bl-model@^0.25.8":
-  version "0.25.8"
-  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.8.tgz#b74f5066500f6b703ba87aae19821ba4c7f5be5b"
-  integrity sha512-6G8DjQkb/kMJWl8FABAzTiXXREhSJsSFXwcBHGFuoCAIrwxsS6QZBe3YxZEQsHOwXV6NxmM20TtCkpogZxRB/A==
+"@boklisten/bl-model@^0.25.14":
+  version "0.25.14"
+  resolved "https://registry.yarnpkg.com/@boklisten/bl-model/-/bl-model-0.25.14.tgz#08f3f5591d6dac8bce06d5b9825b7cbc4166d124"
+  integrity sha512-YaD8JBm6xuI23u0oXLVWU7ui36kO3iXLSdFvEP3Rnoj07IayhEX9CVPabgGWpLYn6B4AJnOl3zcVa+eUCQkQZw==
   dependencies:
     typescript "^4.5.2"
 
