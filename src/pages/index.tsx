@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           />
         </Box>
         <Box sx={{ zIndex: 100 }}>
-          <Typography variant="h2" sx={{ margin: 5 }}>
+          <Typography variant="title" sx={{ margin: 5 }}>
             Alltid riktig bok!
           </Typography>
           <Typography variant="subtitle1" sx={{ margin: 5 }}>
