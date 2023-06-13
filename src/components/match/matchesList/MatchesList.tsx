@@ -10,7 +10,6 @@ import ProgressBar from "./ProgressBar";
 import { Box } from "@mui/material";
 import { MatchWithDetails, UserMatchWithDetails } from "../../../utils/types";
 
-// TODO: real-time updating when receiver is scanning books?
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
     getAccessTokenBody()
@@ -18,7 +17,11 @@ export const MatchesList: React.FC = () => {
   const userId = accessToken?.details;
   const { data: matches, error: matchesError } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
-    apiFetcher<MatchWithDetails[]>
+    // The following line errors in WebStorm for some reason, but it's allowed.
+    // WebStorm accepts it wrapped in parentheses, but then prettier doesn't, so
+    // just ignore it.
+    apiFetcher<MatchWithDetails[]>,
+    { refreshInterval: 5000 }
   );
 
   if (tokenError || matchesError) {
