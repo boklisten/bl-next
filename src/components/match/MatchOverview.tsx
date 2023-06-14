@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import React, { ReactNode, useCallback, useState } from "react";
-import { Match } from "@boklisten/bl-model";
+// import { Match } from "@boklisten/bl-model";
 import Scanner from "./Scanner";
 import moment from "moment";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -45,7 +45,7 @@ const MatchItemTable = ({
   match,
   matchInfo,
 }: {
-  match: Match;
+  match: any;
   matchInfo: MatchInfo;
 }) => {
   return (
@@ -58,7 +58,7 @@ const MatchItemTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {match.items.map((item) => (
+          {match.items.map((item: any) => (
             <TableRow key={item.customerItem}>
               <TableCell>{item.title}</TableCell>
               <Tooltip
@@ -90,12 +90,12 @@ const OtherPersonContact = ({
   match,
   receive,
 }: {
-  match: Match;
+  match: any;
   receive: boolean;
 }) => {
   return (
     <>
-      {(receive ? [match.sender] : match.recievers).map((otherPerson) => (
+      {(receive ? [match.sender] : match.recievers).map((otherPerson: any) => (
         <Box
           key={otherPerson.userId}
           sx={{ display: "flex", alignItems: "center" }}
@@ -125,7 +125,7 @@ const MatchHeader = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const MeetingInfo = ({ match }: { match: Match }) => {
+const MeetingInfo = ({ match }: { match: any }) => {
   // @ts-ignore
   const meetingTime = moment(match.meetingPoint[0].time);
   // @ts-ignore
@@ -153,7 +153,7 @@ const MatchOverview = ({
   match,
   receive = false,
 }: {
-  match: Match;
+  match: any;
   receive: boolean;
 }) => {
   const matchInfo: MatchInfo = receive

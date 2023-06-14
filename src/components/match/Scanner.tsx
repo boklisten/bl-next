@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Match } from "@boklisten/bl-model";
+// import { Match } from "@boklisten/bl-model";
 import { add } from "../../api/api";
 import Image from "next/image";
 import { LoadingButton } from "@mui/lab";
@@ -283,7 +283,7 @@ const Scanner = ({
   match,
   forceUpdate,
 }: {
-  match: Match;
+  match: any;
   forceUpdate: () => void;
 }) => {
   const [scanModalOpen, setScanModalOpen] = useState(false);
