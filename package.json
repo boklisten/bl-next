@@ -46,7 +46,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@boklisten/bl-model": "^0.25.14",
+    "@boklisten/bl-model": "^0.25.15",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@testing-library/react": "^13.4.0",

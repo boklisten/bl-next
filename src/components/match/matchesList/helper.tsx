@@ -1,6 +1,6 @@
-import { Match, MatchVariant } from "@boklisten/bl-model";
+import { Match, MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { Properties } from "csstype";
-import { GroupedMatches, MatchWithDetails } from "../../../utils/types";
+import { GroupedMatches } from "../../../utils/types";
 
 export const sectionStyle: Properties = {
   display: "flex",

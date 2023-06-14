@@ -1,4 +1,10 @@
-import { MatchVariant, StandMatch, UserMatch } from "@boklisten/bl-model";
+import {
+  MatchVariant,
+  MatchWithDetails,
+  RelevantDetails,
+  StandMatch,
+  UserMatch,
+} from "@boklisten/bl-model";
 
 export type ItemType = "book";
 
@@ -49,17 +55,6 @@ export interface Item {
   buyback?: boolean;
   categories?: string[];
 }
-
-interface RelevantMatchedPersonDetails {
-  name: string;
-}
-
-export type MatchWithDetails =
-  | StandMatch
-  | (UserMatch & {
-      senderDetails: RelevantMatchedPersonDetails;
-      receiverDetails: RelevantMatchedPersonDetails;
-    });
 
 export type UserMatchWithDetails = Extract<
   MatchWithDetails,

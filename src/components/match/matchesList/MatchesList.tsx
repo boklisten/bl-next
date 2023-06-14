@@ -8,7 +8,7 @@ import { MatchVariant, StandMatch } from "@boklisten/bl-model";
 import { MatchListItemGroups } from "./MatchListItemGroups";
 import ProgressBar from "./ProgressBar";
 import { Box } from "@mui/material";
-import { MatchWithDetails, UserMatchWithDetails } from "../../../utils/types";
+import { UserMatchWithDetails } from "../../../utils/types";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
