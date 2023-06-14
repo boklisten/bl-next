@@ -1,10 +1,4 @@
-import {
-  MatchVariant,
-  MatchWithDetails,
-  RelevantDetails,
-  StandMatch,
-  UserMatch,
-} from "@boklisten/bl-model";
+import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 
 export type ItemType = "book";
 
