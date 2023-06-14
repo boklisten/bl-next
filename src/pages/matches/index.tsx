@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { MatchesList } from "../../components/match/matchesList/MatchesList";
+import { MatchesList } from "../../components/matches/matchesList/MatchesList";
 import React from "react";
 import { Typography } from "@mui/material";
 
