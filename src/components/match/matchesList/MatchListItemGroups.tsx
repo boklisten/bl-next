@@ -1,10 +1,10 @@
 import React from "react";
 import { formatDatetime, sectionStyle, getSortedMatchGroups } from "./helper";
 import { Typography } from "@mui/material";
-import { MatchVariant } from "@boklisten/bl-model";
+import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import StandMatchListItem from "./StandMatchListItem";
 import UserMatchListItem from "./UserMatchListItem";
-import { GroupedMatches, MatchWithDetails } from "../../../utils/types";
+import { GroupedMatches } from "../../../utils/types";
 
 export const MatchListItemGroups: React.FC<{
   groups: GroupedMatches<MatchWithDetails>;

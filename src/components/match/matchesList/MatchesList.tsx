@@ -4,10 +4,14 @@ import React from "react";
 import { apiFetcher } from "api/api";
 import { getAccessTokenBody } from "../../../api/token";
 import { groupMatchesByTimeAndLocation, matchFulfilled } from "./helper";
-import { MatchVariant, StandMatch } from "@boklisten/bl-model";
+import {
+  MatchVariant,
+  MatchWithDetails,
+  StandMatch,
+} from "@boklisten/bl-model";
 import { MatchListItemGroups } from "./MatchListItemGroups";
 import ProgressBar from "./ProgressBar";
-import { Alert, Box, Skeleton } from "@mui/material";
+import { Alert, Skeleton } from "@mui/material";
 import { UserMatchWithDetails } from "../../../utils/types";
 
 export const MatchesList: React.FC = () => {
