@@ -24,37 +24,45 @@ export function matchBegun(match: Match): boolean {
 export function formatActionsString(handoffItems: number, pickupItems: number) {
   const hasHandoffItems = handoffItems > 0;
   const hasPickupItems = pickupItems > 0;
-  const s: string[] = [];
-  s.push("Du skal ");
+  const stringBuilder: string[] = [];
+  stringBuilder.push("Du skal ");
 
   if (hasHandoffItems) {
-    s.push("levere ");
+    stringBuilder.push("levere ");
     if (handoffItems === 1) {
-      s.push("én");
+      stringBuilder.push("én");
       if (!hasPickupItems) {
-        s.push(" bok");
+        stringBuilder.push(" bok");
       }
     } else {
-      s.push(`${handoffItems}`);
+      stringBuilder.push(`${handoffItems}`);
       if (!hasPickupItems) {
-        s.push(" bøker");
+        stringBuilder.push(" bøker");
       }
     }
     if (hasPickupItems) {
-      s.push(" og ");
+      stringBuilder.push(" og ");
     }
   }
   if (hasPickupItems) {
-    s.push("motta ");
+    stringBuilder.push("motta ");
     if (pickupItems === 1) {
-      s.push("én bok");
+      stringBuilder.push("én bok");
     } else {
-      s.push(`${pickupItems} bøker`);
+      stringBuilder.push(`${pickupItems} bøker`);
     }
   }
-  return s.join("");
+  return stringBuilder.join("");
 }
 
+/**
+ * Groups array of matches location.
+ *
+ * If the input-array is sorted by time, then the output will be as well
+ * (assuming for-of or other insertion-order iteration of keys).
+ *
+ * @param matches the matches to group
+ */
 export function groupMatchesByTimeAndLocation<T extends MatchWithDetails>(
   matches: T[]
 ): GroupedMatches<T> {
@@ -102,9 +110,7 @@ export function getSortedMatchGroups<T extends MatchWithDetails>(
 }
 
 export function formatDatetime(date: Date): string {
-  return (
-    date.toLocaleDateString("no") +
-    " " +
-    date.toLocaleTimeString("no", { timeStyle: "short" })
-  );
+  const dateString = date.toLocaleDateString("no");
+  const timeString = date.toLocaleTimeString("no", { timeStyle: "short" });
+  return `${dateString} ${timeString}`;
 }

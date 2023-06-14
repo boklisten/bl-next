@@ -11,7 +11,7 @@ const MatchesPage: NextPage = () => {
         <title>Mine overleveringer | Boklisten.no</title>
         <meta name="description" content="Overleveringer av bøker" />
       </Head>
-      <div style={{ padding: "1em" }}>
+      <div style={{ padding: "1rem" }}>
         <Typography variant="h1">Mine overleveringer</Typography>
         <MatchesList />
       </div>

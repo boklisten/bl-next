@@ -7,7 +7,7 @@ import { groupMatchesByTimeAndLocation, matchFulfilled } from "./helper";
 import { MatchVariant, StandMatch } from "@boklisten/bl-model";
 import { MatchListItemGroups } from "./MatchListItemGroups";
 import ProgressBar from "./ProgressBar";
-import { Box } from "@mui/material";
+import { Alert, Box, Skeleton } from "@mui/material";
 import { UserMatchWithDetails } from "../../../utils/types";
 
 export const MatchesList: React.FC = () => {
@@ -25,11 +25,11 @@ export const MatchesList: React.FC = () => {
   );
 
   if (tokenError || matchesError) {
-    return <Box>En feil har oppstått.</Box>;
+    return <Alert severity="error">En feil har oppstått.</Alert>;
   }
 
   if (matches === undefined) {
-    return <Box>Laster</Box>;
+    return <Skeleton />;
   }
 
   const standMatches = matches
@@ -44,7 +44,7 @@ export const MatchesList: React.FC = () => {
   const userMatchesByTime = groupMatchesByTimeAndLocation(userMatches);
 
   if (matches.length === 0) {
-    return <Box>Du har ingen overleveringer :)</Box>;
+    return <Alert severity="info">Du har ingen overleveringer :)</Alert>;
   }
 
   const numberFulfilledMatches = matches.filter((element) =>
