@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { MatchesList } from "../../components/matches/matchesList/MatchesList";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { addAccessToken, addRefreshToken } from "../../api/token";
@@ -23,6 +23,11 @@ const MatchesPage: NextPage = () => {
     }
   }, [router]);
 
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   return (
     <>
       <Head>
@@ -31,7 +36,7 @@ const MatchesPage: NextPage = () => {
       </Head>
       <div style={{ padding: "1rem" }}>
         <Typography variant="h1">Mine overleveringer</Typography>
-        {isLoggedIn() ? (
+        {hydrated && isLoggedIn() ? (
           <MatchesList />
         ) : (
           <>
