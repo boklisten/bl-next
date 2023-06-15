@@ -132,7 +132,7 @@ jobs:
           GOOGLE_SECRET: nope
           SENDGRID_API_KEY: foo
           TWILIO_SMS_AUTH_TOKEN: foo
-          TWILIO_SMS_SID: foo
+          TWILIO_SMS_SID: ACfoo
           TWILIO_STATUS_CALLBACK_URL: foo
           BRING_API_KEY: ${{ secrets.BRING_API_KEY }}
           BRING_API_ID: ${{ secrets.BRING_API_ID }}
@@ -209,7 +209,7 @@ jobs:
           GOOGLE_SECRET: nope
           SENDGRID_API_KEY: foo
           TWILIO_SMS_AUTH_TOKEN: foo
-          TWILIO_SMS_SID: foo
+          TWILIO_SMS_SID: ACfoo
           TWILIO_STATUS_CALLBACK_URL: foo
           BRING_API_KEY: ${{ secrets.BRING_API_KEY }}
           BRING_API_ID: ${{ secrets.BRING_API_ID }}
