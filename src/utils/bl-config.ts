@@ -5,6 +5,9 @@ const BL_CONFIG = {
   api: {
     basePath: publicRuntimeConfig.API_URL,
   },
+  blWeb: {
+    basePath: publicRuntimeConfig.BL_WEB_URL,
+  },
   token: {
     accessToken: "bl-access-token",
     refreshToken: "bl-refresh-token",

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import MatchPage from "../../../components/match/MatchPage";
+import MatchPage from "../../../components/matches/MatchPage";
 import Head from "next/head";
 import React from "react";
 
@@ -17,10 +17,10 @@ const DeliveryPage: NextPage<{ matchID: string }> = ({ matchID }) => {
   return (
     <>
       <Head>
-        <title>Avlevering av bøker | Boklisten.no</title>
+        <title>Mottak av bøker | Boklisten.no</title>
         <meta name="description" content="Avlevering av bøker" />
       </Head>
-      <MatchPage matchID={matchID} receive={false} />
+      <MatchPage matchID={matchID} receive={true} />
     </>
   );
 };

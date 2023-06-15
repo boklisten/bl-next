@@ -1,3 +1,5 @@
+import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+
 export type ItemType = "book";
 
 export type UserPermission =
@@ -46,4 +48,14 @@ export interface Item {
   desc?: string;
   buyback?: boolean;
   categories?: string[];
+}
+
+export type UserMatchWithDetails = Extract<
+  MatchWithDetails,
+  { _variant: MatchVariant.UserMatch }
+>;
+
+export interface GroupedMatches<T extends MatchWithDetails> {
+  matchesByKey: Map<string, T[]>;
+  keyToData: Map<string, { time: number | null; location: string }>;
 }
