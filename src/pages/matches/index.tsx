@@ -36,20 +36,21 @@ const MatchesPage: NextPage = () => {
       </Head>
       <div style={{ padding: "1rem" }}>
         <Typography variant="h1">Mine overleveringer</Typography>
-        {hydrated && isLoggedIn() ? (
-          <MatchesList />
-        ) : (
-          <>
-            <Alert severity="info">
-              Du må logge inn for å se overleveringene dine
-            </Alert>
-            <DynamicLink href={`${BL_CONFIG.blWeb.basePath}overleveringer`}>
-              <Button variant={"contained"} sx={{ mt: "1rem" }}>
-                Logg inn
-              </Button>
-            </DynamicLink>
-          </>
-        )}
+        {hydrated &&
+          (isLoggedIn() ? (
+            <MatchesList />
+          ) : (
+            <>
+              <Alert severity="info">
+                Du må logge inn for å se overleveringene dine
+              </Alert>
+              <DynamicLink href={`${BL_CONFIG.blWeb.basePath}overleveringer`}>
+                <Button variant={"contained"} sx={{ mt: "1rem" }}>
+                  Logg inn
+                </Button>
+              </DynamicLink>
+            </>
+          ))}
       </div>
     </>
   );
