@@ -12,7 +12,11 @@ const MatchListItemBox: React.FC<
     >
       <CardContent>{children}</CardContent>
       <CardActions>
-        <Button component={DynamicLink} href={`/match/${matchId}`} size="small">
+        <Button
+          component={DynamicLink}
+          href={`/matches/${matchId}`}
+          size="small"
+        >
           Detaljer
         </Button>
       </CardActions>

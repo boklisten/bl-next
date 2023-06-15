@@ -1,0 +1,40 @@
+import ContactInfo from "../info/ContactInfo";
+import { Box, Typography } from "@mui/material";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import DynamicLink from "../DynamicLink";
+import React from "react";
+import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+
+const OtherPersonContact = ({
+  match,
+  currentUserId,
+}: {
+  match: MatchWithDetails;
+  currentUserId: string;
+}) => {
+  if (match._variant === MatchVariant.StandMatch) {
+    return <ContactInfo />;
+  }
+  const otherPerson =
+    match.receiver === currentUserId
+      ? match.senderDetails
+      : match.receiverDetails;
+
+  return (
+    <Box
+      key={otherPerson.phone}
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
+      <PhoneIphoneIcon sx={{ marginRight: ".2rem" }} />
+      <Box>
+        <Typography>{otherPerson.name}</Typography>
+
+        <DynamicLink href={`tel:+47${otherPerson.phone}`}>
+          {otherPerson.phone}
+        </DynamicLink>
+      </Box>
+    </Box>
+  );
+};
+
+export default OtherPersonContact;
