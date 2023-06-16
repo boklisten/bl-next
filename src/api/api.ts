@@ -43,6 +43,24 @@ export const add = async (collection: string, data: unknown) => {
     });
 };
 
+export const addWithEndpoint = async (
+  collection: string,
+  endpoint: string,
+  data: unknown
+) => {
+  return await axios
+    .post(`${apiPath(collection)}/${endpoint}`, data, {
+      headers: getHeaders(),
+    })
+    .catch((error) => {
+      const apiError: string | undefined = error?.response?.data?.msg;
+      if (apiError === undefined || apiError === "server error") {
+        throw new Error("Noe gikk galt! Ta kontakt med stand for hjelp.");
+      }
+      throw new Error(apiError);
+    });
+};
+
 export class NotFoundError extends Error {
   constructor(message?: string) {
     super(message);
