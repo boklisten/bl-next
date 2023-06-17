@@ -4,15 +4,14 @@ import React from "react";
 import { apiFetcher } from "api/api";
 import { getAccessTokenBody } from "../../../api/token";
 import { groupMatchesByTimeAndLocation, matchFulfilled } from "./helper";
-import {
-  MatchVariant,
-  MatchWithDetails,
-  StandMatch,
-} from "@boklisten/bl-model";
+import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { MatchListItemGroups } from "./MatchListItemGroups";
 import ProgressBar from "./ProgressBar";
 import { Alert, Skeleton } from "@mui/material";
-import { UserMatchWithDetails } from "../../../utils/types";
+import {
+  StandMatchWithDetails,
+  UserMatchWithDetails,
+} from "../../../utils/types";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -38,7 +37,7 @@ export const MatchesList: React.FC = () => {
 
   const standMatches = matches
     .filter((match) => match._variant === MatchVariant.StandMatch)
-    .map((standMatch) => standMatch as StandMatch)
+    .map((standMatch) => standMatch as StandMatchWithDetails)
     .sort((a, b) => (matchFulfilled(a) ? 1 : matchFulfilled(b) ? -1 : 0));
   const userMatches = matches
     .filter((match) => match._variant === MatchVariant.UserMatch)

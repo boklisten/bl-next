@@ -1,13 +1,12 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { apiPath, getHeaders } from "./apiRequest";
 import { fetchNewTokens } from "./token";
 
-const fetchTokensAndGet: any = async (url: string) => {
-  await fetchNewTokens();
-  return get(url);
-};
-
-export const get = async <T = any>(url: string, query?: string) => {
+export const get = async <T = any>(
+  url: string,
+  query?: string,
+  noRetryTokens?: boolean
+): Promise<AxiosResponse<T>> => {
   if (!url || url.length === 0) {
     throw new Error("url is undefined");
   }
@@ -16,13 +15,21 @@ export const get = async <T = any>(url: string, query?: string) => {
     .get<T>(apiPath(url, query), {
       headers: getHeaders(),
     })
-    .catch((error) => {
+    .catch(async (error) => {
       if (error.status === 404 || error.response.status === 404) {
         throw new Error("Not found");
       }
       console.log(error);
 
-      return fetchTokensAndGet(url);
+      if (
+        (error.status === 401 || error.response.status === 401) &&
+        !noRetryTokens
+      ) {
+        await fetchNewTokens();
+        return await get(url, query, true);
+      }
+
+      throw new Error("Unknown API error");
     });
 };
 
@@ -36,7 +43,7 @@ export const add = async (collection: string, data: unknown) => {
     });
 };
 
-class NotFoundError extends Error {
+export class NotFoundError extends Error {
   constructor(message?: string) {
     super(message);
     this.name = "NotFoundError";

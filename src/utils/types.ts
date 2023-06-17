@@ -50,6 +50,11 @@ export interface Item {
   categories?: string[];
 }
 
+export type StandMatchWithDetails = Extract<
+  MatchWithDetails,
+  { _variant: MatchVariant.StandMatch }
+>;
+
 export type UserMatchWithDetails = Extract<
   MatchWithDetails,
   { _variant: MatchVariant.UserMatch }
