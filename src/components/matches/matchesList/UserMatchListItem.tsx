@@ -1,7 +1,7 @@
 import React from "react";
 import { formatActionsString, matchBegun, matchFulfilled } from "./helper";
 import MatchListItemBox from "./MatchListItemBox";
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 import ProgressBar from "./ProgressBar";
 import { Box } from "@mui/material";
@@ -18,6 +18,8 @@ const UserMatchListItem: React.FC<{
   const isFulfilled = matchFulfilled(match);
   const isSender = match.sender === currentUserId;
   const HeaderLevel = "h4";
+  const deliveredCount = match.deliveredCustomerItems.length;
+  const receivedCount = match.receivedCustomerItems.length;
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
       {isSender ? (
@@ -42,12 +44,19 @@ const UserMatchListItem: React.FC<{
         <>
           <ProgressBar
             percentComplete={
-              (match.receivedCustomerItems.length * 100) / numberItems
+              ((isSender ? deliveredCount : receivedCount) * 100) / numberItems
             }
             subtitle={
               <Box>
                 {isSender ? "Levert" : "Mottatt"}{" "}
-                {match.receivedCustomerItems.length} av {numberItems} bøker
+                {isSender ? deliveredCount : receivedCount} av {numberItems}{" "}
+                bøker
+                {isSender && deliveredCount !== receivedCount && (
+                  <Alert severity={"warning"} sx={{ mt: "1rem" }}>
+                    Noen av bøkene du har levert har vært på andres vegne. Ta
+                    kontakt med stand for mer informasjon.
+                  </Alert>
+                )}
               </Box>
             }
           />

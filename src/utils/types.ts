@@ -64,3 +64,14 @@ export interface GroupedMatches<T extends MatchWithDetails> {
   matchesByKey: Map<string, T[]>;
   keyToData: Map<string, { time: number | null; location: string }>;
 }
+
+export enum TextType {
+  // eslint-disable-next-line no-unused-vars
+  BLID,
+  // eslint-disable-next-line no-unused-vars
+  ISBN,
+  // eslint-disable-next-line no-unused-vars
+  UNKNOWN,
+}
+
+export type ScannedTextType = TextType.BLID | TextType.ISBN | TextType.UNKNOWN;

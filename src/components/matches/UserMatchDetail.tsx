@@ -1,6 +1,5 @@
 import { Alert } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import Scanner from "./Scanner";
 import { UserMatchWithDetails } from "../../utils/types";
 import {
   calculateItemStatuses,
@@ -11,6 +10,7 @@ import ProgressBar from "./matchesList/ProgressBar";
 import MeetingInfo from "./MeetingInfo";
 import MatchItemTable from "./MatchItemTable";
 import OtherPersonContact from "./OtherPersonContact";
+import Scanner from "./Scanner/Scanner";
 
 const UserMatchDetail = ({
   match,
@@ -76,7 +76,7 @@ const UserMatchDetail = ({
       {!isSender && !isFulfilled && (
         <>
           <MatchHeader>Når du skal motta bøkene</MatchHeader>
-          <Scanner match={match} forceUpdate={forceUpdate} />
+          <Scanner forceUpdate={forceUpdate} />
         </>
       )}
     </>
