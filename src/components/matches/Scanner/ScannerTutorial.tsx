@@ -16,7 +16,7 @@ const ScannerTutorial = () => {
     <>
       <Button
         variant={"contained"}
-        sx={{ background: "green", mb: "2rem" }}
+        sx={{ mb: "2rem" }}
         onClick={() => setTutorialOpen(true)}
         startIcon={<QuestionMarkIcon />}
       >

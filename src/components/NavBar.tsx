@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import DropDownMenu from "./SideMenuDrawer";
 import BranchSelect from "./BranchSelect";
 import DynamicLink from "./DynamicLink";
+import BL_CONFIG from "../utils/bl-config";
 
 interface TabLinkProps {
   title: string;
@@ -36,12 +37,12 @@ const TabLink = ({ title, href, testID }: TabLinkProps) => {
 
 const TAB_LINKS: TabLinkProps[] = [
   {
-    href: "/info/general",
+    href: BL_CONFIG.blWeb.basePath + "info/general",
     title: "Info",
     testID: "infoBtnNav",
   },
   {
-    href: "/order",
+    href: BL_CONFIG.blWeb.basePath + "order",
     title: "Bestill bøker",
     testID: "",
   },
@@ -52,7 +53,7 @@ export default function NavBar() {
     <Box data-testid="nav-bar">
       <AppBar position="fixed">
         <Toolbar sx={{ paddingY: "10px" }}>
-          <DynamicLink href="/">
+          <DynamicLink href={BL_CONFIG.blWeb.basePath}>
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
               color="secondary"

@@ -23,7 +23,7 @@ const OtherPersonContact = ({
   return (
     <Box
       key={otherPerson.phone}
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      sx={{ display: "flex", alignItems: "center", justifyContent: "left" }}
     >
       <PhoneIphoneIcon sx={{ marginRight: ".2rem" }} />
       <Box>
