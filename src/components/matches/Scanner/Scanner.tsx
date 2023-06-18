@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { AlertColor, Button } from "@mui/material";
 import { addWithEndpoint } from "../../../api/api";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
-import CreateIcon from "@mui/icons-material/Create";
 import { ScannedTextType, TextType } from "../../../utils/types";
 import ScannerTutorial from "./ScannerTutorial";
 import ScannerFeedback from "./ScannerFeedback";
-import ManualRegistrationModal from "./ManualRegistrationModal";
 import ScannerModal from "./ScannerModal";
 import Box from "@mui/material/Box";
 
@@ -27,8 +25,10 @@ function determineScannedTextType(scannedText: string): ScannedTextType {
 
 const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
   const [scanModalOpen, setScanModalOpen] = useState(false);
+  /*
   const [manualRegistrationModalOpen, setManualRegistrationModalOpen] =
     useState(false);
+   */
 
   const [feedback, setFeedback] = useState("");
   const [feedbackSeverity, setFeedbackSeverity] =
@@ -71,7 +71,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         feedback ?? "Boken har blitt registrert!",
         feedback ? "info" : "success"
       );
-      setManualRegistrationModalOpen(false);
+      // setManualRegistrationModalOpen(false);
       setScanModalOpen(false);
       return true;
     } catch (error) {
@@ -99,28 +99,33 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         handleClose={() => setFeedbackVisible(false)}
       />
       <Button
+        sx={{ background: "green" }}
         startIcon={<QrCodeScannerIcon />}
         variant={"contained"}
         onClick={() => setScanModalOpen(true)}
       >
         Scan bøker
       </Button>
-      <p>eller</p>
-      <Button
-        startIcon={<CreateIcon />}
-        variant={"contained"}
-        onClick={() => setManualRegistrationModalOpen(true)}
-      >
-        Manuell registrering
-      </Button>
-      <ManualRegistrationModal
-        open={manualRegistrationModalOpen}
-        handleClose={() => {
+      {/**
+         *
+         <p>eller</p>
+         <Button
+         startIcon={<CreateIcon />}
+         variant={"contained"}
+         onClick={() => setManualRegistrationModalOpen(true)}
+         >
+         Manuell registrering
+         </Button>
+         <ManualRegistrationModal
+         open={manualRegistrationModalOpen}
+         handleClose={() => {
           setManualRegistrationModalOpen(false);
           setFeedbackVisible(false);
         }}
-        handleSubmit={handleRegistration}
-      />
+         handleSubmit={handleRegistration}
+         />
+         *
+         */}
       <ScannerModal
         open={scanModalOpen}
         handleClose={() => {

@@ -9,9 +9,7 @@ const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
   const meetingLocation = match.meetingInfo.location;
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left" }}>
       <Typography fontWeight="bold" variant={"subtitle1"}>
         {meetingLocation}
       </Typography>

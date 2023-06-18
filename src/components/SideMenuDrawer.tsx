@@ -19,6 +19,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { isLoggedIn, logout } from "api/auth";
 import DynamicLink from "./DynamicLink";
+import BL_CONFIG from "../utils/bl-config";
 
 interface DrawerLinkProps {
   title: string;
@@ -73,7 +74,7 @@ export default function SideMenuDrawer() {
           <List>
             <DrawerLink
               title={"Bestill bøker"}
-              href={"/order"}
+              href={BL_CONFIG.blWeb.basePath + "order"}
               icon={<BookIcon />}
             />
 
@@ -81,12 +82,12 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Dine bøker"}
-                  href={"/users/me/items"}
+                  href={BL_CONFIG.blWeb.basePath + "users/me/items"}
                   icon={<MenuBookIcon />}
                 />
                 <DrawerLink
                   title={"Ordrehistorikk"}
-                  href={"/users/me/orders"}
+                  href={BL_CONFIG.blWeb.basePath + "users/me/orders"}
                   icon={<ReceiptIcon />}
                 />
               </>
@@ -95,17 +96,17 @@ export default function SideMenuDrawer() {
 
             <DrawerLink
               title={"Åpningstider"}
-              href={"/info/branch/select"}
+              href={BL_CONFIG.blWeb.basePath + "info/branch/select"}
               icon={<AccessTimeIcon />}
             />
             <DrawerLink
               title={"Generell informasjon"}
-              href={"/info/general"}
+              href={BL_CONFIG.blWeb.basePath + "info/general"}
               icon={<InfoIcon />}
             />
             <DrawerLink
               title={"Kontaktinformasjon"}
-              href={"/info/contact"}
+              href={BL_CONFIG.blWeb.basePath + "info/contact"}
               icon={<EmailIcon />}
             />
 
@@ -115,12 +116,12 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Brukerinnstillinger"}
-                  href={"/users/me/settings"}
+                  href={BL_CONFIG.blWeb.basePath + "users/me/settings"}
                   icon={<SettingsIcon />}
                 />
                 <DrawerLink
                   title={"Logg ut"}
-                  href={"/"}
+                  href={BL_CONFIG.blWeb.basePath}
                   icon={<LogoutIcon />}
                   onClick={logout}
                 />
@@ -131,12 +132,12 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Registrer"}
-                  href={"/auth/register"}
+                  href={BL_CONFIG.blWeb.basePath + "auth/register"}
                   icon={<PersonAddIcon />}
                 />
                 <DrawerLink
                   title={"Logg inn"}
-                  href={"/auth/login"}
+                  href={BL_CONFIG.blWeb.basePath + "auth/login"}
                   icon={<LoginIcon />}
                 />
               </>

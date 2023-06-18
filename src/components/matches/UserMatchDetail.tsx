@@ -62,23 +62,21 @@ const UserMatchDetail = ({
         }
       />
 
-      <MatchHeader>Du skal til</MatchHeader>
-      <MeetingInfo match={match} />
-
-      <MatchHeader>Du skal møte</MatchHeader>
-      <OtherPersonContact match={match} currentUserId={currentUserId} />
-
-      <MatchHeader>
-        Du skal {isSender ? "levere" : "motta"} disse bøkene
-      </MatchHeader>
-      <MatchItemTable itemStatuses={itemStatuses} isSender={isSender} />
-
       {!isSender && !isFulfilled && (
         <>
           <MatchHeader>Når du skal motta bøkene</MatchHeader>
           <Scanner forceUpdate={forceUpdate} />
         </>
       )}
+
+      <MatchHeader>Du skal møte</MatchHeader>
+      <OtherPersonContact match={match} currentUserId={currentUserId} />
+      <MeetingInfo match={match} />
+
+      <MatchHeader>
+        Du skal {isSender ? "levere" : "motta"} disse bøkene
+      </MatchHeader>
+      <MatchItemTable itemStatuses={itemStatuses} isSender={isSender} />
     </>
   );
 };
