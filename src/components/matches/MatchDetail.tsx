@@ -1,12 +1,11 @@
 import React from "react";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import { apiFetcher, NotFoundError } from "../../api/api";
+import { apiFetcher } from "../../api/api";
 import {
   Alert,
   Button,
   Card,
   Container,
-  Link as MuiLink,
   Skeleton,
   Typography,
 } from "@mui/material";
@@ -16,6 +15,7 @@ import { getAccessTokenBody } from "../../api/token";
 import UserMatchDetail from "./UserMatchDetail";
 import StandMatchDetail from "./StandMatchDetail";
 import { ArrowBack } from "@mui/icons-material";
+import DynamicLink from "../DynamicLink";
 
 const MatchDetail = ({ matchId }: { matchId: string }) => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -23,31 +23,23 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   );
   const userId = accessToken?.details;
 
-  const { data: match, error: matchesError } = useSWR(
+  const { data: matches, error: matchesError } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
-    async (key) => {
-      const matches = await apiFetcher<MatchWithDetails[]>(key);
-      const match = matches.find((match) => match.id === matchId);
-      if (!match) {
-        throw new NotFoundError(
-          "No match with this ID belonging to the current user"
-        );
-      }
-      return match;
-    },
+    apiFetcher<MatchWithDetails[]>,
     { refreshInterval: 5000 }
   );
 
-  if (matchesError instanceof NotFoundError) {
+  if (tokenError || matchesError) {
+    return <Alert severity="error">En feil har oppstått.</Alert>;
+  }
+
+  const match = matches?.find((match) => match.id === matchId);
+  if (matches && !match) {
     return (
       <Alert severity="error">
         Kunne ikke finne en overlevering med ID {matchId}.
       </Alert>
     );
-  }
-
-  if (tokenError || matchesError) {
-    return <Alert severity="error">En feil har oppstått.</Alert>;
   }
 
   if (!userId || !match) {
@@ -62,15 +54,12 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
           flexDirection: "column",
         }}
       >
-        {/* Using MuiLink because DynamicLink causes `matches` to be undefined when
-         returning to MatchesList for some reason, and somehow bypassing the undefined-check and
-          erroring */}
-        <MuiLink
+        <DynamicLink
           href={`/${BL_CONFIG.collection.match}`}
           sx={{ marginTop: "1rem", marginBottom: "0.5rem" }}
         >
           <Button startIcon={<ArrowBack />}>Alle overleveringer</Button>
-        </MuiLink>
+        </DynamicLink>
         <Typography variant="h1">Overlevering av bøker</Typography>
 
         {match._variant === MatchVariant.StandMatch && (
