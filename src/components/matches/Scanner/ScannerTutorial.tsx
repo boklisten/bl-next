@@ -58,32 +58,8 @@ const ScannerTutorial = () => {
             <Typography sx={{ mb: ".4rem", mt: "1rem" }}>Eller slik</Typography>
             <Image
               style={{ borderRadius: "2%" }}
-              src={"/ullernUID.png"}
-              alt={"Ullern VGS unik ID"}
-              width={300}
-              height={150}
-            />
-          </Card>
-
-          <Card
-            sx={{
-              padding: "1rem",
-              bgcolor: "#fefefa",
-              mt: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "25rem",
-            }}
-          >
-            <Typography>
-              2. Få feedback på om registreringen var vellykket{" "}
-            </Typography>
-            PLACEHOLDER IMAGE
-            <Image
-              style={{ borderRadius: "2%" }}
-              src={"/ullernUID.png"}
-              alt={"Ullern VGS unik ID"}
+              src={"/blid.jpg"}
+              alt={"BLID"}
               width={300}
               height={150}
             />
@@ -115,11 +91,10 @@ const ScannerTutorial = () => {
               4. Sjekk at både du og den som ga deg bøkene har fått det grønne
               merket{" "}
             </Typography>
-            PLACEHOLDER IMAGE
             <Image
               style={{ borderRadius: "2%" }}
-              src={"/ullernUID.png"}
-              alt={"Ullern VGS unik ID"}
+              src={"/ok_check.png"}
+              alt={"OK Checkmark"}
               width={300}
               height={150}
             />
