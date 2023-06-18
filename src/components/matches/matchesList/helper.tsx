@@ -1,4 +1,4 @@
-import { Match, MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+import { MatchWithDetails } from "@boklisten/bl-model";
 import { Properties } from "csstype";
 import { GroupedMatches } from "../../../utils/types";
 
@@ -7,19 +7,6 @@ export const sectionStyle: Properties = {
   flexDirection: "column",
   gap: "1em",
 };
-
-export function matchFulfilled(match: Match): boolean {
-  return match._variant === MatchVariant.StandMatch
-    ? match.deliveredItems.length >= match.expectedHandoffItems.length &&
-        match.receivedItems.length >= match.expectedPickupItems.length
-    : match.receivedCustomerItems.length >= match.expectedItems.length;
-}
-
-export function matchBegun(match: Match): boolean {
-  return match._variant === MatchVariant.StandMatch
-    ? match.deliveredItems.length > 0 || match.receivedItems.length > 0
-    : match.receivedCustomerItems.length > 0;
-}
 
 export function formatActionsString(handoffItems: number, pickupItems: number) {
   const hasHandoffItems = handoffItems > 0;
