@@ -2,6 +2,7 @@ import { Alert } from "@mui/material";
 import React from "react";
 import { StandMatchWithDetails } from "../../utils/types";
 import {
+  calculateFulfilledStandMatchItems,
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
@@ -18,12 +19,8 @@ const StandMatchDetail = ({
   match: StandMatchWithDetails;
   currentUserId: string;
 }) => {
-  const fulfilledHandoffItems = match.expectedHandoffItems.filter((item) =>
-    match.deliveredItems.includes(item)
-  );
-  const fulfilledPickupItems = match.expectedPickupItems.filter((item) =>
-    match.receivedItems.includes(item)
-  );
+  const { fulfilledHandoffItems, fulfilledPickupItems } =
+    calculateFulfilledStandMatchItems(match);
   const isFulfilled =
     fulfilledHandoffItems.length >= match.expectedHandoffItems.length &&
     fulfilledPickupItems.length >= match.expectedPickupItems.length;

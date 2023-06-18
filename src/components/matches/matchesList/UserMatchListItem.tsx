@@ -1,11 +1,16 @@
 import React from "react";
-import { formatActionsString, matchBegun, matchFulfilled } from "./helper";
+import { formatActionsString } from "./helper";
 import MatchListItemBox from "./MatchListItemBox";
-import { Alert, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 import ProgressBar from "./ProgressBar";
-import { Box } from "@mui/material";
 import { UserMatchWithDetails } from "../../../utils/types";
+import {
+  calculateFulfilledUserMatchCustomerItems,
+  isMatchBegun,
+  isMatchFulfilled,
+  isUserSenderInMatch,
+} from "../matches-helper";
 
 const me = <span style={{ color: "#757575", fontWeight: 400 }}>Meg</span>;
 
@@ -14,12 +19,14 @@ const UserMatchListItem: React.FC<{
   currentUserId: string;
 }> = ({ match, currentUserId }) => {
   const numberItems = match.expectedItems.length;
-  const isBegun = matchBegun(match);
-  const isFulfilled = matchFulfilled(match);
-  const isSender = match.sender === currentUserId;
+  const isSender = isUserSenderInMatch(match, currentUserId);
+  const isBegun = isMatchBegun(match, isSender);
+  const isFulfilled = isMatchFulfilled(match, isSender);
+  const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
+    match,
+    isSender
+  );
   const HeaderLevel = "h4";
-  const deliveredCount = match.deliveredCustomerItems.length;
-  const receivedCount = match.receivedCustomerItems.length;
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
       {isSender ? (
@@ -43,20 +50,11 @@ const UserMatchListItem: React.FC<{
       {isBegun && (
         <>
           <ProgressBar
-            percentComplete={
-              ((isSender ? deliveredCount : receivedCount) * 100) / numberItems
-            }
+            percentComplete={(fulfilledItems.length * 100) / numberItems}
             subtitle={
               <Box>
-                {isSender ? "Levert" : "Mottatt"}{" "}
-                {isSender ? deliveredCount : receivedCount} av {numberItems}{" "}
-                bøker
-                {isSender && deliveredCount !== receivedCount && (
-                  <Alert severity={"warning"} sx={{ mt: "1rem" }}>
-                    Noen av bøkene du har levert har vært på andres vegne. Ta
-                    kontakt med stand for mer informasjon.
-                  </Alert>
-                )}
+                {isSender ? "Levert" : "Mottatt"} {fulfilledItems.length} av{" "}
+                {numberItems} bøker
               </Box>
             }
           />

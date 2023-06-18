@@ -2,6 +2,7 @@ import { Alert } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { UserMatchWithDetails } from "../../utils/types";
 import {
+  calculateFulfilledUserMatchCustomerItems,
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
@@ -22,11 +23,13 @@ const UserMatchDetail = ({
   const [, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
   const isSender = match.sender === currentUserId;
-  const fulfilledItems = match.expectedItems.filter((item) =>
-    (isSender
-      ? match.deliveredCustomerItems
-      : match.receivedCustomerItems
-    ).some((customerItem) => match.customerItemToItemMap[customerItem] === item)
+  const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
+    match,
+    isSender
+  );
+  const otherPersonFulfilledItems = calculateFulfilledUserMatchCustomerItems(
+    match,
+    !isSender
   );
   const isFulfilled = fulfilledItems.length >= match.expectedItems.length;
 
@@ -49,6 +52,13 @@ const UserMatchDetail = ({
           overleveringen.
         </Alert>
       )}
+      {fulfilledItems.length !== otherPersonFulfilledItems.length &&
+        isSender && (
+          <Alert severity={"warning"} sx={{ mt: "1rem" }}>
+            Noen av bøkene du har levert har vært på andres vegne. Ta kontakt
+            med stand for mer informasjon.
+          </Alert>
+        )}
 
       <ProgressBar
         percentComplete={

@@ -3,7 +3,7 @@ import BL_CONFIG from "../../../utils/bl-config";
 import React from "react";
 import { apiFetcher } from "api/api";
 import { getAccessTokenBody } from "../../../api/token";
-import { groupMatchesByTimeAndLocation, matchFulfilled } from "./helper";
+import { groupMatchesByTimeAndLocation } from "./helper";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { MatchListItemGroups } from "./MatchListItemGroups";
 import ProgressBar from "./ProgressBar";
@@ -12,6 +12,7 @@ import {
   StandMatchWithDetails,
   UserMatchWithDetails,
 } from "../../../utils/types";
+import { isMatchFulfilled, isUserSenderInMatch } from "../matches-helper";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -27,7 +28,7 @@ export const MatchesList: React.FC = () => {
     { refreshInterval: 5000 }
   );
 
-  if (tokenError || matchesError) {
+  if (!userId || tokenError || matchesError) {
     return <Alert severity="error">En feil har oppstått.</Alert>;
   }
 
@@ -38,11 +39,19 @@ export const MatchesList: React.FC = () => {
   const standMatches = matches
     .filter((match) => match._variant === MatchVariant.StandMatch)
     .map((standMatch) => standMatch as StandMatchWithDetails)
-    .sort((a, b) => (matchFulfilled(a) ? 1 : matchFulfilled(b) ? -1 : 0));
+    .sort((a, b) =>
+      isMatchFulfilled(a, false) ? 1 : isMatchFulfilled(b, false) ? -1 : 0
+    );
   const userMatches = matches
     .filter((match) => match._variant === MatchVariant.UserMatch)
     .map((userMatch) => userMatch as UserMatchWithDetails)
-    .sort((a, b) => (matchFulfilled(a) ? 1 : matchFulfilled(b) ? -1 : 0));
+    .sort((a, b) =>
+      isMatchFulfilled(a, isUserSenderInMatch(a, userId))
+        ? 1
+        : isMatchFulfilled(b, isUserSenderInMatch(b, userId))
+        ? -1
+        : 0
+    );
   const standMatchesByTime = groupMatchesByTimeAndLocation(standMatches);
   const userMatchesByTime = groupMatchesByTimeAndLocation(userMatches);
 
@@ -51,8 +60,9 @@ export const MatchesList: React.FC = () => {
   }
 
   const numberFulfilledMatches = matches.filter((element) =>
-    matchFulfilled(element)
+    isMatchFulfilled(element, isUserSenderInMatch(element, userId))
   ).length;
+
   return (
     <>
       <ProgressBar

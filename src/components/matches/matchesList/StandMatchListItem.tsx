@@ -1,20 +1,27 @@
-import { StandMatch } from "@boklisten/bl-model";
 import { Box } from "@mui/material";
 import React from "react";
-import { formatActionsString, matchBegun, matchFulfilled } from "./helper";
+import { formatActionsString } from "./helper";
 import MatchListItemBox from "./MatchListItemBox";
 import ProgressBar from "./ProgressBar";
+import {
+  calculateFulfilledStandMatchItems,
+  isMatchBegun,
+  isMatchFulfilled,
+} from "../matches-helper";
+import { StandMatchWithDetails } from "utils/types";
 
 const StandMatchListItem: React.FC<{
-  match: StandMatch;
+  match: StandMatchWithDetails;
   currentUserId: string;
 }> = ({ match }) => {
   const numberHandoffItems = match.expectedHandoffItems.length;
   const numberPickupItems = match.expectedPickupItems.length;
   const hasHandoffItems = numberHandoffItems > 0;
   const hasPickupItems = numberPickupItems > 0;
-  const isBegun = matchBegun(match);
-  const isFulfilled = matchFulfilled(match);
+  const { fulfilledPickupItems, fulfilledHandoffItems } =
+    calculateFulfilledStandMatchItems(match);
+  const isBegun = isMatchBegun(match, false);
+  const isFulfilled = isMatchFulfilled(match, false);
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
       {isBegun && (
@@ -23,12 +30,12 @@ const StandMatchListItem: React.FC<{
             <>
               <ProgressBar
                 percentComplete={
-                  (match.deliveredItems.length * 100) / numberHandoffItems
+                  (fulfilledHandoffItems.length * 100) / numberHandoffItems
                 }
                 subtitle={
                   <Box>
-                    Levert {match.deliveredItems.length} av {numberHandoffItems}{" "}
-                    bøker
+                    Levert {fulfilledHandoffItems.length} av{" "}
+                    {numberHandoffItems} bøker
                   </Box>
                 }
               />
@@ -38,11 +45,11 @@ const StandMatchListItem: React.FC<{
             <>
               <ProgressBar
                 percentComplete={
-                  (match.receivedItems.length * 100) / numberPickupItems
+                  (fulfilledPickupItems.length * 100) / numberPickupItems
                 }
                 subtitle={
                   <Box>
-                    Mottatt {match.receivedItems.length} av {numberPickupItems}{" "}
+                    Mottatt {fulfilledPickupItems.length} av {numberPickupItems}{" "}
                     bøker
                   </Box>
                 }
