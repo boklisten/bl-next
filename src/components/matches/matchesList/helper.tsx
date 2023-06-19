@@ -97,7 +97,10 @@ export function getSortedMatchGroups<T extends MatchWithDetails>(
 }
 
 export function formatDatetime(date: Date): string {
-  const dateString = date.toLocaleDateString("no");
-  const timeString = date.toLocaleTimeString("no", { timeStyle: "short" });
+  const dateString = date.toLocaleDateString("no", { timeZone: "Europe/Oslo" });
+  const timeString = date.toLocaleTimeString("no", {
+    timeZone: "Europe/Oslo",
+    timeStyle: "short",
+  });
   return `${dateString} ${timeString}`;
 }
