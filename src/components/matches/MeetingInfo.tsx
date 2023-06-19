@@ -25,7 +25,7 @@ const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
               {formatDatetime(new Date(meetingTime))}
             </Typography>
           </>
-        )) || <>Du kan møte opp når som helst i løpet av dagen</>}
+        )) || <>Du kan møte opp når som helst i skolens åpningstider</>}
       </Box>
     </Box>
   );
