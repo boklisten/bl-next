@@ -63,6 +63,10 @@ const ScannerTutorial = () => {
               width={300}
               height={150}
             />
+            <Typography sx={{ mb: ".4rem", mt: "1rem" }}>
+              Sliter du med å finne IDen? Sjekk innsiden av boka, eller be om
+              hjelp fra kontaktelev eller stand
+            </Typography>
           </Card>
 
           <Card
