@@ -74,7 +74,7 @@ export default function SideMenuDrawer() {
           <List>
             <DrawerLink
               title={"Bestill bøker"}
-              href={BL_CONFIG.blWeb.basePath + "order"}
+              href={BL_CONFIG.blWeb.basePath + "fastbuy/regions"}
               icon={<BookIcon />}
             />
 
@@ -82,12 +82,12 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Dine bøker"}
-                  href={BL_CONFIG.blWeb.basePath + "users/me/items"}
+                  href={BL_CONFIG.blWeb.basePath + "u/items"}
                   icon={<MenuBookIcon />}
                 />
                 <DrawerLink
                   title={"Ordrehistorikk"}
-                  href={BL_CONFIG.blWeb.basePath + "users/me/orders"}
+                  href={BL_CONFIG.blWeb.basePath + "u/order"}
                   icon={<ReceiptIcon />}
                 />
               </>
@@ -96,17 +96,17 @@ export default function SideMenuDrawer() {
 
             <DrawerLink
               title={"Åpningstider"}
-              href={BL_CONFIG.blWeb.basePath + "info/branch/select"}
+              href={"/info/branch/select"}
               icon={<AccessTimeIcon />}
             />
             <DrawerLink
               title={"Generell informasjon"}
-              href={BL_CONFIG.blWeb.basePath + "info/general"}
+              href={"/info/general"}
               icon={<InfoIcon />}
             />
             <DrawerLink
               title={"Kontaktinformasjon"}
-              href={BL_CONFIG.blWeb.basePath + "info/contact"}
+              href={"/info/contact"}
               icon={<EmailIcon />}
             />
 
@@ -116,7 +116,7 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Brukerinnstillinger"}
-                  href={BL_CONFIG.blWeb.basePath + "users/me/settings"}
+                  href={BL_CONFIG.blWeb.basePath + "u/edit"}
                   icon={<SettingsIcon />}
                 />
                 <DrawerLink

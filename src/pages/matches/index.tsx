@@ -3,26 +3,12 @@ import Head from "next/head";
 import { MatchesList } from "../../components/matches/matchesList/MatchesList";
 import React, { useEffect, useState } from "react";
 import { Alert, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { addAccessToken, addRefreshToken } from "../../api/token";
 import { isLoggedIn } from "../../api/auth";
 import Button from "@mui/material/Button";
 import DynamicLink from "../../components/DynamicLink";
 import BL_CONFIG from "../../utils/bl-config";
 
 const MatchesPage: NextPage = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const { refresh_token, access_token } = router.query;
-
-    if (typeof refresh_token === "string" && typeof access_token === "string") {
-      addAccessToken(access_token);
-      addRefreshToken(refresh_token);
-      router.replace("/matches", undefined, { shallow: true });
-    }
-  }, [router]);
-
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);

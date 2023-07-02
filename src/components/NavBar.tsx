@@ -37,12 +37,12 @@ const TabLink = ({ title, href, testID }: TabLinkProps) => {
 
 const TAB_LINKS: TabLinkProps[] = [
   {
-    href: BL_CONFIG.blWeb.basePath + "info/general",
+    href: "/info/general",
     title: "Info",
     testID: "infoBtnNav",
   },
   {
-    href: BL_CONFIG.blWeb.basePath + "order",
+    href: BL_CONFIG.blWeb.basePath + "fastbuy/regions",
     title: "Bestill bøker",
     testID: "",
   },

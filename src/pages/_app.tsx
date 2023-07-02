@@ -18,6 +18,9 @@ import { Provider } from "react-redux";
 import store from "redux/store";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import "@mui/lab";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { addAccessToken, addRefreshToken } from "../api/token";
 
 class OverriddenAdapter extends DateAdapter {
   // Get years in decending order
@@ -39,6 +42,17 @@ class OverriddenAdapter extends DateAdapter {
 // eslint-disable-next-line unicorn/prevent-abbreviations
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
+  const router = useRouter();
+
+  useEffect(() => {
+    const { refresh_token, access_token } = router.query;
+
+    if (typeof refresh_token === "string" && typeof access_token === "string") {
+      addAccessToken(access_token);
+      addRefreshToken(refresh_token);
+      router.replace(router.pathname, undefined, { shallow: true });
+    }
+  }, [router]);
 
   return (
     <>
