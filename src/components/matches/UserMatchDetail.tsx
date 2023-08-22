@@ -1,4 +1,4 @@
-import { Alert } from "@mui/material";
+import { Alert, Box, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { UserMatchWithDetails } from "../../utils/types";
 import {
@@ -72,16 +72,24 @@ const UserMatchDetail = ({
         }
       />
 
+      <Box>
+        <Typography variant="h2">Hvordan fungerer det?</Typography>
+        <Typography>
+          Du skal møte en annen elev og utveksle bøker.
+          Det er viktig at den som mottar bøker scanner hver bok,
+          hvis ikke blir ikke bøkene registrert som levert, og avsender kan få faktura.
+        </Typography>
+      </Box>
+      <MatchHeader>Du skal møte</MatchHeader>
+      <OtherPersonContact match={match} currentUserId={currentUserId} />
+      <MeetingInfo match={match} />
+
       {!isSender && !isFulfilled && (
         <>
           <MatchHeader>Når du skal motta bøkene</MatchHeader>
           <Scanner forceUpdate={forceUpdate} />
         </>
       )}
-
-      <MatchHeader>Du skal møte</MatchHeader>
-      <OtherPersonContact match={match} currentUserId={currentUserId} />
-      <MeetingInfo match={match} />
 
       <MatchHeader>
         Du skal {isSender ? "levere" : "motta"} disse bøkene
