@@ -88,7 +88,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        gap: "1rem",
       }}
     >
       <ScannerTutorial />
