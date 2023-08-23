@@ -20,6 +20,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { isLoggedIn, logout } from "api/auth";
 import DynamicLink from "./DynamicLink";
 import BL_CONFIG from "../utils/bl-config";
+import { useRouter } from "next/router";
 
 interface DrawerLinkProps {
   title: string;
@@ -39,6 +40,7 @@ const DrawerLink = ({ title, href, icon, onClick }: DrawerLinkProps) => (
 
 export default function SideMenuDrawer() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const toggleDrawer =
     (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
@@ -121,9 +123,12 @@ export default function SideMenuDrawer() {
                 />
                 <DrawerLink
                   title={"Logg ut"}
-                  href={"/"}
+                  href={""}
                   icon={<LogoutIcon />}
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    router.push(BL_CONFIG.blWeb.basePath + "auth/logout");
+                  }}
                 />
               </>
             )}
