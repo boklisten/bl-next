@@ -121,7 +121,7 @@ export default function SideMenuDrawer() {
                 />
                 <DrawerLink
                   title={"Logg ut"}
-                  href={BL_CONFIG.blWeb.basePath}
+                  href={"/"}
                   icon={<LogoutIcon />}
                   onClick={logout}
                 />
