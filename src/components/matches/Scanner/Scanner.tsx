@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AlertColor, Button } from "@mui/material";
 import { addWithEndpoint } from "../../../api/api";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
@@ -34,6 +34,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
   const [feedbackSeverity, setFeedbackSeverity] =
     useState<AlertColor>("success");
   const [feedbackVisible, setFeedbackVisible] = useState(false);
+  const scannerLocked = useRef(false);
 
   const displayFeedback = (feedback: string, severity: AlertColor) => {
     setFeedback(feedback);
@@ -60,6 +61,10 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
       return false;
     }
 
+    if (scannerLocked.current) {
+      return false;
+    }
+    scannerLocked.current = true;
     try {
       const response = await addWithEndpoint(
         "matches",
@@ -78,6 +83,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
       displayFeedback(String(error), "error");
       return false;
     } finally {
+      scannerLocked.current = false;
       // TODO: test with serveo, do we need forceUpdate?
       forceUpdate();
     }
