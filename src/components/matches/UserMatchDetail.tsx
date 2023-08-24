@@ -75,9 +75,9 @@ const UserMatchDetail = ({
       <Box>
         <Typography variant="h2">Hvordan fungerer det?</Typography>
         <Typography>
-          Du skal møte en annen elev og utveksle bøker.
-          Det er viktig at den som mottar bøker scanner hver bok,
-          hvis ikke blir ikke bøkene registrert som levert, og avsender kan få faktura.
+          Du skal møte en annen elev og utveksle bøker. Det er viktig at den som
+          mottar bøker scanner hver bok, hvis ikke blir ikke bøkene registrert
+          som levert, og avsender kan få faktura.
         </Typography>
       </Box>
       <MatchHeader>Du skal møte</MatchHeader>
