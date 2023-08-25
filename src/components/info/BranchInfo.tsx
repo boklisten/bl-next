@@ -65,8 +65,8 @@ const BranchInfo = ({
       )}
       {openingHours.length === 0 && (
         <>
-          <Alert severity="info" data-testid="noHours">
-            Sesongen er over - eller åpningstidene er ikke klare enda. Du kan
+          <Alert severity="info" data-testid="noHours" sx={{ my: 4 }}>
+            Sesongen er over – eller åpningstidene er ikke klare enda. Du kan
             bestille bøker i Posten, eller kontakte oss for spørsmål.
           </Alert>
           <ContactInfo />
