@@ -30,7 +30,12 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   );
 
   if (tokenError || matchesError) {
-    return <Alert severity="error">En feil har oppstått.</Alert>;
+    return (
+      <Alert severity="error">
+        En feil har oppstått. Ta kontakt med info@boklisten.no dersom problemet
+        vedvarer.
+      </Alert>
+    );
   }
 
   const match = matches?.find((match) => match.id === matchId);

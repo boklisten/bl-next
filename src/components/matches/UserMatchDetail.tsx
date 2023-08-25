@@ -54,7 +54,7 @@ const UserMatchDetail = ({
       )}
       {fulfilledItems.length !== otherPersonFulfilledItems.length &&
         isSender && (
-          <Alert severity={"warning"} sx={{ mt: "1rem" }}>
+          <Alert severity={"warning"} sx={{ marginBottom: "1rem" }}>
             Noen av bøkene du har levert har vært på andres vegne. Ta kontakt
             med stand for mer informasjon.
           </Alert>
