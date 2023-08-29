@@ -30,6 +30,7 @@ const ScannerTutorial = () => {
             alignItems: "center",
             flexDirection: "column",
             marginTop: "4rem",
+            paddingTop: "1rem",
             maxWidth: "95%",
           }}
         >
