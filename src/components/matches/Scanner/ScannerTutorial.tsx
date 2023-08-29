@@ -30,6 +30,7 @@ const ScannerTutorial = () => {
             alignItems: "center",
             flexDirection: "column",
             marginTop: "4rem",
+            maxWidth: "95%",
           }}
         >
           <Typography variant="h4">Hvordan scanne bøker</Typography>
