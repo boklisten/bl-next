@@ -23,6 +23,12 @@ function determineScannedTextType(scannedText: string): ScannedTextType {
   return TextType.UNKNOWN;
 }
 
+type Feedback = {
+  text: string;
+  severity: AlertColor;
+  visible: boolean;
+};
+
 const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
   const [scanModalOpen, setScanModalOpen] = useState(false);
   /*
@@ -30,16 +36,15 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
     useState(false);
    */
 
-  const [feedback, setFeedback] = useState("");
-  const [feedbackSeverity, setFeedbackSeverity] =
-    useState<AlertColor>("success");
-  const [feedbackVisible, setFeedbackVisible] = useState(false);
+  const [feedback, setFeedback] = useState<Feedback>({
+    text: "",
+    severity: "success",
+    visible: false,
+  });
   const scannerLocked = useRef(false);
 
-  const displayFeedback = (feedback: string, severity: AlertColor) => {
-    setFeedback(feedback);
-    setFeedbackSeverity(severity);
-    setFeedbackVisible(true);
+  const displayFeedback = (text: string, severity: AlertColor) => {
+    setFeedback({ text, severity, visible: true });
   };
 
   const handleRegistration = async (scannedText: string): Promise<boolean> => {
@@ -99,10 +104,10 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
     >
       <ScannerTutorial />
       <ScannerFeedback
-        open={feedbackVisible}
-        severity={feedbackSeverity}
-        feedback={feedback}
-        handleClose={() => setFeedbackVisible(false)}
+        open={feedback.visible}
+        severity={feedback.severity}
+        feedback={feedback.text}
+        handleClose={() => setFeedback({ ...feedback, visible: false })}
       />
       <Button
         sx={{ background: "green" }}
@@ -136,7 +141,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         open={scanModalOpen}
         handleClose={() => {
           setScanModalOpen(false);
-          setFeedbackVisible(false);
+          setFeedback({ ...feedback, visible: false });
         }}
         handleSubmit={handleRegistration}
       />
