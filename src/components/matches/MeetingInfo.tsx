@@ -4,6 +4,7 @@ import { formatDatetime } from "./matchesList/helper";
 import React from "react";
 import PlaceIcon from "@mui/icons-material/Place";
 import { MatchWithDetails } from "@boklisten/bl-model";
+import DynamicLink from "../DynamicLink";
 
 const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
   const meetingTime = match.meetingInfo.date;
@@ -25,7 +26,16 @@ const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
               {formatDatetime(new Date(meetingTime))}
             </Typography>
           </>
-        )) || <>Du kan møte opp når som helst i skolens åpningstider</>}
+        )) || (
+          <>
+            <Typography sx={{ whiteSpace: "pre" }}>
+              Du kan møte opp når som helst i{" "}
+              <DynamicLink variant="body1" href="/info/branch/select">
+                skolens åpningstider
+              </DynamicLink>
+            </Typography>
+          </>
+        )}
       </Box>
     </Box>
   );
