@@ -106,7 +106,7 @@ const ScannerTutorial = () => {
           </Card>
           <Button
             sx={{ marginY: "1rem" }}
-            color={"error"}
+            color={"success"}
             variant={"contained"}
             onClick={() => setTutorialOpen(false)}
           >
