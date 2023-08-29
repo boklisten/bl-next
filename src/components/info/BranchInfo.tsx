@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import BranchSelect from "../BranchSelect";
 
 const OpeningHourRow = ({ openingHour }: { openingHour: OpeningHour }) => {
   const fromDate = moment(openingHour.from).locale("nb");
@@ -47,12 +48,12 @@ const BranchInfo = ({
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Typography
-        variant="h4"
-        sx={{ textAlign: "center", marginTop: 4, marginBottom: 1 }}
-      >
-        Åpningstider for {branch.name}
+      <Typography variant="h4" sx={{ textAlign: "center", marginTop: 4 }}>
+        Åpningstider
       </Typography>
+      <Box sx={{ my: 3.5 }}>
+        <BranchSelect />
+      </Box>
 
       {branch.location?.address?.length && (
         <Box
