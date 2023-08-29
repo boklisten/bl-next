@@ -51,7 +51,7 @@ const BranchInfo = ({
       <Typography variant="h4" sx={{ textAlign: "center", marginTop: 4 }}>
         Åpningstider
       </Typography>
-      <Box sx={{ my: 2 }}>
+      <Box sx={{ my: 3.5 }}>
         <BranchSelect />
       </Box>
 
