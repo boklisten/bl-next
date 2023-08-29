@@ -5,6 +5,7 @@ import { infoPageTabs, termsAndConditionsTabs } from "../../../utils/constants";
 import Head from "next/head";
 import Editor from "../../../components/info/Editor";
 import { editorData } from "../../../utils/mockData";
+import DynamicSubNav from "../../../components/info/DynamicSubNav";
 
 const Policies: NextPage = () => {
   return (
@@ -18,7 +19,7 @@ const Policies: NextPage = () => {
       </Head>
       <Card sx={{ paddingBottom: "2rem" }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
-        <DynamicNav tabs={termsAndConditionsTabs} />
+        <DynamicSubNav tabs={termsAndConditionsTabs} />
         <Editor rawEditorState={editorData.conditions} />
       </Card>
     </>
