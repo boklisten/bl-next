@@ -21,7 +21,11 @@ const ScannerTutorial = () => {
       >
         Vis instruksjoner
       </Button>
-      <Modal open={tutorialOpen} sx={{ overflow: "scroll" }}>
+      <Modal
+        open={tutorialOpen}
+        sx={{ overflow: "scroll" }}
+        onClose={() => setTutorialOpen(false)}
+      >
         <Container
           component={Paper}
           sx={{
