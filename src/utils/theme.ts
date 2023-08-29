@@ -60,6 +60,15 @@ const theme = responsiveFontSizes(
         },
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 450,
+        md: 600,
+        lg: 1000,
+        xl: 1200,
+      },
+    },
   })
 );
 
