@@ -107,7 +107,9 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         open={feedback.visible}
         severity={feedback.severity}
         feedback={feedback.text}
-        handleClose={() => setFeedback({ ...feedback, visible: false })}
+        handleClose={() =>
+          setFeedback((previous) => ({ ...previous, visible: false }))
+        }
       />
       <Button
         sx={{ background: "green" }}
@@ -141,7 +143,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         open={scanModalOpen}
         handleClose={() => {
           setScanModalOpen(false);
-          setFeedback({ ...feedback, visible: false });
+          setFeedback((previous) => ({ ...previous, visible: false }));
         }}
         handleSubmit={handleRegistration}
       />
