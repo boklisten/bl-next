@@ -31,7 +31,7 @@ const ScannerModal = ({
         </Typography>
         <CropFreeIcon sx={{ zIndex: 100, fontSize: "200px" }} />
         <Button
-          color={"error"}
+          color={"info"}
           sx={{ position: "absolute", top: 80, zIndex: 100 }}
           variant={"contained"}
           onClick={handleClose}

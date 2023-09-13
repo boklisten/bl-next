@@ -22,7 +22,7 @@ const ManualRegistrationModal = ({
   handleSubmit: (scannedText: string) => Promise<boolean>;
 }) => {
   const [manualInput, setManualInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   return (
     <Modal open={open}>
       <Container
@@ -58,12 +58,12 @@ const ManualRegistrationModal = ({
             Lukk
           </Button>
           <LoadingButton
-            loading={loading}
+            loading={waiting}
             variant={"contained"}
             onClick={async () => {
-              setLoading(true);
+              setWaiting(true);
               const success = await handleSubmit(manualInput);
-              setLoading(false);
+              setWaiting(false);
               if (success) {
                 setManualInput("");
               }
