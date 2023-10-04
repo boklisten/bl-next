@@ -1,15 +1,16 @@
+import { Order } from "@boklisten/bl-model";
+import { Card } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Card } from "@mui/material";
-import CheckoutStepper from "../components/checkout/CheckoutStepper";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectCartItems, setOrderID } from "../redux/cart";
-import { add } from "../api/api";
-import { createOrder } from "../utils/cartUtils";
-import { selectBranch } from "../redux/selectedBranch";
-import { Order } from "@boklisten/bl-model";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+import { add } from "api/api";
+import CheckoutStepper from "components/checkout/CheckoutStepper";
+import { selectCartItems, setOrderID } from "redux/cart";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { selectBranch } from "redux/selectedBranch";
+import { createOrder } from "utils/cartUtils";
 
 const CartPage: NextPage = () => {
   const cartItems = useAppSelector(selectCartItems);
@@ -25,7 +26,7 @@ const CartPage: NextPage = () => {
     const fetchOrder = async () => {
       const createdOrder: Order = await add(
         "orders",
-        createOrder(selectedBranch.id, cartItems)
+        createOrder(selectedBranch.id, cartItems),
       ).then((response) => response.data.data[0]);
       dispatch(setOrderID(createdOrder.id));
     };

@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
-import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { Button, Container } from "@mui/material";
+import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import { isAdmin } from "api/auth";
 
 const Editor = dynamic(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
-  { ssr: false }
+  { ssr: false },
 );
 
 const sanitizeRawState = (raw: string) => {
@@ -19,7 +20,7 @@ const sanitizeRawState = (raw: string) => {
 const getEditorStateFromRaw = (rawState: string) => {
   try {
     return EditorState.createWithContent(
-      convertFromRaw(JSON.parse(sanitizeRawState(rawState)))
+      convertFromRaw(JSON.parse(sanitizeRawState(rawState))),
     );
   } catch (error) {
     console.error(error);
@@ -35,7 +36,7 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
   const [editorState, setEditorState] = useState(initialEditorState);
 
   const rawState = JSON.stringify(
-    convertToRaw(editorState.getCurrentContent())
+    convertToRaw(editorState.getCurrentContent()),
   );
 
   const [readOnly, setReadOnly] = useState(true);
@@ -69,6 +70,7 @@ const CustomEditor = ({ rawEditorState }: { rawEditorState: string }) => {
         </Button>
       )}
       <Editor
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         editorState={editorState}
         toolbarHidden={!isAdmin() || readOnly}

@@ -1,6 +1,5 @@
-import React from "react";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import { apiFetcher } from "../../api/api";
+import { ArrowBack } from "@mui/icons-material";
 import {
   Alert,
   Button,
@@ -9,24 +8,26 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import React from "react";
 import useSWR from "swr";
-import BL_CONFIG from "../../utils/bl-config";
-import { getAccessTokenBody } from "../../api/token";
-import UserMatchDetail from "./UserMatchDetail";
-import StandMatchDetail from "./StandMatchDetail";
-import { ArrowBack } from "@mui/icons-material";
-import DynamicLink from "../DynamicLink";
+
+import { apiFetcher } from "api/api";
+import { getAccessTokenBody } from "api/token";
+import DynamicLink from "components/DynamicLink";
+import StandMatchDetail from "components/matches/StandMatchDetail";
+import UserMatchDetail from "components/matches/UserMatchDetail";
+import BL_CONFIG from "utils/bl-config";
 
 const MatchDetail = ({ matchId }: { matchId: string }) => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
-    getAccessTokenBody()
+    getAccessTokenBody(),
   );
   const userId = accessToken?.details;
 
   const { data: matches, error: matchesError } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
     apiFetcher<MatchWithDetails[]>,
-    { refreshInterval: 5000 }
+    { refreshInterval: 5000 },
   );
 
   if (tokenError || matchesError) {

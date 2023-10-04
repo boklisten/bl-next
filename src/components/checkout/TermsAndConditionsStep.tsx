@@ -1,7 +1,8 @@
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import Box from "@mui/material/Box";
-import DynamicLink from "../DynamicLink";
+
+import DynamicLink from "components/DynamicLink";
 
 const TermsAndConditionsStep = ({
   setWait,

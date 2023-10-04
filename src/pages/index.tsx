@@ -2,7 +2,8 @@ import { Box, Typography } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import DynamicLink from "../components/DynamicLink";
+
+import DynamicLink from "components/DynamicLink";
 
 const Home: NextPage = () => {
   return (

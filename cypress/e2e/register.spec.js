@@ -47,7 +47,7 @@ describe("Register", () => {
   it("correctly validates a regular user", () => {
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
     cy.getBySel("password-field").type(
-      "Programming is not a science. Programming is a craft."
+      "Programming is not a science. Programming is a craft.",
     );
     cy.getBySel("first-name-field").type("Richard");
     cy.getBySel("last-name-field").type("Stallman");
@@ -64,7 +64,7 @@ describe("Register", () => {
   it("correctly validates an underage user", () => {
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
     cy.getBySel("password-field").type(
-      "Programming is not a science. Programming is a craft."
+      "Programming is not a science. Programming is a craft.",
     );
 
     cy.getBySel("birthday-field").clear();
@@ -80,7 +80,7 @@ describe("Register", () => {
   it("correctly displays postal city", () => {
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
     cy.getBySel("password-field").type(
-      "Programming is not a science. Programming is a craft."
+      "Programming is not a science. Programming is a craft.",
     );
     cy.getBySel("postal-code-field").clear();
     cy.getBySel("postal-code-field").type("7032");
@@ -91,10 +91,11 @@ describe("Register", () => {
     cy.getBySel("submit-button").should("be.disabled");
     cy.getBySel("error-message").should(
       "contain",
-      "Du må oppgi et gyldig norsk postnummer"
+      "Du må oppgi et gyldig norsk postnummer",
     );
 
     cy.get("#postalCode").clear();
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get("#postalCode").type("0977").blur();
     cy.getBySel("postal-city-preview").should("contain", "Oslo");
     cy.getBySel("submit-button").should("not.be.disabled");
@@ -116,7 +117,7 @@ describe("Register", () => {
 
     cy.getBySel("email-field").type("richard.stallman@protonmail.com");
     cy.getBySel("password-field").type(
-      "Programming is not a science. Programming is a craft."
+      "Programming is not a science. Programming is a craft.",
     );
     cy.getBySel("first-name-field").type("Richard");
     cy.getBySel("last-name-field").type("Stallman");
@@ -144,6 +145,7 @@ describe("Register", () => {
 
   it("cannot register when passord is invalid", () => {
     cy.get("#password").clear();
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get("#password").type("pass").blur();
     cy.getBySel("error-message").should("be.visible");
     cy.getBySel("submit-button").should("be.disabled");

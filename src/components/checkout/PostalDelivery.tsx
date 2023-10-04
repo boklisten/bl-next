@@ -1,5 +1,4 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import { DeliveryInfoBring, UserDetail } from "@boklisten/bl-model";
 import {
   Alert,
   Divider,
@@ -11,18 +10,23 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import moment from "moment";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { extractFirstName, extractLastName } from "../user/UserDetailEditor";
 import isPostalCode from "validator/lib/isPostalCode";
-import { fetchData } from "../../api/requests";
-import Box from "@mui/material/Box";
-import { DeliveryInfoBring, UserDetail } from "@boklisten/bl-model";
-import { add } from "../../api/api";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectOrderID, setDeliveryPrice } from "../../redux/cart";
-import moment from "moment";
+
+import { add } from "api/api";
+import { fetchData } from "api/requests";
+import {
+  extractFirstName,
+  extractLastName,
+} from "components/user/UserDetailEditor";
+import { selectOrderID, setDeliveryPrice } from "redux/cart";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 type PostalDeliveryFields = {
   firstName: string;
@@ -102,7 +106,7 @@ const PostalDelivery = ({
     address: string,
     postalCode: string,
     postalCity: string,
-    orderID: string
+    orderID: string,
   ) => {
     setWait(true);
     const deliveryInfo: DeliveryInfoBring | undefined = await add(
@@ -126,7 +130,7 @@ const PostalDelivery = ({
         },
         order: orderID,
         amount: 0,
-      }
+      },
     ).then((response) => response?.data.data[0].info);
 
     if (!deliveryInfo) return;
@@ -152,7 +156,7 @@ const PostalDelivery = ({
       getValues("address"),
       getValues("postalCode"),
       postalCity,
-      orderID
+      orderID,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getValues, orderID, postalCity]);
@@ -166,7 +170,6 @@ const PostalDelivery = ({
           data-testid="error-message"
           sx={{ marginY: 1 }}
         >
-          {/*@ts-ignore*/}
           {message.message}
         </Alert>
       ))}
@@ -248,7 +251,7 @@ const PostalDelivery = ({
                 const response = await fetchData(
                   "/api/delivery/postal-code",
                   "POST",
-                  event.target.value
+                  event.target.value,
                 );
                 setWaitingForPostalCity(false);
                 if (!response.postalCity) {
@@ -263,7 +266,7 @@ const PostalDelivery = ({
                   getValues("address"),
                   event.target.value,
                   postalCity,
-                  orderID
+                  orderID,
                 );
               },
               required: "Du må fylle inn postnummer",
@@ -277,7 +280,7 @@ const PostalDelivery = ({
                 const response = await fetchData(
                   "/api/delivery/postal-code",
                   "POST",
-                  v
+                  v,
                 );
 
                 if (!response.postalCity) {

@@ -7,10 +7,11 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React from "react";
-import { useAppSelector } from "../../redux/hooks";
-import { selectCartItems, selectDeliveryPrice } from "../../redux/cart";
 import moment from "moment";
+import React from "react";
+
+import { selectCartItems, selectDeliveryPrice } from "redux/cart";
+import { useAppSelector } from "redux/hooks";
 
 const readableOrderItemTypes = {
   rent: "lån",
@@ -45,7 +46,7 @@ const PaymentSummary = () => {
               cartItem.orderItem.type === "buyout"
                 ? ""
                 : ` til ${moment(cartItem.orderItem.info?.to).format(
-                    "DD/MM/YY"
+                    "DD/MM/YY",
                   )}`;
             return (
               <TableRow key={cartItem.item.id}>
@@ -73,7 +74,7 @@ const PaymentSummary = () => {
             <TableCell>
               {cartItems.reduce(
                 (previous, next) => previous + next.orderItem.amount,
-                0
+                0,
               ) + deliveryPrice}
               {"\u00A0"}
               kr

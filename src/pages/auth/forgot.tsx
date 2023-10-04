@@ -11,11 +11,12 @@ import {
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
-import { add } from "../../api/api";
-import { useState } from "react";
-import DynamicLink from "../../components/DynamicLink";
+
+import { add } from "api/api";
+import DynamicLink from "components/DynamicLink";
 
 type ForgotFields = {
   email: string;

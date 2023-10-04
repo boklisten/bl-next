@@ -1,5 +1,5 @@
-import React from "react";
 import dynamic from "next/dynamic";
+import React from "react";
 
 // This scanner does not work on the dev server, only when fully built
 const BarcodeScanner = dynamic(() => import("react-qr-barcode-scanner"), {
@@ -18,7 +18,7 @@ const BarcodeQrScanner = ({
       width={500}
       height={500}
       facingMode="environment"
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onUpdate={(error: unknown, result: any) => {
         if (result?.text) {
           handleScan(result.text as string);

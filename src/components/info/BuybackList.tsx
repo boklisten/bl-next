@@ -10,8 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { fetcher } from "api/requests";
 import useSWR, { SWRResponse } from "swr";
+
+import { fetcher } from "api/requests";
 import BL_CONFIG from "utils/bl-config";
 import { Item } from "utils/types";
 

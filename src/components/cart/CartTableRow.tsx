@@ -1,11 +1,12 @@
 import { BranchItem, OrderItemType } from "@boklisten/bl-model";
-import { CartItem } from "../../redux/cart";
-import { useAppSelector } from "../../redux/hooks";
-import { selectSubjects } from "../../redux/selectedSubjects";
 import { TableCell, TableRow, Tooltip } from "@mui/material";
 import moment from "moment";
-import SelectDeadline from "./SelectDeadline";
-import RemoveCartItemButton from "./RemoveCartItemButton";
+
+import RemoveCartItemButton from "components/cart/RemoveCartItemButton";
+import SelectDeadline from "components/cart/SelectDeadline";
+import { CartItem } from "redux/cart";
+import { useAppSelector } from "redux/hooks";
+import { selectSubjects } from "redux/selectedSubjects";
 
 const getReadableOrderType = (orderItemType: OrderItemType) =>
   orderItemType === "extend" ? "forlenging" : "utkjøp";
@@ -14,9 +15,9 @@ const CartTableRow = ({ cartItem }: { cartItem: CartItem }) => {
   const selectedSubjects = useAppSelector(selectSubjects);
   const getItemSubjects = (item: BranchItem) =>
     item.categories?.filter((category) =>
-      selectedSubjects.includes(category)
+      selectedSubjects.includes(category),
     ) ?? [];
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   /* @ts-ignore */
   const amountLeftToPay = cartItem.orderItem.info?.amountLeftToPay ?? 0;
 

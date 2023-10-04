@@ -1,13 +1,14 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { formatActionsString } from "./helper";
-import MatchListItemBox from "./MatchListItemBox";
-import ProgressBar from "./ProgressBar";
+
 import {
   calculateFulfilledStandMatchItems,
   isMatchBegun,
   isMatchFulfilled,
-} from "../matches-helper";
+} from "components/matches/matches-helper";
+import { formatActionsString } from "components/matches/matchesList/helper";
+import MatchListItemBox from "components/matches/matchesList/MatchListItemBox";
+import ProgressBar from "components/matches/matchesList/ProgressBar";
 import { StandMatchWithDetails } from "utils/types";
 
 const StandMatchListItem: React.FC<{

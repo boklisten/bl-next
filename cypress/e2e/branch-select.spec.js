@@ -12,29 +12,31 @@ describe("Info pages", () => {
     it("can select a branch", () => {
       cy.getBySel("branchSelect").click();
       cy.getBySel("branchOption").should("have.length", 4);
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.getBySel("branchOption")
         .eq(0)
         .click()
         .should(() => {
           expect(localStorage.getItem("bl-current-branch-id")).to.eq(
-            "60074e293309ff001a51b244"
+            "60074e293309ff001a51b244",
           );
         });
 
       cy.visit("/");
       cy.getBySel("branchSelect").should(() => {
         expect(localStorage.getItem("bl-current-branch-id")).to.eq(
-          "60074e293309ff001a51b244"
+          "60074e293309ff001a51b244",
         );
       });
 
       cy.getBySel("branchSelect").click();
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.getBySel("branchOption")
         .eq(1)
         .click()
         .should(() => {
           expect(localStorage.getItem("bl-current-branch-id")).to.eq(
-            "5dfa263e8eeee5001c83eacf"
+            "5dfa263e8eeee5001c83eacf",
           );
         });
     });

@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Image from "next/image";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { UserDetail } from "@boklisten/bl-model";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Alert,
   Divider,
@@ -16,21 +8,26 @@ import {
   Skeleton,
   Tooltip,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
-import "@mui/lab";
 import moment, { Moment } from "moment";
+import Image from "next/image";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
-import { fetchData } from "../../api/requests";
-import { UserDetail } from "@boklisten/bl-model";
-/*
-import FacebookButton from "./FacebookButton";
-import GoogleButton from "./GoogleButton";
-*/
-import DynamicLink from "../DynamicLink";
+
+import { fetchData } from "api/requests";
+import DynamicLink from "components/DynamicLink";
+import "@mui/lab";
 
 type UserEditorFields = {
   email: string;
@@ -95,7 +92,7 @@ const UserDetailEditor = ({
   // eslint-disable-next-line unicorn/no-null
   const [birthday, setBirthday] = useState<Moment | null>(
     // eslint-disable-next-line unicorn/no-null
-    userDetails?.dob ? moment(userDetails.dob) : null
+    userDetails?.dob ? moment(userDetails.dob) : null,
   );
 
   const defaultValues = {
@@ -160,7 +157,6 @@ const UserDetailEditor = ({
               data-testid="error-message"
               sx={{ marginY: 1 }}
             >
-              {/*@ts-ignore*/}
               {message.message}
             </Alert>
           ))}
@@ -176,7 +172,6 @@ const UserDetailEditor = ({
                 label="Epost"
                 autoComplete="email"
                 error={!!errors.email}
-                //@ts-ignore
                 {...register("email", {
                   required: "Du må fylle inn epost",
                   validate: (v) =>
@@ -223,7 +218,7 @@ const UserDetailEditor = ({
                       aria-label="toggle password visibility"
                       onClick={() => setShowPassword(!showPassword)}
                       onMouseDown={(
-                        event: React.MouseEvent<HTMLButtonElement>
+                        event: React.MouseEvent<HTMLButtonElement>,
                       ) => {
                         event.preventDefault();
                       }}
@@ -340,7 +335,7 @@ const UserDetailEditor = ({
                         const response = await fetchData(
                           "/api/delivery/postal-code",
                           "POST",
-                          event.target.value
+                          event.target.value,
                         );
                         setWaitingForPostalCity(false);
 
@@ -362,7 +357,7 @@ const UserDetailEditor = ({
                         const response = await fetchData(
                           "/api/delivery/postal-code",
                           "POST",
-                          v
+                          v,
                         );
 
                         if (!response.postalCity) {

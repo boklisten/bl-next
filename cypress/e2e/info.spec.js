@@ -21,7 +21,7 @@ describe("Info pages", () => {
         .eq(0)
         .should(
           "contain.text",
-          "Hva betyr det at Boklisten alltid leverer riktig bok?"
+          "Hva betyr det at Boklisten alltid leverer riktig bok?",
         );
       cy.getBySel("qna-entry-answer").eq(0).should("not.be.visible");
       cy.getBySel("qna-entry").eq(0).click();

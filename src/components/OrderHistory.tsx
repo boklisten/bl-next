@@ -1,3 +1,5 @@
+import { Order, Payment } from "@boklisten/bl-model";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Card,
@@ -13,12 +15,11 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { Order, Payment } from "@boklisten/bl-model";
-import moment from "moment";
-import { get } from "../api/api";
 import Button from "@mui/material/Button";
-import { LoadingButton } from "@mui/lab";
+import moment from "moment";
+import React, { useState } from "react";
+
+import { get } from "api/api";
 
 // fetchPayments(orders);
 // types are from a business POV
@@ -66,7 +67,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
     for (let index = 0; index < byteNumbers.length; index++) {
       byteNumbers[index] = byteCharacters.codePointAt(index);
     }
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const blob = new Blob([new Uint8Array(byteNumbers)], {
       type: "application/pdf",
@@ -212,7 +213,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                         }}
                       >
                         {order.orderItems.map((orderItem) => {
-                          // @ts-ignore
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                           // @ts-ignore
                           return (
                             <Card
@@ -261,14 +262,19 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                         </TableCell>
                                       </TableRow>
                                     )}
-                                  {/** @ts-ignore*/}
+
+                                  {/**
+                                   eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                   @ts-ignore*/}
                                   {orderItem.info?.["amountLeftToPay"] && (
                                     <TableRow>
                                       <TableCell align="center">
                                         <b>Betal senere</b>
                                       </TableCell>
                                       <TableCell align="center">
-                                        {/** @ts-ignore*/}
+                                        {/**
+                                         eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                         @ts-ignore*/}
                                         {orderItem.info["amountLeftToPay"]} kr
                                       </TableCell>
                                     </TableRow>
@@ -280,7 +286,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                       </TableCell>
                                       <TableCell align="center">
                                         {moment(orderItem.info.to).format(
-                                          "DD/MM/YYYY"
+                                          "DD/MM/YYYY",
                                         )}
                                       </TableCell>
                                     </TableRow>
@@ -301,7 +307,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                           setOpenOrder(order.id);
                           if (order.payments && order.payments.length > 0) {
                             const payment = await fetchPayment(
-                              order.payments[0] as string
+                              order.payments[0] as string,
                             );
                             setOpenPayment(payment);
                           }

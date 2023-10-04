@@ -1,18 +1,19 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { UserDetail } from "@boklisten/bl-model";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StorefrontIcon from "@mui/icons-material/Storefront";
-import Tabs from "@mui/material/Tabs";
+import { Tooltip } from "@mui/material";
 import Tab from "@mui/material/Tab";
-import BranchDelivery from "./BranchDelivery";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import Tabs from "@mui/material/Tabs";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import BranchDelivery from "components/checkout/BranchDelivery";
+import PostalDelivery from "components/checkout/PostalDelivery";
 import {
   selectCartItems,
   selectDeliveryMethod,
   setDeliveryMethod,
-} from "../../redux/cart";
-import { Tooltip } from "@mui/material";
-import PostalDelivery from "./PostalDelivery";
-import { UserDetail } from "@boklisten/bl-model";
+} from "redux/cart";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 
 type DeliveryMethods = {
   byMail: boolean;

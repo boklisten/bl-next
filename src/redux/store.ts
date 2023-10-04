@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
-import selectedBranch from "./selectedBranch";
-import selectedSubjects from "./selectedSubjects";
-import cart from "./cart";
-import selectedCustomerItemActions from "./selectedCustomerItemActions";
+import cart from "redux/cart";
+import selectedBranch from "redux/selectedBranch";
+import selectedCustomerItemActions from "redux/selectedCustomerItemActions";
+import selectedSubjects from "redux/selectedSubjects";
 
 export function makeStore() {
   return configureStore({

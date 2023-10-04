@@ -1,16 +1,17 @@
 import { Alert } from "@mui/material";
 import React from "react";
-import { StandMatchWithDetails } from "../../utils/types";
+
 import {
   calculateFulfilledStandMatchItems,
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
-} from "./matches-helper";
-import ProgressBar from "./matchesList/ProgressBar";
-import MeetingInfo from "./MeetingInfo";
-import MatchItemTable from "./MatchItemTable";
-import OtherPersonContact from "./OtherPersonContact";
+} from "components/matches/matches-helper";
+import ProgressBar from "components/matches/matchesList/ProgressBar";
+import MatchItemTable from "components/matches/MatchItemTable";
+import MeetingInfo from "components/matches/MeetingInfo";
+import OtherPersonContact from "components/matches/OtherPersonContact";
+import { StandMatchWithDetails } from "utils/types";
 
 const StandMatchDetail = ({
   match,
@@ -31,13 +32,14 @@ const StandMatchDetail = ({
     handoffItemStatuses = calculateItemStatuses(
       match,
       (match) => match.expectedHandoffItems,
-      fulfilledHandoffItems
+      fulfilledHandoffItems,
     );
     pickupItemStatuses = calculateItemStatuses(
       match,
       (match) => match.expectedPickupItems,
-      fulfilledPickupItems
+      fulfilledPickupItems,
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return <Alert severity="error">En feil oppstod: {error?.message}</Alert>;
   }

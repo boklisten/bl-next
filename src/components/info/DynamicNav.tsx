@@ -1,8 +1,3 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { useRouter } from "next/dist/client/router";
 import {
   Divider,
   FormControl,
@@ -10,8 +5,14 @@ import {
   NativeSelect,
   SelectChangeEvent,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import { useRouter } from "next/dist/client/router";
+import React from "react";
 import stringSimilarity from "string-similarity";
-import DynamicLink from "../DynamicLink";
+
+import DynamicLink from "components/DynamicLink";
 
 export interface LinkTabProps {
   label: string;
@@ -40,6 +41,7 @@ function SelectTab({
         <NativeSelect
           data-testid="select-info-page"
           value={tabs[activeTabIndex]?.href}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={handleChange as any}
           inputProps={{
             name: "page",
@@ -75,7 +77,7 @@ const DynamicNav = ({
   const router = useRouter();
   const activeTabIndex = stringSimilarity.findBestMatch(
     router.route,
-    tabs.map((tab) => tab.href)
+    tabs.map((tab) => tab.href),
   ).bestMatchIndex;
 
   // A hack to be able to use two rows of tabs

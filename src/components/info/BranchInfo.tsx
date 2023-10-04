@@ -1,17 +1,18 @@
 import { Branch, OpeningHour } from "@boklisten/bl-model";
-import { Box, Typography, Alert } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ContactInfo from "components/info/ContactInfo";
-import moment from "moment";
-import "moment/locale/nb";
+import { Box, Typography, Alert } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import BranchSelect from "../BranchSelect";
+import moment from "moment";
+import "moment/locale/nb";
+
+import BranchSelect from "components/BranchSelect";
+import ContactInfo from "components/info/ContactInfo";
 
 const OpeningHourRow = ({ openingHour }: { openingHour: OpeningHour }) => {
   const fromDate = moment(openingHour.from).locale("nb");

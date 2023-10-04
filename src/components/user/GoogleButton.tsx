@@ -1,6 +1,7 @@
 import GoogleIcon from "@mui/icons-material/Google";
 import React from "react";
-import SocialLoginButton from "./SocialLoginButton";
+
+import SocialLoginButton from "components/user/SocialLoginButton";
 
 const GoogleButton = ({ label }: { label: string }) => (
   <SocialLoginButton

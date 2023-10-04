@@ -1,7 +1,8 @@
-import React, { ReactNode } from "react";
-import { Typography } from "@mui/material";
 import { Match, MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import { StandMatchWithDetails, UserMatchWithDetails } from "../../utils/types";
+import { Typography } from "@mui/material";
+import React, { ReactNode } from "react";
+
+import { StandMatchWithDetails, UserMatchWithDetails } from "utils/types";
 
 export interface ItemStatus {
   id: string;
@@ -18,29 +19,31 @@ export const MatchHeader = ({ children }: { children: ReactNode }) => {
 };
 
 export function calculateFulfilledStandMatchItems(
-  match: StandMatchWithDetails
+  match: StandMatchWithDetails,
 ): {
   fulfilledHandoffItems: string[];
   fulfilledPickupItems: string[];
 } {
   const fulfilledHandoffItems = match.expectedHandoffItems.filter((item) =>
-    match.deliveredItems.includes(item)
+    match.deliveredItems.includes(item),
   );
   const fulfilledPickupItems = match.expectedPickupItems.filter((item) =>
-    match.receivedItems.includes(item)
+    match.receivedItems.includes(item),
   );
   return { fulfilledHandoffItems, fulfilledPickupItems };
 }
 
 export function calculateFulfilledUserMatchCustomerItems(
   match: UserMatchWithDetails,
-  isSender: boolean
+  isSender: boolean,
 ): string[] {
   return match.expectedItems.filter((item) =>
     (isSender
       ? match.deliveredCustomerItems
       : match.receivedCustomerItems
-    ).some((customerItem) => match.customerItemToItemMap[customerItem] === item)
+    ).some(
+      (customerItem) => match.customerItemToItemMap[customerItem] === item,
+    ),
   );
 }
 
@@ -49,7 +52,7 @@ export function calculateItemStatuses<T extends MatchWithDetails>(
   // surpressing because it thinks "match" is an actual variable
   // eslint-disable-next-line no-unused-vars
   expectedItemsSelector: (match: T) => string[],
-  fulfilledItems: string[]
+  fulfilledItems: string[],
 ): ItemStatus[] {
   return expectedItemsSelector(match)
     .map((id) => {
@@ -75,7 +78,7 @@ export function calculateItemStatuses<T extends MatchWithDetails>(
  */
 export function isMatchFulfilled(
   match: MatchWithDetails,
-  isSender: boolean
+  isSender: boolean,
 ): boolean {
   if (match._variant === MatchVariant.StandMatch) {
     const { fulfilledHandoffItems, fulfilledPickupItems } =
@@ -101,7 +104,7 @@ export function isMatchFulfilled(
  */
 export function isMatchBegun(
   match: MatchWithDetails,
-  isSender: boolean
+  isSender: boolean,
 ): boolean {
   if (match._variant === MatchVariant.StandMatch) {
     const { fulfilledHandoffItems, fulfilledPickupItems } =
@@ -121,7 +124,7 @@ export function isMatchBegun(
  */
 export function isUserSenderInMatch(
   match: Match,
-  currentUserId: string
+  currentUserId: string,
 ): boolean {
   if (match._variant === MatchVariant.UserMatch) {
     return match.sender === currentUserId;

@@ -23,7 +23,7 @@ const calculateTaxAmount = (order: Order, delivery?: Delivery): number => {
 
 export const createDibsPayment = (
   order: Order,
-  delivery: Delivery
+  delivery: Delivery,
 ): Payment => {
   return {
     id: "",

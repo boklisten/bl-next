@@ -1,6 +1,3 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-
-import type { AppState } from "./store";
 import {
   Branch,
   BranchItem,
@@ -10,7 +7,10 @@ import {
   OrderItem,
   Period,
 } from "@boklisten/bl-model";
-import { createOrderItem } from "../utils/cartUtils";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+
+import type { AppState } from "redux/store";
+import { createOrderItem } from "utils/cartUtils";
 
 export interface CartItem {
   item: Item;
@@ -38,7 +38,7 @@ export const cartSlice = createSlice({
   reducers: {
     setCart: (state, action: PayloadAction<CartItem[]>) => {
       state.cartItems = action.payload.sort((a, b) =>
-        a.item.title.localeCompare(b.item.title)
+        a.item.title.localeCompare(b.item.title),
       );
     },
     setOrderID: (state, action: PayloadAction<string>) => {
@@ -46,7 +46,7 @@ export const cartSlice = createSlice({
     },
     setDeliveryMethod: (
       state,
-      action: PayloadAction<DeliveryMethod | undefined>
+      action: PayloadAction<DeliveryMethod | undefined>,
     ) => {
       state.deliveryMethod = action.payload;
     },
@@ -55,12 +55,12 @@ export const cartSlice = createSlice({
     },
     updatePeriod: (
       state,
-      action: PayloadAction<{ cartItem: CartItem; updatedPeriod: Period }>
+      action: PayloadAction<{ cartItem: CartItem; updatedPeriod: Period }>,
     ) => {
       const cartItem = action.payload.cartItem;
       state.cartItems = [
         ...current(state.cartItems).filter(
-          (item) => item.item.id !== cartItem.item.id
+          (item) => item.item.id !== cartItem.item.id,
         ),
         {
           ...cartItem,
@@ -68,14 +68,14 @@ export const cartSlice = createSlice({
             cartItem.branch,
             cartItem.item,
             cartItem.orderItem.type,
-            action.payload.updatedPeriod
+            action.payload.updatedPeriod,
           ),
         } as CartItem,
       ].sort((a, b) => a.item.title.localeCompare(b.item.title));
     },
     removeCartItem: (state, action: PayloadAction<CartItem>) => {
       state.cartItems = current(state.cartItems).filter(
-        (cartItem) => cartItem.item.id !== action.payload.item.id
+        (cartItem) => cartItem.item.id !== action.payload.item.id,
       );
     },
   },

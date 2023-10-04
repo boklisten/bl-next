@@ -1,11 +1,12 @@
 import { Card } from "@mui/material";
 import type { NextPage } from "next";
-import DynamicNav from "../../../components/info/DynamicNav";
-import { infoPageTabs, termsAndConditionsTabs } from "../../../utils/constants";
 import Head from "next/head";
-import Editor from "../../../components/info/Editor";
-import { editorData } from "../../../utils/mockData";
-import DynamicSubNav from "../../../components/info/DynamicSubNav";
+
+import DynamicNav from "components/info/DynamicNav";
+import DynamicSubNav from "components/info/DynamicSubNav";
+import Editor from "components/info/Editor";
+import { infoPageTabs, termsAndConditionsTabs } from "utils/constants";
+import { editorData } from "utils/mockData";
 
 const Terms: NextPage = () => {
   return (

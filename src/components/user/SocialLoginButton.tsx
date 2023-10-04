@@ -1,6 +1,6 @@
-import Button from "@mui/material/Button";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import React, { ReactNode } from "react";
 
 interface socialLoginProps {

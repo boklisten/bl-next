@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import {
   Button,
   Card,
@@ -7,9 +7,9 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import Image from "next/image";
 import { Box } from "@mui/system";
+import Image from "next/image";
+import React, { useState } from "react";
 
 const ScannerTutorial = () => {
   const [tutorialOpen, setTutorialOpen] = useState(false);

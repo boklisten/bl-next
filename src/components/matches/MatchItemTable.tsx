@@ -1,3 +1,5 @@
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import ErrorIcon from "@mui/icons-material/Error";
 import {
   Box,
   Table,
@@ -8,10 +10,9 @@ import {
   TableRow,
   Tooltip,
 } from "@mui/material";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import ErrorIcon from "@mui/icons-material/Error";
 import React from "react";
-import { ItemStatus } from "./matches-helper";
+
+import { ItemStatus } from "components/matches/matches-helper";
 
 const MatchItemTable = ({
   itemStatuses,

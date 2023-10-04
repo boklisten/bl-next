@@ -1,23 +1,19 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import isEmail from "validator/lib/isEmail";
-import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
-import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { login } from "api/login";
+import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { useRouter } from "next/router";
-/*
-Temporary disable for P2P test
-import FacebookButton from "./FacebookButton";
-import GoogleButton from "./GoogleButton";
- */
-import DynamicLink from "../DynamicLink";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import isEmail from "validator/lib/isEmail";
+
+import { login } from "api/login";
+import DynamicLink from "components/DynamicLink";
 
 type SignInFields = {
   email: string;

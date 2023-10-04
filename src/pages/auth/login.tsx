@@ -1,7 +1,8 @@
 import { Card } from "@mui/material";
-import SignIn from "components/user/SignIn";
 import type { NextPage } from "next";
 import Head from "next/head";
+
+import SignIn from "components/user/SignIn";
 
 const Login: NextPage = () => {
   return (

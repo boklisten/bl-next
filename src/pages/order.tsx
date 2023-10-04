@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { BranchItem } from "@boklisten/bl-model";
 import { Card } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useEffect, useState } from "react";
+
 import { get } from "api/api";
-import { BranchItem } from "@boklisten/bl-model";
-import { useAppSelector } from "../redux/hooks";
-import { selectBranch } from "../redux/selectedBranch";
-import BranchSelect from "../components/BranchSelect";
-import Typography from "@mui/material/Typography";
-import SubjectSelect from "../components/SubjectSelect";
+import BranchSelect from "components/BranchSelect";
+import SubjectSelect from "components/SubjectSelect";
+import { useAppSelector } from "redux/hooks";
+import { selectBranch } from "redux/selectedBranch";
 
 const Orders: NextPage = () => {
   const selectedBranch = useAppSelector(selectBranch);

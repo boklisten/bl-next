@@ -1,7 +1,7 @@
+import { CustomerItem, OrderItemType } from "@boklisten/bl-model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { AppState } from "./store";
-import { CustomerItem, OrderItemType } from "@boklisten/bl-model";
+import type { AppState } from "redux/store";
 
 export interface CustomerItemAction {
   customerItem: CustomerItem;
@@ -21,7 +21,7 @@ export const selectedCustomerItemActionsSlice = createSlice({
   reducers: {
     setSelectedCustomerItemActions: (
       state,
-      action: PayloadAction<CustomerItemAction[]>
+      action: PayloadAction<CustomerItemAction[]>,
     ) => {
       state.customerItemActions = action.payload;
     },

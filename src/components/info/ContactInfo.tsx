@@ -1,11 +1,12 @@
-import React from "react";
+import EmailIcon from "@mui/icons-material/Email";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { contactInfo } from "../../utils/constants";
-import DynamicLink from "../DynamicLink";
+import React from "react";
+
+import DynamicLink from "components/DynamicLink";
+import { contactInfo } from "utils/constants";
 
 const ContactInfo = () => {
   return (

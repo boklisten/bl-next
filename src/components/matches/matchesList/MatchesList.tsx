@@ -1,22 +1,23 @@
-import useSWR from "swr";
-import BL_CONFIG from "../../../utils/bl-config";
-import React from "react";
-import { apiFetcher } from "api/api";
-import { getAccessTokenBody } from "../../../api/token";
-import { groupMatchesByTimeAndLocation } from "./helper";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import { MatchListItemGroups } from "./MatchListItemGroups";
-import ProgressBar from "./ProgressBar";
 import { Alert, Skeleton } from "@mui/material";
+import React from "react";
+import useSWR from "swr";
+
+import { apiFetcher } from "api/api";
+import { getAccessTokenBody } from "api/token";
 import {
-  StandMatchWithDetails,
-  UserMatchWithDetails,
-} from "../../../utils/types";
-import { isMatchFulfilled, isUserSenderInMatch } from "../matches-helper";
+  isMatchFulfilled,
+  isUserSenderInMatch,
+} from "components/matches/matches-helper";
+import { groupMatchesByTimeAndLocation } from "components/matches/matchesList/helper";
+import { MatchListItemGroups } from "components/matches/matchesList/MatchListItemGroups";
+import ProgressBar from "components/matches/matchesList/ProgressBar";
+import BL_CONFIG from "utils/bl-config";
+import { StandMatchWithDetails, UserMatchWithDetails } from "utils/types";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
-    getAccessTokenBody()
+    getAccessTokenBody(),
   );
   const userId = accessToken?.details;
   const { data: matches, error: matchesError } = useSWR(
@@ -25,7 +26,7 @@ export const MatchesList: React.FC = () => {
     // WebStorm accepts it wrapped in parentheses, but then prettier doesn't, so
     // just ignore it.
     apiFetcher<MatchWithDetails[]>,
-    { refreshInterval: 5000 }
+    { refreshInterval: 5000 },
   );
 
   if (!userId || tokenError || matchesError) {
@@ -40,7 +41,7 @@ export const MatchesList: React.FC = () => {
     .filter((match) => match._variant === MatchVariant.StandMatch)
     .map((standMatch) => standMatch as StandMatchWithDetails)
     .sort((a, b) =>
-      isMatchFulfilled(a, false) ? 1 : isMatchFulfilled(b, false) ? -1 : 0
+      isMatchFulfilled(a, false) ? 1 : isMatchFulfilled(b, false) ? -1 : 0,
     );
   const userMatches = matches
     .filter((match) => match._variant === MatchVariant.UserMatch)
@@ -50,7 +51,7 @@ export const MatchesList: React.FC = () => {
         ? 1
         : isMatchFulfilled(b, isUserSenderInMatch(b, userId))
         ? -1
-        : 0
+        : 0,
     );
   const standMatchesByTime = groupMatchesByTimeAndLocation(standMatches);
   const userMatchesByTime = groupMatchesByTimeAndLocation(userMatches);
@@ -60,7 +61,7 @@ export const MatchesList: React.FC = () => {
   }
 
   const numberFulfilledMatches = matches.filter((element) =>
-    isMatchFulfilled(element, isUserSenderInMatch(element, userId))
+    isMatchFulfilled(element, isUserSenderInMatch(element, userId)),
   ).length;
 
   return (

@@ -44,6 +44,7 @@ export interface Item {
   price: number;
   taxRate: number;
   digital?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   info?: any;
   desc?: string;
   buyback?: boolean;

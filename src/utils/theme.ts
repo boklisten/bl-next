@@ -1,5 +1,5 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 /**
  * Create a theme instance.
@@ -88,7 +88,7 @@ const theme = responsiveFontSizes(
         xl: 1200,
       },
     },
-  })
+  }),
 );
 
 export default theme;

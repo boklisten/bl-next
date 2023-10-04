@@ -1,12 +1,13 @@
-import ContactInfo from "./info/ContactInfo";
-import { Card } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import CopyrightIcon from "@mui/icons-material/Copyright";
-import moment from "moment";
-import React from "react";
+import { Card } from "@mui/material";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import moment from "moment";
 import Image from "next/image";
-import DynamicLink from "./DynamicLink";
+import React from "react";
+
+import DynamicLink from "components/DynamicLink";
+import ContactInfo from "components/info/ContactInfo";
 
 export default function Footer() {
   return (
