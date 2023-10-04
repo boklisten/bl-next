@@ -38,7 +38,7 @@ describe("Login", () => {
       cy.getBySel("email-field").type("petter@");
       cy.getBySel("error-message").should(
         "contain",
-        "Du må fylle inn en gyldig epost"
+        "Du må fylle inn en gyldig epost",
       );
       cy.getBySel("login-submit").should("be.disabled");
 
@@ -55,7 +55,7 @@ describe("Login", () => {
       cy.getBySel("password-field").type("password");
       cy.getBySel("error-message").should("not.exist");
       cy.getBySel("login-submit").should("not.be.disabled");
-    }
+    },
   );
 
   it("displays an error message when username and password is wrong", () => {
@@ -68,14 +68,14 @@ describe("Login", () => {
     cy.wait("@login").its("response.statusCode").should("eq", 401);
     cy.getBySel("api-error").should(
       "contain",
-      "Error: username or password is wrong"
+      "Error: username or password is wrong",
     );
   });
 
   it("can log in with registered user", () => {
     cy.login(
       "richard.stallman@protonmail.com",
-      "Programming is not a science. Programming is a craft."
+      "Programming is not a science. Programming is a craft.",
     );
     cy.url().should("not.include", "login");
     cy.getBySel("MenuIcon").click();

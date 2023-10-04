@@ -1,3 +1,6 @@
+import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   ButtonGroup,
@@ -11,25 +14,23 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
-import moment from "moment";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import moment from "moment";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+
+import { setCart } from "redux/cart";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
   CustomerItemAction,
   selectCustomerItemActions,
   setSelectedCustomerItemActions,
-} from "../redux/selectedCustomerItemActions";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { LoadingButton } from "@mui/lab";
-import { useRouter } from "next/router";
-import { setCart } from "../redux/cart";
+} from "redux/selectedCustomerItemActions";
 import {
   generateCartItemsFromCustomerItemActions,
   getExtendTime,
-} from "../utils/cartUtils";
+} from "utils/cartUtils";
 
 const calculateMaxDeadline = (): string => {
   const now = moment();
@@ -62,7 +63,7 @@ const canBuyout = (customerItem: CustomerItem) => {
   return (
     !isDeadlineExpired(customerItem.deadline.toString()) &&
     !moment().isSameOrBefore(
-      moment(customerItem.creationTime).add(2, "weeks")
+      moment(customerItem.creationTime).add(2, "weeks"),
     ) &&
     !customerItem.returned &&
     !customerItem.match
@@ -112,7 +113,7 @@ const CustomerItemOverview = ({
       customerItemAction.action === "buyout"
         ? `Kjøp ut for ${customerItemAction.customerItem.amountLeftToPay} kr`
         : `Forleng til ${moment(getExtendTime(branchInfo)).format(
-            "DD/MM/YY"
+            "DD/MM/YY",
           )} for 50kr`;
     return (
       <Box sx={{ textAlign: "center" }}>
@@ -131,7 +132,7 @@ const CustomerItemOverview = ({
       branchInfo.paymentInfo?.extendPeriods.some(
         (extendPeriod) =>
           extendPeriod.type === "semester" &&
-          customerItem.deadline !== extendPeriod.date
+          customerItem.deadline !== extendPeriod.date,
       )
     );
   };
@@ -140,7 +141,7 @@ const CustomerItemOverview = ({
     return itemActions.some(
       (itemAction) =>
         itemAction.customerItem.id === customerItemAction.customerItem.id &&
-        itemAction.action === customerItemAction.action
+        itemAction.action === customerItemAction.action,
     );
   };
 
@@ -149,7 +150,7 @@ const CustomerItemOverview = ({
       return itemActions.some(
         (itemAction) =>
           itemAction.customerItem.id === customerItemAction.customerItem.id &&
-          itemAction.action !== customerItemAction.action
+          itemAction.action !== customerItemAction.action,
       );
     };
 
@@ -167,7 +168,7 @@ const CustomerItemOverview = ({
           !(
             itemAction.customerItem.id === customerItemAction.customerItem.id &&
             itemAction.action === targetAction
-          )
+          ),
       );
     }
 
@@ -190,7 +191,7 @@ const CustomerItemOverview = ({
       >
         {customerItems
           .filter(
-            (customerItem) => !customerItem.returned && !customerItem.buyout
+            (customerItem) => !customerItem.returned && !customerItem.buyout,
           )
           .map((customerItem) => (
             <Card key={customerItem.id} sx={{ width: "400px" }}>
@@ -209,7 +210,7 @@ const CustomerItemOverview = ({
                       </TableCell>
                       <TableCell align="center">
                         {moment(customerItem.handoutInfo?.time ?? "").format(
-                          "DD/MM/YYYY"
+                          "DD/MM/YYYY",
                         )}
                       </TableCell>
                     </TableRow>
@@ -255,7 +256,7 @@ const CustomerItemOverview = ({
                       (
                         branchNames.find(
                           (branch) =>
-                            branch.id === customerItem.handoutInfo?.handoutById
+                            branch.id === customerItem.handoutInfo?.handoutById,
                         ) as Branch
                       ).name
                     }{" "}
@@ -381,7 +382,7 @@ const CustomerItemOverview = ({
                 customerItem.returned ||
                 customerItem.buyout ||
                 customerItem.buyback ||
-                customerItem.cancel
+                customerItem.cancel,
             )
             .map((customerItem) => (
               <Card key={customerItem.id} sx={{ width: "400px" }}>
@@ -400,7 +401,7 @@ const CustomerItemOverview = ({
                         </TableCell>
                         <TableCell align="center">
                           {moment(customerItem.handoutInfo?.time ?? "").format(
-                            "DD/MM/YYYY"
+                            "DD/MM/YYYY",
                           )}
                         </TableCell>
                       </TableRow>
@@ -411,7 +412,7 @@ const CustomerItemOverview = ({
                           </TableCell>
                           <TableCell align="center">
                             {moment(customerItem.returnInfo?.time).format(
-                              "DD/MM/YYYY"
+                              "DD/MM/YYYY",
                             )}
                           </TableCell>
                         </TableRow>
@@ -441,7 +442,7 @@ const CustomerItemOverview = ({
             setLoadingCart(true);
             const cartItems = await generateCartItemsFromCustomerItemActions(
               itemActions,
-              branchInfo
+              branchInfo,
             );
             dispatch(setCart(cartItems));
             setLoadingCart(false);

@@ -1,8 +1,9 @@
 import { Card } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Typography from "@mui/material/Typography";
-import Cart from "../components/cart/Cart";
+
+import Cart from "components/cart/Cart";
 
 const CartPage: NextPage = () => {
   return (

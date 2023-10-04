@@ -1,14 +1,15 @@
-import React from "react";
+import { Button } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { Button } from "@mui/material";
-import DropDownMenu from "./SideMenuDrawer";
-import BranchSelect from "./BranchSelect";
-import DynamicLink from "./DynamicLink";
-import BL_CONFIG from "../utils/bl-config";
+import React from "react";
+
+import BranchSelect from "components/BranchSelect";
+import DynamicLink from "components/DynamicLink";
+import DropDownMenu from "components/SideMenuDrawer";
+import BL_CONFIG from "utils/bl-config";
 
 interface TabLinkProps {
   title: string;

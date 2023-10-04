@@ -1,19 +1,20 @@
-import { Alert, Card, Typography } from "@mui/material";
-import type { NextPage } from "next";
-import DynamicNav from "../../../components/info/DynamicNav";
-import { infoPageTabs } from "../../../utils/constants";
-import Head from "next/head";
-import { fetcher } from "api/requests";
-import BranchInfo from "components/info/BranchInfo";
-import BL_CONFIG from "utils/bl-config";
-import { useRouter } from "next/router";
 import { Branch, OpeningHour } from "@boklisten/bl-model";
-import ContactInfo from "components/info/ContactInfo";
-import BranchSelect from "components/BranchSelect";
+import { Alert, Card, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { selectBranch } from "redux/selectedBranch";
-import { useAppSelector } from "redux/hooks";
 import moment from "moment";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
+
+import { fetcher } from "api/requests";
+import BranchSelect from "components/BranchSelect";
+import BranchInfo from "components/info/BranchInfo";
+import ContactInfo from "components/info/ContactInfo";
+import DynamicNav from "components/info/DynamicNav";
+import { useAppSelector } from "redux/hooks";
+import { selectBranch } from "redux/selectedBranch";
+import BL_CONFIG from "utils/bl-config";
+import { infoPageTabs } from "utils/constants";
 
 export const getStaticPaths = async () => {
   const branchesUrl = `${BL_CONFIG.api.basePath}branches?og=id&active=true`;

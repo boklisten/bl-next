@@ -1,12 +1,13 @@
-import React, { useRef, useState } from "react";
-import { AlertColor, Button } from "@mui/material";
-import { addWithEndpoint } from "../../../api/api";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
-import { ScannedTextType, TextType } from "../../../utils/types";
-import ScannerTutorial from "./ScannerTutorial";
-import ScannerFeedback from "./ScannerFeedback";
-import ScannerModal from "./ScannerModal";
+import { AlertColor, Button } from "@mui/material";
 import Box from "@mui/material/Box";
+import React, { useRef, useState } from "react";
+
+import { addWithEndpoint } from "api/api";
+import ScannerFeedback from "components/matches/Scanner/ScannerFeedback";
+import ScannerModal from "components/matches/Scanner/ScannerModal";
+import ScannerTutorial from "components/matches/Scanner/ScannerTutorial";
+import { ScannedTextType, TextType } from "utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
   if (Number.isNaN(Number(scannedText))) {
@@ -53,7 +54,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
     if (scannedTextType === TextType.ISBN) {
       displayFeedback(
         "Feil strekkode. Bruk bokas unike ID. Se instruksjoner for hjelp",
-        "error"
+        "error",
       );
       return false;
     }
@@ -61,7 +62,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
     if (scannedTextType === TextType.UNKNOWN) {
       displayFeedback(
         "Ugyldig strekkode. Vennligst prøv igjen, eller ta kontakt med stand for hjelp",
-        "error"
+        "error",
       );
       return false;
     }
@@ -74,12 +75,12 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
       const response = await addWithEndpoint(
         "matches",
         "transfer-item",
-        JSON.stringify({ blid: scannedText })
+        JSON.stringify({ blid: scannedText }),
       );
       const feedback = response.data?.data?.[0]?.feedback;
       displayFeedback(
         feedback ?? "Boken har blitt registrert!",
-        feedback ? "info" : "success"
+        feedback ? "info" : "success",
       );
       // setManualRegistrationModalOpen(false);
       setScanModalOpen(false);

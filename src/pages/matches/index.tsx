@@ -1,12 +1,13 @@
+import { Alert, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
 import { NextPage } from "next";
 import Head from "next/head";
-import { MatchesList } from "../../components/matches/matchesList/MatchesList";
 import React, { useEffect, useState } from "react";
-import { Alert, Typography } from "@mui/material";
-import { isLoggedIn } from "../../api/auth";
-import Button from "@mui/material/Button";
-import DynamicLink from "../../components/DynamicLink";
-import BL_CONFIG from "../../utils/bl-config";
+
+import { isLoggedIn } from "api/auth";
+import DynamicLink from "components/DynamicLink";
+import { MatchesList } from "components/matches/matchesList/MatchesList";
+import BL_CONFIG from "utils/bl-config";
 
 const MatchesPage: NextPage = () => {
   const [hydrated, setHydrated] = useState(false);

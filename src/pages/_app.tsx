@@ -1,26 +1,27 @@
-import * as React from "react";
-import Head from "next/head";
-import { ThemeProvider } from "@mui/material/styles";
+import { Container } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "../utils/theme";
+import { ThemeProvider } from "@mui/material/styles";
+import { Box } from "@mui/system";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment as DateAdapter } from "@mui/x-date-pickers/AdapterMoment";
+import { Moment } from "moment";
 import { AppProps } from "next/dist/shared/lib/router/router";
-import NavBar from "../components/NavBar";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { useEffect } from "react";
+import { Provider } from "react-redux";
+
+import { addAccessToken, addRefreshToken } from "api/token";
+import Footer from "components/Footer";
+import NavBar from "components/NavBar";
+import store from "redux/store";
+import theme from "utils/theme";
+import "@mui/lab";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { Container } from "@mui/material";
-import { Box } from "@mui/system";
-import Footer from "components/Footer";
-import { AdapterMoment as DateAdapter } from "@mui/x-date-pickers/AdapterMoment";
-import { Moment } from "moment";
-import { Provider } from "react-redux";
-import store from "redux/store";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import "@mui/lab";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { addAccessToken, addRefreshToken } from "../api/token";
 
 class OverriddenAdapter extends DateAdapter {
   // Get years in decending order

@@ -1,9 +1,10 @@
-import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
-import { isLoggedIn } from "../api/auth";
-import { getAccessToken, getRefreshToken } from "../api/token";
-import BL_CONFIG from "../utils/bl-config";
+import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { ForwardedRef, forwardRef, useEffect, useState } from "react";
+
+import { isLoggedIn } from "api/auth";
+import { getAccessToken, getRefreshToken } from "api/token";
+import BL_CONFIG from "utils/bl-config";
 
 type CustomNextLinkProps = Omit<NextLinkProps, "href"> & {
   _href: NextLinkProps["href"];
@@ -12,8 +13,8 @@ type CustomNextLinkProps = Omit<NextLinkProps, "href"> & {
 const CustomNextLink = forwardRef(
   (
     { _href, ...props }: CustomNextLinkProps,
-    ref: ForwardedRef<HTMLAnchorElement>
-  ) => <NextLink href={_href} ref={ref} {...props} />
+    ref: ForwardedRef<HTMLAnchorElement>,
+  ) => <NextLink href={_href} ref={ref} {...props} />,
 );
 CustomNextLink.displayName = "CustomNextLink";
 

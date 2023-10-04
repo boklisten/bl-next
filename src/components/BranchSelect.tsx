@@ -1,3 +1,4 @@
+import { Branch } from "@boklisten/bl-model";
 import {
   Box,
   FormControl,
@@ -6,18 +7,18 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { fetcher } from "api/requests";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
-import BL_CONFIG from "utils/bl-config";
-import { Branch } from "@boklisten/bl-model";
+
+import { fetcher } from "api/requests";
 import { add, get } from "api/storage";
-import { selectBranch, setSelectedBranch } from "redux/selectedBranch";
+import { setCart, setDeliveryMethod } from "redux/cart";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
-import { useRouter } from "next/router";
-import { setCart, setDeliveryMethod } from "../redux/cart";
-import { setSelectedSubjects } from "../redux/selectedSubjects";
-import { setSelectedCustomerItemActions } from "../redux/selectedCustomerItemActions";
+import { selectBranch, setSelectedBranch } from "redux/selectedBranch";
+import { setSelectedCustomerItemActions } from "redux/selectedCustomerItemActions";
+import { setSelectedSubjects } from "redux/selectedSubjects";
+import BL_CONFIG from "utils/bl-config";
 
 export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
 

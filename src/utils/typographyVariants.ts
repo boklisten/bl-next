@@ -3,9 +3,10 @@
  * @see theme
  */
 import React from "react";
+
 // used for module JSdoc
-// eslint-disable-next-line no-unused-vars
-import theme from "./theme";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import theme from "utils/theme";
 
 declare module "@mui/material/styles" {
   // eslint-disable-next-line no-unused-vars

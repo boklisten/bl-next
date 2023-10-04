@@ -1,6 +1,7 @@
 import { MatchWithDetails } from "@boklisten/bl-model";
 import { Properties } from "csstype";
-import { GroupedMatches } from "../../../utils/types";
+
+import { GroupedMatches } from "utils/types";
 
 export const sectionStyle: Properties = {
   display: "flex",
@@ -51,7 +52,7 @@ export function formatActionsString(handoffItems: number, pickupItems: number) {
  * @param matches the matches to group
  */
 export function groupMatchesByTimeAndLocation<T extends MatchWithDetails>(
-  matches: T[]
+  matches: T[],
 ): GroupedMatches<T> {
   const keyToData: Map<string, { time: number | null; location: string }> =
     new Map();
@@ -79,7 +80,7 @@ export function groupMatchesByTimeAndLocation<T extends MatchWithDetails>(
  * @returns array of keys of groups
  */
 export function getSortedMatchGroups<T extends MatchWithDetails>(
-  groups: GroupedMatches<T>
+  groups: GroupedMatches<T>,
 ): string[] {
   const keys = [...groups.keyToData.keys()];
   keys.sort((a, b) => {

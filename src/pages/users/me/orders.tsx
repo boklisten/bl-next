@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { Order } from "@boklisten/bl-model";
 import { Card } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useEffect, useState } from "react";
+
 import { get } from "api/api";
 import { getAccessTokenBody } from "api/token";
-import OrderHistory from "../../../components/OrderHistory";
-import { Order } from "@boklisten/bl-model";
+import OrderHistory from "components/OrderHistory";
 
 const Orders: NextPage = () => {
   const [orders, setOrders] = useState<Order[]>();

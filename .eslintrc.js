@@ -1,33 +1,38 @@
 module.exports = {
+  parser: "@typescript-eslint/parser",
   settings: {
     react: {
       version: "detect",
     },
   },
-  parserOptions: {
-    ecmaVersion: 13,
-    sourceType: "module",
-    ecmaFeatures: {
-      modules: true,
-    },
-  },
   env: {
     browser: true,
-    es2021: true,
+    node: true,
+    es2024: true,
     "cypress/globals": true,
   },
   extends: [
+    "next/core-web-vitals",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "eslint:recommended",
     "plugin:cypress/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:promise/recommended",
     "plugin:unicorn/all",
-    "next/core-web-vitals",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
-  plugins: ["cypress"],
+  plugins: ["cypress", "eslint-plugin-no-relative-import-paths"],
   ignorePatterns: ["cypress/support", "cypress/plugins"],
   rules: {
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      {
+        rootDir: "src",
+      },
+    ],
     "unicorn/consistent-function-scoping": [
       "error",
       {
@@ -55,5 +60,26 @@ module.exports = {
       },
     ],
     "unicorn/no-null": "off",
+
+    /** @see https://medium.com/weekly-webtips/how-to-sort-imports-like-a-pro-in-typescript-4ee8afd7258a */
+    "import/order": [
+      "error",
+      {
+        groups: [
+          "builtin",
+          "external",
+          "internal",
+          ["sibling", "parent"],
+          "index",
+          "unknown",
+        ],
+        "newlines-between": "always",
+        alphabetize: {
+          order: "asc",
+          caseInsensitive: true,
+        },
+      },
+    ],
+    /** */
   },
 };

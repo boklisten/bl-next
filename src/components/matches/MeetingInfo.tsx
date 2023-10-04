@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
-import ScheduleIcon from "@mui/icons-material/Schedule";
-import { formatDatetime } from "./matchesList/helper";
-import React from "react";
-import PlaceIcon from "@mui/icons-material/Place";
 import { MatchWithDetails } from "@boklisten/bl-model";
-import DynamicLink from "../DynamicLink";
+import PlaceIcon from "@mui/icons-material/Place";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+
+import DynamicLink from "components/DynamicLink";
+import { formatDatetime } from "components/matches/matchesList/helper";
 
 const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
   const meetingTime = match.meetingInfo.date;

@@ -1,5 +1,3 @@
-import { CartItem } from "../redux/cart";
-import { get } from "../api/api";
 import {
   Branch,
   BranchItem,
@@ -10,36 +8,39 @@ import {
   OrderItemType,
   Period,
 } from "@boklisten/bl-model";
-import { CustomerItemAction } from "../redux/selectedCustomerItemActions";
-import { getAccessTokenBody } from "../api/token";
+
+import { get } from "api/api";
+import { getAccessTokenBody } from "api/token";
+import { CartItem } from "redux/cart";
+import { CustomerItemAction } from "redux/selectedCustomerItemActions";
 
 export const getExtendTime = (branchInfo: Branch) =>
   (
     branchInfo.paymentInfo?.extendPeriods.find(
-      (extendPeriod) => extendPeriod.type === "semester"
+      (extendPeriod) => extendPeriod.type === "semester",
     ) ?? { date: Date.now() }
   ).date;
 
 const getSelectedItems = (subjects: string[], branchItems: BranchItem[]) =>
   branchItems.filter((branchItem) =>
-    subjects.some((subject) => branchItem.categories?.includes(subject))
+    subjects.some((subject) => branchItem.categories?.includes(subject)),
   );
 
 export const getRentPeriodDate = (
   branch: Branch,
-  period: Period
+  period: Period,
 ): Date | undefined => {
   return branch.paymentInfo?.rentPeriods.find(
-    (rentPeriod) => rentPeriod.type === period
+    (rentPeriod) => rentPeriod.type === period,
   )?.date;
 };
 
 export const getPartlyPaymentPeriodDate = (
   branch: Branch,
-  period: Period
+  period: Period,
 ): Date | undefined => {
   return branch.paymentInfo?.partlyPaymentPeriods?.find(
-    (partlyPaymentPeriod) => partlyPaymentPeriod.type === period
+    (partlyPaymentPeriod) => partlyPaymentPeriod.type === period,
   )?.date;
 };
 
@@ -58,16 +59,16 @@ const roundDown = (roundDownNumber: number): number => {
 const calculatePartlyPaymentAmountLeftToPay = (
   branch: Branch,
   itemPrice: number,
-  period: Period
+  period: Period,
 ) => {
   if (!branch.paymentInfo?.partlyPaymentPeriods) {
     return -1;
   }
 
-  for (let partlyPaymentPeriod of branch.paymentInfo.partlyPaymentPeriods) {
+  for (const partlyPaymentPeriod of branch.paymentInfo.partlyPaymentPeriods) {
     if (partlyPaymentPeriod.type === period) {
       return sanitize(
-        roundDown(itemPrice * partlyPaymentPeriod.percentageBuyout)
+        roundDown(itemPrice * partlyPaymentPeriod.percentageBuyout),
       );
     }
   }
@@ -78,7 +79,7 @@ const calculatePriceBasedOnPeriodType = (
   item: Item,
   branch: Branch,
   type: OrderItemType,
-  period: Period
+  period: Period,
 ): number => {
   if (branch.paymentInfo?.responsible) {
     return 0;
@@ -103,7 +104,7 @@ const calculatePriceBasedOnPeriodType = (
   }
 
   throw new Error(
-    `could not find price for item "${item.id}" for period "${period}"`
+    `could not find price for item "${item.id}" for period "${period}"`,
   );
 };
 
@@ -115,11 +116,11 @@ const calculateItemUnitPrice = (
   item: Item,
   branch: Branch,
   type: OrderItemType,
-  period: Period
+  period: Period,
 ): number => {
   if (type === "rent" || type === "partly-payment") {
     return sanitize(
-      calculatePriceBasedOnPeriodType(item, branch, type, period)
+      calculatePriceBasedOnPeriodType(item, branch, type, period),
     );
   } else if (type === "buy") {
     return sanitize(calculateBuyPrice(item));
@@ -143,22 +144,19 @@ const calculateOrderItemAmount = (unitPrice: number, taxAmount: number) => {
 const calculateBuyoutPrice = (
   customerItem: CustomerItem,
   item: Item,
-  branch: Branch
+  branch: Branch,
 ): number => {
   if (customerItem.type === "partly-payment") {
     return <number>customerItem.amountLeftToPay;
   }
 
-  return roundDown(
-    // @ts-ignore
-    item.price * branch.paymentInfo.buyout.percentage
-  );
+  return roundDown(item.price * (branch.paymentInfo?.buyout?.percentage ?? -1));
 };
 
 const calculateExtendPrice = (
   item: Item,
   branch: Branch,
-  periodType: "semester" | "year"
+  periodType: "semester" | "year",
 ): number => {
   if (!branch?.paymentInfo) {
     return 50;
@@ -174,7 +172,7 @@ const calculateExtendPrice = (
   }
 
   throw new Error(
-    `could not find extend price for item "${item.id}" for period "${periodType}"`
+    `could not find extend price for item "${item.id}" for period "${periodType}"`,
   );
 };
 
@@ -182,7 +180,7 @@ const calculateCustomerItemUnitPrice = (
   customerItem: CustomerItem,
   item: Item,
   branch: Branch,
-  type: OrderItemType
+  type: OrderItemType,
 ) => {
   if (type === "extend") {
     return sanitize(calculateExtendPrice(item, branch, "semester"));
@@ -194,7 +192,7 @@ const calculateCustomerItemUnitPrice = (
 
 const calculateOrderItemPrices = (
   unitPrice: number,
-  taxRate: number
+  taxRate: number,
 ): {
   amount: number;
   unitPrice: number;
@@ -216,7 +214,7 @@ const calculateInfo = (
   item: Item,
   orderItemType: OrderItemType,
   period: Period,
-  customerItem?: CustomerItem
+  customerItem?: CustomerItem,
 ) => {
   let info = {};
   switch (orderItemType) {
@@ -237,7 +235,7 @@ const calculateInfo = (
         amountLeftToPay: calculatePartlyPaymentAmountLeftToPay(
           branch,
           item.price,
-          period
+          period,
         ),
         periodType: period,
       };
@@ -271,7 +269,7 @@ export const createOrder = (branchID: string, cartItems: CartItem[]): Order => {
     id: "",
     amount: cartItems.reduce(
       (previous, next) => previous + next.orderItem.amount,
-      0
+      0,
     ),
     branch: branchID,
     customer: getAccessTokenBody().details,
@@ -286,7 +284,7 @@ export const createOrderItem = (
   item: Item,
   orderItemType: OrderItemType,
   period: Period,
-  customerItem?: CustomerItem
+  customerItem?: CustomerItem,
 ): OrderItem => {
   const info = calculateInfo(branch, item, orderItemType, period, customerItem);
 
@@ -327,24 +325,25 @@ export const getOrderItemTypeFromBranch = (branch: Branch): OrderItemType => {
 
 export const generateCartItemsFromCustomerItemActions = async (
   customerItemActions: CustomerItemAction[],
-  branchInfo: Branch
+  branchInfo: Branch,
 ): Promise<CartItem[]> => {
   const branchItems = await get(`branchitems`, `?branch=${branchInfo.id}`).then(
-    (response) => response.data.data as BranchItem[]
+    (response) => response.data.data as BranchItem[],
   );
 
   return customerItemActions.map((customerItemAction) => {
     return {
       item: customerItemAction.customerItem.item as Item,
       branchItem: branchItems.find(
-        (branchItem) => branchItem.item === customerItemAction.customerItem.item
+        (branchItem) =>
+          branchItem.item === customerItemAction.customerItem.item,
       ) as BranchItem,
       orderItem: createOrderItem(
         branchInfo,
         customerItemAction.customerItem.item as Item,
         customerItemAction.action as OrderItemType,
         "semester",
-        customerItemAction.customerItem
+        customerItemAction.customerItem,
       ),
       customerItem: customerItemAction.customerItem,
       branch: branchInfo,
@@ -354,14 +353,14 @@ export const generateCartItemsFromCustomerItemActions = async (
 
 export const generateCartItemsFromSubjects = async (
   subjects: string[],
-  branchID: string
+  branchID: string,
 ): Promise<CartItem[]> => {
   const [branch, branchItems] = await Promise.all([
     get(`branches/${branchID}`).then(
-      (response) => response.data.data[0] as Branch
+      (response) => response.data.data[0] as Branch,
     ),
     get(`branchitems`, `?branch=${branchID}`).then(
-      (response) => response.data.data as BranchItem[]
+      (response) => response.data.data as BranchItem[],
     ),
   ]);
 
@@ -369,21 +368,21 @@ export const generateCartItemsFromSubjects = async (
   const items = await Promise.all(
     selectedBranchItems.map((branchItem) =>
       get(`items/${branchItem.item}`).then(
-        (response) => response.data.data[0] as Item
-      )
-    )
+        (response) => response.data.data[0] as Item,
+      ),
+    ),
   );
   return items.map((item) => {
     return {
       item,
       branchItem: branchItems.find(
-        (branchItem) => branchItem.item === item.id
+        (branchItem) => branchItem.item === item.id,
       ) as BranchItem,
       orderItem: createOrderItem(
         branch,
         item,
         getOrderItemTypeFromBranch(branch),
-        "semester"
+        "semester",
       ),
       branch,
     };

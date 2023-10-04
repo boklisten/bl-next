@@ -1,13 +1,14 @@
-import { CartItem, updatePeriod } from "../../redux/cart";
-import { useAppDispatch } from "../../redux/hooks";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Branch, Period } from "@boklisten/bl-model";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import moment from "moment";
+
+import { CartItem, updatePeriod } from "redux/cart";
+import { useAppDispatch } from "redux/hooks";
 import {
   getOrderItemTypeFromBranch,
   getPartlyPaymentPeriodDate,
   getRentPeriodDate,
-} from "../../utils/cartUtils";
-import moment from "moment";
+} from "utils/cartUtils";
 
 const getDeadline = (period: Period, branch: Branch) => {
   const deadline =
@@ -31,7 +32,7 @@ const SelectDeadline = ({ cartItem }: { cartItem: CartItem }) => {
             updatePeriod({
               cartItem,
               updatedPeriod: event.target.value as Period,
-            })
+            }),
           )
         }
       >

@@ -1,9 +1,10 @@
-import ContactInfo from "../info/ContactInfo";
-import { Box, Typography } from "@mui/material";
-import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import DynamicLink from "../DynamicLink";
-import React from "react";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+
+import DynamicLink from "components/DynamicLink";
+import ContactInfo from "components/info/ContactInfo";
 
 const OtherPersonContact = ({
   match,

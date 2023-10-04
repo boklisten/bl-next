@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from "react";
 import { Button, Card, CardActions, CardContent } from "@mui/material";
-import DynamicLink from "../../DynamicLink";
+import React, { PropsWithChildren } from "react";
+
+import DynamicLink from "components/DynamicLink";
 
 const MatchListItemBox: React.FC<
   PropsWithChildren<{ finished: boolean; matchId: string }>

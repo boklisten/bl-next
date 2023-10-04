@@ -1,25 +1,26 @@
-import { useAppSelector } from "../../redux/hooks";
-import { selectCartItems } from "../../redux/cart";
 import { Table, TableBody, TableContainer } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useRouter } from "next/router";
 import Typography from "@mui/material/Typography";
-import { isLoggedIn } from "../../api/auth";
-import FixedSuccessButton from "../FixedSuccessButton";
-import BackButton from "./BackButton";
-import CartTableHeader from "./CartTableHeader";
-import CartTableRow from "./CartTableRow";
+import { useRouter } from "next/router";
+
+import { isLoggedIn } from "api/auth";
+import BackButton from "components/cart/BackButton";
+import CartTableHeader from "components/cart/CartTableHeader";
+import CartTableRow from "components/cart/CartTableRow";
+import FixedSuccessButton from "components/FixedSuccessButton";
+import { selectCartItems } from "redux/cart";
+import { useAppSelector } from "redux/hooks";
 
 const Cart = () => {
   const cartItems = useAppSelector(selectCartItems);
   const router = useRouter();
 
   const hasCustomerItemsInCart = cartItems.some(
-    (cartItem) => cartItem.customerItem
+    (cartItem) => cartItem.customerItem,
   );
 
   const branchCoversCosts = cartItems.every(
-    (cartItem) => cartItem.orderItem.amount === 0
+    (cartItem) => cartItem.orderItem.amount === 0,
   );
 
   return (
@@ -51,7 +52,7 @@ const Cart = () => {
           label={"Til betaling"}
           onClick={() =>
             router.push(
-              isLoggedIn() ? "/checkout" : "/auth/login?redirect=checkout"
+              isLoggedIn() ? "/checkout" : "/auth/login?redirect=checkout",
             )
           }
         />

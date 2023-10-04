@@ -1,4 +1,8 @@
-import React, { useEffect } from "react";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SaveIcon from "@mui/icons-material/Save";
 import {
   Accordion,
   AccordionDetails,
@@ -8,13 +12,9 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useRef, useState } from "react";
 import { Box } from "@mui/system";
+import React, { useEffect, useRef, useState } from "react";
+
 import { isAdmin } from "api/auth";
 
 interface QNA {
@@ -78,8 +78,10 @@ const QuestionWithAnswer = ({
                   if (edit) {
                     updateQuestion({
                       id: id,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       //@ts-ignore
                       question: questionInput.current.value,
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       //@ts-ignore
                       answer: answerInput.current.value,
                     });

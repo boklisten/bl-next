@@ -1,6 +1,7 @@
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import React from "react";
-import SocialLoginButton from "./SocialLoginButton";
+
+import SocialLoginButton from "components/user/SocialLoginButton";
 
 const FacebookButton = ({ label }: { label: string }) => (
   <SocialLoginButton

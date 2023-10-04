@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useRouter } from "next/dist/client/router";
-import stringSimilarity from "string-similarity";
-import NextLink from "next/link";
 import { Box } from "@mui/system";
+import { useRouter } from "next/dist/client/router";
+import NextLink from "next/link";
+import { ReactElement } from "react";
+import stringSimilarity from "string-similarity";
 
 export interface DynamicSubNavProps {
   tabs: {
@@ -69,7 +69,7 @@ export default function DynamicSubNav({ tabs }: DynamicSubNavProps) {
     tabs[
       stringSimilarity.findBestMatch(
         router.route,
-        tabs.map((tab) => tab.href)
+        tabs.map((tab) => tab.href),
       ).bestMatchIndex
     ]?.href ?? null;
 

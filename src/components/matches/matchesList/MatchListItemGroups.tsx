@@ -1,10 +1,15 @@
-import React from "react";
-import { formatDatetime, sectionStyle, getSortedMatchGroups } from "./helper";
-import { Typography } from "@mui/material";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import StandMatchListItem from "./StandMatchListItem";
-import UserMatchListItem from "./UserMatchListItem";
-import { GroupedMatches } from "../../../utils/types";
+import { Typography } from "@mui/material";
+import React from "react";
+
+import {
+  formatDatetime,
+  sectionStyle,
+  getSortedMatchGroups,
+} from "components/matches/matchesList/helper";
+import StandMatchListItem from "components/matches/matchesList/StandMatchListItem";
+import UserMatchListItem from "components/matches/matchesList/UserMatchListItem";
+import { GroupedMatches } from "utils/types";
 
 export const MatchListItemGroups: React.FC<{
   groups: GroupedMatches<MatchWithDetails>;
@@ -36,7 +41,7 @@ export const MatchListItemGroups: React.FC<{
                     match={match}
                     currentUserId={userId}
                   />
-                )
+                ),
               )}
           </section>
         );

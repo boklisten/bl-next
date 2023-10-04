@@ -16,6 +16,7 @@ export const fetchData = async (url: string, method: string, data: unknown) => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetcher = async <T = any>(url: string) => {
   try {
     return await axios

@@ -27,7 +27,7 @@ describe("Forgot password", () => {
     cy.getBySel("email-field").type("petter@");
     cy.getBySel("error-message").should(
       "contain",
-      "Du må fylle inn en gyldig epost"
+      "Du må fylle inn en gyldig epost",
     );
     cy.getBySel("forgot-submit").should("be.disabled");
 

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
 import { Card, Container, Skeleton, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import type { NextPage } from "next";
 import Head from "next/head";
+import React, { useEffect, useState } from "react";
+
 import { get } from "api/api";
+import { fetcher } from "api/requests";
 import { getAccessTokenBody } from "api/token";
-import { Branch, CustomerItem, Item } from "@boklisten/bl-model";
-import CustomerItemOverview from "../../../components/CustomerItemOverview";
-import { useAppSelector } from "../../../redux/hooks";
-import { selectBranch } from "../../../redux/selectedBranch";
-import { branchListUrl } from "../../../components/BranchSelect";
-import { fetcher } from "../../../api/requests";
-import Box from "@mui/material/Box";
+import { branchListUrl } from "components/BranchSelect";
+import CustomerItemOverview from "components/CustomerItemOverview";
+import { useAppSelector } from "redux/hooks";
+import { selectBranch } from "redux/selectedBranch";
 
 const Orders: NextPage = () => {
   const [customerItems, setCustomerItems] = useState<CustomerItem[]>();
@@ -35,7 +36,7 @@ const Orders: NextPage = () => {
           const data = await get(`items/${customerItem.item}`);
           customerItem.item = data.data.data[0] as Item;
           return customerItem;
-        })
+        }),
       );
 
       setBranchNames(branchNames);

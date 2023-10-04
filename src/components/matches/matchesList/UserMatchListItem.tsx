@@ -1,16 +1,17 @@
-import React from "react";
-import { formatActionsString } from "./helper";
-import MatchListItemBox from "./MatchListItemBox";
-import { Box, Typography } from "@mui/material";
 import { KeyboardDoubleArrowRight } from "@mui/icons-material";
-import ProgressBar from "./ProgressBar";
-import { UserMatchWithDetails } from "../../../utils/types";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+
 import {
   calculateFulfilledUserMatchCustomerItems,
   isMatchBegun,
   isMatchFulfilled,
   isUserSenderInMatch,
-} from "../matches-helper";
+} from "components/matches/matches-helper";
+import { formatActionsString } from "components/matches/matchesList/helper";
+import MatchListItemBox from "components/matches/matchesList/MatchListItemBox";
+import ProgressBar from "components/matches/matchesList/ProgressBar";
+import { UserMatchWithDetails } from "utils/types";
 
 const me = <span style={{ color: "#757575", fontWeight: 400 }}>Meg</span>;
 
@@ -24,7 +25,7 @@ const UserMatchListItem: React.FC<{
   const isFulfilled = isMatchFulfilled(match, isSender);
   const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
     match,
-    isSender
+    isSender,
   );
   const HeaderLevel = "h4";
   return (
@@ -65,7 +66,7 @@ const UserMatchListItem: React.FC<{
           <Box>
             {formatActionsString(
               isSender ? numberItems : 0,
-              isSender ? 0 : numberItems
+              isSender ? 0 : numberItems,
             )}
           </Box>
         </>

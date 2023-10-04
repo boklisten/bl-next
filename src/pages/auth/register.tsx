@@ -1,7 +1,8 @@
 import { Card } from "@mui/material";
-import UserDetailEditor from "components/user/UserDetailEditor";
 import type { NextPage } from "next";
 import Head from "next/head";
+
+import UserDetailEditor from "components/user/UserDetailEditor";
 
 const Register: NextPage = () => {
   return (

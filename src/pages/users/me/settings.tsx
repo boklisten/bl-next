@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
-import UserDetailEditor from "components/user/UserDetailEditor";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+
 import { get } from "api/api";
 import { getAccessTokenBody } from "api/token";
+import UserDetailEditor from "components/user/UserDetailEditor";
 
 const Register: NextPage = () => {
   const [userDetails, setUserDetails] = useState();

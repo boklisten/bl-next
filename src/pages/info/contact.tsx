@@ -1,9 +1,10 @@
 import { Card, Typography } from "@mui/material";
 import type { NextPage } from "next";
-import DynamicNav from "../../components/info/DynamicNav";
-import { infoPageTabs } from "../../utils/constants";
 import Head from "next/head";
+
 import ContactInfo from "components/info/ContactInfo";
+import DynamicNav from "components/info/DynamicNav";
+import { infoPageTabs } from "utils/constants";
 
 const Contact: NextPage = () => {
   return (

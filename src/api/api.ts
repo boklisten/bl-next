@@ -1,11 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { apiPath, getHeaders } from "./apiRequest";
-import { fetchNewTokens } from "./token";
 
+import { apiPath, getHeaders } from "api/apiRequest";
+import { fetchNewTokens } from "api/token";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const get = async <T = any>(
   url: string,
   query?: string,
-  noRetryTokens?: boolean
+  noRetryTokens?: boolean,
 ): Promise<AxiosResponse<T>> => {
   if (!url || url.length === 0) {
     throw new Error("url is undefined");
@@ -46,7 +48,7 @@ export const add = async (collection: string, data: unknown) => {
 export const addWithEndpoint = async (
   collection: string,
   endpoint: string,
-  data: unknown
+  data: unknown,
 ) => {
   return await axios
     .post(`${apiPath(collection)}/${endpoint}`, data, {
@@ -68,6 +70,7 @@ export class NotFoundError extends Error {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiFetcher = async <T = any>(url: string): Promise<T> => {
   try {
     return await get<{ data: T }>(url).then((response) => response.data.data);

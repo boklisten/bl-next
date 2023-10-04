@@ -8,15 +8,16 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectBranch } from "../redux/selectedBranch";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { selectSubjects, setSelectedSubjects } from "../redux/selectedSubjects";
-import { generateCartItemsFromSubjects } from "../utils/cartUtils";
-import { setCart } from "../redux/cart";
-import FixedSuccessButton from "./FixedSuccessButton";
+import React, { useState } from "react";
+
+import FixedSuccessButton from "components/FixedSuccessButton";
+import { setCart } from "redux/cart";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { selectBranch } from "redux/selectedBranch";
+import { selectSubjects, setSelectedSubjects } from "redux/selectedSubjects";
+import { generateCartItemsFromSubjects } from "utils/cartUtils";
 
 const SubjectCheckbox = ({ subject }: { subject: string }) => {
   const dispatch = useAppDispatch();
@@ -24,8 +25,10 @@ const SubjectCheckbox = ({ subject }: { subject: string }) => {
   const removeSubject = (subject: string) => {
     dispatch(
       setSelectedSubjects(
-        selectedSubjects.filter((selectedSubject) => selectedSubject != subject)
-      )
+        selectedSubjects.filter(
+          (selectedSubject) => selectedSubject != subject,
+        ),
+      ),
     );
   };
 
@@ -101,7 +104,7 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
   const getOptionalSubjects = (): string[] => {
     const commonSubjects = getCommonSubjects();
     return getUniqueSubjects().filter(
-      (subject) => !commonSubjects.includes(subject)
+      (subject) => !commonSubjects.includes(subject),
     );
   };
 
@@ -109,7 +112,7 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
     dispatch(
       setSelectedSubjects([
         ...new Set([...selectedSubjects, ...getCommonSubjects()]),
-      ])
+      ]),
     );
   };
 
@@ -149,7 +152,7 @@ const SubjectSelect = ({ branchItems }: { branchItems: BranchItem[] }) => {
             setLoadingCart(true);
             const cartItems = await generateCartItemsFromSubjects(
               selectedSubjects,
-              selectedBranch.id
+              selectedBranch.id,
             );
             dispatch(setCart(cartItems));
             setLoadingCart(false);

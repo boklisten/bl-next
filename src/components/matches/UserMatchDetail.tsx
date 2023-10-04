@@ -1,17 +1,18 @@
 import { Alert, Box, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { UserMatchWithDetails } from "../../utils/types";
+
 import {
   calculateFulfilledUserMatchCustomerItems,
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
-} from "./matches-helper";
-import ProgressBar from "./matchesList/ProgressBar";
-import MeetingInfo from "./MeetingInfo";
-import MatchItemTable from "./MatchItemTable";
-import OtherPersonContact from "./OtherPersonContact";
-import Scanner from "./Scanner/Scanner";
+} from "components/matches/matches-helper";
+import ProgressBar from "components/matches/matchesList/ProgressBar";
+import MatchItemTable from "components/matches/MatchItemTable";
+import MeetingInfo from "components/matches/MeetingInfo";
+import OtherPersonContact from "components/matches/OtherPersonContact";
+import Scanner from "components/matches/Scanner/Scanner";
+import { UserMatchWithDetails } from "utils/types";
 
 const UserMatchDetail = ({
   match,
@@ -25,11 +26,11 @@ const UserMatchDetail = ({
   const isSender = match.sender === currentUserId;
   const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
     match,
-    isSender
+    isSender,
   );
   const otherPersonFulfilledItems = calculateFulfilledUserMatchCustomerItems(
     match,
-    !isSender
+    !isSender,
   );
   const isFulfilled = fulfilledItems.length >= match.expectedItems.length;
 
@@ -38,8 +39,9 @@ const UserMatchDetail = ({
     itemStatuses = calculateItemStatuses(
       match,
       (match) => match.expectedItems,
-      fulfilledItems
+      fulfilledItems,
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return <Alert severity="error">En feil oppstod: {error?.message}</Alert>;
   }

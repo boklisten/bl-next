@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const PostalCode = async (
   request: NextApiRequest,
-  response: NextApiResponse
+  response: NextApiResponse,
 ) => {
   if (!process.env["BRING_API_ID"] || !process.env["BRING_API_KEY"]) {
     throw new Error("Bring API env variables are undefined");
@@ -17,7 +17,7 @@ const PostalCode = async (
   try {
     const postalLookupResult = await fetch(
       `https://api.bring.com/pickuppoint/api/postalCode/NO/getCityAndType/${request.body}.json`,
-      { method: "GET", headers: bringHeaders }
+      { method: "GET", headers: bringHeaders },
     );
     result = await postalLookupResult.json();
   } catch (error) {

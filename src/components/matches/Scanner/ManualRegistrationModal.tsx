@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import React, { useState } from "react";
 
 const ManualRegistrationModal = ({
   open,
