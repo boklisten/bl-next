@@ -62,6 +62,7 @@ const BL_CONFIG = {
     item: "items",
     branch: "branches",
     branchItem: "branchitems",
+    editableText: "editableTexts",
     openingHour: "openingHours",
     userDetail: "userdetails",
     customerItem: "customerItems",

@@ -18,20 +18,19 @@ export const get = async <T = any>(
       headers: getHeaders(),
     })
     .catch(async (error) => {
-      if (error.status === 404 || error.response.status === 404) {
-        throw new Error("Not found");
+      if ((error as AxiosError)?.response?.status === 404) {
+        throw new NotFoundError(`API request resulted in 404: ${url}`);
       }
-      console.log(error);
-
+      console.error(error);
       if (
-        (error.status === 401 || error.response.status === 401) &&
+        (error?.status === 401 || error?.response?.status === 401) &&
         !noRetryTokens
       ) {
         await fetchNewTokens();
         return await get(url, query, true);
       }
 
-      throw new Error("Unknown API error");
+      throw new Error(`Unknown API error: ${error}`);
     });
 };
 
@@ -42,6 +41,36 @@ export const add = async (collection: string, data: unknown) => {
     })
     .catch((error) => {
       throw new Error(error?.response?.data?.msg ?? "Noe gikk galt!");
+    });
+};
+
+export const put = async <T = unknown>(
+  url: string,
+  data: T,
+  noRetryTokens?: boolean,
+): Promise<void> => {
+  if (!url || url.length === 0) {
+    throw new Error("url is undefined");
+  }
+
+  await axios
+    .put<T>(apiPath(url), data, {
+      headers: getHeaders(),
+    })
+    .catch(async (error) => {
+      if (
+        (error.status === 401 || error.response.status === 401) &&
+        !noRetryTokens
+      ) {
+        await fetchNewTokens();
+        return await put(url, data, true);
+      }
+
+      if ((error as AxiosError).response?.status === 404) {
+        throw new NotFoundError(`API request resulted in 404: ${url}`);
+      }
+
+      throw new Error("Unknown API error", error);
     });
 };
 
@@ -72,13 +101,5 @@ export class NotFoundError extends Error {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiFetcher = async <T = any>(url: string): Promise<T> => {
-  try {
-    return await get<{ data: T }>(url).then((response) => response.data.data);
-  } catch (error) {
-    if (!((error as AxiosError).response?.status === 404)) {
-      throw error;
-    }
-
-    throw new NotFoundError(`API request resulted in 404: ${url}`);
-  }
+  return await get<{ data: T }>(url).then((response) => response.data.data);
 };

@@ -25,6 +25,8 @@ const readableOrderItemTypes = {
   loan: "lån",
   buyback: "tilbakekjøp",
   "invoice-paid": "betal faktura",
+  "match-receive": "motta fra annen elev",
+  "match-deliver": "lever til annen elev",
 };
 const PaymentSummary = () => {
   const cartItems = useAppSelector(selectCartItems);
