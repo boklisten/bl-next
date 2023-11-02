@@ -17,6 +17,7 @@ import isEmail from "validator/lib/isEmail";
 
 import { add } from "api/api";
 import DynamicLink from "components/DynamicLink";
+import blConfig from "utils/bl-config";
 
 type ForgotFields = {
   email: string;
@@ -34,7 +35,9 @@ const Login: NextPage = () => {
     try {
       setError(false);
       setSuccess(false);
-      await add("passwordresets", { email: data.email });
+      await add(blConfig.collection.pendingPasswordReset, {
+        email: data.email,
+      });
       setSuccess(true);
     } catch {
       setError(true);
