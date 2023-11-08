@@ -94,8 +94,9 @@ const Login: NextPage = () => {
               )}
               {success && (
                 <Alert severity="success">
-                  En e-post med instruksjoner for hvordan du kan endre passordet
-                  ditt er blitt sendt til deg.
+                  Hvis det finnes en bruker med denne e-postaddressen har vi
+                  sendt en e-post med instruksjoner for hvordan du kan endre
+                  passordet ditt.
                 </Alert>
               )}
               <TextField
