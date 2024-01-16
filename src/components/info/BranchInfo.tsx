@@ -14,6 +14,16 @@ import "moment/locale/nb";
 import BranchSelect from "components/BranchSelect";
 import ContactInfo from "components/info/ContactInfo";
 
+const compareOpeningHours = (a: OpeningHour, b: OpeningHour): number => {
+  if (a.from < b.from) {
+    return -1;
+  }
+  if (a.from > b.from) {
+    return 1;
+  }
+  return 0;
+};
+
 const OpeningHourRow = ({ openingHour }: { openingHour: OpeningHour }) => {
   const fromDate = moment(openingHour.from).locale("nb");
   const toDate = moment(openingHour.to).locale("nb");
@@ -45,6 +55,9 @@ const BranchInfo = ({
   branch: Branch;
   openingHours: OpeningHour[];
 }) => {
+  const processedOpeningHours = openingHours
+    .filter(({ id }) => (branch.openingHours as string[])?.includes(id))
+    .sort(compareOpeningHours);
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
@@ -65,7 +78,7 @@ const BranchInfo = ({
           {branch.location?.address}
         </Box>
       )}
-      {openingHours.length === 0 && (
+      {processedOpeningHours.length === 0 && (
         <>
           <Alert severity="info" data-testid="noHours" sx={{ my: 4 }}>
             Sesongen er over – eller åpningstidene er ikke klare enda. Du kan
@@ -74,7 +87,7 @@ const BranchInfo = ({
           <ContactInfo />
         </>
       )}
-      {openingHours.length > 0 && (
+      {processedOpeningHours.length > 0 && (
         <TableContainer component={Paper}>
           <Table aria-label="tabell over åpningstider">
             <TableHead>
@@ -85,7 +98,7 @@ const BranchInfo = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {openingHours.map((openingHour) => (
+              {processedOpeningHours.map((openingHour) => (
                 <OpeningHourRow
                   key={openingHour.id}
                   openingHour={openingHour}
