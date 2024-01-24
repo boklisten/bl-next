@@ -15,10 +15,10 @@ const NewsBanner = (props: ComponentProps<typeof EditableTextElement>) => {
     <Box
       sx={{
         borderColor: theme.palette.warning.main,
-        borderWidth: 2,
+        borderWidth: 3,
         borderStyle: "solid",
         borderRadius: 1,
-        backgroundColor: theme.palette.warning.light,
+        backgroundColor: "#ffffff",
         color: theme.palette.warning.contrastText,
         padding: 1,
         my: 5,
