@@ -1,11 +1,35 @@
 import { Box, Typography } from "@mui/material";
 import type { NextPage } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import React from "react";
 
 import DynamicLink from "components/DynamicLink";
+import NewsBanner from "components/editableText/NewsBanner";
+import { editableTextIds } from "utils/constants";
+import { MaybeEmptyEditableText } from "utils/types";
+import getEditableText from "utils/useEditableText";
 
-const Home: NextPage = () => {
+interface HomeProps {
+  newsBannerText: MaybeEmptyEditableText;
+}
+
+const revalidate = 10;
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const newsBannerText = await getEditableText(
+    editableTextIds.frontPage.newsBanner,
+  );
+  return {
+    props: {
+      newsBannerText,
+    },
+    revalidate,
+  };
+};
+
+const Home: NextPage<HomeProps> = ({ newsBannerText }) => {
   return (
     <>
       <Head>
@@ -22,9 +46,10 @@ const Home: NextPage = () => {
           alignItems: "center",
           width: "100%",
           textAlign: "center",
+          position: "relative",
         }}
       >
-        <Box sx={{ position: "fixed" }}>
+        <Box sx={{ position: "absolute", top: 0 }}>
           <Image
             src="/banner-placeholder.jpg"
             width={960}
@@ -40,6 +65,7 @@ const Home: NextPage = () => {
             Vi i Boklisten.no er veldig opptatt av lærebøker, derfor vil vi
             gjøre det så enkelt som mulig for deg å få tak i dem.
           </Typography>
+          <NewsBanner editableText={newsBannerText} />
           <DynamicLink href={"https://www.boklisten.no/welcome"}>
             Til gamle boklisten.no
           </DynamicLink>

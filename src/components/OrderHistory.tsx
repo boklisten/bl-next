@@ -35,6 +35,8 @@ const orderTypes = {
   loan: "lånt",
   buyback: "tilbakekjøp",
   "invoice-paid": "betalt faktura",
+  "match-receive": "mottatt fra annen elev",
+  "match-deliver": "gitt bort til annen elev",
 };
 
 const paymentTypes = {

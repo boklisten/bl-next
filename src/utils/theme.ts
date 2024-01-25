@@ -1,4 +1,4 @@
-import { red } from "@mui/material/colors";
+import { red, orange, grey } from "@mui/material/colors";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 /**
@@ -17,6 +17,12 @@ const theme = responsiveFontSizes(
       },
       error: {
         main: red.A400,
+      },
+      warning: {
+        main: orange["500"],
+        light: orange["100"],
+        dark: orange["700"],
+        contrastText: grey["900"],
       },
     },
     typography: {
@@ -75,6 +81,13 @@ const theme = responsiveFontSizes(
             "&": {
               padding: "0.5rem",
             },
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            paddingX: 5,
           },
         },
       },
