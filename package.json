@@ -42,7 +42,7 @@
     "react-qr-barcode-scanner": "^1.0.6",
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
-    "sanitize-html": "^2.11.0",
+    "sanitize-html": "^2.12.1",
     "sharp": "^0.31.3",
     "string-similarity": "^4.0.4",
     "swr": "^2.0.0",
