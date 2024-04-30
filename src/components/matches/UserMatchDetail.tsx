@@ -6,13 +6,13 @@ import {
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
-} from "components/matches/matches-helper";
-import ProgressBar from "components/matches/matchesList/ProgressBar";
-import MatchItemTable from "components/matches/MatchItemTable";
-import MeetingInfo from "components/matches/MeetingInfo";
-import OtherPersonContact from "components/matches/OtherPersonContact";
-import Scanner from "components/matches/Scanner/Scanner";
-import { UserMatchWithDetails } from "utils/types";
+} from "@/components/matches/matches-helper";
+import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import MatchItemTable from "@/components/matches/MatchItemTable";
+import MeetingInfo from "@/components/matches/MeetingInfo";
+import OtherPersonContact from "@/components/matches/OtherPersonContact";
+import Scanner from "@/components/matches/Scanner/Scanner";
+import { UserMatchWithDetails } from "@/utils/types";
 
 const UserMatchDetail = ({
   match,

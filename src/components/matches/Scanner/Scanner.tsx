@@ -3,11 +3,11 @@ import { AlertColor, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useRef, useState } from "react";
 
-import { addWithEndpoint } from "api/api";
-import ScannerFeedback from "components/matches/Scanner/ScannerFeedback";
-import ScannerModal from "components/matches/Scanner/ScannerModal";
-import ScannerTutorial from "components/matches/Scanner/ScannerTutorial";
-import { ScannedTextType, TextType } from "utils/types";
+import { addWithEndpoint } from "@/api/api";
+import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
+import ScannerModal from "@/components/matches/Scanner/ScannerModal";
+import ScannerTutorial from "@/components/matches/Scanner/ScannerTutorial";
+import { ScannedTextType, TextType } from "@/utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
   if (Number.isNaN(Number(scannedText))) {

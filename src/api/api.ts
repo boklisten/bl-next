@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-import { apiPath, getHeaders } from "api/apiRequest";
-import { fetchNewTokens } from "api/token";
+import { apiPath, getHeaders } from "@/api/apiRequest";
+import { fetchNewTokens } from "@/api/token";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const get = async <T = any>(

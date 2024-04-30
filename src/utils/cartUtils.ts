@@ -9,10 +9,10 @@ import {
   Period,
 } from "@boklisten/bl-model";
 
-import { get } from "api/api";
-import { getAccessTokenBody } from "api/token";
-import { CartItem } from "redux/cart";
-import { CustomerItemAction } from "redux/selectedCustomerItemActions";
+import { get } from "@/api/api";
+import { getAccessTokenBody } from "@/api/token";
+import { CartItem } from "@/redux/cart";
+import { CustomerItemAction } from "@/redux/selectedCustomerItemActions";
 
 export const getExtendTime = (branchInfo: Branch) =>
   (
@@ -276,6 +276,7 @@ export const createOrder = (branchID: string, cartItems: CartItem[]): Order => {
     orderItems: cartItems.map((cartItem) => cartItem.orderItem),
     byCustomer: true,
     payments: [],
+    pendingSignature: false, // TODO: hook me up when migrating to bl-next orders
   };
 };
 

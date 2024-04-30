@@ -3,17 +3,17 @@ import { Alert, Skeleton } from "@mui/material";
 import React from "react";
 import useSWR from "swr";
 
-import { apiFetcher } from "api/api";
-import { getAccessTokenBody } from "api/token";
+import { apiFetcher } from "@/api/api";
+import { getAccessTokenBody } from "@/api/token";
 import {
   isMatchFulfilled,
   isUserSenderInMatch,
-} from "components/matches/matches-helper";
-import { groupMatchesByTimeAndLocation } from "components/matches/matchesList/helper";
-import { MatchListItemGroups } from "components/matches/matchesList/MatchListItemGroups";
-import ProgressBar from "components/matches/matchesList/ProgressBar";
-import BL_CONFIG from "utils/bl-config";
-import { StandMatchWithDetails, UserMatchWithDetails } from "utils/types";
+} from "@/components/matches/matches-helper";
+import { groupMatchesByTimeAndLocation } from "@/components/matches/matchesList/helper";
+import { MatchListItemGroups } from "@/components/matches/matchesList/MatchListItemGroups";
+import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import BL_CONFIG from "@/utils/bl-config";
+import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -50,8 +50,8 @@ export const MatchesList: React.FC = () => {
       isMatchFulfilled(a, isUserSenderInMatch(a, userId))
         ? 1
         : isMatchFulfilled(b, isUserSenderInMatch(b, userId))
-        ? -1
-        : 0,
+          ? -1
+          : 0,
     );
   const standMatchesByTime = groupMatchesByTimeAndLocation(standMatches);
   const userMatchesByTime = groupMatchesByTimeAndLocation(userMatches);

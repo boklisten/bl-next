@@ -5,11 +5,11 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 
-import DynamicLink from "components/DynamicLink";
-import NewsBanner from "components/editableText/NewsBanner";
-import { editableTextIds } from "utils/constants";
-import { MaybeEmptyEditableText } from "utils/types";
-import getEditableText from "utils/useEditableText";
+import DynamicLink from "@/components/DynamicLink";
+import NewsBanner from "@/components/editableText/NewsBanner";
+import { editableTextIds } from "@/utils/constants";
+import { MaybeEmptyEditableText } from "@/utils/types";
+import getEditableText from "@/utils/useEditableText";
 
 interface HomeProps {
   newsBannerText: MaybeEmptyEditableText;

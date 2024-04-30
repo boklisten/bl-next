@@ -1,5 +1,5 @@
-import DibsPayment from "components/checkout/DibsPayment";
-import PaymentSummary from "components/checkout/PaymentSummary";
+import DibsPayment from "@/components/checkout/DibsPayment";
+import PaymentSummary from "@/components/checkout/PaymentSummary";
 
 const PaymentStep = () => {
   return (

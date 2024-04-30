@@ -1,9 +1,9 @@
 import axios from "axios";
 import { decodeToken } from "react-jwt";
 
-import { add, get, remove } from "api/storage";
-import BL_CONFIG from "utils/bl-config";
-import { AccessToken } from "utils/types";
+import { add, get, remove } from "@/api/storage";
+import BL_CONFIG from "@/utils/bl-config";
+import { AccessToken } from "@/utils/types";
 
 const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;

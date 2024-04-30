@@ -12,7 +12,7 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 import stringSimilarity from "string-similarity";
 
-import DynamicLink from "components/DynamicLink";
+import DynamicLink from "@/components/DynamicLink";
 
 export interface LinkTabProps {
   label: string;

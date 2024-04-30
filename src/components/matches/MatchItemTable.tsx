@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { ItemStatus } from "components/matches/matches-helper";
+import { ItemStatus } from "@/components/matches/matches-helper";
 
 const MatchItemTable = ({
   itemStatuses,

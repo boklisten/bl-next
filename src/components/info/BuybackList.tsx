@@ -12,9 +12,9 @@ import {
 import { Box } from "@mui/system";
 import useSWR, { SWRResponse } from "swr";
 
-import { fetcher } from "api/requests";
-import BL_CONFIG from "utils/bl-config";
-import { Item } from "utils/types";
+import { fetcher } from "@/api/requests";
+import BL_CONFIG from "@/utils/bl-config";
+import { Item } from "@/utils/types";
 
 export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`;
 

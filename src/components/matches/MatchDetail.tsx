@@ -11,12 +11,12 @@ import {
 import React from "react";
 import useSWR from "swr";
 
-import { apiFetcher } from "api/api";
-import { getAccessTokenBody } from "api/token";
-import DynamicLink from "components/DynamicLink";
-import StandMatchDetail from "components/matches/StandMatchDetail";
-import UserMatchDetail from "components/matches/UserMatchDetail";
-import BL_CONFIG from "utils/bl-config";
+import { apiFetcher } from "@/api/api";
+import { getAccessTokenBody } from "@/api/token";
+import DynamicLink from "@/components/DynamicLink";
+import StandMatchDetail from "@/components/matches/StandMatchDetail";
+import UserMatchDetail from "@/components/matches/UserMatchDetail";
+import BL_CONFIG from "@/utils/bl-config";
 
 const MatchDetail = ({ matchId }: { matchId: string }) => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>

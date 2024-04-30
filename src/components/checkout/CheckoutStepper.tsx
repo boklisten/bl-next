@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
-import CheckoutStep from "components/checkout/CheckoutStep";
+import CheckoutStep from "@/components/checkout/CheckoutStep";
 
 export type CheckoutSteps = "tos" | "payment" | "delivery" | undefined;
 

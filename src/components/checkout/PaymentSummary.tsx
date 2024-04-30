@@ -10,8 +10,8 @@ import {
 import moment from "moment";
 import React from "react";
 
-import { selectCartItems, selectDeliveryPrice } from "redux/cart";
-import { useAppSelector } from "redux/hooks";
+import { selectCartItems, selectDeliveryPrice } from "@/redux/cart";
+import { useAppSelector } from "@/redux/hooks";
 
 const readableOrderItemTypes = {
   rent: "lån",

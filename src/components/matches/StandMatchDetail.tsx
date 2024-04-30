@@ -6,12 +6,12 @@ import {
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
-} from "components/matches/matches-helper";
-import ProgressBar from "components/matches/matchesList/ProgressBar";
-import MatchItemTable from "components/matches/MatchItemTable";
-import MeetingInfo from "components/matches/MeetingInfo";
-import OtherPersonContact from "components/matches/OtherPersonContact";
-import { StandMatchWithDetails } from "utils/types";
+} from "@/components/matches/matches-helper";
+import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import MatchItemTable from "@/components/matches/MatchItemTable";
+import MeetingInfo from "@/components/matches/MeetingInfo";
+import OtherPersonContact from "@/components/matches/OtherPersonContact";
+import { StandMatchWithDetails } from "@/utils/types";
 
 const StandMatchDetail = ({
   match,

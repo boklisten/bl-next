@@ -2,7 +2,7 @@ import CropFreeIcon from "@mui/icons-material/CropFree";
 import { Box, Button, Container, Modal, Typography } from "@mui/material";
 import React, { useCallback } from "react";
 
-import BarcodeQrScanner from "components/matches/BarcodeQrScanner";
+import BarcodeQrScanner from "@/components/matches/BarcodeQrScanner";
 
 const ScannerModal = ({
   open,

@@ -9,8 +9,8 @@ import {
 } from "@boklisten/bl-model";
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
-import type { AppState } from "redux/store";
-import { createOrderItem } from "utils/cartUtils";
+import type { AppState } from "@/redux/store";
+import { createOrderItem } from "@/utils/cartUtils";
 
 export interface CartItem {
   item: Item;

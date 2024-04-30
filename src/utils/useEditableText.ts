@@ -1,8 +1,8 @@
 import { EditableText } from "@boklisten/bl-model";
 
-import { apiFetcher, NotFoundError } from "api/api";
-import BL_CONFIG from "utils/bl-config";
-import { MaybeEmptyEditableText } from "utils/types";
+import { apiFetcher, NotFoundError } from "@/api/api";
+import BL_CONFIG from "@/utils/bl-config";
+import { MaybeEmptyEditableText } from "@/utils/types";
 
 const useEditableText = async (
   editableTextId: string,

@@ -5,12 +5,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import { add } from "api/api";
-import CheckoutStepper from "components/checkout/CheckoutStepper";
-import { selectCartItems, setOrderID } from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { selectBranch } from "redux/selectedBranch";
-import { createOrder } from "utils/cartUtils";
+import { add } from "@/api/api";
+import CheckoutStepper from "@/components/checkout/CheckoutStepper";
+import { selectCartItems, setOrderID } from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectBranch } from "@/redux/selectedBranch";
+import { createOrder } from "@/utils/cartUtils";
 
 const CartPage: NextPage = () => {
   const cartItems = useAppSelector(selectCartItems);

@@ -25,8 +25,9 @@ import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 
-import { fetchData } from "api/requests";
-import DynamicLink from "components/DynamicLink";
+import { fetchData } from "@/api/requests";
+import DynamicLink from "@/components/DynamicLink";
+
 import "@mui/lab";
 
 type UserEditorFields = {
@@ -387,7 +388,7 @@ const UserDetailEditor = ({
                 <Grid item xs={12}>
                   <DatePicker
                     label="Fødselsdato"
-                    inputFormat="DD/MM/YYYY"
+                    format="DD/MM/YYYY"
                     minDate={moment().subtract(100, "years")}
                     maxDate={moment().subtract(10, "years")}
                     openTo="year"
@@ -410,17 +411,19 @@ const UserDetailEditor = ({
                           })
                         : clearErrors("birthday")
                     }
-                    renderInput={(parameters) => (
-                      <TextField
-                        data-testid="birthday-field"
-                        id="birthday"
-                        autoComplete="bday"
-                        required
-                        fullWidth
-                        helperText={parameters?.inputProps?.placeholder}
-                        {...parameters}
-                      />
-                    )}
+                    slots={{
+                      textField: (parameters) => (
+                        <TextField
+                          data-testid="birthday-field"
+                          id="birthday"
+                          autoComplete="bday"
+                          required
+                          fullWidth
+                          helperText={parameters?.inputProps?.["placeholder"]}
+                          {...parameters}
+                        />
+                      ),
+                    }}
                   />
                 </Grid>
                 {isUnder18(birthday) && (

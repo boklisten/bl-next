@@ -20,17 +20,17 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import { setCart } from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { setCart } from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   CustomerItemAction,
   selectCustomerItemActions,
   setSelectedCustomerItemActions,
-} from "redux/selectedCustomerItemActions";
+} from "@/redux/selectedCustomerItemActions";
 import {
   generateCartItemsFromCustomerItemActions,
   getExtendTime,
-} from "utils/cartUtils";
+} from "@/utils/cartUtils";
 
 const calculateMaxDeadline = (): string => {
   const now = moment();

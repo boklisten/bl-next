@@ -4,9 +4,9 @@
  */
 import React from "react";
 
-// used for module JSdoc
+// @ts-expect-error used for module JSdoc
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import theme from "utils/theme";
+import theme from "@/utils/theme";
 
 declare module "@mui/material/styles" {
   // eslint-disable-next-line no-unused-vars

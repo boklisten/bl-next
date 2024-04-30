@@ -12,8 +12,8 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import { login } from "api/login";
-import DynamicLink from "components/DynamicLink";
+import { login } from "@/api/login";
+import DynamicLink from "@/components/DynamicLink";
 
 type SignInFields = {
   email: string;

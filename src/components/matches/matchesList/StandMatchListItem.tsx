@@ -5,11 +5,11 @@ import {
   calculateFulfilledStandMatchItems,
   isMatchBegun,
   isMatchFulfilled,
-} from "components/matches/matches-helper";
-import { formatActionsString } from "components/matches/matchesList/helper";
-import MatchListItemBox from "components/matches/matchesList/MatchListItemBox";
-import ProgressBar from "components/matches/matchesList/ProgressBar";
-import { StandMatchWithDetails } from "utils/types";
+} from "@/components/matches/matches-helper";
+import { formatActionsString } from "@/components/matches/matchesList/helper";
+import MatchListItemBox from "@/components/matches/matchesList/MatchListItemBox";
+import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import { StandMatchWithDetails } from "@/utils/types";
 
 const StandMatchListItem: React.FC<{
   match: StandMatchWithDetails;

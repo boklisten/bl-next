@@ -11,14 +11,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
 
-import { fetcher } from "api/requests";
-import { add, get } from "api/storage";
-import { setCart, setDeliveryMethod } from "redux/cart";
-import { useAppSelector, useAppDispatch } from "redux/hooks";
-import { selectBranch, setSelectedBranch } from "redux/selectedBranch";
-import { setSelectedCustomerItemActions } from "redux/selectedCustomerItemActions";
-import { setSelectedSubjects } from "redux/selectedSubjects";
-import BL_CONFIG from "utils/bl-config";
+import { fetcher } from "@/api/requests";
+import { add, get } from "@/api/storage";
+import { setCart, setDeliveryMethod } from "@/redux/cart";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { selectBranch, setSelectedBranch } from "@/redux/selectedBranch";
+import { setSelectedCustomerItemActions } from "@/redux/selectedCustomerItemActions";
+import { setSelectedSubjects } from "@/redux/selectedSubjects";
+import BL_CONFIG from "@/utils/bl-config";
 
 export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
 
