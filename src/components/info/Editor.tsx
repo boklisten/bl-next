@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import { isAdmin } from "api/auth";
+import { isAdmin } from "@/api/auth";
 
 const Editor = dynamic(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

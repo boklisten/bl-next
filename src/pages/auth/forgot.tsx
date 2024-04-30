@@ -15,9 +15,9 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import { add } from "api/api";
-import DynamicLink from "components/DynamicLink";
-import blConfig from "utils/bl-config";
+import { add } from "@/api/api";
+import DynamicLink from "@/components/DynamicLink";
+import blConfig from "@/utils/bl-config";
 
 type ForgotFields = {
   email: string;

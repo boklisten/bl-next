@@ -6,8 +6,8 @@ import moment from "moment";
 import Image from "next/image";
 import React from "react";
 
-import DynamicLink from "components/DynamicLink";
-import ContactInfo from "components/info/ContactInfo";
+import DynamicLink from "@/components/DynamicLink";
+import ContactInfo from "@/components/info/ContactInfo";
 
 export default function Footer() {
   return (

@@ -19,14 +19,14 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import isPostalCode from "validator/lib/isPostalCode";
 
-import { add } from "api/api";
-import { fetchData } from "api/requests";
+import { add } from "@/api/api";
+import { fetchData } from "@/api/requests";
 import {
   extractFirstName,
   extractLastName,
-} from "components/user/UserDetailEditor";
-import { selectOrderID, setDeliveryPrice } from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+} from "@/components/user/UserDetailEditor";
+import { selectOrderID, setDeliveryPrice } from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 type PostalDeliveryFields = {
   firstName: string;

@@ -2,12 +2,12 @@ import { UserDetail } from "@boklisten/bl-model";
 import { Alert } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { get } from "api/api";
-import { getAccessTokenBody } from "api/token";
-import { CheckoutSteps } from "components/checkout/CheckoutStepper";
-import DeliveryStep from "components/checkout/DeliveryStep";
-import PaymentStep from "components/checkout/PaymentStep";
-import TermsAndConditionsStep from "components/checkout/TermsAndConditionsStep";
+import { get } from "@/api/api";
+import { getAccessTokenBody } from "@/api/token";
+import { CheckoutSteps } from "@/components/checkout/CheckoutStepper";
+import DeliveryStep from "@/components/checkout/DeliveryStep";
+import PaymentStep from "@/components/checkout/PaymentStep";
+import TermsAndConditionsStep from "@/components/checkout/TermsAndConditionsStep";
 
 const CheckoutStep = ({
   step,

@@ -3,11 +3,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { SWRConfig } from "swr";
 
-import { fetcher } from "api/requests";
-import BuybackList, { buybackUrl } from "components/info/BuybackList";
-import DynamicNav from "components/info/DynamicNav";
-import { infoPageTabs } from "utils/constants";
-import { Item } from "utils/types";
+import { fetcher } from "@/api/requests";
+import BuybackList, { buybackUrl } from "@/components/info/BuybackList";
+import DynamicNav from "@/components/info/DynamicNav";
+import { infoPageTabs } from "@/utils/constants";
+import { Item } from "@/utils/types";
 
 export const getStaticProps = async () => {
   return {

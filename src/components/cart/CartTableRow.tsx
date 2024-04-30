@@ -2,11 +2,11 @@ import { BranchItem, OrderItemType } from "@boklisten/bl-model";
 import { TableCell, TableRow, Tooltip } from "@mui/material";
 import moment from "moment";
 
-import RemoveCartItemButton from "components/cart/RemoveCartItemButton";
-import SelectDeadline from "components/cart/SelectDeadline";
-import { CartItem } from "redux/cart";
-import { useAppSelector } from "redux/hooks";
-import { selectSubjects } from "redux/selectedSubjects";
+import RemoveCartItemButton from "@/components/cart/RemoveCartItemButton";
+import SelectDeadline from "@/components/cart/SelectDeadline";
+import { CartItem } from "@/redux/cart";
+import { useAppSelector } from "@/redux/hooks";
+import { selectSubjects } from "@/redux/selectedSubjects";
 
 const getReadableOrderType = (orderItemType: OrderItemType) =>
   orderItemType === "extend" ? "forlenging" : "utkjøp";

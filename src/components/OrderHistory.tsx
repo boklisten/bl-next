@@ -19,7 +19,7 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 import React, { useState } from "react";
 
-import { get } from "api/api";
+import { get } from "@/api/api";
 
 // fetchPayments(orders);
 // types are from a business POV
@@ -267,7 +267,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
 
                                   {/**
                                    eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                   @ts-ignore*/}
+                                   @ts-expect-error orderItemInfo type is outdated*/}
                                   {orderItem.info?.["amountLeftToPay"] && (
                                     <TableRow>
                                       <TableCell align="center">
@@ -276,7 +276,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                       <TableCell align="center">
                                         {/**
                                          eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                         @ts-ignore*/}
+                                         @ts-expect-error orderItemInfo type is outdated*/}
                                         {orderItem.info["amountLeftToPay"]} kr
                                       </TableCell>
                                     </TableRow>

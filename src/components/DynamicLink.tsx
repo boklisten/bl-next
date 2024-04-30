@@ -2,9 +2,9 @@ import { Link as MuiLink, LinkProps as MuiLinkProps } from "@mui/material";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { ForwardedRef, forwardRef, useEffect, useState } from "react";
 
-import { isLoggedIn } from "api/auth";
-import { getAccessToken, getRefreshToken } from "api/token";
-import BL_CONFIG from "utils/bl-config";
+import { isLoggedIn } from "@/api/auth";
+import { getAccessToken, getRefreshToken } from "@/api/token";
+import BL_CONFIG from "@/utils/bl-config";
 
 type CustomNextLinkProps = Omit<NextLinkProps, "href"> & {
   _href: NextLinkProps["href"];

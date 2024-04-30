@@ -6,14 +6,14 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import BranchDelivery from "components/checkout/BranchDelivery";
-import PostalDelivery from "components/checkout/PostalDelivery";
+import BranchDelivery from "@/components/checkout/BranchDelivery";
+import PostalDelivery from "@/components/checkout/PostalDelivery";
 import {
   selectCartItems,
   selectDeliveryMethod,
   setDeliveryMethod,
-} from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+} from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 type DeliveryMethods = {
   byMail: boolean;

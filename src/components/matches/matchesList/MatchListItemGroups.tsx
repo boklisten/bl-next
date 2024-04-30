@@ -6,10 +6,10 @@ import {
   formatDatetime,
   sectionStyle,
   getSortedMatchGroups,
-} from "components/matches/matchesList/helper";
-import StandMatchListItem from "components/matches/matchesList/StandMatchListItem";
-import UserMatchListItem from "components/matches/matchesList/UserMatchListItem";
-import { GroupedMatches } from "utils/types";
+} from "@/components/matches/matchesList/helper";
+import StandMatchListItem from "@/components/matches/matchesList/StandMatchListItem";
+import UserMatchListItem from "@/components/matches/matchesList/UserMatchListItem";
+import { GroupedMatches } from "@/utils/types";
 
 export const MatchListItemGroups: React.FC<{
   groups: GroupedMatches<MatchWithDetails>;

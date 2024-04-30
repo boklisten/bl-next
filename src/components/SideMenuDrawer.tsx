@@ -19,9 +19,9 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import { useRouter } from "next/router";
 import React, { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
 
-import { isLoggedIn, logout } from "api/auth";
-import DynamicLink from "components/DynamicLink";
-import BL_CONFIG from "utils/bl-config";
+import { isLoggedIn, logout } from "@/api/auth";
+import DynamicLink from "@/components/DynamicLink";
+import BL_CONFIG from "@/utils/bl-config";
 
 interface DrawerLinkProps {
   title: string;

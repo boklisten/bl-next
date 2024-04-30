@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import Cart from "components/cart/Cart";
+import Cart from "@/components/cart/Cart";
 
 const CartPage: NextPage = () => {
   return (

@@ -12,11 +12,11 @@ import * as React from "react";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 
-import { addAccessToken, addRefreshToken } from "api/token";
-import Footer from "components/Footer";
-import NavBar from "components/NavBar";
-import store from "redux/store";
-import theme from "utils/theme";
+import { addAccessToken, addRefreshToken } from "@/api/token";
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
+import store from "@/redux/store";
+import theme from "@/utils/theme";
 import "@mui/lab";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -24,8 +24,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 class OverriddenAdapter extends DateAdapter {
-  // Get years in decending order
-  override getYearRange = (start: Moment, end: Moment) => {
+  // Get years in descending order
+  override getYearRange = ([start, end]: [Moment, Moment]) => {
     const startDate = this.moment(start).startOf("year");
     const endDate = this.moment(end).endOf("year");
     const years: Moment[] = [];

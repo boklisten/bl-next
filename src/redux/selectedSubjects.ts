@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { AppState } from "redux/store";
+import type { AppState } from "@/redux/store";
 
 export interface SelectedSubjectsState {
   subjects: string[];

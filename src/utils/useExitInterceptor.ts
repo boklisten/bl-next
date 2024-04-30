@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import useIsHydrated from "utils/useIsHydrated";
+import useIsHydrated from "@/utils/useIsHydrated";
 
 const useExitInterceptor = (preventExit: boolean) => {
   const hydrated = useIsHydrated();

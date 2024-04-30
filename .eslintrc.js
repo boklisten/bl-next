@@ -1,5 +1,8 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.json",
+  },
   settings: {
     react: {
       version: "detect",
@@ -25,12 +28,13 @@ module.exports = {
     "prettier",
   ],
   plugins: ["cypress", "eslint-plugin-no-relative-import-paths"],
-  ignorePatterns: ["cypress/support", "cypress/plugins"],
+  ignorePatterns: ["cypress"],
   rules: {
     "no-relative-import-paths/no-relative-import-paths": [
       "error",
       {
         rootDir: "src",
+        prefix: "@",
       },
     ],
     "unicorn/consistent-function-scoping": [

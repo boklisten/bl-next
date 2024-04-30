@@ -5,11 +5,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-import { get } from "api/api";
-import BranchSelect from "components/BranchSelect";
-import SubjectSelect from "components/SubjectSelect";
-import { useAppSelector } from "redux/hooks";
-import { selectBranch } from "redux/selectedBranch";
+import { get } from "@/api/api";
+import BranchSelect from "@/components/BranchSelect";
+import SubjectSelect from "@/components/SubjectSelect";
+import { useAppSelector } from "@/redux/hooks";
+import { selectBranch } from "@/redux/selectedBranch";
 
 const Orders: NextPage = () => {
   const selectedBranch = useAppSelector(selectBranch);

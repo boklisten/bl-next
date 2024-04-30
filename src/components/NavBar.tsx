@@ -6,10 +6,10 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import React from "react";
 
-import BranchSelect from "components/BranchSelect";
-import DynamicLink from "components/DynamicLink";
-import DropDownMenu from "components/SideMenuDrawer";
-import BL_CONFIG from "utils/bl-config";
+import BranchSelect from "@/components/BranchSelect";
+import DynamicLink from "@/components/DynamicLink";
+import DropDownMenu from "@/components/SideMenuDrawer";
+import BL_CONFIG from "@/utils/bl-config";
 
 interface TabLinkProps {
   title: string;

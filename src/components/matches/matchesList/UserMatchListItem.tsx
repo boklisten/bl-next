@@ -7,11 +7,11 @@ import {
   isMatchBegun,
   isMatchFulfilled,
   isUserSenderInMatch,
-} from "components/matches/matches-helper";
-import { formatActionsString } from "components/matches/matchesList/helper";
-import MatchListItemBox from "components/matches/matchesList/MatchListItemBox";
-import ProgressBar from "components/matches/matchesList/ProgressBar";
-import { UserMatchWithDetails } from "utils/types";
+} from "@/components/matches/matches-helper";
+import { formatActionsString } from "@/components/matches/matchesList/helper";
+import MatchListItemBox from "@/components/matches/matchesList/MatchListItemBox";
+import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import { UserMatchWithDetails } from "@/utils/types";
 
 const me = <span style={{ color: "#757575", fontWeight: 400 }}>Meg</span>;
 

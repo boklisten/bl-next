@@ -2,11 +2,11 @@ import React from "react";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import { isAdmin } from "api/auth";
-import { EditableTextEditor } from "components/editableText/EditableTextEditor";
-import { EditableTextRenderer } from "components/editableText/EditableTextRenderer";
-import { MaybeEmptyEditableText } from "utils/types";
-import useIsHydrated from "utils/useIsHydrated";
+import { isAdmin } from "@/api/auth";
+import { EditableTextEditor } from "@/components/editableText/EditableTextEditor";
+import { EditableTextRenderer } from "@/components/editableText/EditableTextRenderer";
+import { MaybeEmptyEditableText } from "@/utils/types";
+import useIsHydrated from "@/utils/useIsHydrated";
 
 export interface EditorProps {
   editableText: MaybeEmptyEditableText;

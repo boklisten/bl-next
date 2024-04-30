@@ -15,7 +15,7 @@ import {
 import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
 
-import { isAdmin } from "api/auth";
+import { isAdmin } from "@/api/auth";
 
 interface QNA {
   id: string;

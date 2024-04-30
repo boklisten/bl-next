@@ -12,12 +12,12 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import FixedSuccessButton from "components/FixedSuccessButton";
-import { setCart } from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { selectBranch } from "redux/selectedBranch";
-import { selectSubjects, setSelectedSubjects } from "redux/selectedSubjects";
-import { generateCartItemsFromSubjects } from "utils/cartUtils";
+import FixedSuccessButton from "@/components/FixedSuccessButton";
+import { setCart } from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectBranch } from "@/redux/selectedBranch";
+import { selectSubjects, setSelectedSubjects } from "@/redux/selectedSubjects";
+import { generateCartItemsFromSubjects } from "@/utils/cartUtils";
 
 const SubjectCheckbox = ({ subject }: { subject: string }) => {
   const dispatch = useAppDispatch();

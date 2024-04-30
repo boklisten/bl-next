@@ -4,10 +4,10 @@ import { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-import { isLoggedIn } from "api/auth";
-import DynamicLink from "components/DynamicLink";
-import { MatchesList } from "components/matches/matchesList/MatchesList";
-import BL_CONFIG from "utils/bl-config";
+import { isLoggedIn } from "@/api/auth";
+import DynamicLink from "@/components/DynamicLink";
+import { MatchesList } from "@/components/matches/matchesList/MatchesList";
+import BL_CONFIG from "@/utils/bl-config";
 
 const MatchesPage: NextPage = () => {
   const [hydrated, setHydrated] = useState(false);

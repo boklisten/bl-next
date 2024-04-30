@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 
-import MatchDetail from "components/matches/MatchDetail";
+import MatchDetail from "@/components/matches/MatchDetail";
 
 export async function getServerSideProps({
   params,

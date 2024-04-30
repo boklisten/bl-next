@@ -11,8 +11,8 @@ import TableRow from "@mui/material/TableRow";
 import moment from "moment";
 import "moment/locale/nb";
 
-import BranchSelect from "components/BranchSelect";
-import ContactInfo from "components/info/ContactInfo";
+import BranchSelect from "@/components/BranchSelect";
+import ContactInfo from "@/components/info/ContactInfo";
 
 const compareOpeningHours = (a: OpeningHour, b: OpeningHour): number => {
   if (a.from < b.from) {

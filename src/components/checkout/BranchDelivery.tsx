@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-import { selectCartItems, setDeliveryPrice } from "redux/cart";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { selectCartItems, setDeliveryPrice } from "@/redux/cart";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const BranchDelivery = ({
   setWait,

@@ -1,5 +1,5 @@
-import { getAccessToken, haveAccessToken } from "api/token";
-import BL_CONFIG from "utils/bl-config";
+import { getAccessToken, haveAccessToken } from "@/api/token";
+import BL_CONFIG from "@/utils/bl-config";
 
 export const apiPath = (collection: string, query?: string) => {
   const path = BL_CONFIG.api.basePath;

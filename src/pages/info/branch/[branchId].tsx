@@ -6,15 +6,15 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { fetcher } from "api/requests";
-import BranchSelect from "components/BranchSelect";
-import BranchInfo from "components/info/BranchInfo";
-import ContactInfo from "components/info/ContactInfo";
-import DynamicNav from "components/info/DynamicNav";
-import { useAppSelector } from "redux/hooks";
-import { selectBranch } from "redux/selectedBranch";
-import BL_CONFIG from "utils/bl-config";
-import { infoPageTabs } from "utils/constants";
+import { fetcher } from "@/api/requests";
+import BranchSelect from "@/components/BranchSelect";
+import BranchInfo from "@/components/info/BranchInfo";
+import ContactInfo from "@/components/info/ContactInfo";
+import DynamicNav from "@/components/info/DynamicNav";
+import { useAppSelector } from "@/redux/hooks";
+import { selectBranch } from "@/redux/selectedBranch";
+import BL_CONFIG from "@/utils/bl-config";
+import { infoPageTabs } from "@/utils/constants";
 
 export const getStaticPaths = async () => {
   const branchesUrl = `${BL_CONFIG.api.basePath}branches?og=id&active=true`;

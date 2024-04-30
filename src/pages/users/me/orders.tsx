@@ -4,9 +4,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-import { get } from "api/api";
-import { getAccessTokenBody } from "api/token";
-import OrderHistory from "components/OrderHistory";
+import { get } from "@/api/api";
+import { getAccessTokenBody } from "@/api/token";
+import OrderHistory from "@/components/OrderHistory";
 
 const Orders: NextPage = () => {
   const [orders, setOrders] = useState<Order[]>();

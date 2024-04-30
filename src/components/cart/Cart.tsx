@@ -3,13 +3,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 
-import { isLoggedIn } from "api/auth";
-import BackButton from "components/cart/BackButton";
-import CartTableHeader from "components/cart/CartTableHeader";
-import CartTableRow from "components/cart/CartTableRow";
-import FixedSuccessButton from "components/FixedSuccessButton";
-import { selectCartItems } from "redux/cart";
-import { useAppSelector } from "redux/hooks";
+import { isLoggedIn } from "@/api/auth";
+import BackButton from "@/components/cart/BackButton";
+import CartTableHeader from "@/components/cart/CartTableHeader";
+import CartTableRow from "@/components/cart/CartTableRow";
+import FixedSuccessButton from "@/components/FixedSuccessButton";
+import { selectCartItems } from "@/redux/cart";
+import { useAppSelector } from "@/redux/hooks";
 
 const Cart = () => {
   const cartItems = useAppSelector(selectCartItems);
