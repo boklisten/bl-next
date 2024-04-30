@@ -1,8 +1,7 @@
-import CropFreeIcon from "@mui/icons-material/CropFree";
-import { Box, Button, Container, Modal, Typography } from "@mui/material";
+import { Box, Button, Container, Modal } from "@mui/material";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { BarcodeFormat, DecodeHintType } from "@zxing/library";
 import React, { useCallback } from "react";
-
-import BarcodeQrScanner from "@/components/matches/BarcodeQrScanner";
 
 const ScannerModal = ({
   open,
@@ -27,10 +26,6 @@ const ScannerModal = ({
           height: "100vh",
         }}
       >
-        <Typography variant={"h4"} sx={{ zIndex: 100 }}>
-          Unik ID
-        </Typography>
-        <CropFreeIcon sx={{ zIndex: 100, fontSize: "200px" }} />
         <Button
           color={"info"}
           sx={{ position: "absolute", top: 80, zIndex: 100 }}
@@ -39,8 +34,31 @@ const ScannerModal = ({
         >
           Lukk
         </Button>
-        <Box sx={{ position: "absolute" }}>
-          <BarcodeQrScanner handleScan={handleScan} />
+        <Box sx={{ position: "absolute", width: "100%" }}>
+          <Scanner
+            options={{
+              delayBetweenScanAttempts: 100,
+              delayBetweenScanSuccess: 100,
+              constraints: {
+                facingMode: "environment",
+              },
+              hints: new Map<DecodeHintType, unknown>([
+                [
+                  DecodeHintType.POSSIBLE_FORMATS,
+                  [
+                    BarcodeFormat.QR_CODE,
+                    BarcodeFormat.EAN_8,
+                    BarcodeFormat.EAN_13,
+                  ],
+                ],
+                [DecodeHintType.TRY_HARDER, true],
+              ]),
+            }}
+            onResult={(text) => {
+              navigator.vibrate(100);
+              handleScan(text);
+            }}
+          />
         </Box>
       </Container>
     </Modal>
