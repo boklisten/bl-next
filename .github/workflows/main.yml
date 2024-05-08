@@ -10,20 +10,20 @@ jobs:
   install:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Cache install
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./node_modules/
           key: ${{ github.sha }}-install
       - name: Cache Cypress
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress/
           key: ${{ github.sha }}-cypress
@@ -32,9 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Retrive install cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./node_modules/
           key: ${{ github.sha }}-install
@@ -45,9 +45,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Retrive install cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./node_modules/
           key: ${{ github.sha }}-install
@@ -57,7 +57,7 @@ jobs:
   setup_backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           path: "./bl-api"
           repository: boklisten/bl-api
@@ -67,7 +67,7 @@ jobs:
           yarn install --frozen-lockfile
           yarn build
       - name: Cache backend
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./bl-api/
           key: ${{ github.sha }}-backend
@@ -76,14 +76,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [install, setup_backend]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Retrive Install Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./node_modules/
           key: ${{ github.sha }}-install
       - name: Retrive Next cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.next/cache
           # Generate a new cache whenever packages or source files change.
@@ -92,14 +92,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
       - name: Retrive backend cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./bl-api/
           key: ${{ github.sha }}-backend
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.7.0
+        uses: supercharge/mongodb-github-action@1.10.0
         with:
-          mongodb-version: "4.4"
+          mongodb-version: "7.0"
       - name: Start backend
         run: |
           cd bl-api
@@ -139,7 +139,7 @@ jobs:
       - name: Build
         run: yarn build
       - name: Cache build
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./.next/
           key: ${{ github.sha }}-build
@@ -151,24 +151,24 @@ jobs:
 #      matrix:
 #        containers: [1, 2, 3, 4]
 #    steps:
-#      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v4
 #      - name: Retrive install cache
-#        uses: actions/cache@v2
+#        uses: actions/cache@v4
 #        with:
 #          path: ./node_modules/
 #          key: ${{ github.sha }}-install
 #      - name: Retrive Cypress cache
-#        uses: actions/cache@v2
+#        uses: actions/cache@v4
 #        with:
 #          path: ~/.cache/Cypress/
 #          key: ${{ github.sha }}-cypress
 #      - name: Retrive build cache
-#        uses: actions/cache@v2
+#        uses: actions/cache@v4
 #        with:
 #          path: ./.next/
 #          key: ${{ github.sha }}-build
 #      - name: Retrive backend cache
-#        uses: actions/cache@v2
+#        uses: actions/cache@v4
 #        with:
 #          path: ./bl-api/
 #          key: ${{ github.sha }}-backend
