@@ -1,12 +1,17 @@
-import { MatchWithDetails } from "@boklisten/bl-model";
+import { KeyboardDoubleArrowRight, SwapHoriz } from "@mui/icons-material";
+import { SxProps, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { Properties } from "csstype";
+import React from "react";
 
-import { GroupedMatches } from "@/utils/types";
+import theme from "@/utils/theme";
+import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
 
 export const sectionStyle: Properties = {
   display: "flex",
   flexDirection: "column",
   gap: "1em",
+  marginTop: "1rem",
 };
 
 export function formatActionsString(handoffItems: number, pickupItems: number) {
@@ -43,65 +48,94 @@ export function formatActionsString(handoffItems: number, pickupItems: number) {
   return stringBuilder.join("");
 }
 
-/**
- * Groups array of matches location.
- *
- * If the input-array is sorted by time, then the output will be as well
- * (assuming for-of or other insertion-order iteration of keys).
- *
- * @param matches the matches to group
- */
-export function groupMatchesByTimeAndLocation<T extends MatchWithDetails>(
-  matches: T[],
-): GroupedMatches<T> {
-  const keyToData: Map<string, { time: number | null; location: string }> =
-    new Map();
-  const matchesByKey: Map<string, T[]> = new Map();
-  for (const match of matches) {
-    const date = match.meetingInfo.date
-      ? new Date(match.meetingInfo.date)
-      : null;
-    const key = (date?.getTime() ?? null) + match.meetingInfo.location;
-    const items = matchesByKey.get(key) ?? [];
-    keyToData.set(key, {
-      time: date?.getTime() ?? null,
-      location: match.meetingInfo.location,
-    });
-    matchesByKey.set(key, items);
-    items.push(match);
-  }
-  return { matchesByKey, keyToData };
-}
-
-/**
- * Sort groups by time ascending.
- *
- * @param groups the groups to sort
- * @returns array of keys of groups
- */
-export function getSortedMatchGroups<T extends MatchWithDetails>(
-  groups: GroupedMatches<T>,
-): string[] {
-  const keys = [...groups.keyToData.keys()];
-  keys.sort((a, b) => {
-    const timeA = groups.keyToData.get(a)!.time;
-    const timeB = groups.keyToData.get(b)!.time;
-    if (!timeA) {
-      return 1;
-    }
-    if (!timeB) {
-      return -1;
-    }
-    return new Date(timeA) >= new Date(timeB) ? 1 : -1;
+export const FormattedDatetime = ({ date }: { date: Date }) => {
+  const dateString = date.toLocaleDateString("no", {
+    timeZone: "Europe/Oslo",
+    dateStyle: "long",
   });
-  return keys;
-}
-
-export function formatDatetime(date: Date): string {
-  const dateString = date.toLocaleDateString("no", { timeZone: "Europe/Oslo" });
   const timeString = date.toLocaleTimeString("no", {
     timeZone: "Europe/Oslo",
     timeStyle: "short",
   });
-  return `${dateString} ${timeString}`;
+  return (
+    <>
+      <Typography>{timeString}</Typography>
+      <Typography color={theme.palette.grey["600"]}>, {dateString}</Typography>
+    </>
+  );
+};
+
+const me = <span style={{ color: "#757575", fontWeight: 400 }}>Meg</span>;
+
+interface UserMatchTitleProps {
+  match: UserMatchWithDetails;
+  isSender: boolean;
 }
+
+export const UserMatchTitle = ({ match, isSender }: UserMatchTitleProps) => {
+  const arrowSize: string = "1.18em";
+  return (
+    <>
+      {isSender ? (
+        <>
+          {me}{" "}
+          <KeyboardDoubleArrowRight
+            sx={{ verticalAlign: "text-bottom", fontSize: arrowSize }}
+          />{" "}
+          <Box component="span" fontWeight="bold">
+            {match.receiverDetails.name}
+          </Box>
+        </>
+      ) : (
+        <>
+          <Box component="span" fontWeight="bold">
+            {match.senderDetails.name}
+          </Box>{" "}
+          <KeyboardDoubleArrowRight
+            sx={{ verticalAlign: "text-bottom", fontSize: arrowSize }}
+          />{" "}
+          {me}
+        </>
+      )}
+    </>
+  );
+};
+
+interface StandMatchTitleProps {
+  match: StandMatchWithDetails;
+}
+
+export const StandMatchTitle = ({ match }: StandMatchTitleProps) => {
+  const hasHandoffItems = match.expectedHandoffItems.length > 0;
+  const hasPickupItems = match.expectedPickupItems.length > 0;
+
+  const stand = (
+    <Box component="span" fontWeight="bold">
+      Stand
+    </Box>
+  );
+
+  const isMeFirst = hasPickupItems ? hasHandoffItems : true;
+
+  const iconStyle: SxProps = {
+    verticalAlign: "text-bottom",
+    fontSize: "1.18em",
+  };
+
+  const left = isMeFirst ? me : stand;
+  const right = isMeFirst ? stand : me;
+  const arrow = hasHandoffItems ? (
+    hasPickupItems ? (
+      <SwapHoriz sx={iconStyle} />
+    ) : (
+      <KeyboardDoubleArrowRight sx={iconStyle} />
+    )
+  ) : (
+    <KeyboardDoubleArrowRight sx={iconStyle} />
+  );
+  return (
+    <>
+      {left} {arrow} {right}
+    </>
+  );
+};

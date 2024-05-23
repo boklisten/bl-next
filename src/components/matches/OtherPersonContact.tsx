@@ -27,15 +27,37 @@ const OtherPersonContact = ({
       sx={{ display: "flex", alignItems: "center", justifyContent: "left" }}
     >
       <PhoneIphoneIcon sx={{ marginRight: ".2rem" }} />
-      <Box>
-        <Typography>{otherPerson.name}</Typography>
-
-        <DynamicLink href={`tel:+47${otherPerson.phone}`}>
-          {otherPerson.phone}
+      <Typography>
+        {otherPerson.name},{" "}
+        <DynamicLink
+          sx={{ fontSize: "inherit" }}
+          href={`tel:+47${otherPerson.phone}`}
+        >
+          {formatPhoneNumber(otherPerson.phone)}
         </DynamicLink>
-      </Box>
+      </Typography>
     </Box>
   );
 };
+
+function formatPhoneNumber(number: string): string {
+  if (/\d{8}/.exec(number) !== null) {
+    return (
+      number.slice(0, 3) + " " + number.slice(3, 5) + " " + number.slice(5, 8)
+    );
+  }
+  if (/\d{10}/.exec(number) !== null) {
+    return (
+      number.slice(2) +
+      " " +
+      number.slice(2, 5) +
+      " " +
+      number.slice(5, 7) +
+      " " +
+      number.slice(7, 10)
+    );
+  }
+  return number;
+}
 
 export default OtherPersonContact;

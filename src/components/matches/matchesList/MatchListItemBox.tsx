@@ -1,8 +1,14 @@
-import { Button, Card, CardActions, CardContent } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+} from "@mui/material";
+import { green, grey } from "@mui/material/colors";
 import React, { PropsWithChildren } from "react";
 
 import DynamicLink from "@/components/DynamicLink";
-
 const MatchListItemBox: React.FC<
   PropsWithChildren<{ finished: boolean; matchId: string }>
 > = ({ finished, matchId, children }) => {
@@ -10,17 +16,23 @@ const MatchListItemBox: React.FC<
     <Card
       variant={finished ? "outlined" : "elevation"}
       elevation={finished ? 0 : 8}
+      sx={{ backgroundColor: finished ? green["50"] : grey["100"] }}
     >
-      <CardContent>{children}</CardContent>
-      <CardActions>
-        <Button
-          component={DynamicLink}
-          href={`/matches/${matchId}`}
-          size="small"
-        >
-          Detaljer
-        </Button>
-      </CardActions>
+      <CardActionArea component={DynamicLink} href={`/matches/${matchId}`}>
+        <CardContent>{children}</CardContent>
+        <CardActions>
+          <Button
+            component={DynamicLink}
+            href={`/matches/${matchId}`}
+            size="small"
+            variant={finished ? "text" : "contained"}
+            sx={{ width: "100%" }}
+            color="success"
+          >
+            Åpne
+          </Button>
+        </CardActions>
+      </CardActionArea>
     </Card>
   );
 };

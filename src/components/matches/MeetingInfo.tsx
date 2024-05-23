@@ -5,38 +5,38 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
-import { formatDatetime } from "@/components/matches/matchesList/helper";
+import { FormattedDatetime } from "@/components/matches/matchesList/helper";
 
 const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
   const meetingTime = match.meetingInfo.date;
   const meetingLocation = match.meetingInfo.location;
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "left" }}>
-      <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
-        <PlaceIcon sx={{ marginRight: ".2rem" }} />
-        <Typography fontWeight="bold" variant={"subtitle1"}>
-          {meetingLocation}
-        </Typography>
-      </Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+        my: ".2rem",
+        fontSize: "inherit",
+      }}
+    >
       <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
         <ScheduleIcon sx={{ marginRight: ".2rem" }} />
         {(meetingTime && (
-          <>
-            <Typography fontWeight="bold" variant={"subtitle1"}>
-              {formatDatetime(new Date(meetingTime))}
-            </Typography>
-          </>
+          <FormattedDatetime date={new Date(meetingTime)} />
         )) || (
-          <>
-            <Typography sx={{ whiteSpace: "pre" }}>
-              Du kan møte opp når som helst i{" "}
-              <DynamicLink variant="body1" href="/info/branch/select">
-                skolens åpningstider
-              </DynamicLink>
-            </Typography>
-          </>
+          <Typography>
+            Du kan møte opp når som helst i{" "}
+            <DynamicLink variant="body1" href="/info/branch/select">
+              skolens åpningstider
+            </DynamicLink>
+          </Typography>
         )}
+      </Box>
+      <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
+        <PlaceIcon sx={{ marginRight: ".2rem" }} />
+        <Typography>{meetingLocation}</Typography>
       </Box>
     </Box>
   );
