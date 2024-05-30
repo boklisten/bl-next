@@ -1,13 +1,6 @@
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { ArrowBack } from "@mui/icons-material";
-import {
-  Alert,
-  Button,
-  Card,
-  Container,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, Card, Container, Skeleton } from "@mui/material";
 import React from "react";
 import useSWR from "swr";
 
@@ -66,7 +59,6 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
         >
           <Button startIcon={<ArrowBack />}>Alle overleveringer</Button>
         </DynamicLink>
-        <Typography variant="h1">Overlevering av bøker</Typography>
 
         {match._variant === MatchVariant.StandMatch && (
           <StandMatchDetail match={match} currentUserId={userId} />

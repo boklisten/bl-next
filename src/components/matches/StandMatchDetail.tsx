@@ -1,4 +1,4 @@
-import { Alert } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import React from "react";
 
 import {
@@ -7,6 +7,7 @@ import {
   ItemStatus,
   MatchHeader,
 } from "@/components/matches/matches-helper";
+import { StandMatchTitle } from "@/components/matches/matchesList/helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import MeetingInfo from "@/components/matches/MeetingInfo";
@@ -49,6 +50,10 @@ const StandMatchDetail = ({
 
   return (
     <>
+      <Typography variant="h1">
+        <StandMatchTitle match={match} />
+      </Typography>
+
       {isFulfilled && (
         <Alert sx={{ marginTop: "1rem", marginBottom: "1rem" }}>
           Du har mottatt og levert alle bøkene for denne overleveringen.
@@ -99,7 +104,7 @@ const StandMatchDetail = ({
         </>
       )}
 
-      <MatchHeader>Du skal på stand ved</MatchHeader>
+      <MatchHeader>Du skal på stand:</MatchHeader>
       <MeetingInfo match={match} />
 
       <MatchHeader>Kontaktinformasjon</MatchHeader>

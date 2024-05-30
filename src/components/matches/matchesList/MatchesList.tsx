@@ -1,4 +1,4 @@
-import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+import { MatchWithDetails } from "@boklisten/bl-model";
 import { Alert, Skeleton } from "@mui/material";
 import React from "react";
 import useSWR from "swr";
@@ -9,11 +9,9 @@ import {
   isMatchFulfilled,
   isUserSenderInMatch,
 } from "@/components/matches/matches-helper";
-import { groupMatchesByTimeAndLocation } from "@/components/matches/matchesList/helper";
 import { MatchListItemGroups } from "@/components/matches/matchesList/MatchListItemGroups";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import BL_CONFIG from "@/utils/bl-config";
-import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
 
 export const MatchesList: React.FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -22,9 +20,6 @@ export const MatchesList: React.FC = () => {
   const userId = accessToken?.details;
   const { data: matches, error: matchesError } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
-    // The following line errors in WebStorm for some reason, but it's allowed.
-    // WebStorm accepts it wrapped in parentheses, but then prettier doesn't, so
-    // just ignore it.
     apiFetcher<MatchWithDetails[]>,
     { refreshInterval: 5000 },
   );
@@ -36,25 +31,25 @@ export const MatchesList: React.FC = () => {
   if (matches === undefined) {
     return <Skeleton />;
   }
+  const sortedMatches = matches.sort((a, b) => {
+    if (!a.meetingInfo.date) {
+      return b.meetingInfo.date ? 1 : 0;
+    } else if (!b.meetingInfo.date) {
+      return -1;
+    }
 
-  const standMatches = matches
-    .filter((match) => match._variant === MatchVariant.StandMatch)
-    .map((standMatch) => standMatch as StandMatchWithDetails)
-    .sort((a, b) =>
-      isMatchFulfilled(a, false) ? 1 : isMatchFulfilled(b, false) ? -1 : 0,
-    );
-  const userMatches = matches
-    .filter((match) => match._variant === MatchVariant.UserMatch)
-    .map((userMatch) => userMatch as UserMatchWithDetails)
-    .sort((a, b) =>
-      isMatchFulfilled(a, isUserSenderInMatch(a, userId))
-        ? 1
-        : isMatchFulfilled(b, isUserSenderInMatch(b, userId))
-          ? -1
-          : 0,
-    );
-  const standMatchesByTime = groupMatchesByTimeAndLocation(standMatches);
-  const userMatchesByTime = groupMatchesByTimeAndLocation(userMatches);
+    if (a.meetingInfo.date > b.meetingInfo.date) return 1;
+    if (a.meetingInfo.date < b.meetingInfo.date) return -1;
+
+    return 0;
+  });
+
+  const unfulfilledMatches = sortedMatches.filter(
+    (match) => !isMatchFulfilled(match, isUserSenderInMatch(match, userId)),
+  );
+  const fulfilledMatches = sortedMatches.filter((match) =>
+    isMatchFulfilled(match, isUserSenderInMatch(match, userId)),
+  );
 
   if (matches.length === 0) {
     return <Alert severity="info">Du har ingen overleveringer :)</Alert>;
@@ -75,19 +70,15 @@ export const MatchesList: React.FC = () => {
         }
       />
 
-      {userMatches.length > 0 && (
-        <MatchListItemGroups
-          groups={userMatchesByTime}
-          userId={userId!}
-          heading="Bytte med elever"
-        />
+      {unfulfilledMatches.length > 0 && (
+        <MatchListItemGroups matches={unfulfilledMatches} userId={userId} />
       )}
 
-      {standMatches.length > 0 && (
+      {fulfilledMatches.length > 0 && (
         <MatchListItemGroups
-          groups={standMatchesByTime}
-          userId={userId!}
-          heading="Stand"
+          matches={fulfilledMatches}
+          userId={userId}
+          heading="Fullførte overleveringer"
         />
       )}
     </>

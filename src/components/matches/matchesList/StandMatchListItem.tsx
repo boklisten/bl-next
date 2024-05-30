@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import {
@@ -6,9 +6,13 @@ import {
   isMatchBegun,
   isMatchFulfilled,
 } from "@/components/matches/matches-helper";
-import { formatActionsString } from "@/components/matches/matchesList/helper";
+import {
+  formatActionsString,
+  StandMatchTitle,
+} from "@/components/matches/matchesList/helper";
 import MatchListItemBox from "@/components/matches/matchesList/MatchListItemBox";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import MeetingInfo from "@/components/matches/MeetingInfo";
 import { StandMatchWithDetails } from "@/utils/types";
 
 const StandMatchListItem: React.FC<{
@@ -25,6 +29,9 @@ const StandMatchListItem: React.FC<{
   const isFulfilled = isMatchFulfilled(match, false);
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
+      <Typography variant="cardHeader" component="h3">
+        <StandMatchTitle match={match} />
+      </Typography>
       {isBegun && (
         <>
           {hasHandoffItems && (
@@ -66,6 +73,7 @@ const StandMatchListItem: React.FC<{
           </Box>
         </>
       )}
+      {!isFulfilled && <MeetingInfo match={match} />}
     </MatchListItemBox>
   );
 };

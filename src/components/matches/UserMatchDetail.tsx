@@ -7,6 +7,7 @@ import {
   ItemStatus,
   MatchHeader,
 } from "@/components/matches/matches-helper";
+import { UserMatchTitle } from "@/components/matches/matchesList/helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import MeetingInfo from "@/components/matches/MeetingInfo";
@@ -48,6 +49,10 @@ const UserMatchDetail = ({
 
   return (
     <>
+      <Typography variant="h1">
+        <UserMatchTitle match={match} isSender={isSender} />
+      </Typography>
+
       {isFulfilled && (
         <Alert sx={{ marginTop: "1rem", marginBottom: "1rem" }}>
           Du har {isSender ? "levert" : "mottatt"} alle bøkene for denne
@@ -83,8 +88,8 @@ const UserMatchDetail = ({
         </Typography>
       </Box>
       <MatchHeader>Du skal møte</MatchHeader>
-      <OtherPersonContact match={match} currentUserId={currentUserId} />
       <MeetingInfo match={match} />
+      <OtherPersonContact match={match} currentUserId={currentUserId} />
 
       {!isSender && !isFulfilled && (
         <>

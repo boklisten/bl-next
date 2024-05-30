@@ -1,4 +1,3 @@
-import { KeyboardDoubleArrowRight } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
@@ -8,12 +7,14 @@ import {
   isMatchFulfilled,
   isUserSenderInMatch,
 } from "@/components/matches/matches-helper";
-import { formatActionsString } from "@/components/matches/matchesList/helper";
+import {
+  formatActionsString,
+  UserMatchTitle,
+} from "@/components/matches/matchesList/helper";
 import MatchListItemBox from "@/components/matches/matchesList/MatchListItemBox";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
+import MeetingInfo from "@/components/matches/MeetingInfo";
 import { UserMatchWithDetails } from "@/utils/types";
-
-const me = <span style={{ color: "#757575", fontWeight: 400 }}>Meg</span>;
 
 const UserMatchListItem: React.FC<{
   match: UserMatchWithDetails;
@@ -27,26 +28,11 @@ const UserMatchListItem: React.FC<{
     match,
     isSender,
   );
-  const HeaderLevel = "h4";
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
-      {isSender ? (
-        <Typography variant="cardHeader" component={HeaderLevel}>
-          {me}{" "}
-          <KeyboardDoubleArrowRight
-            sx={{ verticalAlign: "text-bottom", fontSize: "1.3rem" }}
-          />{" "}
-          {match.receiverDetails.name}
-        </Typography>
-      ) : (
-        <Typography variant="cardHeader" component={HeaderLevel}>
-          {match.senderDetails.name}{" "}
-          <KeyboardDoubleArrowRight
-            sx={{ verticalAlign: "text-bottom", fontSize: "1.3rem" }}
-          />{" "}
-          {me}
-        </Typography>
-      )}
+      <Typography variant="cardHeader" component="h3">
+        <UserMatchTitle match={match} isSender={isSender} />
+      </Typography>
 
       {isBegun && (
         <>
@@ -71,6 +57,7 @@ const UserMatchListItem: React.FC<{
           </Box>
         </>
       )}
+      {!isFulfilled && <MeetingInfo match={match} />}
     </MatchListItemBox>
   );
 };
