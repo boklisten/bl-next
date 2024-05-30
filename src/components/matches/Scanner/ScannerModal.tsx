@@ -1,7 +1,6 @@
 import { Box, Button, Container, Modal } from "@mui/material";
 import { Scanner } from "@yudiel/react-qr-scanner";
-import { BarcodeFormat, DecodeHintType } from "@zxing/library";
-import React, { useCallback } from "react";
+import React from "react";
 
 const ScannerModal = ({
   open,
@@ -13,8 +12,6 @@ const ScannerModal = ({
   // eslint-disable-next-line no-unused-vars
   handleSubmit: (scannedText: string) => Promise<boolean>;
 }) => {
-  const handleScan = useCallback(handleSubmit, [handleSubmit]);
-
   return (
     <Modal open={open}>
       <Container
@@ -36,27 +33,13 @@ const ScannerModal = ({
         </Button>
         <Box sx={{ position: "absolute", width: "100%" }}>
           <Scanner
-            options={{
-              delayBetweenScanAttempts: 100,
-              delayBetweenScanSuccess: 100,
-              constraints: {
-                facingMode: "environment",
-              },
-              hints: new Map<DecodeHintType, unknown>([
-                [
-                  DecodeHintType.POSSIBLE_FORMATS,
-                  [
-                    BarcodeFormat.QR_CODE,
-                    BarcodeFormat.EAN_8,
-                    BarcodeFormat.EAN_13,
-                  ],
-                ],
-                [DecodeHintType.TRY_HARDER, true],
-              ]),
-            }}
-            onResult={(text) => {
-              navigator.vibrate(100);
-              handleScan(text);
+            constraints={{ facingMode: "environment" }}
+            formats={["qr_code", "ean_8", "ean_13"]}
+            components={{ torch: true }}
+            onScan={(detectedCodes) => {
+              for (const code of detectedCodes) {
+                handleSubmit(code.rawValue);
+              }
             }}
           />
         </Box>
