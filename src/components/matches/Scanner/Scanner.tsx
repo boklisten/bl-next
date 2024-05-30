@@ -77,6 +77,7 @@ const Scanner = ({ forceUpdate }: { forceUpdate: () => void }) => {
         "transfer-item",
         JSON.stringify({ blid: scannedText }),
       );
+      navigator.vibrate(100);
       const feedback = response.data?.data?.[0]?.feedback;
       displayFeedback(
         feedback ?? "Boken har blitt registrert!",
