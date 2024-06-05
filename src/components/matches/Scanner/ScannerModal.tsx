@@ -12,6 +12,7 @@ const ScannerModal = ({
   // eslint-disable-next-line no-unused-vars
   handleSubmit: (scannedText: string) => Promise<boolean>;
 }) => {
+  console.log("scannermodal");
   return (
     <Modal open={open}>
       <Container
@@ -34,7 +35,7 @@ const ScannerModal = ({
         <Box sx={{ position: "absolute", width: "100%" }}>
           <Scanner
             constraints={{ facingMode: "environment" }}
-            formats={["qr_code", "ean_8", "ean_13"]}
+            formats={["qr_code", "code_128", "ean_8", "ean_13"]}
             components={{ torch: true }}
             onScan={(detectedCodes) => {
               for (const code of detectedCodes) {
