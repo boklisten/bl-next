@@ -1,21 +1,17 @@
-import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
-import ContactInfo from "@/components/info/ContactInfo";
+import { UserMatchWithDetails } from "@/utils/types";
 
 const OtherPersonContact = ({
   match,
   currentUserId,
 }: {
-  match: MatchWithDetails;
+  match: UserMatchWithDetails;
   currentUserId: string;
 }) => {
-  if (match._variant === MatchVariant.StandMatch) {
-    return <ContactInfo />;
-  }
   const otherPerson =
     match.receiver === currentUserId
       ? match.senderDetails

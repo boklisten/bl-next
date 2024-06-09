@@ -54,7 +54,7 @@ const ScannerTutorial = () => {
               }}
             >
               <Typography sx={{ mb: ".4rem" }}>
-                1. Scan eller skriv inn en boks unike ID, som ser slik ut:
+                1. Scan eller skriv inn en bok sin unike ID, som ser slik ut:
               </Typography>
               <Image
                 style={{ borderRadius: "2%" }}

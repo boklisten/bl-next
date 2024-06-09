@@ -31,27 +31,29 @@ const MatchItemTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {itemStatuses.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.title}</TableCell>
-              <Tooltip
-                title={
-                  (item.fulfilled
-                    ? "Denne boken er registrert som "
-                    : "Denne boken har ikke blitt registrert som ") +
-                  (isSender ? "levert" : "mottatt")
-                }
-              >
-                <TableCell sx={{ textAlign: "center" }}>
-                  {item.fulfilled ? (
-                    <CheckBoxIcon sx={{ color: "green" }} />
-                  ) : (
-                    <ErrorIcon sx={{ color: "orange" }} />
-                  )}
-                </TableCell>
-              </Tooltip>
-            </TableRow>
-          ))}
+          {itemStatuses
+            .sort((a, b) => Number(a.fulfilled) - Number(b.fulfilled))
+            .map((item) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.title}</TableCell>
+                <Tooltip
+                  title={
+                    (item.fulfilled
+                      ? "Denne boken er registrert som "
+                      : "Denne boken har ikke blitt registrert som ") +
+                    (isSender ? "levert" : "mottatt")
+                  }
+                >
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item.fulfilled ? (
+                      <CheckBoxIcon sx={{ color: "green" }} />
+                    ) : (
+                      <ErrorIcon sx={{ color: "orange" }} />
+                    )}
+                  </TableCell>
+                </Tooltip>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

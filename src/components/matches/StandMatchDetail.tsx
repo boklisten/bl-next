@@ -11,16 +11,9 @@ import { StandMatchTitle } from "@/components/matches/matchesList/helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import MeetingInfo from "@/components/matches/MeetingInfo";
-import OtherPersonContact from "@/components/matches/OtherPersonContact";
 import { StandMatchWithDetails } from "@/utils/types";
 
-const StandMatchDetail = ({
-  match,
-  currentUserId,
-}: {
-  match: StandMatchWithDetails;
-  currentUserId: string;
-}) => {
+const StandMatchDetail = ({ match }: { match: StandMatchWithDetails }) => {
   const { fulfilledHandoffItems, fulfilledPickupItems } =
     calculateFulfilledStandMatchItems(match);
   const isFulfilled =
@@ -106,9 +99,6 @@ const StandMatchDetail = ({
 
       <MatchHeader>Du skal på stand:</MatchHeader>
       <MeetingInfo match={match} />
-
-      <MatchHeader>Kontaktinformasjon</MatchHeader>
-      <OtherPersonContact match={match} currentUserId={currentUserId} />
     </>
   );
 };

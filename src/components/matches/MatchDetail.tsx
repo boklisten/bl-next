@@ -61,7 +61,7 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
         </DynamicLink>
 
         {match._variant === MatchVariant.StandMatch && (
-          <StandMatchDetail match={match} currentUserId={userId} />
+          <StandMatchDetail match={match} />
         )}
         {match._variant === MatchVariant.UserMatch && (
           <UserMatchDetail match={match} currentUserId={userId} />
