@@ -118,7 +118,7 @@ const ScannerModal = ({
           flexDirection: "column",
           flexBasis: "30rem",
           maxWidth: "50rem",
-          maxHeight: "100vh",
+          maxHeight: "calc(var(--vh, 1vh) * 100)",
           paddingBottom: "1rem",
           borderRadius: 0,
           overflowY: "hidden",
