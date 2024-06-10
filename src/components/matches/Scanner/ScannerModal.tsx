@@ -162,15 +162,7 @@ const ScannerModal = ({
             mt: "1rem",
           }}
         >
-          <MatchItemTable
-            itemStatuses={[
-              ...itemStatuses,
-              ...itemStatuses,
-              ...itemStatuses,
-              ...itemStatuses,
-            ]}
-            isSender={false}
-          />
+          <MatchItemTable itemStatuses={itemStatuses} isSender={false} />
         </Box>
         <Stack direction={"row"} gap={1} mt={"1rem"}>
           <Button
