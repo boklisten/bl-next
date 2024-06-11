@@ -1,4 +1,13 @@
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import {
+  Alert,
+  AlertColor,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Snackbar,
+} from "@mui/material";
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 const ScannerFeedback = ({
@@ -16,7 +25,7 @@ const ScannerFeedback = ({
     _event?: React.SyntheticEvent | Event,
     reason?: string,
   ) => {
-    if (reason === "clickaway") {
+    if (reason === "clickaway" || severity === "info") {
       return;
     }
 
@@ -24,17 +33,30 @@ const ScannerFeedback = ({
   };
 
   return (
-    <Snackbar
-      open={open}
-      onClose={autoClose}
-      autoHideDuration={6000}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "center",
-      }}
-    >
-      <Alert severity={severity}>{feedback}</Alert>
-    </Snackbar>
+    <>
+      <Snackbar
+        open={open && severity !== "info"}
+        onClose={autoClose}
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Alert severity={severity}>
+          <Typography variant={"subtitle1"}>{feedback}</Typography>
+        </Alert>
+      </Snackbar>
+      <Dialog open={severity === "info" && open}>
+        <DialogContent>
+          <Typography variant={"h1"}>Viktig informasjon</Typography>
+          {feedback}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

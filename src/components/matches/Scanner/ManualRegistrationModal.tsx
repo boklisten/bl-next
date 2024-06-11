@@ -1,11 +1,12 @@
-import { LoadingButton } from "@mui/lab";
+import { Close, InputRounded } from "@mui/icons-material";
 import {
-  Box,
+  Alert,
   Button,
-  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
   InputLabel,
-  Modal,
-  Paper,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -19,61 +20,52 @@ const ManualRegistrationModal = ({
   open: boolean;
   handleClose: () => void;
   // eslint-disable-next-line no-unused-vars
-  handleSubmit: (scannedText: string) => Promise<boolean>;
+  handleSubmit: (scannedText: string) => void;
 }) => {
   const [manualInput, setManualInput] = useState("");
-  const [waiting, setWaiting] = useState(false);
   return (
-    <Modal open={open}>
-      <Container
-        component={Paper}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          marginTop: "4rem",
-        }}
-      >
-        <Typography variant="h4">Manuell registrering</Typography>
-        <InputLabel sx={{ mt: "1rem", mb: ".4rem" }}>
-          Skriv inn bokas unike ID
-        </InputLabel>
-        <TextField
-          value={manualInput}
-          label="12345678 / a1b2c3d4e5f6"
-          sx={{ marginBottom: "1rem" }}
-          onChange={(event) => setManualInput(event.target.value)}
-        />
-        <Box sx={{ marginBottom: "1rem" }}>
-          <Button
-            sx={{ marginRight: "1rem" }}
-            color={"error"}
-            variant={"contained"}
-            onClick={() => {
-              setManualInput("");
-              handleClose();
-            }}
-          >
-            Lukk
-          </Button>
-          <LoadingButton
-            loading={waiting}
-            variant={"contained"}
-            onClick={async () => {
-              setWaiting(true);
-              const success = await handleSubmit(manualInput);
-              setWaiting(false);
-              if (success) {
-                setManualInput("");
-              }
-            }}
-          >
-            Bekreft
-          </LoadingButton>
-        </Box>
-      </Container>
-    </Modal>
+    <Dialog open={open}>
+      <DialogContent>
+        <Stack>
+          <Typography variant="h4">Manuell registrering</Typography>
+          <Alert severity="info" sx={{ mt: 1 }}>
+            Skal kun brukes dersom bokas unike ID ikke lar seg skanne
+          </Alert>
+          <InputLabel sx={{ mt: "1rem", mb: ".4rem" }}>
+            Skriv inn bokas unike ID
+          </InputLabel>
+          <TextField
+            value={manualInput}
+            label="8 siffer eller 12 bokstaver"
+            sx={{ marginBottom: "1rem" }}
+            onChange={(event) => setManualInput(event.target.value)}
+          />
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          startIcon={<InputRounded />}
+          color={"success"}
+          variant={"outlined"}
+          onClick={() => {
+            handleSubmit(manualInput);
+          }}
+        >
+          Bekreft
+        </Button>
+        <Button
+          color={"info"}
+          variant="contained"
+          startIcon={<Close />}
+          onClick={() => {
+            setManualInput("");
+            handleClose();
+          }}
+        >
+          Lukk
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

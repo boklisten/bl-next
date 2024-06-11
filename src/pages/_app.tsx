@@ -22,6 +22,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import "@/globals.css";
 
 class OverriddenAdapter extends DateAdapter {
   // Get years in descending order
@@ -54,6 +55,19 @@ export default function MyApp(props: AppProps) {
       router.replace(router.pathname, undefined, { shallow: true });
     }
   }, [router]);
+
+  // Dynamic height variable to fix stupid mobile browsers
+  useEffect(() => {
+    function setDynamicHeight() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    }
+    setDynamicHeight();
+    window.addEventListener("resize", setDynamicHeight);
+    return () => {
+      window.removeEventListener("resize", setDynamicHeight);
+    };
+  }, []);
 
   return (
     <>

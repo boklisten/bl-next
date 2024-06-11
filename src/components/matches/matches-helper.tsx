@@ -38,11 +38,8 @@ export function calculateFulfilledUserMatchCustomerItems(
   isSender: boolean,
 ): string[] {
   return match.expectedItems.filter((item) =>
-    (isSender
-      ? match.deliveredCustomerItems
-      : match.receivedCustomerItems
-    ).some(
-      (customerItem) => match.customerItemToItemMap[customerItem] === item,
+    (isSender ? match.deliveredBlIds : match.receivedBlIds).some(
+      (blId) => match.blIdToItemMap[blId] === item,
     ),
   );
 }

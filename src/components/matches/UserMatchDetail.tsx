@@ -1,6 +1,8 @@
-import { Alert, Box, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import { Alert, Box, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
 
+import CountdownToRedirect from "@/components/CountdownToRedirect";
 import {
   calculateFulfilledUserMatchCustomerItems,
   calculateItemStatuses,
@@ -12,7 +14,8 @@ import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import MeetingInfo from "@/components/matches/MeetingInfo";
 import OtherPersonContact from "@/components/matches/OtherPersonContact";
-import Scanner from "@/components/matches/Scanner/Scanner";
+import ScannerModal from "@/components/matches/Scanner/ScannerModal";
+import ScannerTutorial from "@/components/matches/Scanner/ScannerTutorial";
 import { UserMatchWithDetails } from "@/utils/types";
 
 const UserMatchDetail = ({
@@ -22,8 +25,9 @@ const UserMatchDetail = ({
   match: UserMatchWithDetails;
   currentUserId: string;
 }) => {
-  const [, updateState] = useState({});
-  const forceUpdate = useCallback(() => updateState({}), []);
+  const [scanModalOpen, setScanModalOpen] = useState(false);
+  const [redirectCountdownStarted, setRedirectCountdownStarted] =
+    useState(false);
   const isSender = match.sender === currentUserId;
   const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
     match,
@@ -54,10 +58,15 @@ const UserMatchDetail = ({
       </Typography>
 
       {isFulfilled && (
-        <Alert sx={{ marginTop: "1rem", marginBottom: "1rem" }}>
-          Du har {isSender ? "levert" : "mottatt"} alle bøkene for denne
-          overleveringen.
-        </Alert>
+        <Box my={"1rem"}>
+          <Alert>
+            Du har {isSender ? "levert" : "mottatt"} alle bøkene for denne
+            overleveringen.
+          </Alert>
+          {redirectCountdownStarted && (
+            <CountdownToRedirect path={"/matches"} seconds={5} />
+          )}
+        </Box>
       )}
       {fulfilledItems.length !== otherPersonFulfilledItems.length &&
         isSender && (
@@ -79,29 +88,62 @@ const UserMatchDetail = ({
         }
       />
 
-      <Box>
-        <Typography variant="h2">Hvordan fungerer det?</Typography>
-        <Typography>
-          Du skal møte en annen elev og utveksle bøker. Det er viktig at den som
-          mottar bøker scanner hver bok, hvis ikke blir ikke bøkene registrert
-          som levert, og avsender kan få faktura.
-        </Typography>
-      </Box>
-      <MatchHeader>Du skal møte</MatchHeader>
-      <MeetingInfo match={match} />
-      <OtherPersonContact match={match} currentUserId={currentUserId} />
+      {!isFulfilled && (
+        <>
+          <Box>
+            <Typography variant="h2">Hvordan fungerer det?</Typography>
+            <Typography>
+              Du skal møte en annen elev og utveksle bøker. Det er viktig at den
+              som mottar bøker scanner hver bok, hvis ikke blir ikke bøkene
+              registrert som levert, og avsender kan få faktura.
+            </Typography>
+          </Box>
+          <MatchHeader>Du skal møte</MatchHeader>
+          <MeetingInfo match={match} />
+          <OtherPersonContact match={match} currentUserId={currentUserId} />
+        </>
+      )}
 
       {!isSender && !isFulfilled && (
         <>
           <MatchHeader>Når du skal motta bøkene</MatchHeader>
-          <Scanner forceUpdate={forceUpdate} />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <ScannerTutorial />
+            <Button
+              sx={{ background: "green" }}
+              startIcon={<QrCodeScannerIcon />}
+              variant={"contained"}
+              onClick={() => setScanModalOpen(true)}
+            >
+              Scan bøker
+            </Button>
+          </Box>
         </>
       )}
 
-      <MatchHeader>
-        Du skal {isSender ? "levere" : "motta"} disse bøkene
-      </MatchHeader>
+      {!isFulfilled && (
+        <MatchHeader>
+          Du skal {isSender ? "levere" : "motta"} disse bøkene
+        </MatchHeader>
+      )}
       <MatchItemTable itemStatuses={itemStatuses} isSender={isSender} />
+
+      <ScannerModal
+        open={scanModalOpen}
+        handleClose={() => {
+          setScanModalOpen(false);
+          setRedirectCountdownStarted(isFulfilled);
+        }}
+        itemStatuses={itemStatuses}
+        expectedItems={match.expectedItems}
+        fulfilledItems={fulfilledItems}
+      />
     </>
   );
 };
