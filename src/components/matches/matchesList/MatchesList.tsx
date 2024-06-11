@@ -52,7 +52,16 @@ export const MatchesList: React.FC = () => {
   );
 
   if (matches.length === 0) {
-    return <Alert severity="info">Du har ingen overleveringer :)</Alert>;
+    return (
+      <Alert severity="info">
+        Du har ingen overleveringer :)
+        <p>
+          Har du fått melding om overleveringer? Sjekk om du er logget inn med
+          riktig konto.
+        </p>
+        <p>Ta kontakt med info@boklisten.no om du har spørsmål.</p>
+      </Alert>
+    );
   }
 
   const numberFulfilledMatches = matches.filter((element) =>
