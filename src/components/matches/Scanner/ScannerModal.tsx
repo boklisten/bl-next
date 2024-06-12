@@ -36,12 +36,14 @@ type Feedback = {
 const ScannerModal = ({
   open,
   handleClose,
+  handleItemTransferred,
   itemStatuses,
   expectedItems,
   fulfilledItems,
 }: {
   open: boolean;
   handleClose: () => void;
+  handleItemTransferred?: (() => void) | undefined;
   itemStatuses: ItemStatus[];
   expectedItems: string[];
   fulfilledItems: string[];
@@ -91,6 +93,7 @@ const ScannerModal = ({
         severity: feedback ? "info" : "success",
         visible: true,
       });
+      handleItemTransferred?.();
     } catch (error) {
       setFeedback({
         text: String(error),
@@ -136,9 +139,15 @@ const ScannerModal = ({
             constraints={{ facingMode: "environment" }}
             formats={["qr_code", "code_128", "ean_8", "ean_13"]}
             components={{ torch: true }}
-            onScan={(detectedCodes) => {
+            onScan={async (detectedCodes) => {
               for (const code of detectedCodes) {
-                handleRegistration(code.rawValue);
+                await handleRegistration(code.rawValue).catch((error) =>
+                  console.error("Failed to handle scan", error),
+                );
+                // Arbitrary delay to somewhat avoid races the backend isn't smart enough to handle
+                await new Promise((resolve) => {
+                  window.setTimeout(resolve, 250);
+                });
               }
             }}
           />
