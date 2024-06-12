@@ -17,7 +17,11 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   );
   const userId = accessToken?.details;
 
-  const { data: matches, error: matchesError } = useSWR(
+  const {
+    data: matches,
+    error: matchesError,
+    mutate: updateMatches,
+  } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
     apiFetcher<MatchWithDetails[]>,
     { refreshInterval: 5000 },
@@ -64,7 +68,11 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
           <StandMatchDetail match={match} />
         )}
         {match._variant === MatchVariant.UserMatch && (
-          <UserMatchDetail match={match} currentUserId={userId} />
+          <UserMatchDetail
+            match={match}
+            currentUserId={userId}
+            handleItemTransferred={() => updateMatches()}
+          />
         )}
       </Container>
     </Card>

@@ -21,9 +21,11 @@ import { UserMatchWithDetails } from "@/utils/types";
 const UserMatchDetail = ({
   match,
   currentUserId,
+  handleItemTransferred,
 }: {
   match: UserMatchWithDetails;
   currentUserId: string;
+  handleItemTransferred?: (() => void) | undefined;
 }) => {
   const [scanModalOpen, setScanModalOpen] = useState(false);
   const [redirectCountdownStarted, setRedirectCountdownStarted] =
@@ -136,6 +138,7 @@ const UserMatchDetail = ({
 
       <ScannerModal
         open={scanModalOpen}
+        handleItemTransferred={handleItemTransferred}
         handleClose={() => {
           setScanModalOpen(false);
           setRedirectCountdownStarted(isFulfilled);
