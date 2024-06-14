@@ -12,7 +12,7 @@ export interface ItemStatus {
 
 export const MatchHeader = ({ children }: { children: ReactNode }) => {
   return (
-    <Typography variant="h2" sx={{ marginTop: 4, marginBottom: 2 }}>
+    <Typography variant="h2" sx={{ marginTop: "2rem", marginBottom: "1rem" }}>
       {children}
     </Typography>
   );
@@ -33,21 +33,26 @@ export function calculateFulfilledStandMatchItems(
   return { fulfilledHandoffItems, fulfilledPickupItems };
 }
 
-export function calculateFulfilledUserMatchCustomerItems(
+export function calculateFulfilledUserMatchItems(
   match: UserMatchWithDetails,
   isSender: boolean,
 ): string[] {
   return match.expectedItems.filter((item) =>
-    (isSender ? match.deliveredBlIds : match.receivedBlIds).some(
-      (blId) => match.blIdToItemMap[blId] === item,
+    // For a sender, an item must have been both delivered and received to be fulfilled, though
+    // it does not need to be the same blId; someone else can deliver your book, and you can
+    // deliver someone else's, and that's fine.
+    // For the receiver, we only care that the book is received.
+    (isSender
+      ? [match.deliveredBlIds, match.receivedBlIds]
+      : [match.receivedBlIds]
+    ).every((registeredBlIds) =>
+      registeredBlIds.some((blId) => match.blIdToItemMap[blId] === item),
     ),
   );
 }
 
 export function calculateItemStatuses<T extends MatchWithDetails>(
   match: T,
-  // surpressing because it thinks "match" is an actual variable
-  // eslint-disable-next-line no-unused-vars
   expectedItemsSelector: (match: T) => string[],
   fulfilledItems: string[],
 ): ItemStatus[] {
@@ -86,7 +91,7 @@ export function isMatchFulfilled(
     );
   } else {
     return (
-      calculateFulfilledUserMatchCustomerItems(match, isSender).length >=
+      calculateFulfilledUserMatchItems(match, isSender).length >=
       match.expectedItems.length
     );
   }
@@ -108,7 +113,7 @@ export function isMatchBegun(
       calculateFulfilledStandMatchItems(match);
     return fulfilledHandoffItems.length > 0 || fulfilledPickupItems.length > 0;
   } else {
-    return calculateFulfilledUserMatchCustomerItems(match, isSender).length > 0;
+    return calculateFulfilledUserMatchItems(match, isSender).length > 0;
   }
 }
 

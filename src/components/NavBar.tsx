@@ -97,7 +97,7 @@ export default function NavBar() {
           <DropDownMenu />
         </Toolbar>
       </AppBar>
-      <Toolbar sx={{ marginBottom: "10px" }} />
+      <Toolbar sx={{ display: "inline-block" }} />
     </Box>
   );
 }
