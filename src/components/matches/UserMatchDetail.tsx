@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import {
-  calculateFulfilledUserMatchCustomerItems,
+  calculateFulfilledUserMatchItems,
   calculateItemStatuses,
   ItemStatus,
   MatchHeader,
@@ -31,11 +31,8 @@ const UserMatchDetail = ({
   const [redirectCountdownStarted, setRedirectCountdownStarted] =
     useState(false);
   const isSender = match.sender === currentUserId;
-  const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
-    match,
-    isSender,
-  );
-  const otherPersonFulfilledItems = calculateFulfilledUserMatchCustomerItems(
+  const fulfilledItems = calculateFulfilledUserMatchItems(match, isSender);
+  const otherPersonFulfilledItems = calculateFulfilledUserMatchItems(
     match,
     !isSender,
   );
@@ -70,13 +67,6 @@ const UserMatchDetail = ({
           )}
         </Box>
       )}
-      {fulfilledItems.length !== otherPersonFulfilledItems.length &&
-        isSender && (
-          <Alert severity={"warning"} sx={{ marginBottom: "1rem" }}>
-            Noen av de overleverte bøkene har vært på andres vegne. Ta kontakt
-            med stand for mer informasjon.
-          </Alert>
-        )}
 
       <ProgressBar
         percentComplete={
@@ -90,9 +80,21 @@ const UserMatchDetail = ({
         }
       />
 
+      {isSender &&
+        otherPersonFulfilledItems.some(
+          (item) => !fulfilledItems.includes(item),
+        ) && (
+          <Alert severity={"warning"} sx={{ my: "1rem" }}>
+            Noen av bøkene du har levert tilhørte en annen elev. Du er selv
+            ansvarlig for at bøkene du opprinnelig fikk utdelt blir levert. Hvis
+            noen andre leverer bøkene dine, eller vi finner dem når skapene
+            tømmes, vil de bli markert som levert.
+          </Alert>
+        )}
+
       {!isFulfilled && (
         <>
-          <Box>
+          <Box sx={{ my: "1rem" }}>
             <Typography variant="h2">Hvordan fungerer det?</Typography>
             <Typography>
               Du skal møte en annen elev og utveksle bøker. Det er viktig at den

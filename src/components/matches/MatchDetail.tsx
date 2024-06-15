@@ -50,13 +50,8 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   }
 
   return (
-    <Card sx={{ paddingBottom: "2rem" }}>
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+    <Card sx={{ padding: "1rem 0 2rem 0" }}>
+      <Container>
         <DynamicLink
           href={`/${BL_CONFIG.collection.match}`}
           sx={{ marginTop: "1rem", marginBottom: "0.5rem" }}

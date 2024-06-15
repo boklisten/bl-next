@@ -18,8 +18,11 @@ const ProgressBar: React.FC<{
               flexDirection: "row",
               placeItems: "center",
               gap: "0.2rem",
+              marginBottom: "0.5rem",
             }
-          : {}
+          : {
+              marginBottom: "0.5rem",
+            }
       }
     >
       {finished && <CheckCircle color="success" sx={{ height: "1.3rem" }} />}

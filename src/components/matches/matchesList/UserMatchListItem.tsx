@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 import {
-  calculateFulfilledUserMatchCustomerItems,
+  calculateFulfilledUserMatchItems,
   isMatchBegun,
   isMatchFulfilled,
   isUserSenderInMatch,
@@ -24,10 +24,7 @@ const UserMatchListItem: React.FC<{
   const isSender = isUserSenderInMatch(match, currentUserId);
   const isBegun = isMatchBegun(match, isSender);
   const isFulfilled = isMatchFulfilled(match, isSender);
-  const fulfilledItems = calculateFulfilledUserMatchCustomerItems(
-    match,
-    isSender,
-  );
+  const fulfilledItems = calculateFulfilledUserMatchItems(match, isSender);
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
       <Typography variant="cardHeader" component="h3">
