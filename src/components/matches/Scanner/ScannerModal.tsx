@@ -2,6 +2,7 @@ import { Close, InputRounded } from "@mui/icons-material";
 import { AlertColor, Box, Button, Card, Modal, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Scanner } from "@yudiel/react-qr-scanner";
+import { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 
 import { addWithEndpoint } from "@/api/api";
@@ -13,17 +14,12 @@ import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
 import { ScannedTextType, TextType } from "@/utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
-  if (Number.isNaN(Number(scannedText))) {
-    if (scannedText.length === 12) {
-      return TextType.BLID;
-    }
-  } else {
-    if (scannedText.length === 8) {
-      return TextType.BLID;
-    } else if (scannedText.length === 13) {
-      return TextType.ISBN;
-    }
+  if (/^[\dA-Za-z]{12}$|^\d{8}$/.test(scannedText)) {
+    return TextType.BLID;
+  } else if (/^\d{13}$/.test(scannedText)) {
+    return TextType.ISBN;
   }
+
   return TextType.UNKNOWN;
 }
 
@@ -77,7 +73,9 @@ const ScannerModal = ({
     }
 
     try {
-      const response = await addWithEndpoint(
+      const response: AxiosResponse<null | {
+        data: { feedback: string }[];
+      }> = await addWithEndpoint(
         "matches",
         "transfer-item",
         JSON.stringify({ blid: scannedText }),
@@ -87,7 +85,7 @@ const ScannerModal = ({
       } catch {
         // Some browsers or devices may not have implemented the vibrate function
       }
-      const feedback = response.data?.data?.[0]?.feedback;
+      const feedback = response.data?.data[0]?.feedback;
       setFeedback({
         text: feedback ?? "Boken har blitt registrert!",
         severity: feedback ? "info" : "success",
