@@ -99,7 +99,7 @@ const ScannerModal = ({
       }
     } catch (error) {
       setFeedback({
-        text: String(error),
+        text: error instanceof Error ? error.message : String(error),
         severity: "error",
         visible: true,
       });
