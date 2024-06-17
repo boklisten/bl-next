@@ -169,7 +169,7 @@ const ScannerModal = ({
         </Box>
         <Box
           sx={{
-            overflowY: "scroll",
+            overflowY: "auto",
             maxHeight: "30rem",
             mt: "1rem",
           }}
