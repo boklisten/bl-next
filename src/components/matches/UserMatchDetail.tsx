@@ -1,5 +1,5 @@
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
-import { Alert, Box, Button, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import CountdownToRedirect from "@/components/CountdownToRedirect";
@@ -84,11 +84,18 @@ const UserMatchDetail = ({
         otherPersonFulfilledItems.some(
           (item) => !fulfilledItems.includes(item),
         ) && (
-          <Alert severity={"warning"} sx={{ my: "1rem" }}>
-            Noen av bøkene du har levert tilhørte en annen elev. Du er selv
-            ansvarlig for at bøkene du opprinnelig fikk utdelt blir levert. Hvis
-            noen andre leverer bøkene dine, eller vi finner dem når skapene
-            tømmes, vil de bli markert som levert.
+          <Alert severity="warning" sx={{ my: "1rem" }}>
+            <AlertTitle>{`${match.receiverDetails.name} har fått bøker som tilhørte noen andre enn deg`}</AlertTitle>
+            <Typography paragraph>
+              Hvis det var du som ga dem bøkene, betyr det at noen andre har
+              bøker som opprinnelig tilhørte deg. Du er fortsatt ansvarlig for
+              at de blir levert, men hvis noen andre leverer dem for deg vil de
+              bli markert som levert.
+            </Typography>
+            <Typography>
+              Hvis du ikke har gitt bort bøkene du har, betyr det at de har fått
+              bøker av noen andre, og du må levere på stand i stedet.
+            </Typography>
           </Alert>
         )}
 
