@@ -128,7 +128,7 @@ const UserMatchDetail = ({
           >
             <ScannerTutorial />
             <Button
-              sx={{ background: "green" }}
+              color="success"
               startIcon={<QrCodeScannerIcon />}
               variant={"contained"}
               onClick={() => setScanModalOpen(true)}
