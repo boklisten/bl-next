@@ -14,7 +14,7 @@ import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
 import { ScannedTextType, TextType } from "@/utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
-  if (/^[\da-f]{12}$|^\d{8}$/.test(scannedText)) {
+  if (/^[\dA-Za-z]{12}$|^\d{8}$/.test(scannedText)) {
     return TextType.BLID;
   } else if (/^\d{13}$/.test(scannedText)) {
     return TextType.ISBN;
