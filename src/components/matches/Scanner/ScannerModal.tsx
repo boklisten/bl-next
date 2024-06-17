@@ -1,7 +1,7 @@
 import { Close, InputRounded } from "@mui/icons-material";
 import { AlertColor, Box, Button, Card, Modal, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Scanner } from "@yudiel/react-qr-scanner";
+import { Scanner, IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -112,6 +112,29 @@ const ScannerModal = ({
     }
   }, [expectedItems.length, fulfilledItems.length, handleClose, open]);
 
+  const handleCodeDetection = async (
+    detectedCodes: IDetectedBarcode[],
+  ): Promise<void> => {
+    const didFindBlid = detectedCodes.some(
+      (code) => determineScannedTextType(code.rawValue) === TextType.BLID,
+    );
+    const codesToProcess = didFindBlid
+      ? detectedCodes.filter(
+          (code) => determineScannedTextType(code.rawValue) === TextType.BLID,
+        )
+      : detectedCodes;
+
+    for (const code of codesToProcess) {
+      await handleRegistration(code.rawValue).catch((error) =>
+        console.error("Failed to handle scan", error),
+      );
+      // Arbitrary delay to somewhat avoid races the backend isn't smart enough to handle
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 250);
+      });
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -142,17 +165,7 @@ const ScannerModal = ({
             constraints={{ facingMode: "environment" }}
             formats={["qr_code", "code_128", "ean_8", "ean_13"]}
             components={{ torch: true }}
-            onScan={async (detectedCodes) => {
-              for (const code of detectedCodes) {
-                await handleRegistration(code.rawValue).catch((error) =>
-                  console.error("Failed to handle scan", error),
-                );
-                // Arbitrary delay to somewhat avoid races the backend isn't smart enough to handle
-                await new Promise((resolve) => {
-                  window.setTimeout(resolve, 250);
-                });
-              }
-            }}
+            onScan={handleCodeDetection}
           />
         </Box>
         <Box width={"90%"}>
