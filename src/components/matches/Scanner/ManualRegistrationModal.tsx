@@ -24,7 +24,7 @@ const ManualRegistrationModal = ({
 }) => {
   const [manualInput, setManualInput] = useState("");
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogContent>
         <Stack>
           <Typography variant="h4">Manuell registrering</Typography>
@@ -44,6 +44,17 @@ const ManualRegistrationModal = ({
       </DialogContent>
       <DialogActions>
         <Button
+          color={"info"}
+          variant="outlined"
+          startIcon={<Close />}
+          onClick={() => {
+            setManualInput("");
+            handleClose();
+          }}
+        >
+          Lukk
+        </Button>
+        <Button
           startIcon={<InputRounded />}
           color={"success"}
           variant={"outlined"}
@@ -52,17 +63,6 @@ const ManualRegistrationModal = ({
           }}
         >
           Bekreft
-        </Button>
-        <Button
-          color={"info"}
-          variant="contained"
-          startIcon={<Close />}
-          onClick={() => {
-            setManualInput("");
-            handleClose();
-          }}
-        >
-          Lukk
         </Button>
       </DialogActions>
     </Dialog>
