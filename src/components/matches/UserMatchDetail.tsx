@@ -106,8 +106,8 @@ const UserMatchDetail = ({
             <Typography>
               Du skal møte en annen elev og utveksle bøker. Det er viktig at den
               som mottar bøker scanner hver bok, hvis ikke blir ikke bøkene
-              registrert som levert, og avsender kan få faktura. Ikke ta imot
-              ødelagte bøker.
+              registrert som levert, og avsender kan få faktura.
+              {!isSender && " Hvis en bok er ødelagt, ikke ta den imot."}
             </Typography>
           </Box>
           <MatchHeader>Du skal møte</MatchHeader>
