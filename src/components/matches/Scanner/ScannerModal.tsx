@@ -93,7 +93,11 @@ const ScannerModal = ({
         severity: feedback ? "info" : "success",
         visible: true,
       });
-      handleItemTransferred?.();
+      try {
+        handleItemTransferred?.();
+      } catch {
+        // Do not expose potentially rough API errors to user
+      }
     } catch (error) {
       setFeedback({
         text: String(error),
