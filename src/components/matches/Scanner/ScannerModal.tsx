@@ -107,10 +107,21 @@ const ScannerModal = ({
   };
 
   useEffect(() => {
-    if (open && expectedItems.length === fulfilledItems.length) {
+    if (
+      open &&
+      expectedItems.length === fulfilledItems.length &&
+      !(feedback.visible && feedback.severity === "info")
+    ) {
       handleClose();
     }
-  }, [expectedItems.length, fulfilledItems.length, handleClose, open]);
+  }, [
+    expectedItems.length,
+    fulfilledItems.length,
+    handleClose,
+    open,
+    feedback.visible,
+    feedback.severity,
+  ]);
 
   const handleCodeDetection = async (
     detectedCodes: IDetectedBarcode[],
