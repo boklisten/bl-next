@@ -95,8 +95,9 @@ const ScannerModal = ({
       });
       try {
         handleItemTransferred?.();
-      } catch {
+      } catch (error: unknown) {
         // Do not expose potentially rough API errors to user
+        console.error("Got error when handling item transferred", error);
       }
     } catch (error) {
       setFeedback({
