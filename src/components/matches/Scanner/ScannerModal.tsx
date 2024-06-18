@@ -91,7 +91,12 @@ const ScannerModal = ({
         severity: feedback ? "info" : "success",
         visible: true,
       });
-      handleItemTransferred?.();
+      try {
+        handleItemTransferred?.();
+      } catch (error: unknown) {
+        // Do not expose potentially rough API errors to user
+        console.error("Got error when handling item transferred", error);
+      }
     } catch (error) {
       setFeedback({
         text: String(error),
