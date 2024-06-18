@@ -1,6 +1,6 @@
 import { LinearProgress, Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CountdownToRedirect = ({
   path,
@@ -11,6 +11,14 @@ const CountdownToRedirect = ({
 }) => {
   const [progress, setProgress] = useState(100);
   const router = useRouter();
+  const elementRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    elementRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,7 +38,7 @@ const CountdownToRedirect = ({
   }, [path, router, seconds]);
 
   return (
-    <Box sx={{ width: "100%", mt: 1 }}>
+    <Box sx={{ width: "100%", mt: 1 }} ref={elementRef}>
       <Typography variant="h6" sx={{ mb: 2, textAlign: "center" }}>
         Du blir videresendt om {Math.ceil((progress / 100) * seconds)}{" "}
         sekunder...

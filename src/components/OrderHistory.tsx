@@ -118,7 +118,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                         width: "80%",
                         display: "flex",
                         flexDirection: "column",
-                        overflowY: "scroll",
+                        overflowY: "auto",
                       }}
                     >
                       <Typography

@@ -107,6 +107,7 @@ const UserMatchDetail = ({
               Du skal møte en annen elev og utveksle bøker. Det er viktig at den
               som mottar bøker scanner hver bok, hvis ikke blir ikke bøkene
               registrert som levert, og avsender kan få faktura.
+              {!isSender && " Hvis en bok er ødelagt, ikke ta den imot."}
             </Typography>
           </Box>
           <MatchHeader>Du skal møte</MatchHeader>
@@ -127,7 +128,7 @@ const UserMatchDetail = ({
           >
             <ScannerTutorial />
             <Button
-              sx={{ background: "green" }}
+              color="success"
               startIcon={<QrCodeScannerIcon />}
               variant={"contained"}
               onClick={() => setScanModalOpen(true)}
