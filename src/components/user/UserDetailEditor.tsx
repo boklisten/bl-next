@@ -334,7 +334,7 @@ const UserDetailEditor = ({
 
                         setWaitingForPostalCity(true);
                         const response = await fetchData(
-                          "/api/delivery/postal-code",
+                          "/api/postal-code",
                           "POST",
                           event.target.value,
                         );
@@ -356,7 +356,7 @@ const UserDetailEditor = ({
                         }
 
                         const response = await fetchData(
-                          "/api/delivery/postal-code",
+                          "/api/postal-code",
                           "POST",
                           v,
                         );

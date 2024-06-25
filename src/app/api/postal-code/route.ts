@@ -1,9 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-const PostalCode = async (
-  request: NextApiRequest,
-  response: NextApiResponse,
-) => {
+// TODO: use bl-api instead
+export const POST = async (request: Request) => {
   if (!process.env["BRING_API_ID"] || !process.env["BRING_API_KEY"]) {
     throw new Error("Bring API env variables are undefined");
   }
@@ -13,25 +9,27 @@ const PostalCode = async (
     "X-MyBring-API-Key": process.env["BRING_API_KEY"] ?? "",
     "X-Bring-Client-URL": "https://boklisten.no",
   });
+  const body = await request.json();
   let result;
   try {
     const postalLookupResult = await fetch(
-      `https://api.bring.com/pickuppoint/api/postalCode/NO/getCityAndType/${request.body}.json`,
+      `https://api.bring.com/pickuppoint/api/postalCode/NO/getCityAndType/${body}.json`,
       { method: "GET", headers: bringHeaders },
     );
     result = await postalLookupResult.json();
   } catch (error) {
     console.error(error);
-    return response.status(500).json({ postalCity: " ", error });
+    return Response.json({ postalCity: " ", error }, { status: 500 });
   }
 
   if (result["error"] || !result["postalCode"]) {
-    return response.status(200).json({});
+    return Response.json({}, { status: 200 });
   }
 
-  return response.status(200).json({
-    postalCity: result["postalCode"]["city"],
-  });
+  return Response.json(
+    {
+      postalCity: result["postalCode"]["city"],
+    },
+    { status: 200 },
+  );
 };
-
-export default PostalCode;

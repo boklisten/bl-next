@@ -249,7 +249,7 @@ const PostalDelivery = ({
                 // eslint-disable-next-line unicorn/no-useless-undefined
                 setDeliveryInfo(undefined);
                 const response = await fetchData(
-                  "/api/delivery/postal-code",
+                  "/api/postal-code",
                   "POST",
                   event.target.value,
                 );
@@ -277,11 +277,7 @@ const PostalDelivery = ({
                   return illegalPostalCodeMessage;
                 }
 
-                const response = await fetchData(
-                  "/api/delivery/postal-code",
-                  "POST",
-                  v,
-                );
+                const response = await fetchData("/api/postal-code", "POST", v);
 
                 if (!response.postalCity) {
                   return illegalPostalCodeMessage;
