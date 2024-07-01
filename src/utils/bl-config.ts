@@ -1,12 +1,9 @@
-import getConfig from "next/config";
-const { publicRuntimeConfig } = getConfig();
-
 const BL_CONFIG = {
   api: {
-    basePath: publicRuntimeConfig.API_URL,
+    basePath: process.env["API_URL"] ?? "http://localhost:1337/",
   },
   blWeb: {
-    basePath: publicRuntimeConfig.BL_WEB_URL,
+    basePath: process.env["BL_WEB_URL"] ?? "http://localhost:4200/",
   },
   token: {
     accessToken: "bl-access-token",

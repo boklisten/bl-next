@@ -1,3 +1,4 @@
+"use client";
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { ArrowBack } from "@mui/icons-material";
 import { Alert, Button, Card, Container, Skeleton } from "@mui/material";

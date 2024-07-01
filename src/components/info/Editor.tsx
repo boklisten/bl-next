@@ -1,3 +1,4 @@
+"use client";
 import { Button, Container } from "@mui/material";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";

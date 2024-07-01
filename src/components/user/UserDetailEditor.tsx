@@ -1,3 +1,4 @@
+"use client";
 import { UserDetail } from "@boklisten/bl-model";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
@@ -90,9 +91,7 @@ const UserDetailEditor = ({
   const [postalCity, setPostalCity] = useState(userDetails?.postCity ?? "");
   const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
 
-  // eslint-disable-next-line unicorn/no-null
   const [birthday, setBirthday] = useState<Moment | null>(
-    // eslint-disable-next-line unicorn/no-null
     userDetails?.dob ? moment(userDetails.dob) : null,
   );
 
@@ -555,7 +554,7 @@ const UserDetailEditor = ({
           {isSignUp && (
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <DynamicLink href={"/auth/login"} testID={"login-link"}>
+                <DynamicLink href={"/auth/login"}>
                   Har du allerede en konto? Logg inn
                 </DynamicLink>
               </Grid>

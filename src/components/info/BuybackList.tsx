@@ -1,3 +1,4 @@
+"use client";
 import {
   Alert,
   Paper,
@@ -18,9 +19,13 @@ import { Item } from "@/utils/types";
 
 export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`;
 
-const BuybackList = () => {
+const BuybackList = ({
+  defaultBuybackItems,
+}: {
+  defaultBuybackItems: Item[];
+}) => {
   const { data, error }: SWRResponse = useSWR(buybackUrl, fetcher);
-  const items = data as Item[];
+  const items = (data ?? defaultBuybackItems) as Item[];
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}

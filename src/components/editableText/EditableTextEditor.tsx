@@ -2,7 +2,6 @@ import "react-quill/dist/quill.snow.css";
 
 import { Box, Button, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 
@@ -24,7 +23,6 @@ export const EditableTextEditor = ({ editableText }: EditorProps) => {
 
   const [readOnly, setReadOnly] = useState(true);
 
-  const router = useRouter();
   useExitInterceptor(!readOnly);
 
   const onEdit = () => {
@@ -32,9 +30,7 @@ export const EditableTextEditor = ({ editableText }: EditorProps) => {
   };
 
   const onEditorSave = async () => {
-    if (!(await router.replace(router.asPath))) {
-      throw new Error("Unable to refresh");
-    }
+    // TODO: implement persistent storage of editable text
   };
 
   const onSave = () => {

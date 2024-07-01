@@ -1,3 +1,4 @@
+"use client";
 import { Branch } from "@boklisten/bl-model";
 import {
   Box,
@@ -7,18 +8,14 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
 
 import { fetcher } from "@/api/requests";
 import { add, get } from "@/api/storage";
-import { setCart, setDeliveryMethod } from "@/redux/cart";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { selectBranch, setSelectedBranch } from "@/redux/selectedBranch";
-import { setSelectedCustomerItemActions } from "@/redux/selectedCustomerItemActions";
-import { setSelectedSubjects } from "@/redux/selectedSubjects";
 import BL_CONFIG from "@/utils/bl-config";
+import { useGlobalState } from "@/utils/useGlobalState";
 
 export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
 
@@ -26,31 +23,26 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const { data }: SWRResponse = useSWR(branchListUrl, fetcher);
   const branches = data as Branch[];
 
-  const selectedBranch = useAppSelector(selectBranch);
-  const dispatch = useAppDispatch();
+  const { selectedBranchId, setSelectedBranchId } = useGlobalState();
 
   const router = useRouter();
+  const pathName = usePathname();
 
   useEffect(() => {
     try {
       const storedBranchId = get("bl-current-branch-id");
-      dispatch(setSelectedBranch(storedBranchId));
+      setSelectedBranchId(storedBranchId);
     } catch {
       // no stored branch
     }
-  }, [dispatch, branches]);
+  }, [branches, setSelectedBranchId]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch(setCart([]));
-    dispatch(setSelectedSubjects([]));
-    dispatch(setSelectedCustomerItemActions([]));
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    dispatch(setDeliveryMethod(undefined));
     const branchId = event.target.value as string;
-    dispatch(setSelectedBranch(branchId));
+    setSelectedBranchId(branchId);
     add("bl-current-branch-id", branchId);
 
-    if (router.pathname.includes("info/branch")) {
+    if (pathName?.includes("info/branch")) {
       router.push(`/info/branch/${branchId}`);
     }
   };
@@ -63,12 +55,12 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
           id="demo-simple-select-label"
           sx={{ color: isNav ? "white" : "inherit" }}
         >
-          {selectedBranch.id ? "Valgt skole" : "Velg skole"}
+          {selectedBranchId ? "Valgt skole" : "Velg skole"}
         </InputLabel>
         <Select
           data-testid="branchSelect"
           sx={{ color: isNav ? "white" : "inherit" }}
-          value={selectedBranch.id}
+          value={selectedBranchId ?? ""}
           label="Valgt skole"
           onChange={handleChange}
         >
