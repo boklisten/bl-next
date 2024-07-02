@@ -22,5 +22,5 @@ export default function AuthLinker() {
       }
     }
   }, [pathname, router, searchParameters]);
-  return <></>;
+  return null;
 }
