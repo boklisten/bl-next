@@ -1,4 +1,4 @@
-import { Branch } from "@boklisten/bl-model";
+import { Branch, OpeningHour } from "@boklisten/bl-model";
 import moment from "moment";
 import { Metadata } from "next";
 
@@ -6,17 +6,23 @@ import { fetcher } from "@/api/requests";
 import LinkableBranchInfo from "@/components/LinkableBranchInfo";
 import BL_CONFIG from "@/utils/bl-config";
 
+type Params = { params: { id: string } };
+
 export const generateStaticParams = async () => {
   const branchesUrl = `${BL_CONFIG.api.basePath}branches?og=id&active=true`;
-  const branches = (await fetcher(branchesUrl)) as Branch[];
-  return branches.map((branch) => ({ branchId: branch.id }));
+  return await fetcher<Branch[]>(branchesUrl);
 };
 
-export const metadata: Metadata = {
-  title: "Skoler og åpningstider | Boklisten.no",
-  description:
-    "Skal du hente eller levere bøker? Finn ut når vi står på stand på din skole.",
-};
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const branchData = await fetcher<Branch>(
+    `${BL_CONFIG.api.basePath}branches/${params.id}`,
+  );
+  return {
+    title: `${branchData?.name ?? "Skoler og åpningstider"} | Boklisten.no`,
+    description:
+      "Skal du hente eller levere bøker? Finn ut når vi står på stand på din skole.",
+  };
+}
 
 async function getBranchData(branchId: string) {
   if (branchId === "select") {
@@ -26,20 +32,23 @@ async function getBranchData(branchId: string) {
   const now = moment().startOf("day").format("DDMMYYYYHHmm");
   const openingHoursUrl = `${BL_CONFIG.api.basePath}openingHours?branch=${branchId}&from=>${now}&og=to&og=from`;
   const [branchData, openingHoursData] = await Promise.all([
-    fetcher(branchUrl),
-    fetcher(openingHoursUrl),
+    fetcher<Branch>(branchUrl),
+    fetcher<OpeningHour[]>(openingHoursUrl),
   ]);
+  console.log(branchData);
 
   return {
-    branch: branchData?.[0] ?? {},
+    branch: branchData,
     openingHours: openingHoursData,
   };
 }
 
-const BranchPage = async ({ params }: { params: { branchId: string } }) => {
-  const { branch, openingHours } = await getBranchData(params.branchId);
+const BranchPage = async ({ params }: Params) => {
+  const { branch, openingHours } = await getBranchData(params.id);
 
-  return <LinkableBranchInfo branch={branch} openingHours={openingHours} />;
+  return (
+    <LinkableBranchInfo branch={branch} openingHours={openingHours ?? []} />
+  );
 };
 
 export default BranchPage;

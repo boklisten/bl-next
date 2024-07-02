@@ -1,3 +1,4 @@
+import { Item } from "@boklisten/bl-model";
 import { Card } from "@mui/material";
 import { Metadata } from "next";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const BuybackPage = async () => {
-  const buybackItems = await fetcher(
+  const buybackItems = await fetcher<Item[]>(
     `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`,
   );
 
@@ -22,7 +23,7 @@ const BuybackPage = async () => {
     <>
       <Card>
         <DynamicNav tabs={infoPageTabs} twoRows />
-        <BuybackList defaultBuybackItems={buybackItems} />
+        <BuybackList defaultBuybackItems={buybackItems ?? []} />
       </Card>
     </>
   );
