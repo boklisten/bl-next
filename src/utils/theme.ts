@@ -1,5 +1,12 @@
 import { red, orange, grey } from "@mui/material/colors";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 /**
  * Create a theme instance.
@@ -26,6 +33,7 @@ const theme = responsiveFontSizes(
       },
     },
     typography: {
+      fontFamily: roboto.style.fontFamily,
       h1: {
         fontSize: "2rem",
         marginTop: "1.6rem",
