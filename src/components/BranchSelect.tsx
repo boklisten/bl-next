@@ -17,7 +17,7 @@ import { add, get } from "@/api/storage";
 import BL_CONFIG from "@/utils/bl-config";
 import { useGlobalState } from "@/utils/useGlobalState";
 
-export const branchListUrl = `${BL_CONFIG.api.basePath}branches?og=name&active=true&sort=name`;
+export const branchListUrl = `${BL_CONFIG.api.basePath}branches?active=true&sort=name`;
 
 const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const { data }: SWRResponse = useSWR(branchListUrl, fetcher);

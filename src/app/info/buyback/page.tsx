@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const BuybackPage = async () => {
   const buybackItems = await fetcher<Item[]>(
-    `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`,
+    `${BL_CONFIG.api.basePath}items?buyback=true&sort=title`,
   );
 
   return (

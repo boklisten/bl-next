@@ -17,7 +17,7 @@ import { fetcher } from "@/api/requests";
 import BL_CONFIG from "@/utils/bl-config";
 import { Item } from "@/utils/types";
 
-export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&og=title&og=info.isbn&sort=title`;
+export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&sort=title`;
 
 const BuybackList = ({
   defaultBuybackItems,

@@ -9,7 +9,7 @@ import BL_CONFIG from "@/utils/bl-config";
 type Params = { params: { id: string } };
 
 export const generateStaticParams = async () => {
-  const branchesUrl = `${BL_CONFIG.api.basePath}branches?og=id&active=true`;
+  const branchesUrl = `${BL_CONFIG.api.basePath}branches?&active=true`;
   return (await fetcher<Branch[]>(branchesUrl)) ?? [];
 };
 
@@ -30,9 +30,9 @@ async function getBranchData(branchId: string) {
   if (branchId === "select") {
     return { branch: null, openingHours: [] };
   }
-  const branchUrl = `${BL_CONFIG.api.basePath}branches/${branchId}?og=name&og=location.address&og=openingHours`;
+  const branchUrl = `${BL_CONFIG.api.basePath}branches/${branchId}`;
   const now = moment().startOf("day").format("DDMMYYYYHHmm");
-  const openingHoursUrl = `${BL_CONFIG.api.basePath}openingHours?branch=${branchId}&from=>${now}&og=to&og=from`;
+  const openingHoursUrl = `${BL_CONFIG.api.basePath}openingHours?branch=${branchId}&from=>${now}`;
   const [branchData, openingHoursData] = await Promise.all([
     fetcher<Branch[]>(branchUrl),
     fetcher<OpeningHour[]>(openingHoursUrl),
