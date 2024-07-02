@@ -10,8 +10,8 @@ export default function AuthLinker() {
   const searchParameters = useSearchParams();
 
   useEffect(() => {
-    const refresh_token = searchParameters?.get("refresh_token");
-    const access_token = searchParameters?.get("access_token");
+    const refresh_token = searchParameters.get("refresh_token");
+    const access_token = searchParameters.get("access_token");
 
     if (refresh_token && access_token) {
       addAccessToken(access_token);

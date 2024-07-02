@@ -42,7 +42,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
     selectBranch(branchId);
     add("bl-current-branch-id", branchId);
 
-    if (pathName?.includes("info/branch")) {
+    if (pathName.includes("info/branch")) {
       router.push(`/info/branch/${branchId}`);
     }
   };

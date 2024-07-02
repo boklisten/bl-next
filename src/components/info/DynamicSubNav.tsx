@@ -69,7 +69,7 @@ export default function DynamicSubNav({ tabs }: DynamicSubNavProps) {
   const selectedHref =
     tabs[
       stringSimilarity.findBestMatch(
-        pathname ?? "",
+        pathname,
         tabs.map((tab) => tab.href),
       ).bestMatchIndex
     ]?.href ?? null;

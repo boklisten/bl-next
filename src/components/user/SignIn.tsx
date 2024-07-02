@@ -35,7 +35,7 @@ export default function SignIn() {
     setApiError("");
     try {
       await login(data.email, data.password);
-      router.push("/" + (searchParams?.get("redirect") ?? ""));
+      router.push("/" + (searchParams.get("redirect") ?? ""));
     } catch (error) {
       setApiError(String(error));
     }
