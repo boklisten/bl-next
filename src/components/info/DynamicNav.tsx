@@ -1,3 +1,4 @@
+"use client";
 import {
   Divider,
   FormControl,
@@ -8,7 +9,7 @@ import {
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { useRouter } from "next/dist/client/router";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import stringSimilarity from "string-similarity";
 
@@ -74,9 +75,9 @@ const DynamicNav = ({
   tabs: LinkTabProps[];
   twoRows?: boolean;
 }) => {
-  const router = useRouter();
+  const pathName = usePathname();
   const activeTabIndex = stringSimilarity.findBestMatch(
-    router.route,
+    pathName as string,
     tabs.map((tab) => tab.href),
   ).bestMatchIndex;
 

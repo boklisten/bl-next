@@ -1,3 +1,4 @@
+"use client";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -7,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
@@ -24,6 +25,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [apiError, setApiError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -33,7 +35,7 @@ export default function SignIn() {
     setApiError("");
     try {
       await login(data.email, data.password);
-      router.push("/" + (router.query?.["redirect"] ?? ""));
+      router.push("/" + (searchParams?.get("redirect") ?? ""));
     } catch (error) {
       setApiError(String(error));
     }
@@ -150,9 +152,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <DynamicLink href={"/auth/forgot"} testID={"forgot-password"}>
-                Glemt passord?
-              </DynamicLink>
+              <DynamicLink href={"/auth/forgot"}>Glemt passord?</DynamicLink>
             </Grid>
             <Grid item>
               <DynamicLink href={"/auth/register"}>

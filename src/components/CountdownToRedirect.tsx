@@ -1,5 +1,5 @@
 import { LinearProgress, Box, Typography } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const CountdownToRedirect = ({

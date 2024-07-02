@@ -1,8 +1,9 @@
+"use client";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { Box } from "@mui/system";
-import { useRouter } from "next/dist/client/router";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactElement } from "react";
 import stringSimilarity from "string-similarity";
 
@@ -63,12 +64,12 @@ const DynamicSubNavInner = ({
 );
 
 export default function DynamicSubNav({ tabs }: DynamicSubNavProps) {
-  const router = useRouter();
+  const pathname = usePathname();
 
   const selectedHref =
     tabs[
       stringSimilarity.findBestMatch(
-        router.route,
+        pathname ?? "",
         tabs.map((tab) => tab.href),
       ).bestMatchIndex
     ]?.href ?? null;
