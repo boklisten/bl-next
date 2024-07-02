@@ -9,11 +9,9 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import useSWR, { SWRResponse } from "swr";
 
 import { fetcher } from "@/api/requests";
-import { add, get } from "@/api/storage";
 import BL_CONFIG from "@/utils/bl-config";
 import { useGlobalState } from "@/utils/useGlobalState";
 
@@ -28,19 +26,9 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const router = useRouter();
   const pathName = usePathname();
 
-  useEffect(() => {
-    try {
-      const storedBranchId = get("bl-current-branch-id");
-      selectBranch(storedBranchId);
-    } catch {
-      // no stored branch
-    }
-  }, [branches, selectBranch]);
-
   const handleChange = (event: SelectChangeEvent) => {
     const branchId = event.target.value as string;
     selectBranch(branchId);
-    add("bl-current-branch-id", branchId);
 
     if (pathName.includes("info/branch")) {
       router.push(`/info/branch/${branchId}`);
