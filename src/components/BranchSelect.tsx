@@ -23,7 +23,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const { data }: SWRResponse = useSWR(branchListUrl, fetcher);
   const branches = data as Branch[];
 
-  const { selectedBranchId, setSelectedBranchId } = useGlobalState();
+  const { selectedBranchId, selectBranch } = useGlobalState();
 
   const router = useRouter();
   const pathName = usePathname();
@@ -31,15 +31,15 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   useEffect(() => {
     try {
       const storedBranchId = get("bl-current-branch-id");
-      setSelectedBranchId(storedBranchId);
+      selectBranch(storedBranchId);
     } catch {
       // no stored branch
     }
-  }, [branches, setSelectedBranchId]);
+  }, [branches, selectBranch]);
 
   const handleChange = (event: SelectChangeEvent) => {
     const branchId = event.target.value as string;
-    setSelectedBranchId(branchId);
+    selectBranch(branchId);
     add("bl-current-branch-id", branchId);
 
     if (pathName?.includes("info/branch")) {
