@@ -16,10 +16,8 @@ export default function AuthLinker() {
     if (refresh_token && access_token) {
       addAccessToken(access_token);
       addRefreshToken(refresh_token);
-      if (pathname) {
-        // Clear search params
-        router.replace(pathname);
-      }
+      // Clear search params
+      router.replace(pathname);
     }
   }, [pathname, router, searchParameters]);
   return null;

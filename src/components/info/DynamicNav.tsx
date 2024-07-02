@@ -77,7 +77,7 @@ const DynamicNav = ({
 }) => {
   const pathName = usePathname();
   const activeTabIndex = stringSimilarity.findBestMatch(
-    pathName as string,
+    pathName,
     tabs.map((tab) => tab.href),
   ).bestMatchIndex;
 
