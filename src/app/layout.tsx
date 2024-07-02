@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import CustomLocalizationProvider from "@/components/LocalizationProvider";
 import NavBar from "@/components/NavBar";
 
-import "@mui/lab";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
