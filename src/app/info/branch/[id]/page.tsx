@@ -13,6 +13,8 @@ export const generateStaticParams = async () => {
   return (await fetcher<Branch[]>(branchesUrl)) ?? [];
 };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const branchData = await fetcher<Branch[]>(
     `${BL_CONFIG.api.basePath}branches/${params.id}`,
