@@ -1,3 +1,4 @@
+"use client";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BookIcon from "@mui/icons-material/Book";
 import EmailIcon from "@mui/icons-material/Email";
@@ -16,7 +17,7 @@ import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
 
 import { isLoggedIn, logout } from "@/api/auth";

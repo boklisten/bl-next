@@ -16,8 +16,7 @@ export const fetchData = async (url: string, method: string, data: unknown) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fetcher = async <T = any>(url: string) => {
+export const fetcher = async <T = unknown>(url: string): Promise<T | null> => {
   try {
     return await axios
       .get<{ data: T }>(url)
@@ -26,6 +25,6 @@ export const fetcher = async <T = any>(url: string) => {
     if (!((error as AxiosError).response?.status === 404)) {
       throw error;
     }
-    return [];
+    return null;
   }
 };

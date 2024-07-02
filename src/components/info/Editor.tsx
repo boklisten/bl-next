@@ -1,3 +1,4 @@
+"use client";
 import { Button, Container } from "@mui/material";
 import { convertFromRaw, convertToRaw, EditorState } from "draft-js";
 import dynamic from "next/dynamic";
@@ -14,7 +15,7 @@ const Editor = dynamic(
 );
 
 const sanitizeRawState = (raw: string) => {
-  return raw.replaceAll("\n", "\\n");
+  return raw.replaceAll("\n", String.raw`\n`);
 };
 
 const getEditorStateFromRaw = (rawState: string) => {

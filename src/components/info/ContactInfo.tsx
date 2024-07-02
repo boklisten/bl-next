@@ -1,3 +1,4 @@
+"use client";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
@@ -15,10 +16,7 @@ const ContactInfo = () => {
         <PhoneIphoneIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Ring oss</Typography>
-          <DynamicLink
-            href={`tel:+${contactInfo.phone}`}
-            testID={"contact-phone"}
-          >
+          <DynamicLink href={`tel:+${contactInfo.phone}`}>
             {contactInfo.phone}
           </DynamicLink>
         </Box>
@@ -28,10 +26,7 @@ const ContactInfo = () => {
         <EmailIcon />
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography variant="body1">Send oss en epost</Typography>
-          <DynamicLink
-            href={`mailto:${contactInfo.email}`}
-            testID={"contact-email"}
-          >
+          <DynamicLink href={`mailto:${contactInfo.email}`}>
             {contactInfo.email}
           </DynamicLink>
         </Box>

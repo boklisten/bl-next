@@ -61,13 +61,13 @@ module.exports = {
           prop: false,
           props: false,
           ref: false,
+          params: false,
         },
       },
     ],
     "unicorn/no-null": "off",
     // .textContent is very different from .innerText, not interchangeable
     "unicorn/prefer-dom-node-text-content": "off",
-
     /** @see https://medium.com/weekly-webtips/how-to-sort-imports-like-a-pro-in-typescript-4ee8afd7258a */
     "import/order": [
       "error",
