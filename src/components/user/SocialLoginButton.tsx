@@ -3,9 +3,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import React, { ReactNode } from "react";
 
-interface socialLoginProps {
+import { apiPath } from "@/api/apiRequest";
+import BL_CONFIG from "@/utils/bl-config";
+
+interface SocialLoginProps {
   label: string;
-  brandName: string;
+  brandName: "facebook" | "google";
   brandIcon: ReactNode;
   brandColor: string;
 }
@@ -15,8 +18,9 @@ const SocialLoginButton = ({
   brandName,
   brandIcon,
   brandColor,
-}: socialLoginProps) => (
+}: SocialLoginProps) => (
   <Button
+    href={apiPath(BL_CONFIG.login[brandName].url)}
     data-testid={`${brandName}-button`}
     fullWidth
     variant="contained"
@@ -26,8 +30,23 @@ const SocialLoginButton = ({
       background: brandColor,
       display: "flex",
       justifyContent: "left",
+      textTransform: "none",
     }}
-    startIcon={brandIcon}
+    startIcon={
+      <Box
+        component="span"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          "& svg": {
+            fontSize: 30,
+          },
+        }}
+      >
+        {brandIcon}
+      </Box>
+    }
     endIcon={<ChevronRightIcon />}
   >
     {label}

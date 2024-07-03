@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";
 import { MatchesList } from "@/components/matches/matchesList/MatchesList";
-import BL_CONFIG from "@/utils/bl-config";
 
 const MatchesPage = () => {
   const [hydrated, setHydrated] = useState(false);
@@ -28,7 +27,7 @@ const MatchesPage = () => {
               <Alert severity="info">
                 Du må logge inn for å se overleveringene dine
               </Alert>
-              <DynamicLink href={`${BL_CONFIG.blWeb.basePath}overleveringer`}>
+              <DynamicLink href={"/auth/login?redirect=matches"}>
                 <Button variant={"contained"} sx={{ mt: "1rem" }}>
                   Logg inn
                 </Button>

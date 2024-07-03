@@ -2,7 +2,24 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import { addAccessToken, addRefreshToken } from "@/api/token";
+import { isLoggedIn } from "@/api/auth";
+import {
+  addAccessToken,
+  addRefreshToken,
+  getAccessToken,
+  getRefreshToken,
+} from "@/api/token";
+import BL_CONFIG from "@/utils/bl-config";
+
+export function attachTokensToHref(href: string) {
+  if (String(href).includes(BL_CONFIG.blWeb.basePath) && isLoggedIn()) {
+    return (
+      href +
+      `?refresh_token=${getRefreshToken()}&access_token=${getAccessToken()}`
+    );
+  }
+  return href;
+}
 
 export default function AuthLinker() {
   const pathname = usePathname();

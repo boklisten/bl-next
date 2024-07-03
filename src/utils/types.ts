@@ -81,3 +81,20 @@ export interface MaybeEmptyEditableText {
   id: string;
   text: string | null;
 }
+
+export type BlError = {
+  httpStatus: number;
+  code: number;
+  msg: string;
+  data: unknown;
+};
+
+export function verifyBlError(blError: unknown): blError is BlError {
+  const m = blError as Record<string, unknown> | null | undefined;
+  return (
+    !!m &&
+    typeof m["httpStatus"] === "number" &&
+    typeof m["code"] === "number" &&
+    typeof m["msg"] === "string"
+  );
+}

@@ -12,7 +12,6 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import isEmail from "validator/lib/isEmail";
 
 import { add } from "@/api/api";
 import DynamicLink from "@/components/DynamicLink";
@@ -104,12 +103,7 @@ const ForgotPage = () => {
                 id="email"
                 label="Epost"
                 autoComplete="email"
-                error={!!errors.email}
-                {...register("email", {
-                  required: "Du må fylle inn epost",
-                  validate: (v) =>
-                    isEmail(v) ? true : "Du må fylle inn en gyldig epost",
-                })}
+                {...register("email")}
               />
               <Button
                 data-testid="forgot-submit"

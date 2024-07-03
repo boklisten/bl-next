@@ -1,7 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse, isAxiosError } from "axios";
 
 import { apiPath, getHeaders } from "@/api/apiRequest";
 import { fetchNewTokens } from "@/api/token";
+import { BlError } from "@/utils/types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const get = async <T = any>(
@@ -34,14 +35,42 @@ export const get = async <T = any>(
     });
 };
 
-export const add = async (collection: string, data: unknown) => {
-  return await axios
-    .post(apiPath(collection), data, {
+export const add = async (
+  collection: string,
+  data: unknown,
+): Promise<AxiosResponse | BlError> => {
+  try {
+    return await axios.post(apiPath(collection), data, {
       headers: getHeaders(),
-    })
-    .catch((error) => {
-      throw new Error(error?.response?.data?.msg ?? "Noe gikk galt!");
     });
+  } catch (error: unknown) {
+    return (
+      (isAxiosError(error) && error.response?.data) ?? {
+        msg: "Noe gikk galt!",
+        httpCode: 500,
+        code: 800,
+      }
+    );
+  }
+};
+
+export const patch = async (
+  collection: string,
+  data: unknown,
+): Promise<AxiosResponse | BlError> => {
+  try {
+    return await axios.patch(apiPath(collection), data, {
+      headers: getHeaders(),
+    });
+  } catch (error: unknown) {
+    return (
+      (isAxiosError(error) && error.response?.data) ?? {
+        msg: "Noe gikk galt!",
+        httpCode: 500,
+        code: 800,
+      }
+    );
+  }
 };
 
 export const put = async <T = unknown>(

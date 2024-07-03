@@ -1,7 +1,7 @@
 import axios from "axios";
 import { decodeToken } from "react-jwt";
 
-import { add, get, remove } from "@/api/storage";
+import { add, get, removeAll } from "@/api/storage";
 import BL_CONFIG from "@/utils/bl-config";
 import { AccessToken } from "@/utils/types";
 
@@ -57,8 +57,7 @@ export const getRefreshToken = (): string => {
 };
 
 export const removeTokens = (): void => {
-  remove(accessTokenName);
-  remove(refreshTokenName);
+  removeAll();
 };
 
 export const getAccessTokenBody = (): AccessToken => {

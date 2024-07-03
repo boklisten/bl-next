@@ -20,16 +20,22 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
 import moment, { Moment } from "moment";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 
+import { apiPath } from "@/api/apiRequest";
 import { fetchData } from "@/api/requests";
+import { getAccessTokenBody } from "@/api/token";
+import { registerUser, updateUserDetails } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
-
-import "@mui/lab";
+import FacebookButton from "@/components/user/FacebookButton";
+import GoogleButton from "@/components/user/GoogleButton";
+import BL_CONFIG from "@/utils/bl-config";
+import { verifyBlError } from "@/utils/types";
 
 type UserEditorFields = {
   email: string;
@@ -39,7 +45,7 @@ type UserEditorFields = {
   phoneNumber: string;
   address: string;
   postalCode: string;
-  birthday: Moment;
+  birthday: Moment | null;
   guardianName: string;
   guardianEmail: string;
   guardianPhoneNumber: string;
@@ -76,8 +82,9 @@ export const extractLastName = (fullName: string): string => {
   return "";
 };
 
-const isUnder18 = (birthday: moment.Moment | null): boolean =>
-  moment().diff(birthday, "years") < 18;
+const isUnder18 = (birthday: moment.Moment | null): boolean => {
+  return birthday !== null && moment().diff(birthday, "years") < 18;
+};
 
 const UserDetailEditor = ({
   isSignUp,
@@ -90,10 +97,8 @@ const UserDetailEditor = ({
   const [showDetails, setShowDetails] = useState(!isSignUp);
   const [postalCity, setPostalCity] = useState(userDetails?.postCity ?? "");
   const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
-
-  const [birthday, setBirthday] = useState<Moment | null>(
-    userDetails?.dob ? moment(userDetails.dob) : null,
-  );
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const defaultValues = {
     email: userDetails.email,
@@ -102,6 +107,7 @@ const UserDetailEditor = ({
     phoneNumber: userDetails.phone,
     address: userDetails.address,
     postalCode: userDetails.postCode,
+    birthday: moment(userDetails.dob),
     guardianName: userDetails.guardian?.name as string,
     guardianEmail: userDetails.guardian?.email as string,
     guardianPhoneNumber: userDetails.guardian?.phone as string,
@@ -110,20 +116,62 @@ const UserDetailEditor = ({
   const {
     register,
     handleSubmit,
-    trigger,
+    control,
+    getValues,
+    setValue,
     setError,
     clearErrors,
     formState: { errors },
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
-  const onSubmit: SubmitHandler<UserEditorFields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
+    if (isSignUp) {
+      const result = await registerUser(data.email, data.password);
+      if (verifyBlError(result)) {
+        if (result.code === 903) {
+          setError("email", {
+            message: "Det finnes allerede en bruker med denne e-postadressen!",
+          });
+          return;
+        }
+        if (result.httpStatus === 500) {
+          setError("email", {
+            message:
+              "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
+          });
+        }
+      }
+    }
+    const result = await updateUserDetails(getAccessTokenBody().details, {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      phone: data.phoneNumber,
+      address: data.address,
+      postCode: data.postalCode,
+      postCity: postalCity,
+      dob: data.birthday?.toDate() ?? new Date(),
+      guardian: {
+        name: data?.guardianName,
+        email: data?.guardianEmail,
+        phone: data?.guardianPhoneNumber,
+      },
+    });
+
+    if (verifyBlError(result)) {
+      setError("email", {
+        message:
+          "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
+      });
+      return;
+    }
+    router.replace("/" + (searchParams.get("redirect") ?? ""));
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -138,7 +186,6 @@ const UserDetailEditor = ({
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           {isSignUp ? "Registrer deg" : "Innstillinger"}
         </Typography>
-        {/*
         {isSignUp && (
           <>
             <FacebookButton label={"Registrer deg med Facebook"} />
@@ -148,7 +195,6 @@ const UserDetailEditor = ({
             </Divider>
           </>
         )}
-          */}
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           {Object.entries(errors).map(([type, message]) => (
             <Alert
@@ -325,26 +371,27 @@ const UserDetailEditor = ({
                     {...register("postalCode", {
                       // Need to have a separate onChange because of autofill not triggering validation
                       onChange: async (event) => {
-                        if (!isPostalCode(event.target.value, "NO")) {
-                          trigger("postalCode");
+                        if (event.target.value.length === 0) {
                           setPostalCity("");
                           return;
                         }
-
                         setWaitingForPostalCity(true);
                         const response = await fetchData(
-                          "/api/postal-code",
+                          apiPath(
+                            BL_CONFIG.collection.delivery,
+                            "/postal-code",
+                          ),
                           "POST",
-                          event.target.value,
+                          { postalCode: event.target.value },
                         );
                         setWaitingForPostalCity(false);
 
-                        if (!response.postalCity) {
+                        if (!response.data?.[0].postalCity) {
                           setPostalCity("");
                           return;
                         }
 
-                        setPostalCity(response.postalCity);
+                        setPostalCity(response.data?.[0].postalCity);
                       },
                       required: "Du må fylle inn postnummer",
                       validate: async (v) => {
@@ -355,12 +402,15 @@ const UserDetailEditor = ({
                         }
 
                         const response = await fetchData(
-                          "/api/postal-code",
+                          apiPath(
+                            BL_CONFIG.collection.delivery,
+                            "/postal-code",
+                          ),
                           "POST",
-                          v,
+                          { postalCode: v },
                         );
 
-                        if (!response.postalCity) {
+                        if (!response.data?.[0].postalCity) {
                           return illegalPostalCodeMessage;
                         }
 
@@ -369,7 +419,11 @@ const UserDetailEditor = ({
                     })}
                   />
                   <Typography
-                    sx={{ position: "absolute", mr: 3 }}
+                    sx={{
+                      position: "absolute",
+                      mr: 3,
+                      pointerEvents: "none",
+                    }}
                     variant="subtitle1"
                     color="gray"
                     data-testid="postal-city-preview"
@@ -385,47 +439,46 @@ const UserDetailEditor = ({
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <DatePicker
-                    label="Fødselsdato"
-                    format="DD/MM/YYYY"
-                    minDate={moment().subtract(100, "years")}
-                    maxDate={moment().subtract(10, "years")}
-                    openTo="year"
-                    views={["year", "month", "day"]}
-                    value={birthday}
-                    onChange={(newValue) => {
-                      setBirthday(newValue);
-
-                      if (!isUnder18(birthday)) {
-                        clearErrors("guardianName");
-                        clearErrors("guardianEmail");
-                        clearErrors("guardianPhoneNumber");
-                      }
-                    }}
-                    onError={(error) =>
-                      error
-                        ? setError("birthday", {
-                            type: "birthday",
-                            message: "Du må fylle inn en lovlig fødselsdag",
-                          })
-                        : clearErrors("birthday")
-                    }
-                    slots={{
-                      textField: (parameters) => (
-                        <TextField
-                          data-testid="birthday-field"
-                          id="birthday"
-                          autoComplete="bday"
-                          required
-                          fullWidth
-                          helperText={parameters?.inputProps?.["placeholder"]}
-                          {...parameters}
+                  <Controller
+                    control={control}
+                    {...register("birthday", {
+                      required: "Du må fylle inn fødselsdato",
+                      valueAsDate: true,
+                      validate: (v) =>
+                        v?.isValid() &&
+                        v.isAfter(moment().subtract(100, "years")) &&
+                        v.isBefore(moment().subtract(10, "years"))
+                          ? true
+                          : "Du må fylle inn en gyldig fødselsdato",
+                    })}
+                    name="birthday"
+                    render={() => {
+                      return (
+                        <DatePicker
+                          sx={{ width: "100%" }}
+                          label="Fødselsdato"
+                          format="DD/MM/YYYY"
+                          minDate={moment().subtract(100, "years")}
+                          maxDate={moment().subtract(10, "years")}
+                          openTo="year"
+                          views={["year", "month", "day"]}
+                          value={getValues("birthday")}
+                          onChange={(newValue) => {
+                            setValue("birthday", newValue, {
+                              shouldValidate: true,
+                            });
+                            if (!isUnder18(newValue)) {
+                              clearErrors("guardianName");
+                              clearErrors("guardianEmail");
+                              clearErrors("guardianPhoneNumber");
+                            }
+                          }}
                         />
-                      ),
+                      );
                     }}
                   />
                 </Grid>
-                {isUnder18(birthday) && (
+                {isUnder18(getValues("birthday") ?? null) && (
                   <>
                     <Grid item xs={12} sm={12} mt={1}>
                       <Typography variant="body1">
@@ -547,7 +600,6 @@ const UserDetailEditor = ({
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={!showDetails || Object.entries(errors).length > 0}
           >
             {isSignUp ? "Registrer deg" : "Lagre"}
           </Button>
