@@ -7,5 +7,5 @@ import BL_CONFIG from "@/utils/bl-config";
 
 export default function LogoutPage() {
   logout();
-  redirect(attachTokensToHref(BL_CONFIG.blWeb.basePath + "auth/logout"));
+  redirect(attachTokensToHref(BL_CONFIG.blWeb.basePath + "logout"));
 }
