@@ -4,6 +4,8 @@ import { apiPath, getHeaders } from "@/api/apiRequest";
 import { fetchNewTokens } from "@/api/token";
 import { BlError } from "@/utils/types";
 
+// TODO before merge: rewrite to properly handle errors (especially accessToken not valid) and abandon Axios
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const get = async <T = any>(
   url: string,

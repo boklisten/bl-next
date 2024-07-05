@@ -1,17 +1,21 @@
-import { Card, CircularProgress, Container, Typography } from "@mui/material";
+import { Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 import Image from "next/image";
-import { Suspense } from "react";
 
-import AuthVerifier from "@/components/AuthVerifier";
+import EmailConfirmer from "@/components/EmailConfirmer";
 
 export const metadata: Metadata = {
-  title: "Logger inn... | Boklisten.no",
-  description: "Du blir nå logget inn. Vennligst vent.",
+  title: "Bekreft e-post | Boklisten.no",
+  description:
+    "Bekreft din e-post-adresse, slik at du får viktig informasjon fra oss.",
 };
 
-export default function TokenPage() {
+export default function TokenPage({
+  params,
+}: {
+  params: { confirmationId: string };
+}) {
   return (
     <Card sx={{ paddingBottom: "2rem" }}>
       <Container component="main" maxWidth="xs">
@@ -29,13 +33,7 @@ export default function TokenPage() {
             height={50}
             alt="logo"
           />
-          <Typography component="h1" variant="h5" sx={{ my: 1 }}>
-            Du blir nå logget inn...
-          </Typography>
-          <CircularProgress />
-          <Suspense>
-            <AuthVerifier />
-          </Suspense>
+          <EmailConfirmer confirmationId={params.confirmationId} />
         </Box>
       </Container>
     </Card>

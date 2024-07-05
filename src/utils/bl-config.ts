@@ -45,9 +45,9 @@ const BL_CONFIG = {
       operation: "agreement",
     },
   },
-  passwordReset: {
-    setNew: {
-      operation: "new",
+  pendingPasswordReset: {
+    confirm: {
+      operation: "confirm",
     },
   },
   emailValidation: {

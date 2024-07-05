@@ -1,6 +1,12 @@
 "use client";
 import { UserDetail } from "@boklisten/bl-model";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  Check,
+  Email,
+  Info,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import {
   Alert,
   Divider,
@@ -27,6 +33,7 @@ import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 
+import { add } from "@/api/api";
 import { apiPath } from "@/api/apiRequest";
 import { fetchData } from "@/api/requests";
 import { getAccessTokenBody } from "@/api/token";
@@ -93,9 +100,13 @@ const UserDetailEditor = ({
   isSignUp?: boolean;
   userDetails?: UserDetail;
 }) => {
+  const [emailConfirmationRequested, setEmailConfirmationRequested] =
+    useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showDetails, setShowDetails] = useState(!isSignUp);
-  const [postalCity, setPostalCity] = useState(userDetails?.postCity ?? "");
+  const [postalCity, setPostalCity] = useState<string | null>(
+    userDetails?.postCity ?? null,
+  );
   const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -107,7 +118,7 @@ const UserDetailEditor = ({
     phoneNumber: userDetails.phone,
     address: userDetails.address,
     postalCode: userDetails.postCode,
-    birthday: moment(userDetails.dob),
+    birthday: userDetails.dob ? moment(userDetails.dob) : null,
     guardianName: userDetails.guardian?.name as string,
     guardianEmail: userDetails.guardian?.email as string,
     guardianPhoneNumber: userDetails.guardian?.phone as string,
@@ -125,6 +136,12 @@ const UserDetailEditor = ({
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
   const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
+    if (postalCity === null) {
+      setError("postalCode", {
+        message: "Du må oppgi et gyldig postnummer!",
+      });
+      return;
+    }
     if (isSignUp) {
       const result = await registerUser(data.email, data.password);
       if (verifyBlError(result)) {
@@ -183,7 +200,7 @@ const UserDetailEditor = ({
           height={50}
           alt="logo"
         />
-        <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+        <Typography component="h1" variant="h5" sx={{ my: 1 }}>
           {isSignUp ? "Registrer deg" : "Innstillinger"}
         </Typography>
         {isSignUp && (
@@ -208,22 +225,82 @@ const UserDetailEditor = ({
           ))}
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                data-testid="email-field"
-                onFocus={() => setShowDetails(true)}
-                required
-                disabled={!isSignUp}
-                fullWidth
-                id="email"
-                label="Epost"
-                autoComplete="email"
-                error={!!errors.email}
-                {...register("email", {
-                  required: "Du må fylle inn epost",
-                  validate: (v) =>
-                    isEmail(v) ? true : "Du må fylle inn en gyldig epost",
-                })}
-              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "center",
+                }}
+              >
+                <TextField
+                  data-testid="email-field"
+                  onFocus={() => setShowDetails(true)}
+                  required
+                  disabled={!isSignUp}
+                  fullWidth
+                  id="email"
+                  label="Epost"
+                  autoComplete="email"
+                  error={!!errors.email}
+                  {...register("email", {
+                    required: "Du må fylle inn epost",
+                    validate: (v) =>
+                      isEmail(v) ? true : "Du må fylle inn en gyldig epost",
+                  })}
+                />
+                {!isSignUp && (
+                  <InputAdornment
+                    position="end"
+                    sx={{ position: "absolute", mr: 1 }}
+                  >
+                    <Tooltip
+                      title={
+                        userDetails.emailConfirmed
+                          ? "Bekreftet"
+                          : "Ikke bekreftet"
+                      }
+                    >
+                      {userDetails.emailConfirmed ? (
+                        <Check color={"success"} />
+                      ) : (
+                        <Info color={"warning"} />
+                      )}
+                    </Tooltip>
+                  </InputAdornment>
+                )}
+              </Box>
+              {!isSignUp && !userDetails.emailConfirmed && (
+                <>
+                  {emailConfirmationRequested ? (
+                    <Alert sx={{ mt: 1 }} icon={<Email />}>
+                      Bekreftelseslenke er sendt til din e-post-adresse! Sjekk
+                      søppelpost om den ikke dukker opp i inbox.
+                    </Alert>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        const response = add(
+                          BL_CONFIG.collection.emailValidation,
+                          {
+                            userDetail: userDetails.id,
+                            email: userDetails.email,
+                          },
+                        );
+                        if (verifyBlError(response)) {
+                          setError("email", {
+                            message:
+                              "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
+                          });
+                          return;
+                        }
+                        setEmailConfirmationRequested(true);
+                      }}
+                    >
+                      Send bekreftelseslenke på nytt
+                    </Button>
+                  )}
+                </>
+              )}
             </Grid>
             {isSignUp && (
               <Grid
@@ -372,14 +449,14 @@ const UserDetailEditor = ({
                       // Need to have a separate onChange because of autofill not triggering validation
                       onChange: async (event) => {
                         if (event.target.value.length === 0) {
-                          setPostalCity("");
+                          setPostalCity(null);
                           return;
                         }
                         setWaitingForPostalCity(true);
                         const response = await fetchData(
                           apiPath(
                             BL_CONFIG.collection.delivery,
-                            "/postal-code",
+                            "/postal-code-lookup",
                           ),
                           "POST",
                           { postalCode: event.target.value },
@@ -387,7 +464,7 @@ const UserDetailEditor = ({
                         setWaitingForPostalCity(false);
 
                         if (!response.data?.[0].postalCity) {
-                          setPostalCity("");
+                          setPostalCity(null);
                           return;
                         }
 
@@ -404,7 +481,7 @@ const UserDetailEditor = ({
                         const response = await fetchData(
                           apiPath(
                             BL_CONFIG.collection.delivery,
-                            "/postal-code",
+                            "/postal-code-lookup",
                           ),
                           "POST",
                           { postalCode: v },

@@ -1,32 +1,18 @@
-"use client";
-import { Card } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Metadata } from "next";
+import { Suspense } from "react";
 
-import { get } from "@/api/api";
-import { getAccessTokenBody } from "@/api/token";
-import UserDetailEditor from "@/components/user/UserDetailEditor";
+import Settings from "@/components/user/Settings";
+
+export const metadata: Metadata = {
+  title: "Innstillinger | Boklisten.no",
+  description: "Endre din informasjon",
+};
 
 const SettingsPage = () => {
-  const [userDetails, setUserDetails] = useState();
-
-  useEffect(() => {
-    const { details } = getAccessTokenBody();
-    const userDetailUrl = `userdetails/${details}`;
-    const fetchDetails = async () => {
-      const data = await get(userDetailUrl);
-      setUserDetails(data.data.data[0]);
-    };
-    fetchDetails();
-  }, []);
   return (
-    <>
-      <title>Innstillinger | Boklisten.no</title>
-      <meta name="description" content="Endre din informasjon" />
-      <Card sx={{ paddingBottom: "2rem" }}>
-        {!userDetails && <UserDetailEditor />}
-        {userDetails && <UserDetailEditor userDetails={userDetails} />}
-      </Card>
-    </>
+    <Suspense>
+      <Settings />
+    </Suspense>
   );
 };
 

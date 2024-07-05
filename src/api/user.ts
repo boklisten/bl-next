@@ -36,3 +36,17 @@ export const updateUserDetails = async (
     userDetails,
   );
 };
+
+export const resetPassword = async (
+  userId: string,
+  resetToken: string,
+  newPassword: string,
+) => {
+  return await patch(
+    `${BL_CONFIG.collection.pendingPasswordReset}/${userId}/${BL_CONFIG.pendingPasswordReset.confirm.operation}`,
+    {
+      resetToken,
+      newPassword,
+    },
+  );
+};

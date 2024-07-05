@@ -1,5 +1,6 @@
 import { Card } from "@mui/material";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import UserDetailEditor from "@/components/user/UserDetailEditor";
 
@@ -12,7 +13,9 @@ const RegisterPage = () => {
   return (
     <>
       <Card sx={{ paddingBottom: "2rem" }}>
-        <UserDetailEditor isSignUp />
+        <Suspense>
+          <UserDetailEditor isSignUp />
+        </Suspense>
       </Card>
     </>
   );

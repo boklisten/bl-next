@@ -1,3 +1,4 @@
+"use client";
 import { LinearProgress, Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
