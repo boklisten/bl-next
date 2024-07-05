@@ -1,10 +1,10 @@
 "use client";
 import { Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Image from "next/image";
 import { useEffect } from "react";
 
 import { logout } from "@/api/auth";
+import CompanyLogo from "@/components/CompanyLogo";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import BL_CONFIG from "@/utils/bl-config";
 
@@ -26,12 +26,7 @@ export default function LogoutPage() {
             alignItems: "center",
           }}
         >
-          <Image
-            src="/boklisten_logo_v2_icon_blue.png"
-            width={50}
-            height={50}
-            alt="logo"
-          />
+          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Du er nå logget ut
           </Typography>

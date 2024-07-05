@@ -1,8 +1,8 @@
 import { Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import Image from "next/image";
 
+import CompanyLogo from "@/components/CompanyLogo";
 import EmailConfirmer from "@/components/EmailConfirmer";
 
 export const metadata: Metadata = {
@@ -27,12 +27,7 @@ export default function TokenPage({
             alignItems: "center",
           }}
         >
-          <Image
-            src="/boklisten_logo_v2_icon_blue.png"
-            width={50}
-            height={50}
-            alt="logo"
-          />
+          <CompanyLogo />
           <EmailConfirmer confirmationId={params.confirmationId} />
         </Box>
       </Container>

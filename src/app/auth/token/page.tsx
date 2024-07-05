@@ -1,10 +1,10 @@
 import { Card, CircularProgress, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import Image from "next/image";
 import { Suspense } from "react";
 
 import AuthVerifier from "@/components/AuthVerifier";
+import CompanyLogo from "@/components/CompanyLogo";
 
 export const metadata: Metadata = {
   title: "Logger inn... | Boklisten.no",
@@ -23,12 +23,7 @@ export default function TokenPage() {
             alignItems: "center",
           }}
         >
-          <Image
-            src="/boklisten_logo_v2_icon_blue.png"
-            width={50}
-            height={50}
-            alt="logo"
-          />
+          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ my: 1 }}>
             Du blir nå logget inn...
           </Typography>

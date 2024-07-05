@@ -2,12 +2,12 @@
 import { UserDetail } from "@boklisten/bl-model";
 import { Card, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
+import CompanyLogo from "@/components/CompanyLogo";
 import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
 import BL_CONFIG from "@/utils/bl-config";
 
@@ -47,12 +47,7 @@ const Settings = () => {
             alignItems: "center",
           }}
         >
-          <Image
-            src="/boklisten_logo_v2_icon_blue.png"
-            width={50}
-            height={50}
-            alt="logo"
-          />
+          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Innstillinger
           </Typography>

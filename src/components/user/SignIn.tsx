@@ -8,12 +8,12 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { login } from "@/api/user";
+import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
@@ -63,12 +63,7 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Image
-          src="/boklisten_logo_v2_icon_blue.png"
-          width={50}
-          height={50}
-          alt="logo"
-        />
+        <CompanyLogo />
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           Logg inn
         </Typography>

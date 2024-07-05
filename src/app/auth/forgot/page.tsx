@@ -9,11 +9,11 @@ import {
   TextField,
   Alert,
 } from "@mui/material";
-import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import BlFetcher from "@/api/blFetcher";
+import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import blConfig from "@/utils/bl-config";
 
@@ -58,12 +58,7 @@ const ForgotPage = () => {
               alignItems: "center",
             }}
           >
-            <Image
-              src="/boklisten_logo_v2_icon_blue.png"
-              width={50}
-              height={50}
-              alt="logo"
-            />
+            <CompanyLogo />
             <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
               Glemt passord
             </Typography>

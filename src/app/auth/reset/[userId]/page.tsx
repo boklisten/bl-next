@@ -1,8 +1,8 @@
 import { Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import Image from "next/image";
 
+import CompanyLogo from "@/components/CompanyLogo";
 import PasswordReset from "@/components/user/PasswordReset";
 
 export const metadata: Metadata = {
@@ -26,12 +26,7 @@ export default function PasswordResetPage({
             alignItems: "center",
           }}
         >
-          <Image
-            src="/boklisten_logo_v2_icon_blue.png"
-            width={50}
-            height={50}
-            alt="logo"
-          />
+          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Lag nytt passord
           </Typography>

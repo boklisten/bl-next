@@ -13,6 +13,7 @@ import {
   IconButton,
   InputAdornment,
   Skeleton,
+  Stack,
   Tooltip,
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -25,7 +26,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -33,6 +33,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import { registerUser, updateUserDetails } from "@/api/user";
+import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
@@ -40,6 +41,7 @@ import {
   fieldValidators,
   UserEditorFields,
 } from "@/components/user/user-detail-editor/field-validators";
+import TermsAndConditionsDisclaimer from "@/components/user/user-detail-editor/TermsAndConditionsDisclaimer";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
@@ -170,20 +172,8 @@ const UserDetailEditor = ({
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          src="/boklisten_logo_v2_icon_blue.png"
-          width={50}
-          height={50}
-          alt="logo"
-        />
+      <Stack alignItems={"center"} mt={4}>
+        <CompanyLogo />
         <Typography component="h1" variant="h5" sx={{ my: 1 }}>
           {isSignUp ? "Registrer deg" : "Innstillinger"}
         </Typography>
@@ -210,11 +200,9 @@ const UserDetailEditor = ({
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "end",
-                  alignItems: "center",
-                }}
+                display={"flex"}
+                justifyContent={"end"}
+                alignItems={"center"}
               >
                 <TextField
                   data-testid="email-field"
@@ -223,7 +211,7 @@ const UserDetailEditor = ({
                   disabled={!isSignUp}
                   fullWidth
                   id="email"
-                  label="Epost"
+                  label="E-post"
                   autoComplete="email"
                   error={!!errors.email}
                   {...register("email", fieldValidators.email)}
@@ -289,11 +277,9 @@ const UserDetailEditor = ({
               <Grid
                 item
                 xs={12}
-                sx={{
-                  display: "flex",
-                  justifyContent: "end",
-                  alignItems: "center",
-                }}
+                display={"flex"}
+                justifyContent={"end"}
+                alignItems={"center"}
               >
                 <TextField
                   data-testid="password-field"
@@ -374,11 +360,9 @@ const UserDetailEditor = ({
                 <Grid
                   item
                   xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "right",
-                    alignItems: "center",
-                  }}
+                  display={"flex"}
+                  justifyContent={"end"}
+                  alignItems={"center"}
                 >
                   <TextField
                     data-testid="postal-code-field"
@@ -518,28 +502,7 @@ const UserDetailEditor = ({
                           )}
                         />
                       }
-                      label={
-                        <Typography>
-                          {"Jeg godtar Boklistens "}
-                          <DynamicLink
-                            href={"/info/policies/conditions"}
-                            target={"_blank"}
-                            variant={"body1"}
-                            underline={"hover"}
-                          >
-                            betingelser
-                          </DynamicLink>
-                          {" og "}
-                          <DynamicLink
-                            href={"/info/policies/terms"}
-                            target={"_blank"}
-                            variant={"body1"}
-                            underline={"hover"}
-                          >
-                            vilkår
-                          </DynamicLink>
-                        </Typography>
-                      }
+                      label={<TermsAndConditionsDisclaimer />}
                     />
                   </Grid>
                 )}
@@ -556,16 +519,12 @@ const UserDetailEditor = ({
             {isSignUp ? "Registrer deg" : "Lagre"}
           </Button>
           {isSignUp && (
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <DynamicLink href={"/auth/login"}>
-                  Har du allerede en konto? Logg inn
-                </DynamicLink>
-              </Grid>
-            </Grid>
+            <DynamicLink href={"/auth/login"}>
+              Har du allerede en konto? Logg inn
+            </DynamicLink>
           )}
         </Box>
-      </Box>
+      </Stack>
     </Container>
   );
 };
