@@ -24,14 +24,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
-import moment, { Moment } from "moment";
+import moment from "moment";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import isEmail from "validator/lib/isEmail";
-import isMobilePhone from "validator/lib/isMobilePhone";
-import isPostalCode from "validator/lib/isPostalCode";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
@@ -39,22 +36,12 @@ import { registerUser, updateUserDetails } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
+import {
+  fieldValidators,
+  UserEditorFields,
+} from "@/components/user/user-detail-editor/field-validators";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
-
-type UserEditorFields = {
-  email: string;
-  password: string;
-  name: string;
-  phoneNumber: string;
-  address: string;
-  postalCode: string;
-  birthday: Moment | null;
-  guardianName: string;
-  guardianEmail: string;
-  guardianPhoneNumber: string;
-  agreeToTermsAndConditions: boolean;
-};
 
 const isUnder18 = (birthday: moment.Moment | null): boolean => {
   return birthday !== null && moment().diff(birthday, "years") < 18;
@@ -155,6 +142,32 @@ const UserDetailEditor = ({
     router.replace("/" + (searchParams.get("redirect") ?? ""));
   };
 
+  async function onPostalCodeChange(event: { target: { value: string } }) {
+    setPostalCity(null);
+    if (event.target.value.length === 0) {
+      return;
+    }
+    setWaitingForPostalCity(true);
+    const response = await BlFetcher.post<
+      [
+        {
+          postalCity: string | null;
+        },
+      ]
+    >(
+      `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
+      { postalCode: event.target.value },
+    );
+    setWaitingForPostalCity(false);
+
+    if (!response[0].postalCity) {
+      setPostalCity(null);
+      return;
+    }
+
+    setPostalCity(response[0].postalCity);
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -213,11 +226,7 @@ const UserDetailEditor = ({
                   label="Epost"
                   autoComplete="email"
                   error={!!errors.email}
-                  {...register("email", {
-                    required: "Du må fylle inn epost",
-                    validate: (v) =>
-                      isEmail(v) ? true : "Du må fylle inn en gyldig epost",
-                  })}
+                  {...register("email", fieldValidators.email)}
                 />
                 {!isSignUp && (
                   <InputAdornment
@@ -296,13 +305,7 @@ const UserDetailEditor = ({
                   label="Passord"
                   autoComplete="new-password"
                   error={!!errors.password}
-                  {...register("password", {
-                    required: "Du må fylle inn passord",
-                    minLength: {
-                      value: 10,
-                      message: "Passordet må minst ha 10 tegn",
-                    },
-                  })}
+                  {...register("password", fieldValidators.password)}
                 />
                 <InputAdornment
                   position="end"
@@ -341,9 +344,7 @@ const UserDetailEditor = ({
                     id="name"
                     label="Navn"
                     error={!!errors.name}
-                    {...register("name", {
-                      required: "Du må fylle inn navn",
-                    })}
+                    {...register("name", fieldValidators.name)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -355,23 +356,7 @@ const UserDetailEditor = ({
                     label="Telefonnummer"
                     autoComplete="tel-national"
                     error={!!errors.phoneNumber}
-                    {...register("phoneNumber", {
-                      required: "Du må fylle inn telefonnummer",
-                      validate: (v) =>
-                        isMobilePhone(v, "nb-NO")
-                          ? true
-                          : "Du må fylle inn et lovlig norsk telefonnummer (uten mellomrom og +47)",
-                      minLength: {
-                        value: 8,
-                        message:
-                          "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
-                      },
-                      maxLength: {
-                        value: 8,
-                        message:
-                          "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
-                      },
-                    })}
+                    {...register("phoneNumber", fieldValidators.phoneNumber)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -383,9 +368,7 @@ const UserDetailEditor = ({
                     label="Adresse"
                     autoComplete="street-address"
                     error={!!errors.address}
-                    {...register("address", {
-                      required: "Du må fylle inn adresse",
-                    })}
+                    {...register("address", fieldValidators.address)}
                   />
                 </Grid>
                 <Grid
@@ -407,56 +390,8 @@ const UserDetailEditor = ({
                     error={!!errors.postalCode}
                     {...register("postalCode", {
                       // Need to have a separate onChange because of autofill not triggering validation
-                      onChange: async (event) => {
-                        setPostalCity(null);
-                        if (event.target.value.length === 0) {
-                          return;
-                        }
-                        setWaitingForPostalCity(true);
-                        const response = await BlFetcher.post<
-                          [
-                            {
-                              postalCity: string | null;
-                            },
-                          ]
-                        >(
-                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
-                          { postalCode: event.target.value },
-                        );
-                        setWaitingForPostalCity(false);
-
-                        if (!response[0].postalCity) {
-                          setPostalCity(null);
-                          return;
-                        }
-
-                        setPostalCity(response[0].postalCity);
-                      },
-                      required: "Du må fylle inn postnummer",
-                      validate: async (v) => {
-                        const illegalPostalCodeMessage =
-                          "Du må oppgi et gyldig norsk postnummer";
-                        if (!isPostalCode(v, "NO")) {
-                          return illegalPostalCodeMessage;
-                        }
-
-                        const response = await BlFetcher.post<
-                          [
-                            {
-                              postalCity: string | null;
-                            },
-                          ]
-                        >(
-                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
-                          { postalCode: v },
-                        );
-
-                        if (!response[0].postalCity) {
-                          return illegalPostalCodeMessage;
-                        }
-
-                        return true;
-                      },
+                      onChange: onPostalCodeChange,
+                      ...fieldValidators.postalCode,
                     })}
                   />
                   <Typography
@@ -482,16 +417,7 @@ const UserDetailEditor = ({
                 <Grid item xs={12}>
                   <Controller
                     control={control}
-                    {...register("birthday", {
-                      required: "Du må fylle inn fødselsdato",
-                      valueAsDate: true,
-                      validate: (v) =>
-                        v?.isValid() &&
-                        v.isAfter(moment().subtract(100, "years")) &&
-                        v.isBefore(moment().subtract(10, "years"))
-                          ? true
-                          : "Du må fylle inn en gyldig fødselsdato",
-                    })}
+                    {...register("birthday", fieldValidators.birthday)}
                     name="birthday"
                     render={() => {
                       return (
@@ -537,9 +463,10 @@ const UserDetailEditor = ({
                         label="Foresatt sitt fulle navn"
                         autoComplete="name"
                         error={!!errors.guardianName}
-                        {...register("guardianName", {
-                          required: "Du må fylle inn foresatt sitt fulle navn",
-                        })}
+                        {...register(
+                          "guardianName",
+                          fieldValidators.guardianName,
+                        )}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -551,13 +478,10 @@ const UserDetailEditor = ({
                         label="Foresatt sin epost"
                         autoComplete="email"
                         error={!!errors.guardianEmail}
-                        {...register("guardianEmail", {
-                          required: "Du må fylle inn foresatt sin epost",
-                          validate: (v) =>
-                            isEmail(v)
-                              ? true
-                              : "Du må fylle inn en gyldig epost",
-                        })}
+                        {...register(
+                          "guardianEmail",
+                          fieldValidators.guardianEmail,
+                        )}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -569,24 +493,10 @@ const UserDetailEditor = ({
                         label="Foresatt sitt telefonnummer"
                         autoComplete="tel-national"
                         error={!!errors.guardianPhoneNumber}
-                        {...register("guardianPhoneNumber", {
-                          required:
-                            "Du må fylle inn foresatt sitt telefonnummer",
-                          validate: (v) =>
-                            isMobilePhone(v, "nb-NO")
-                              ? true
-                              : "Du må fylle inn et lovlig norsk telefonnummer (uten mellomrom og +47)",
-                          minLength: {
-                            value: 8,
-                            message:
-                              "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
-                          },
-                          maxLength: {
-                            value: 8,
-                            message:
-                              "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
-                          },
-                        })}
+                        {...register(
+                          "guardianPhoneNumber",
+                          fieldValidators.guardianPhoneNumber,
+                        )}
                       />
                     </Grid>
                   </>
@@ -602,9 +512,10 @@ const UserDetailEditor = ({
                               ? "red"
                               : "inherit",
                           }}
-                          {...register("agreeToTermsAndConditions", {
-                            required: "Du må godta våre betingelser og vilkår",
-                          })}
+                          {...register(
+                            "agreeToTermsAndConditions",
+                            fieldValidators.agreeToTermsAndConditions,
+                          )}
                         />
                       }
                       label={

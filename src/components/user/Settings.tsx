@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
-import UserDetailEditor from "@/components/user/UserDetailEditor";
+import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
 import BL_CONFIG from "@/utils/bl-config";
 
 const Settings = () => {

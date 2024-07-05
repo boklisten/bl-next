@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-import UserDetailEditor from "@/components/user/UserDetailEditor";
+import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
 
 export const metadata: Metadata = {
   title: "Ny bruker | Boklisten.no",
