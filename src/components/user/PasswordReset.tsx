@@ -17,7 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { resetPassword } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
-import { verifyBlApiError } from "@/utils/types";
+import { assertBlApiError } from "@/utils/types";
 
 type PasswordResetFields = {
   password: string;
@@ -35,16 +35,19 @@ export default function PasswordReset({ userId }: { userId: string }) {
   } = useForm<PasswordResetFields>({ mode: "onTouched" });
   const onSubmit: SubmitHandler<PasswordResetFields> = async (data) => {
     setApiError("");
-    const result = await resetPassword(
-      userId,
-      searchParams.get("resetToken") ?? "",
-      data.password,
-    );
-    if (verifyBlApiError(result)) {
-      setApiError(
-        "Klarte ikke sette nytt passord. Lenken kan være utløpt. Prøv igjen eller ta kontakt dersom problemet vedvarer.",
+    try {
+      await resetPassword(
+        userId,
+        searchParams.get("resetToken") ?? "",
+        data.password,
       );
-      return;
+    } catch (error) {
+      if (assertBlApiError(error)) {
+        setApiError(
+          "Klarte ikke sette nytt passord. Lenken kan være utløpt. Prøv igjen eller ta kontakt dersom problemet vedvarer.",
+        );
+        return;
+      }
     }
     setSuccess(true);
   };

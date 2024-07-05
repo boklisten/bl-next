@@ -40,7 +40,7 @@ import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
 import BL_CONFIG from "@/utils/bl-config";
-import { verifyBlApiError } from "@/utils/types";
+import { assertBlApiError } from "@/utils/types";
 
 type UserEditorFields = {
   email: string;
@@ -141,43 +141,48 @@ const UserDetailEditor = ({
       return;
     }
     if (isSignUp) {
-      const result = await registerUser(data.email, data.password);
-      if (verifyBlApiError(result)) {
-        if (result.code === 903) {
-          setError("email", {
-            message: "Det finnes allerede en bruker med denne e-postadressen!",
-          });
-          return;
-        }
-        if (result.httpStatus === 500) {
-          setError("email", {
-            message:
-              "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
-          });
+      try {
+        await registerUser(data.email, data.password);
+      } catch (error) {
+        if (assertBlApiError(error)) {
+          if (error.code === 903) {
+            setError("email", {
+              message:
+                "Det finnes allerede en bruker med denne e-postadressen!",
+            });
+            return;
+          }
+          if (error.httpStatus === 500) {
+            setError("email", {
+              message:
+                "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
+            });
+          }
         }
       }
     }
-    const result = await updateUserDetails(getAccessTokenBody().details, {
-      name: `${data.firstName} ${data.lastName}`,
-      email: data.email,
-      phone: data.phoneNumber,
-      address: data.address,
-      postCode: data.postalCode,
-      postCity: postalCity,
-      dob: data.birthday?.toDate() ?? new Date(),
-      guardian: {
-        name: data?.guardianName,
-        email: data?.guardianEmail,
-        phone: data?.guardianPhoneNumber,
-      },
-    });
-
-    if (verifyBlApiError(result)) {
-      setError("email", {
-        message:
-          "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
+    try {
+      await updateUserDetails(getAccessTokenBody().details, {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phoneNumber,
+        address: data.address,
+        postCode: data.postalCode,
+        postCity: postalCity,
+        dob: data.birthday?.toDate() ?? new Date(),
+        guardian: {
+          name: data?.guardianName,
+          email: data?.guardianEmail,
+          phone: data?.guardianPhoneNumber,
+        },
       });
-      return;
+    } catch (error) {
+      if (assertBlApiError(error)) {
+        setError("email", {
+          message:
+            "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
+        });
+      }
     }
     router.replace("/" + (searchParams.get("redirect") ?? ""));
   };
@@ -277,21 +282,24 @@ const UserDetailEditor = ({
                   ) : (
                     <Button
                       onClick={async () => {
-                        const response = await BlFetcher.post(
-                          BL_CONFIG.collection.emailValidation,
-                          {
-                            userDetail: userDetails.id,
-                            email: userDetails.email,
-                          },
-                        );
-                        if (verifyBlApiError(response)) {
-                          setError("email", {
-                            message:
-                              "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
-                          });
-                          return;
+                        try {
+                          await BlFetcher.post(
+                            BL_CONFIG.collection.emailValidation,
+                            {
+                              userDetail: userDetails.id,
+                              email: userDetails.email,
+                            },
+                          );
+                          setEmailConfirmationRequested(true);
+                        } catch (error) {
+                          if (assertBlApiError(error)) {
+                            setError("email", {
+                              message:
+                                "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
+                            });
+                            return;
+                          }
                         }
-                        setEmailConfirmationRequested(true);
                       }}
                     >
                       Send bekreftelseslenke på nytt
@@ -319,7 +327,7 @@ const UserDetailEditor = ({
                   id="password"
                   label="Passord"
                   autoComplete="new-password"
-                  error={errors.password ? true : false}
+                  error={!!errors.password}
                   {...register("password", {
                     required: "Du må fylle inn passord",
                     minLength: {
@@ -458,7 +466,7 @@ const UserDetailEditor = ({
                             },
                           ]
                         >(
-                          BL_CONFIG.collection.delivery + "/postal-code-lookup",
+                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup}`,
                           { postalCode: event.target.value },
                         );
                         setWaitingForPostalCity(false);
@@ -485,7 +493,7 @@ const UserDetailEditor = ({
                             },
                           ]
                         >(
-                          BL_CONFIG.collection.delivery + "/postal-code-lookup",
+                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup}`,
                           { postalCode: v },
                         );
 

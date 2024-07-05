@@ -3,9 +3,12 @@ import { UserDetail } from "@boklisten/bl-model";
 import BlFetcher from "@/api/blFetcher";
 import { parseTokensFromResponseDataAndStore } from "@/api/token";
 import BL_CONFIG from "@/utils/bl-config";
-import { AuthResponse, verifyBlApiError } from "@/utils/types";
+import { AuthResponse } from "@/utils/types";
 
-export const login = async (username: string, password: string) => {
+export const login = async (
+  username: string,
+  password: string,
+): Promise<AuthResponse> => {
   const loginResponse = await BlFetcher.post<AuthResponse>(
     BL_CONFIG.login.local.url,
     {
@@ -13,13 +16,14 @@ export const login = async (username: string, password: string) => {
       password,
     },
   );
-  if (!verifyBlApiError(loginResponse)) {
-    parseTokensFromResponseDataAndStore(loginResponse);
-  }
+  parseTokensFromResponseDataAndStore(loginResponse);
   return loginResponse;
 };
 
-export const registerUser = async (username: string, password: string) => {
+export const registerUser = async (
+  username: string,
+  password: string,
+): Promise<AuthResponse> => {
   const registerResponse = await BlFetcher.post<AuthResponse>(
     BL_CONFIG.register.local.url,
     {
@@ -27,9 +31,7 @@ export const registerUser = async (username: string, password: string) => {
       password,
     },
   );
-  if (!verifyBlApiError(registerResponse)) {
-    parseTokensFromResponseDataAndStore(registerResponse);
-  }
+  parseTokensFromResponseDataAndStore(registerResponse);
   return registerResponse;
 };
 

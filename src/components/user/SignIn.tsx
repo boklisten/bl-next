@@ -17,7 +17,7 @@ import { login } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
-import { verifyBlApiError } from "@/utils/types";
+import { assertBlApiError } from "@/utils/types";
 
 type SignInFields = {
   email: string;
@@ -36,14 +36,17 @@ export default function SignIn() {
   } = useForm<SignInFields>({ mode: "onTouched" });
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
-    const result = await login(data.email, data.password);
-    if (verifyBlApiError(result)) {
-      if (result.code === 908) {
-        setApiError("Feil brukernavn eller passord");
-      } else {
-        setApiError(
-          "Noe gikk galt! Prøv igjen eller ta kontakt dersom problemet vedvarer.",
-        );
+    try {
+      await login(data.email, data.password);
+    } catch (error) {
+      if (assertBlApiError(error)) {
+        if (error.code === 908) {
+          setApiError("Feil brukernavn eller passord");
+        } else {
+          setApiError(
+            "Noe gikk galt! Prøv igjen eller ta kontakt dersom problemet vedvarer.",
+          );
+        }
       }
       return;
     }

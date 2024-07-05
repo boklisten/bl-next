@@ -19,9 +19,6 @@ const BL_CONFIG = {
     google: {
       url: "auth/google",
     },
-    feide: {
-      url: "auth/feide",
-    },
   },
   register: {
     local: {
@@ -32,9 +29,6 @@ const BL_CONFIG = {
     },
     google: {
       url: "auth/google",
-    },
-    feide: {
-      url: "auth/feide",
     },
   },
   order: {
@@ -53,6 +47,11 @@ const BL_CONFIG = {
   emailValidation: {
     confirm: {
       operation: "confirm",
+    },
+  },
+  delivery: {
+    postalCodeLookup: {
+      operation: "postal-code-lookup",
     },
   },
   collection: {
