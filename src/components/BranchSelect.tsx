@@ -9,17 +9,17 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
-import useSWR, { SWRResponse } from "swr";
+import useSWR from "swr";
 
-import { fetcher } from "@/api/requests";
+import BlFetcher from "@/api/blFetcher";
 import BL_CONFIG from "@/utils/bl-config";
 import { useGlobalState } from "@/utils/useGlobalState";
 
-export const branchListUrl = `${BL_CONFIG.api.basePath}branches?active=true&sort=name`;
-
 const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
-  const { data }: SWRResponse = useSWR(branchListUrl, fetcher);
-  const branches = data as Branch[];
+  const { data } = useSWR(
+    `${BL_CONFIG.collection.branch}?active=true&sort=name`,
+    BlFetcher.get<Branch[]>,
+  );
 
   const { selectedBranchId, selectBranch } = useGlobalState();
 
@@ -52,7 +52,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
           label="Valgt skole"
           onChange={handleChange}
         >
-          {branches?.map((branch) => (
+          {data?.map((branch) => (
             <MenuItem
               data-testid="branchOption"
               value={branch.id}

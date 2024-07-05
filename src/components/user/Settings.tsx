@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { get } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import UserDetailEditor from "@/components/user/UserDetailEditor";
 import BL_CONFIG from "@/utils/bl-config";
@@ -25,8 +25,10 @@ const Settings = () => {
     try {
       const { details } = getAccessTokenBody();
       const fetchDetails = async () => {
-        const data = await get(`${BL_CONFIG.collection.userDetail}/${details}`);
-        setUserDetails(data.data.data[0]);
+        const userDetails = await BlFetcher.get<[UserDetail]>(
+          `${BL_CONFIG.collection.userDetail}/${details}`,
+        );
+        setUserDetails(userDetails[0]);
       };
       fetchDetails();
     } catch {

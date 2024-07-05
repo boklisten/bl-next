@@ -13,7 +13,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { add } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import DynamicLink from "@/components/DynamicLink";
 import blConfig from "@/utils/bl-config";
 
@@ -33,7 +33,7 @@ const ForgotPage = () => {
     try {
       setError(false);
       setSuccess(false);
-      await add(blConfig.collection.pendingPasswordReset, {
+      await BlFetcher.post(blConfig.collection.pendingPasswordReset, {
         email: data.email,
       });
       setSuccess(true);

@@ -2,14 +2,14 @@
 import { Alert, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
-import { patch } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import DynamicLink from "@/components/DynamicLink";
 import BL_CONFIG from "@/utils/bl-config";
-import { verifyBlError } from "@/utils/types";
+import { verifyBlApiError } from "@/utils/types";
 
 function validateEmail(confirmationId: string) {
-  return patch(
+  return BlFetcher.patch(
     `${BL_CONFIG.collection.emailValidation}/${confirmationId}/${BL_CONFIG.emailValidation.confirm.operation}`,
     {},
   );
@@ -25,7 +25,7 @@ export default function EmailConfirmer({
   useEffect(() => {
     async function tryValidateEmail() {
       const response = await validateEmail(confirmationId);
-      if (verifyBlError(response)) {
+      if (verifyBlApiError(response)) {
         setStatus("ERROR");
         return;
       }

@@ -2,16 +2,16 @@ import { Close, InputRounded } from "@mui/icons-material";
 import { AlertColor, Box, Button, Card, Modal, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Scanner, IDetectedBarcode } from "@yudiel/react-qr-scanner";
-import { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 
-import { addWithEndpoint } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { ItemStatus } from "@/components/matches/matches-helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import ManualRegistrationModal from "@/components/matches/Scanner/ManualRegistrationModal";
 import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
-import { ScannedTextType, TextType } from "@/utils/types";
+import BL_CONFIG from "@/utils/bl-config";
+import { assertBlApiError, ScannedTextType, TextType } from "@/utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
   if (/^[\dA-Za-z]{12}$|^\d{8}$/.test(scannedText)) {
@@ -73,36 +73,32 @@ const ScannerModal = ({
     }
 
     try {
-      const response: AxiosResponse<null | {
-        data: { feedback: string }[];
-      }> = await addWithEndpoint(
-        "matches",
-        "transfer-item",
-        JSON.stringify({ blid: scannedText }),
-      );
+      const [{ feedback }] = await BlFetcher.post<
+        [
+          {
+            feedback: string;
+          },
+        ]
+      >(BL_CONFIG.collection.match + "/transfer-item", { blid: scannedText });
       try {
         navigator?.vibrate(100);
       } catch {
         // Some browsers or devices may not have implemented the vibrate function
       }
-      const feedback = response.data?.data[0]?.feedback;
       setFeedback({
         text: feedback ?? "Boken har blitt registrert!",
         severity: feedback ? "info" : "success",
         visible: true,
       });
-      try {
-        handleItemTransferred?.();
-      } catch (error: unknown) {
-        // Do not expose potentially rough API errors to user
-        console.error("Got error when handling item transferred", error);
-      }
+      handleItemTransferred?.();
     } catch (error) {
-      setFeedback({
-        text: error instanceof Error ? error.message : String(error),
-        severity: "error",
-        visible: true,
-      });
+      if (assertBlApiError(error) && error.msg) {
+        setFeedback({
+          text: error.msg,
+          severity: "error",
+          visible: true,
+        });
+      }
     }
   };
 

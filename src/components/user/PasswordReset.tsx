@@ -17,7 +17,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { resetPassword } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
-import { verifyBlError } from "@/utils/types";
+import { verifyBlApiError } from "@/utils/types";
 
 type PasswordResetFields = {
   password: string;
@@ -40,7 +40,7 @@ export default function PasswordReset({ userId }: { userId: string }) {
       searchParams.get("resetToken") ?? "",
       data.password,
     );
-    if (verifyBlError(result)) {
+    if (verifyBlApiError(result)) {
       setApiError(
         "Klarte ikke sette nytt passord. Lenken kan være utløpt. Prøv igjen eller ta kontakt dersom problemet vedvarer.",
       );

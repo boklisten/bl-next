@@ -33,16 +33,14 @@ import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 
-import { add } from "@/api/api";
-import { apiPath } from "@/api/apiRequest";
-import { fetchData } from "@/api/requests";
+import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import { registerUser, updateUserDetails } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
 import BL_CONFIG from "@/utils/bl-config";
-import { verifyBlError } from "@/utils/types";
+import { verifyBlApiError } from "@/utils/types";
 
 type UserEditorFields = {
   email: string;
@@ -144,7 +142,7 @@ const UserDetailEditor = ({
     }
     if (isSignUp) {
       const result = await registerUser(data.email, data.password);
-      if (verifyBlError(result)) {
+      if (verifyBlApiError(result)) {
         if (result.code === 903) {
           setError("email", {
             message: "Det finnes allerede en bruker med denne e-postadressen!",
@@ -174,7 +172,7 @@ const UserDetailEditor = ({
       },
     });
 
-    if (verifyBlError(result)) {
+    if (verifyBlApiError(result)) {
       setError("email", {
         message:
           "Noe gikk galt under registreringen! Prøv igjen, eller ta kontakt dersom problemet vedvarer!",
@@ -278,15 +276,15 @@ const UserDetailEditor = ({
                     </Alert>
                   ) : (
                     <Button
-                      onClick={() => {
-                        const response = add(
+                      onClick={async () => {
+                        const response = await BlFetcher.post(
                           BL_CONFIG.collection.emailValidation,
                           {
                             userDetail: userDetails.id,
                             email: userDetails.email,
                           },
                         );
-                        if (verifyBlError(response)) {
+                        if (verifyBlApiError(response)) {
                           setError("email", {
                             message:
                               "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
@@ -448,27 +446,29 @@ const UserDetailEditor = ({
                     {...register("postalCode", {
                       // Need to have a separate onChange because of autofill not triggering validation
                       onChange: async (event) => {
+                        setPostalCity(null);
                         if (event.target.value.length === 0) {
-                          setPostalCity(null);
                           return;
                         }
                         setWaitingForPostalCity(true);
-                        const response = await fetchData(
-                          apiPath(
-                            BL_CONFIG.collection.delivery,
-                            "/postal-code-lookup",
-                          ),
-                          "POST",
+                        const response = await BlFetcher.post<
+                          [
+                            {
+                              postalCity: string | null;
+                            },
+                          ]
+                        >(
+                          BL_CONFIG.collection.delivery + "/postal-code-lookup",
                           { postalCode: event.target.value },
                         );
                         setWaitingForPostalCity(false);
 
-                        if (!response.data?.[0].postalCity) {
+                        if (!response[0].postalCity) {
                           setPostalCity(null);
                           return;
                         }
 
-                        setPostalCity(response.data?.[0].postalCity);
+                        setPostalCity(response[0].postalCity);
                       },
                       required: "Du må fylle inn postnummer",
                       validate: async (v) => {
@@ -478,16 +478,18 @@ const UserDetailEditor = ({
                           return illegalPostalCodeMessage;
                         }
 
-                        const response = await fetchData(
-                          apiPath(
-                            BL_CONFIG.collection.delivery,
-                            "/postal-code-lookup",
-                          ),
-                          "POST",
+                        const response = await BlFetcher.post<
+                          [
+                            {
+                              postalCity: string | null;
+                            },
+                          ]
+                        >(
+                          BL_CONFIG.collection.delivery + "/postal-code-lookup",
                           { postalCode: v },
                         );
 
-                        if (!response.data?.[0].postalCity) {
+                        if (!response[0].postalCity) {
                           return illegalPostalCodeMessage;
                         }
 

@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 
-import { put } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { EditorProps } from "@/components/editableText/EditableTextElement";
 import { EditableTextRenderer } from "@/components/editableText/EditableTextRenderer";
 import BL_CONFIG from "@/utils/bl-config";
@@ -38,7 +38,7 @@ export const EditableTextEditor = ({ editableText }: EditorProps) => {
     if (editorRef.current?.innerText.trim().length === 0) {
       editorState.current = "";
     }
-    put(`${BL_CONFIG.collection.editableText}/${editableText.id}/`, {
+    BlFetcher.put(`${BL_CONFIG.collection.editableText}/${editableText.id}/`, {
       ...editableText,
       text: editorState.current,
     })

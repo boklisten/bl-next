@@ -1,37 +1,43 @@
 import { UserDetail } from "@boklisten/bl-model";
 
-import { add, patch } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { parseTokensFromResponseDataAndStore } from "@/api/token";
 import BL_CONFIG from "@/utils/bl-config";
-import { verifyBlError } from "@/utils/types";
+import { AuthResponse, verifyBlApiError } from "@/utils/types";
 
 export const login = async (username: string, password: string) => {
-  const apiResponse = await add(BL_CONFIG.login.local.url, {
-    username,
-    password,
-  });
-  if (!verifyBlError(apiResponse)) {
-    parseTokensFromResponseDataAndStore(apiResponse.data);
+  const loginResponse = await BlFetcher.post<AuthResponse>(
+    BL_CONFIG.login.local.url,
+    {
+      username,
+      password,
+    },
+  );
+  if (!verifyBlApiError(loginResponse)) {
+    parseTokensFromResponseDataAndStore(loginResponse);
   }
-  return apiResponse;
+  return loginResponse;
 };
 
 export const registerUser = async (username: string, password: string) => {
-  const apiResponse = await add(BL_CONFIG.register.local.url, {
-    username,
-    password,
-  });
-  if (!verifyBlError(apiResponse)) {
-    parseTokensFromResponseDataAndStore(apiResponse.data);
+  const registerResponse = await BlFetcher.post<AuthResponse>(
+    BL_CONFIG.register.local.url,
+    {
+      username,
+      password,
+    },
+  );
+  if (!verifyBlApiError(registerResponse)) {
+    parseTokensFromResponseDataAndStore(registerResponse);
   }
-  return apiResponse;
+  return registerResponse;
 };
 
 export const updateUserDetails = async (
   userId: string,
   userDetails: Partial<UserDetail>,
 ) => {
-  return await patch(
+  return await BlFetcher.patch(
     `${BL_CONFIG.collection.userDetail}/${userId}`,
     userDetails,
   );
@@ -42,7 +48,7 @@ export const resetPassword = async (
   resetToken: string,
   newPassword: string,
 ) => {
-  return await patch(
+  return await BlFetcher.patch(
     `${BL_CONFIG.collection.pendingPasswordReset}/${userId}/${BL_CONFIG.pendingPasswordReset.confirm.operation}`,
     {
       resetToken,

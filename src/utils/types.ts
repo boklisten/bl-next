@@ -1,4 +1,8 @@
-import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
+import {
+  BlapiErrorResponse,
+  MatchVariant,
+  MatchWithDetails,
+} from "@boklisten/bl-model";
 
 export type ItemType = "book";
 
@@ -19,6 +23,11 @@ export interface AccessToken {
   permission: UserPermission;
   details: string;
 }
+
+export type AuthResponse = {
+  documentName: string;
+  data: string;
+}[];
 
 export interface BlDocument {
   id: string;
@@ -82,19 +91,22 @@ export interface MaybeEmptyEditableText {
   text: string | null;
 }
 
-export type BlError = {
-  httpStatus: number;
-  code: number;
-  msg: string;
-  data: unknown;
-};
-
-export function verifyBlError(blError: unknown): blError is BlError {
-  const m = blError as Record<string, unknown> | null | undefined;
+export function verifyBlApiError(
+  apiError: unknown,
+): apiError is BlapiErrorResponse {
+  const m = apiError as Record<string, unknown> | null | undefined;
   return (
     !!m &&
     typeof m["httpStatus"] === "number" &&
-    typeof m["code"] === "number" &&
-    typeof m["msg"] === "string"
+    (typeof m["code"] === "number" || m["code"] === undefined) &&
+    (typeof m["msg"] === "string" || m["msg"] === undefined)
   );
+}
+
+export function assertBlApiError(
+  blError: unknown,
+): blError is BlapiErrorResponse {
+  if (blError instanceof BlapiErrorResponse) return true;
+
+  throw new Error("Unknown API error");
 }

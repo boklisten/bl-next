@@ -3,8 +3,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import { get } from "@/api/api";
 import { isLoggedIn } from "@/api/auth";
+import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import BL_CONFIG from "@/utils/bl-config";
 
@@ -22,11 +22,10 @@ export default function AuthVerifier() {
     const { details } = getAccessTokenBody();
     const checkUserDetailsValid = async () => {
       try {
-        const response = await get(
+        const [{ valid }] = await BlFetcher.get<[{ valid: boolean }]>(
           `${BL_CONFIG.collection.userDetail}/${details}/valid`,
         );
-        const isValid = response.data.data[0]?.valid;
-        if (isValid) {
+        if (valid) {
           router.push("/");
         } else {
           router.push("/settings");

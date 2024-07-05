@@ -5,7 +5,7 @@ import { Alert, Button, Card, Container, Skeleton } from "@mui/material";
 import React from "react";
 import useSWR from "swr";
 
-import { apiFetcher } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import DynamicLink from "@/components/DynamicLink";
 import StandMatchDetail from "@/components/matches/StandMatchDetail";
@@ -24,7 +24,7 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
     mutate: updateMatches,
   } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
-    apiFetcher<MatchWithDetails[]>,
+    BlFetcher.get<MatchWithDetails[]>,
     { refreshInterval: 5000 },
   );
 

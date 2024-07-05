@@ -17,7 +17,7 @@ import { login } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
-import { verifyBlError } from "@/utils/types";
+import { verifyBlApiError } from "@/utils/types";
 
 type SignInFields = {
   email: string;
@@ -37,7 +37,7 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
     const result = await login(data.email, data.password);
-    if (verifyBlError(result)) {
+    if (verifyBlApiError(result)) {
       if (result.code === 908) {
         setApiError("Feil brukernavn eller passord");
       } else {

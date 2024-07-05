@@ -2,22 +2,24 @@ import { Branch, OpeningHour } from "@boklisten/bl-model";
 import moment from "moment";
 import { Metadata } from "next";
 
-import { fetcher } from "@/api/requests";
+import BlFetcher from "@/api/blFetcher";
 import LinkableBranchInfo from "@/components/LinkableBranchInfo";
 import BL_CONFIG from "@/utils/bl-config";
+import { assertBlApiError } from "@/utils/types";
 
 type Params = { params: { id: string } };
 
 export const generateStaticParams = async () => {
-  const branchesUrl = `${BL_CONFIG.api.basePath}branches?&active=true`;
-  return (await fetcher<Branch[]>(branchesUrl)) ?? [];
+  return await BlFetcher.get<Branch[]>(
+    `${BL_CONFIG.collection.branch}?active=true`,
+  );
 };
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const branchData = await fetcher<Branch[]>(
-    `${BL_CONFIG.api.basePath}branches/${params.id}`,
+  const branchData = await BlFetcher.get<Branch[]>(
+    `${BL_CONFIG.collection.branch}/${params.id}`,
   );
   return {
     title: `${branchData?.[0]?.name ?? "Skoler og åpningstider"} | Boklisten.no`,
@@ -25,23 +27,34 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       "Skal du hente eller levere bøker? Finn ut når vi står på stand på din skole.",
   };
 }
+type BranchData = {
+  branch: Branch | null;
+  openingHours: OpeningHour[];
+};
 
-async function getBranchData(branchId: string) {
-  if (branchId === "select") {
-    return { branch: null, openingHours: [] };
-  }
-  const branchUrl = `${BL_CONFIG.api.basePath}branches/${branchId}`;
+async function getBranchData(branchId: string): Promise<BranchData> {
+  const branchUrl = `${BL_CONFIG.collection.branch}/${branchId}`;
   const now = moment().startOf("day").format("DDMMYYYYHHmm");
-  const openingHoursUrl = `${BL_CONFIG.api.basePath}openingHours?branch=${branchId}&from=>${now}`;
-  const [branchData, openingHoursData] = await Promise.all([
-    fetcher<Branch[]>(branchUrl),
-    fetcher<OpeningHour[]>(openingHoursUrl),
+  const openingHoursUrl = `${BL_CONFIG.collection.openingHour}?branch=${branchId}&from=>${now}`;
+  const branchData: BranchData = { branch: null, openingHours: [] };
+  const [branchResult, openingHoursResult] = await Promise.allSettled([
+    BlFetcher.get<Branch[]>(branchUrl),
+    BlFetcher.get<OpeningHour[]>(openingHoursUrl),
   ]);
 
-  return {
-    branch: branchData?.[0] ?? null,
-    openingHours: openingHoursData,
-  };
+  if (branchResult.status === "fulfilled") {
+    branchData.branch = branchResult.value[0] ?? null;
+  } else {
+    assertBlApiError(branchResult.reason);
+  }
+
+  if (openingHoursResult.status === "fulfilled") {
+    branchData.openingHours = openingHoursResult.value;
+  } else {
+    assertBlApiError(openingHoursResult.reason);
+  }
+
+  return branchData;
 }
 
 const BranchPage = async ({ params }: Params) => {

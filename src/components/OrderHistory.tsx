@@ -19,7 +19,8 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 import React, { useState } from "react";
 
-import { get } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
+import BL_CONFIG from "@/utils/bl-config";
 
 // fetchPayments(orders);
 // types are from a business POV
@@ -50,9 +51,10 @@ const paymentTypes = {
 };
 
 const fetchPayment = async (payment: string) => {
-  const paymentsUrl = `payments/${payment}`;
-  const data = await get(paymentsUrl);
-  return data.data.data[0] as Payment;
+  const [data] = await BlFetcher.get<Payment[]>(
+    `${BL_CONFIG.collection.payment}/${payment}`,
+  );
+  return data;
 };
 
 const OrderHistory = ({ orders }: { orders: Order[] }) => {
@@ -62,9 +64,10 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
 
   const printReceipt = async (orderId: string) => {
     setWait(true);
-    const data = await get(`orders/${orderId}/receipt`);
-    const receiptData = data.data.data[0];
-    const byteCharacters = atob(receiptData.content);
+    const data = await BlFetcher.get<[{ content: string }]>(
+      `${BL_CONFIG.collection.order}/${orderId}/receipt`,
+    );
+    const byteCharacters = atob(data[0].content);
     const byteNumbers = Array.from({ length: byteCharacters.length });
     for (let index = 0; index < byteNumbers.length; index++) {
       byteNumbers[index] = byteCharacters.codePointAt(index);
