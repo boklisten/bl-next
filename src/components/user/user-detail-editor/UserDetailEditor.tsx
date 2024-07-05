@@ -45,8 +45,8 @@ import TermsAndConditionsDisclaimer from "@/components/user/user-detail-editor/T
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
-const isUnder18 = (birthday: moment.Moment | null): boolean => {
-  return birthday !== null && moment().diff(birthday, "years") < 18;
+const isUnder18 = (birthday: moment.Moment): boolean => {
+  return moment().diff(birthday, "years") < 18;
 };
 
 const UserDetailEditor = ({
@@ -74,9 +74,9 @@ const UserDetailEditor = ({
     address: userDetails.address,
     postalCode: userDetails.postCode,
     birthday: userDetails.dob ? moment(userDetails.dob) : null,
-    guardianName: userDetails.guardian?.name as string,
-    guardianEmail: userDetails.guardian?.email as string,
-    guardianPhoneNumber: userDetails.guardian?.phone as string,
+    guardianName: userDetails.guardian?.name,
+    guardianEmail: userDetails.guardian?.email,
+    guardianPhoneNumber: userDetails.guardian?.phone,
   };
 
   const {
@@ -128,9 +128,9 @@ const UserDetailEditor = ({
         postCity: postalCity,
         dob: data.birthday?.toDate() ?? new Date(),
         guardian: {
-          name: data?.guardianName,
-          email: data?.guardianEmail,
-          phone: data?.guardianPhoneNumber,
+          name: data?.guardianName ?? "",
+          email: data?.guardianEmail ?? "",
+          phone: data?.guardianPhoneNumber ?? "",
         },
       });
     } catch (error) {
@@ -169,6 +169,8 @@ const UserDetailEditor = ({
 
     setPostalCity(response[0].postalCity);
   }
+
+  const birthdayFieldValue = getValues("birthday");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -418,7 +420,7 @@ const UserDetailEditor = ({
                             setValue("birthday", newValue, {
                               shouldValidate: true,
                             });
-                            if (!isUnder18(newValue)) {
+                            if (newValue === null || !isUnder18(newValue)) {
                               clearErrors("guardianName");
                               clearErrors("guardianEmail");
                               clearErrors("guardianPhoneNumber");
@@ -429,62 +431,63 @@ const UserDetailEditor = ({
                     }}
                   />
                 </Grid>
-                {isUnder18(getValues("birthday") ?? null) && (
-                  <>
-                    <Grid item xs={12} sm={12} mt={1}>
-                      <Typography variant="body1">
-                        Siden du er under 18, trenger vi informasjon om en av
-                        dine foresatte.
-                      </Typography>
-                      <Divider />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        data-testid="guardian-name-field"
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Foresatt sitt fulle navn"
-                        autoComplete="name"
-                        error={!!errors.guardianName}
-                        {...register(
-                          "guardianName",
-                          fieldValidators.guardianName,
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        data-testid="guardian-email-field"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Foresatt sin epost"
-                        autoComplete="email"
-                        error={!!errors.guardianEmail}
-                        {...register(
-                          "guardianEmail",
-                          fieldValidators.guardianEmail,
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        data-testid="guardian-phone-field"
-                        required
-                        fullWidth
-                        id="phoneNumber"
-                        label="Foresatt sitt telefonnummer"
-                        autoComplete="tel-national"
-                        error={!!errors.guardianPhoneNumber}
-                        {...register(
-                          "guardianPhoneNumber",
-                          fieldValidators.guardianPhoneNumber,
-                        )}
-                      />
-                    </Grid>
-                  </>
-                )}
+                {birthdayFieldValue !== null &&
+                  isUnder18(birthdayFieldValue) && (
+                    <>
+                      <Grid item xs={12} sm={12} mt={1}>
+                        <Typography variant="body1">
+                          Siden du er under 18, trenger vi informasjon om en av
+                          dine foresatte.
+                        </Typography>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          data-testid="guardian-name-field"
+                          required
+                          fullWidth
+                          id="lastName"
+                          label="Foresatt sitt fulle navn"
+                          autoComplete="name"
+                          error={!!errors.guardianName}
+                          {...register(
+                            "guardianName",
+                            fieldValidators.guardianName,
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          data-testid="guardian-email-field"
+                          required
+                          fullWidth
+                          id="email"
+                          label="Foresatt sin epost"
+                          autoComplete="email"
+                          error={!!errors.guardianEmail}
+                          {...register(
+                            "guardianEmail",
+                            fieldValidators.guardianEmail,
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          data-testid="guardian-phone-field"
+                          required
+                          fullWidth
+                          id="phoneNumber"
+                          label="Foresatt sitt telefonnummer"
+                          autoComplete="tel-national"
+                          error={!!errors.guardianPhoneNumber}
+                          {...register(
+                            "guardianPhoneNumber",
+                            fieldValidators.guardianPhoneNumber,
+                          )}
+                        />
+                      </Grid>
+                    </>
+                  )}
                 {isSignUp && (
                   <Grid item xs={12}>
                     <FormControlLabel

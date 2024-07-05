@@ -15,9 +15,9 @@ export type UserEditorFields = {
   address: string;
   postalCode: string;
   birthday: Moment | null;
-  guardianName: string;
-  guardianEmail: string;
-  guardianPhoneNumber: string;
+  guardianName: string | undefined;
+  guardianEmail: string | undefined;
+  guardianPhoneNumber: string | undefined;
   agreeToTermsAndConditions: boolean;
 };
 
