@@ -45,8 +45,7 @@ import { assertBlApiError } from "@/utils/types";
 type UserEditorFields = {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   phoneNumber: string;
   address: string;
   postalCode: string;
@@ -55,36 +54,6 @@ type UserEditorFields = {
   guardianEmail: string;
   guardianPhoneNumber: string;
   agreeToTermsAndConditions: boolean;
-};
-
-export const extractFirstName = (fullName: string): string => {
-  if (!fullName || fullName.length <= 0) {
-    return "";
-  }
-
-  const fullNameSplit = fullName.split(" ");
-
-  if (fullNameSplit.length === 1) {
-    return fullNameSplit[0] as string;
-  }
-
-  return fullName
-    .split(" ")
-    .slice(0, fullNameSplit.length - 1)
-    .join(" ");
-};
-
-export const extractLastName = (fullName: string): string => {
-  if (!fullName || fullName.length <= 0) {
-    return "";
-  }
-
-  const fullNameSplit = fullName.split(" ");
-
-  if (fullNameSplit.length > 1) {
-    return fullNameSplit.slice(-1).join(" ");
-  }
-  return "";
 };
 
 const isUnder18 = (birthday: moment.Moment | null): boolean => {
@@ -111,8 +80,7 @@ const UserDetailEditor = ({
 
   const defaultValues = {
     email: userDetails.email,
-    firstName: extractFirstName(userDetails.name),
-    lastName: extractLastName(userDetails.name),
+    name: userDetails.name,
     phoneNumber: userDetails.phone,
     address: userDetails.address,
     postalCode: userDetails.postCode,
@@ -163,7 +131,7 @@ const UserDetailEditor = ({
     }
     try {
       await updateUserDetails(getAccessTokenBody().details, {
-        name: `${data.firstName} ${data.lastName}`,
+        name: data.name,
         email: data.email,
         phone: data.phoneNumber,
         address: data.address,
@@ -364,31 +332,17 @@ const UserDetailEditor = ({
                   <Typography variant="body1">Din informasjon</Typography>
                   <Divider />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <TextField
-                    data-testid="first-name-field"
+                    data-testid="name-field"
                     required
-                    autoComplete="given-name"
+                    autoComplete="name"
                     fullWidth
-                    id="firstName"
-                    label="Fornavn"
-                    error={!!errors.firstName}
-                    {...register("firstName", {
-                      required: "Du må fylle inn fornavn",
-                    })}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    data-testid="last-name-field"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Etternavn"
-                    autoComplete="family-name"
-                    error={!!errors.lastName}
-                    {...register("lastName", {
-                      required: "Du må fylle inn etternavn",
+                    id="name"
+                    label="Navn"
+                    error={!!errors.name}
+                    {...register("name", {
+                      required: "Du må fylle inn navn",
                     })}
                   />
                 </Grid>
@@ -466,7 +420,7 @@ const UserDetailEditor = ({
                             },
                           ]
                         >(
-                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup}`,
+                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
                           { postalCode: event.target.value },
                         );
                         setWaitingForPostalCity(false);
@@ -493,7 +447,7 @@ const UserDetailEditor = ({
                             },
                           ]
                         >(
-                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup}`,
+                          `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
                           { postalCode: v },
                         );
 
