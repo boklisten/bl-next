@@ -189,16 +189,18 @@ const UserDetailEditor = ({
           </>
         )}
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          {Object.entries(errors).map(([type, message]) => (
-            <Alert
-              key={type}
-              severity="error"
-              data-testid="error-message"
-              sx={{ marginY: 1 }}
-            >
-              {message.message}
-            </Alert>
-          ))}
+          <Box mb={2}>
+            {Object.entries(errors).map(([type, message]) => (
+              <Alert
+                key={type}
+                severity="error"
+                data-testid="error-message"
+                sx={{ marginY: 1 }}
+              >
+                {message.message}
+              </Alert>
+            ))}
+          </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box
