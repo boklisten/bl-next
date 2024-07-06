@@ -12,7 +12,11 @@ import {
 import BL_CONFIG from "@/utils/bl-config";
 
 export function attachTokensToHref(href: string) {
-  if (String(href).includes(BL_CONFIG.blWeb.basePath) && isLoggedIn()) {
+  if (
+    (String(href).includes(BL_CONFIG.blWeb.basePath) ||
+      String(href).includes(BL_CONFIG.blAdmin.basePath)) &&
+    isLoggedIn()
+  ) {
     return (
       href +
       `?refresh_token=${getRefreshToken()}&access_token=${getAccessToken()}`

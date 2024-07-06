@@ -13,10 +13,12 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import { login } from "@/api/user";
+import { attachTokensToHref } from "@/components/AuthLinker";
 import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
+import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
 type SignInFields = {
@@ -48,6 +50,12 @@ export default function SignIn() {
           );
         }
       }
+      return;
+    }
+    if (searchParams.get("caller") === "bl-admin") {
+      router.push(
+        attachTokensToHref(BL_CONFIG.blAdmin.basePath + "auth/gateway"),
+      );
       return;
     }
     router.push("/" + (searchParams.get("redirect") ?? ""));

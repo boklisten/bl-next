@@ -5,6 +5,10 @@ const BL_CONFIG = {
   blWeb: {
     basePath: process.env["NEXT_PUBLIC_BL_WEB_URL"] ?? "http://localhost:4200/",
   },
+  blAdmin: {
+    basePath:
+      process.env["NEXT_PUBLIC_BL_ADMIN_URL"] ?? "http://localhost:8080/",
+  },
   token: {
     accessToken: "bl-access-token",
     refreshToken: "bl-refresh-token",

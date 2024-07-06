@@ -8,9 +8,6 @@ import CompanyLogo from "@/components/CompanyLogo";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import BL_CONFIG from "@/utils/bl-config";
 
-// TODO before merge: handle login/logout redirects to and from bl-admin as well
-// TODO before merge: handle permission lockouts for bl-admin
-
 export default function LogoutPage() {
   useEffect(() => {
     logout();
