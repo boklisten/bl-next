@@ -37,21 +37,18 @@ async function getBranchData(branchId: string): Promise<BranchData> {
   const now = moment().startOf("day").format("DDMMYYYYHHmm");
   const openingHoursUrl = `${BL_CONFIG.collection.openingHour}?branch=${branchId}&from=>${now}`;
   const branchData: BranchData = { branch: null, openingHours: [] };
-  const [branchResult, openingHoursResult] = await Promise.allSettled([
-    BlFetcher.get<Branch[]>(branchUrl),
-    BlFetcher.get<OpeningHour[]>(openingHoursUrl),
-  ]);
-
-  if (branchResult.status === "fulfilled") {
-    branchData.branch = branchResult.value[0] ?? null;
-  } else {
-    assertBlApiError(branchResult.reason);
+  try {
+    const branches = await BlFetcher.get<Branch[]>(branchUrl);
+    branchData.branch = branches[0] ?? null;
+  } catch (error) {
+    assertBlApiError(error);
   }
-
-  if (openingHoursResult.status === "fulfilled") {
-    branchData.openingHours = openingHoursResult.value;
-  } else {
-    assertBlApiError(openingHoursResult.reason);
+  try {
+    const openingHoursResult =
+      await BlFetcher.get<OpeningHour[]>(openingHoursUrl);
+    branchData.openingHours = openingHoursResult ?? [];
+  } catch (error) {
+    assertBlApiError(error);
   }
 
   return branchData;
