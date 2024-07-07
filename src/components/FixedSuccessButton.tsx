@@ -12,7 +12,7 @@ const FixedSuccessButton = ({
   <LoadingButton
     color="success"
     variant="contained"
-    sx={{ position: "fixed", bottom: ".5rem", zIndex: 10 }}
+    sx={{ position: "fixed", bottom: 1, zIndex: 10 }}
     loading={loading}
     onClick={onClick}
   >

@@ -243,7 +243,7 @@ const UserDetailEditor = ({
                 <>
                   {emailConfirmationRequested ? (
                     <Alert severity={"info"} sx={{ mt: 1 }} icon={<Email />}>
-                      Bekreftelseslenke er sendt til din e-post-adresse! Sjekk
+                      Bekreftelseslenke er sendt til din e-postadresse! Sjekk
                       søppelpost om den ikke dukker opp i inbox.
                     </Alert>
                   ) : (

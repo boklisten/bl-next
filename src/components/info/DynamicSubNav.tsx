@@ -43,7 +43,7 @@ const DynamicSubNavInner = ({
           key={href}
           sx={{
             p: 0,
-            borderRadius: "1rem",
+            borderRadius: 2,
           }}
         >
           <NextLink
@@ -51,7 +51,7 @@ const DynamicSubNavInner = ({
             role="tab"
             style={{
               color: "inherit",
-              padding: "0.5rem 0.6rem",
+              padding: "1 1.2",
               textDecoration: "none",
             }}
           >

@@ -31,13 +31,13 @@ const ManualRegistrationModal = ({
           <Alert severity="info" sx={{ mt: 1 }}>
             Skal kun brukes dersom bokas unike ID ikke lar seg skanne
           </Alert>
-          <InputLabel sx={{ mt: "1rem", mb: ".4rem" }}>
+          <InputLabel sx={{ mt: 2, mb: 0.8 }}>
             Skriv inn bokas unike ID
           </InputLabel>
           <TextField
             value={manualInput}
             label="8 siffer eller 12 bokstaver"
-            sx={{ marginBottom: "1rem" }}
+            sx={{ marginBottom: 2 }}
             onChange={(event) => setManualInput(event.target.value)}
           />
         </Stack>

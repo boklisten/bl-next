@@ -51,11 +51,11 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   }
 
   return (
-    <Card sx={{ padding: "1rem 0 2rem 0" }}>
+    <Card sx={{ padding: "2 0 4 0" }}>
       <Container>
         <DynamicLink
           href={`/${BL_CONFIG.collection.match}`}
-          sx={{ marginTop: "1rem", marginBottom: "0.5rem" }}
+          sx={{ marginTop: 2, marginBottom: 1 }}
         >
           <Button startIcon={<ArrowBack />}>Alle overleveringer</Button>
         </DynamicLink>

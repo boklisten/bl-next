@@ -35,25 +35,25 @@ const ScannerTutorial = () => {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-              marginY: "2rem",
+              marginY: 4,
               width: "95%",
             }}
           >
-            <Typography variant="h4" sx={{ mt: "1rem" }}>
+            <Typography variant="h4" sx={{ mt: 2 }}>
               Hvordan scanne bøker
             </Typography>
 
             <Card
               sx={{
-                padding: "1rem",
+                padding: 2,
                 bgcolor: "#fefefa",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "20rem",
+                width: 40,
               }}
             >
-              <Typography sx={{ mb: ".4rem" }}>
+              <Typography sx={{ mb: 0.8 }}>
                 1. Scan eller skriv inn en bok sin unike ID, som ser slik ut:
               </Typography>
               <Image
@@ -63,9 +63,7 @@ const ScannerTutorial = () => {
                 width={300}
                 height={150}
               />
-              <Typography sx={{ mb: ".4rem", mt: "1rem" }}>
-                Eller slik
-              </Typography>
+              <Typography sx={{ mb: 0.8, mt: 2 }}>Eller slik</Typography>
               <Image
                 style={{ borderRadius: "2%" }}
                 src={"/blid.jpg"}
@@ -73,7 +71,7 @@ const ScannerTutorial = () => {
                 width={300}
                 height={150}
               />
-              <Typography sx={{ mb: ".4rem", mt: "1rem" }}>
+              <Typography sx={{ mb: 0.8, mt: 2 }}>
                 Sliter du med å finne IDen? Sjekk innsiden av boka, eller be om
                 hjelp fra kontaktelev eller stand
               </Typography>
@@ -81,10 +79,10 @@ const ScannerTutorial = () => {
 
             <Card
               sx={{
-                padding: "1rem",
+                padding: 2,
                 bgcolor: "#fefefa",
-                mt: "1rem",
-                width: "20rem",
+                mt: 2,
+                width: 40,
               }}
             >
               <Typography>3. Gjenta til du har scannet alle bøkene </Typography>
@@ -92,13 +90,13 @@ const ScannerTutorial = () => {
 
             <Card
               sx={{
-                padding: "1rem",
+                padding: 2,
                 bgcolor: "#fefefa",
-                mt: "1rem",
+                mt: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "20rem",
+                width: "1",
               }}
             >
               <Typography>
@@ -114,7 +112,7 @@ const ScannerTutorial = () => {
               />
             </Card>
             <Button
-              sx={{ marginY: "1rem" }}
+              sx={{ marginY: 2 }}
               color={"success"}
               variant={"contained"}
               onClick={() => setTutorialOpen(false)}

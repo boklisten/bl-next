@@ -152,19 +152,19 @@ const ScannerModal = ({
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          flexBasis: "30rem",
-          maxWidth: "50rem",
+          flexBasis: 60,
+          maxWidth: 100,
           maxHeight: "calc(var(--vh, 1vh) * 100)",
-          paddingBottom: "1rem",
+          paddingBottom: 2,
           borderRadius: 0,
           overflowY: "hidden",
         }}
       >
         <Box
           sx={{
-            maxWidth: "30rem",
+            maxWidth: 60,
             maxHeight: "100%",
-            flexBasis: "21rem",
+            flexBasis: 0.2,
             flexShrink: 0,
           }}
         >
@@ -190,13 +190,13 @@ const ScannerModal = ({
         <Box
           sx={{
             overflowY: "auto",
-            maxHeight: "30rem",
-            mt: "1rem",
+            maxHeight: 60,
+            mt: 2,
           }}
         >
           <MatchItemTable itemStatuses={itemStatuses} isSender={false} />
         </Box>
-        <Stack direction={"row"} gap={1} mt={"1rem"}>
+        <Stack direction={"row"} gap={1} mt={2}>
           <Button
             color={"info"}
             variant={"outlined"}

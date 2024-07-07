@@ -48,7 +48,7 @@ const ForgotPage = () => {
         name="description"
         content="Har du glemt passordet ditt? Få hjep til å opprette et nytt!"
       />
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <Container component="main" maxWidth="xs">
           <Box
             sx={{

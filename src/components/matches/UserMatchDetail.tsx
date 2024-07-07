@@ -57,7 +57,7 @@ const UserMatchDetail = ({
       </Typography>
 
       {isFulfilled && (
-        <Box my={"1rem"}>
+        <Box my={2}>
           <Alert>
             Du har {isSender ? "levert" : "mottatt"} alle bøkene for denne
             overleveringen.
@@ -84,7 +84,7 @@ const UserMatchDetail = ({
         otherPersonFulfilledItems.some(
           (item) => !fulfilledItems.includes(item),
         ) && (
-          <Alert severity="warning" sx={{ my: "1rem" }}>
+          <Alert severity="warning" sx={{ my: 2 }}>
             <AlertTitle>{`${match.receiverDetails.name} har fått bøker som tilhørte noen andre enn deg`}</AlertTitle>
             <Typography paragraph>
               Hvis det var du som ga dem bøkene, betyr det at noen andre har
@@ -101,7 +101,7 @@ const UserMatchDetail = ({
 
       {!isFulfilled && (
         <>
-          <Box sx={{ my: "1rem" }}>
+          <Box sx={{ my: 2 }}>
             <Typography variant="h2">Hvordan fungerer det?</Typography>
             <Typography>
               Du skal møte en annen elev og utveksle bøker. Det er viktig at den
@@ -123,7 +123,7 @@ const UserMatchDetail = ({
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: "1rem",
+              gap: 2,
             }}
           >
             <ScannerTutorial />

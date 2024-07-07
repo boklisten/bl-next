@@ -8,7 +8,7 @@ import EmailConfirmer from "@/components/EmailConfirmer";
 export const metadata: Metadata = {
   title: "Bekreft e-post",
   description:
-    "Bekreft din e-post-adresse, slik at du får viktig informasjon fra oss.",
+    "Bekreft din e-postadresse, slik at du får viktig informasjon fra oss.",
 };
 
 export default function TokenPage({
@@ -17,7 +17,7 @@ export default function TokenPage({
   params: { confirmationId: string };
 }) {
   return (
-    <Card sx={{ paddingBottom: "2rem" }}>
+    <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

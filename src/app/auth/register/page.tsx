@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const RegisterPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <Suspense>
           <UserDetailEditor isSignUp />
         </Suspense>

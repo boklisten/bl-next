@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </Box>
               <Box
                 sx={{
-                  height: "1rem",
+                  height: 2,
                   width: "100%",
                 }}
               />

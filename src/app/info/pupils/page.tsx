@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.pupils} />
       </Card>

@@ -126,7 +126,7 @@ export const EditableTextEditor = ({ editableText }: EditorProps) => {
 
 const quillModules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { header: "3" }],
+    [{ header: "1" }, { header: 2 }, { header: "3" }],
     // Disabled until bl-web no longer needs to be supported
     // [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],

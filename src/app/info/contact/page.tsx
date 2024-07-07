@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const ContactPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Typography
           variant="h4"

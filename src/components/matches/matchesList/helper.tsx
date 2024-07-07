@@ -11,7 +11,7 @@ export const sectionStyle: Properties = {
   display: "flex",
   flexDirection: "column",
   gap: "1em",
-  marginTop: "1rem",
+  marginTop: 2,
 };
 
 export function formatActionsString(handoffItems: number, pickupItems: number) {

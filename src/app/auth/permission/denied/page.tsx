@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function PermissionDeniedPage() {
   return (
-    <Card sx={{ paddingBottom: "2rem" }}>
+    <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

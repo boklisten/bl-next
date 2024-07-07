@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const TermsPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <DynamicSubNav tabs={termsAndConditionsTabs} />
         <Editor rawEditorState={editorData.terms} />

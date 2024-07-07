@@ -29,7 +29,7 @@ export default function Matches() {
           Du må logge inn for å se overleveringene dine
         </Alert>
         <DynamicLink href={"/auth/login?redirect=matches"}>
-          <Button variant={"contained"} sx={{ mt: "1rem" }}>
+          <Button variant={"contained"} sx={{ mt: 2 }}>
             Logg inn
           </Button>
         </DynamicLink>

@@ -111,7 +111,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                     }}
                     open={openOrder === order.id}
                     sx={{
-                      marginY: "1rem",
+                      marginY: 2,
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -126,7 +126,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                     >
                       <Typography
                         variant="h4"
-                        sx={{ textAlign: "center", marginBottom: "1rem" }}
+                        sx={{ textAlign: "center", marginBottom: 2 }}
                       >
                         Ordredetaljer
                       </Typography>
@@ -205,7 +205,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                       </Table>
                       <Typography
                         variant="h5"
-                        sx={{ textAlign: "center", marginY: "1rem" }}
+                        sx={{ textAlign: "center", marginY: 2 }}
                       >
                         Bøker
                       </Typography>
@@ -214,7 +214,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                           display: "flex",
                           flexWrap: "wrap",
                           justifyContent: "center",
-                          gap: "1rem",
+                          gap: 2,
                         }}
                       >
                         {order.orderItems.map((orderItem) => {
@@ -224,16 +224,16 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                             <Card
                               key={orderItem.blid}
                               sx={{
-                                marginBottom: "1rem",
+                                marginBottom: 2,
                                 width: "400px",
-                                marginX: ".5rem",
+                                marginX: 1,
                               }}
                             >
                               <Typography
                                 variant="h6"
                                 sx={{
                                   textAlign: "center",
-                                  marginBottom: ".1rem",
+                                  marginBottom: 0.2,
                                 }}
                               >
                                 {orderItem.title}

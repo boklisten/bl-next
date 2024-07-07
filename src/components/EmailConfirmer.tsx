@@ -58,7 +58,7 @@ export default function EmailConfirmer({
       )}
       {status === "SUCCESS" && (
         <>
-          <Alert sx={{ mt: 1 }}>E-post-adressen ble bekreftet!</Alert>
+          <Alert sx={{ mt: 1 }}>E-postadressen ble bekreftet!</Alert>
           <CountdownToRedirect path={"/"} seconds={3} />
         </>
       )}

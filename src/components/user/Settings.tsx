@@ -25,10 +25,10 @@ const Settings = () => {
     try {
       const { details } = getAccessTokenBody();
       const fetchDetails = async () => {
-        const userDetails = await BlFetcher.get<[UserDetail]>(
+        const [userDetails] = await BlFetcher.get<[UserDetail]>(
           `${BL_CONFIG.collection.userDetail}/${details}`,
         );
-        setUserDetails(userDetails[0]);
+        setUserDetails(userDetails);
       };
       fetchDetails();
     } catch {
@@ -37,7 +37,7 @@ const Settings = () => {
   }, [router, searchParams]);
 
   return (
-    <Card sx={{ paddingBottom: "2rem" }}>
+    <Card sx={{ paddingBottom: 4 }}>
       {!userDetails && (
         <Box
           sx={{

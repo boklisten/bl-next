@@ -24,7 +24,7 @@ const OrdersPage = () => {
     <>
       <title>Ordrehistorikk | Boklisten.no</title>
       <meta name="description" content="Se dine ordre" />
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         {orders && <OrderHistory orders={orders} />}
       </Card>
     </>
