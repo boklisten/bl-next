@@ -196,44 +196,49 @@ const UserDetailEditor = ({
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Box
-                display={"flex"}
-                justifyContent={"end"}
-                alignItems={"center"}
-              >
-                <TextField
-                  data-testid="email-field"
-                  onFocus={() => setShowDetails(true)}
-                  required
-                  disabled={!isSignUp}
-                  fullWidth
-                  id="email"
-                  label="E-post"
-                  autoComplete="email"
-                  error={!!errors.email}
-                  {...register("email", fieldValidators.email)}
-                />
-                {!isSignUp && (
-                  <InputAdornment
-                    position="end"
-                    sx={{ position: "absolute", mr: 1 }}
-                  >
-                    <Tooltip
-                      title={
-                        userDetails.emailConfirmed
-                          ? "Bekreftet"
-                          : "Ikke bekreftet"
-                      }
-                    >
-                      {userDetails.emailConfirmed ? (
-                        <Check color={"success"} />
-                      ) : (
-                        <Info color={"warning"} />
+              <TextField
+                data-testid="email-field"
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      {!isSignUp && (
+                        <InputAdornment position={"end"}>
+                          <Tooltip
+                            title={
+                              userDetails.emailConfirmed
+                                ? "Bekreftet"
+                                : "Ikke bekreftet"
+                            }
+                          >
+                            {userDetails.emailConfirmed ? (
+                              <Check color={"success"} />
+                            ) : (
+                              <Info color={"warning"} />
+                            )}
+                          </Tooltip>
+                        </InputAdornment>
                       )}
-                    </Tooltip>
-                  </InputAdornment>
-                )}
-              </Box>
+                    </>
+                  ),
+                }}
+                inputProps={{
+                  inputMode: "email",
+                }}
+                onFocus={() => setShowDetails(true)}
+                required
+                disabled={!isSignUp}
+                fullWidth
+                id="email"
+                label="E-post"
+                helperText={
+                  isSignUp
+                    ? ""
+                    : "Ta kontakt dersom du ønsker å endre e-postadresse"
+                }
+                autoComplete="email"
+                error={!!errors.email}
+                {...register("email", fieldValidators.email)}
+              />
               {!isSignUp && !userDetails.emailConfirmed && (
                 <>
                   {emailConfirmationRequested ? (
@@ -273,44 +278,39 @@ const UserDetailEditor = ({
             </Grid>
             {isSignUp && (
               <Grid item xs={12}>
-                <Box
-                  display={"flex"}
-                  justifyContent={"end"}
-                  alignItems={"center"}
-                >
-                  <TextField
-                    data-testid="password-field"
-                    onFocus={() => setShowDetails(true)}
-                    required
-                    fullWidth
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    label="Passord"
-                    autoComplete="new-password"
-                    error={!!errors.password}
-                    {...register("password", fieldValidators.password)}
-                  />
-                  <InputAdornment
-                    position="end"
-                    sx={{ position: "absolute", mr: 1 }}
-                  >
-                    <Tooltip
-                      title={showPassword ? "Skjul passord" : "Vis passord"}
-                    >
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={(
-                          event: React.MouseEvent<HTMLButtonElement>,
-                        ) => {
-                          event.preventDefault();
-                        }}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </Tooltip>
-                  </InputAdornment>
-                </Box>
+                <TextField
+                  data-testid="password-field"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Tooltip
+                          title={showPassword ? "Skjul passord" : "Vis passord"}
+                        >
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            onMouseDown={(
+                              event: React.MouseEvent<HTMLButtonElement>,
+                            ) => {
+                              event.preventDefault();
+                            }}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </Tooltip>
+                      </InputAdornment>
+                    ),
+                  }}
+                  onFocus={() => setShowDetails(true)}
+                  required
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  label="Passord"
+                  autoComplete="new-password"
+                  error={!!errors.password}
+                  {...register("password", fieldValidators.password)}
+                />
                 <FieldErrorAlert error={errors.password} />
               </Grid>
             )}
@@ -336,6 +336,15 @@ const UserDetailEditor = ({
                 <Grid item xs={12}>
                   <TextField
                     data-testid="phone-field"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">+47</InputAdornment>
+                      ),
+                    }}
+                    inputProps={{
+                      inputMode: "numeric",
+                      pattern: "[0-9]{8}",
+                    }}
                     required
                     fullWidth
                     id="phoneNumber"
@@ -360,38 +369,28 @@ const UserDetailEditor = ({
                   <FieldErrorAlert error={errors.address} />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box
-                    display={"flex"}
-                    justifyContent={"end"}
-                    alignItems={"center"}
-                  >
-                    <TextField
-                      data-testid="postal-code-field"
-                      required
-                      fullWidth
-                      id="postalCode"
-                      label="Postnummer"
-                      autoComplete="postal-code"
-                      error={!!errors.postalCode}
-                      {...register("postalCode", {
-                        // Need to have a separate onChange because of autofill not triggering validation
-                        onChange: onPostalCodeChange,
-                        ...fieldValidators.postalCode,
-                      })}
-                    />
-                    <Typography
-                      sx={{
-                        position: "absolute",
-                        mr: 3,
-                        pointerEvents: "none",
-                      }}
-                      variant="subtitle1"
-                      color="gray"
-                      data-testid="postal-city-preview"
-                    >
-                      {postalCity}
-                    </Typography>
-                  </Box>
+                  <TextField
+                    data-testid="postal-code-field"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position={"end"}>
+                          {postalCity}
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputProps={{ inputMode: "numeric", pattern: "[0-9]{4}" }}
+                    required
+                    fullWidth
+                    id="postalCode"
+                    label="Postnummer"
+                    autoComplete="postal-code"
+                    error={!!errors.postalCode}
+                    {...register("postalCode", {
+                      // Need to have a separate onChange because of autofill not triggering validation
+                      onChange: onPostalCodeChange,
+                      ...fieldValidators.postalCode,
+                    })}
+                  />
                   <FieldErrorAlert error={errors.postalCode} />
                 </Grid>
                 <Grid item xs={12}>
@@ -455,6 +454,9 @@ const UserDetailEditor = ({
                       <Grid item xs={12}>
                         <TextField
                           data-testid="guardian-email-field"
+                          inputProps={{
+                            inputMode: "email",
+                          }}
                           required
                           fullWidth
                           id="email"
@@ -471,6 +473,17 @@ const UserDetailEditor = ({
                       <Grid item xs={12}>
                         <TextField
                           data-testid="guardian-phone-field"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                +47
+                              </InputAdornment>
+                            ),
+                          }}
+                          inputProps={{
+                            inputMode: "numeric",
+                            pattern: "[0-9]{8}",
+                          }}
                           required
                           fullWidth
                           id="phoneNumber"

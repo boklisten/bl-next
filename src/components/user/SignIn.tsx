@@ -103,6 +103,9 @@ export default function SignIn() {
           ))}
           <TextField
             data-testid="email-field"
+            inputProps={{
+              inputMode: "email",
+            }}
             required
             margin="normal"
             fullWidth
@@ -111,41 +114,38 @@ export default function SignIn() {
             autoComplete="email"
             {...register("email")}
           />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
+          <TextField
+            data-testid="password-field"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Tooltip
+                    title={showPassword ? "Skjul passord" : "Vis passord"}
+                  >
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(
+                        event: React.MouseEvent<HTMLButtonElement>,
+                      ) => {
+                        event.preventDefault();
+                      }}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </Tooltip>
+                </InputAdornment>
+              ),
             }}
-          >
-            <TextField
-              data-testid="password-field"
-              required
-              margin="normal"
-              fullWidth
-              label="Passord"
-              type={showPassword ? "text" : "password"}
-              id="password"
-              autoComplete="current-password"
-              {...register("password")}
-            />
-            <InputAdornment
-              position="end"
-              sx={{ position: "absolute", mr: 1, mt: 1 }}
-            >
-              <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShowPassword(!showPassword)}
-                  onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-                    event.preventDefault();
-                  }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </Tooltip>
-            </InputAdornment>
-          </Box>
+            required
+            margin="normal"
+            fullWidth
+            label="Passord"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            autoComplete="current-password"
+            {...register("password")}
+          />
           <Button
             data-testid="login-submit"
             type="submit"
