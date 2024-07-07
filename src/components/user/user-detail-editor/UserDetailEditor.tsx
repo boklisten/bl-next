@@ -9,9 +9,11 @@ import {
 } from "@mui/icons-material";
 import {
   Alert,
+  AlertTitle,
   Divider,
   IconButton,
   InputAdornment,
+  ListItem,
   Skeleton,
   Stack,
   Tooltip,
@@ -22,13 +24,19 @@ import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  Controller,
+  FieldError,
+} from "react-hook-form";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
@@ -41,6 +49,7 @@ import {
   fieldValidators,
   UserEditorFields,
 } from "@/components/user/user-detail-editor/field-validators";
+import FieldErrorAlert from "@/components/user/user-detail-editor/FieldErrorAlert";
 import TermsAndConditionsDisclaimer from "@/components/user/user-detail-editor/TermsAndConditionsDisclaimer";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
@@ -88,7 +97,7 @@ const UserDetailEditor = ({
     setError,
     clearErrors,
     formState: { errors },
-  } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
+  } = useForm<UserEditorFields>({ mode: "onBlur", defaultValues });
 
   const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
     if (postalCity === null) {
@@ -189,18 +198,6 @@ const UserDetailEditor = ({
           </>
         )}
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <Box mb={2}>
-            {Object.entries(errors).map(([type, message]) => (
-              <Alert
-                key={type}
-                severity="error"
-                data-testid="error-message"
-                sx={{ marginY: 1 }}
-              >
-                {message.message}
-              </Alert>
-            ))}
-          </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box
@@ -244,7 +241,7 @@ const UserDetailEditor = ({
               {!isSignUp && !userDetails.emailConfirmed && (
                 <>
                   {emailConfirmationRequested ? (
-                    <Alert sx={{ mt: 1 }} icon={<Email />}>
+                    <Alert severity={"info"} sx={{ mt: 1 }} icon={<Email />}>
                       Bekreftelseslenke er sendt til din e-post-adresse! Sjekk
                       søppelpost om den ikke dukker opp i inbox.
                     </Alert>
@@ -276,47 +273,49 @@ const UserDetailEditor = ({
                   )}
                 </>
               )}
+              <FieldErrorAlert error={errors.email} />
             </Grid>
             {isSignUp && (
-              <Grid
-                item
-                xs={12}
-                display={"flex"}
-                justifyContent={"end"}
-                alignItems={"center"}
-              >
-                <TextField
-                  data-testid="password-field"
-                  onFocus={() => setShowDetails(true)}
-                  required
-                  fullWidth
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  label="Passord"
-                  autoComplete="new-password"
-                  error={!!errors.password}
-                  {...register("password", fieldValidators.password)}
-                />
-                <InputAdornment
-                  position="end"
-                  sx={{ position: "absolute", mr: 1 }}
+              <Grid item xs={12}>
+                <Box
+                  display={"flex"}
+                  justifyContent={"end"}
+                  alignItems={"center"}
                 >
-                  <Tooltip
-                    title={showPassword ? "Skjul passord" : "Vis passord"}
+                  <TextField
+                    data-testid="password-field"
+                    onFocus={() => setShowDetails(true)}
+                    required
+                    fullWidth
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    label="Passord"
+                    autoComplete="new-password"
+                    error={!!errors.password}
+                    {...register("password", fieldValidators.password)}
+                  />
+                  <InputAdornment
+                    position="end"
+                    sx={{ position: "absolute", mr: 1 }}
                   >
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(!showPassword)}
-                      onMouseDown={(
-                        event: React.MouseEvent<HTMLButtonElement>,
-                      ) => {
-                        event.preventDefault();
-                      }}
+                    <Tooltip
+                      title={showPassword ? "Skjul passord" : "Vis passord"}
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </Tooltip>
-                </InputAdornment>
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        onMouseDown={(
+                          event: React.MouseEvent<HTMLButtonElement>,
+                        ) => {
+                          event.preventDefault();
+                        }}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </Tooltip>
+                  </InputAdornment>
+                </Box>
+                <FieldErrorAlert error={errors.password} />
               </Grid>
             )}
             {showDetails && (
@@ -336,6 +335,7 @@ const UserDetailEditor = ({
                     error={!!errors.name}
                     {...register("name", fieldValidators.name)}
                   />
+                  <FieldErrorAlert error={errors.name} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -348,6 +348,7 @@ const UserDetailEditor = ({
                     error={!!errors.phoneNumber}
                     {...register("phoneNumber", fieldValidators.phoneNumber)}
                   />
+                  <FieldErrorAlert error={errors.phoneNumber} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -360,47 +361,49 @@ const UserDetailEditor = ({
                     error={!!errors.address}
                     {...register("address", fieldValidators.address)}
                   />
+                  <FieldErrorAlert error={errors.address} />
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  display={"flex"}
-                  justifyContent={"end"}
-                  alignItems={"center"}
-                >
-                  <TextField
-                    data-testid="postal-code-field"
-                    required
-                    fullWidth
-                    id="postalCode"
-                    label="Postnummer"
-                    autoComplete="postal-code"
-                    error={!!errors.postalCode}
-                    {...register("postalCode", {
-                      // Need to have a separate onChange because of autofill not triggering validation
-                      onChange: onPostalCodeChange,
-                      ...fieldValidators.postalCode,
-                    })}
-                  />
-                  <Typography
-                    sx={{
-                      position: "absolute",
-                      mr: 3,
-                      pointerEvents: "none",
-                    }}
-                    variant="subtitle1"
-                    color="gray"
-                    data-testid="postal-city-preview"
+                <Grid item xs={12}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"end"}
+                    alignItems={"center"}
                   >
-                    {waitingForPostalCity && (
-                      <Skeleton
-                        variant="rectangular"
-                        width={50}
-                        height="1rem"
-                      />
-                    )}
-                    {postalCity}
-                  </Typography>
+                    <TextField
+                      data-testid="postal-code-field"
+                      required
+                      fullWidth
+                      id="postalCode"
+                      label="Postnummer"
+                      autoComplete="postal-code"
+                      error={!!errors.postalCode}
+                      {...register("postalCode", {
+                        // Need to have a separate onChange because of autofill not triggering validation
+                        onChange: onPostalCodeChange,
+                        ...fieldValidators.postalCode,
+                      })}
+                    />
+                    <Typography
+                      sx={{
+                        position: "absolute",
+                        mr: 3,
+                        pointerEvents: "none",
+                      }}
+                      variant="subtitle1"
+                      color="gray"
+                      data-testid="postal-city-preview"
+                    >
+                      {waitingForPostalCity && (
+                        <Skeleton
+                          variant="rectangular"
+                          width={50}
+                          height="1rem"
+                        />
+                      )}
+                      {postalCity}
+                    </Typography>
+                  </Box>
+                  <FieldErrorAlert error={errors.postalCode} />
                 </Grid>
                 <Grid item xs={12}>
                   <Controller
@@ -432,6 +435,7 @@ const UserDetailEditor = ({
                       );
                     }}
                   />
+                  <FieldErrorAlert error={errors.birthday as FieldError} />
                 </Grid>
                 {birthdayFieldValue !== null &&
                   isUnder18(birthdayFieldValue) && (
@@ -457,6 +461,7 @@ const UserDetailEditor = ({
                             fieldValidators.guardianName,
                           )}
                         />
+                        <FieldErrorAlert error={errors.guardianName} />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
@@ -472,6 +477,7 @@ const UserDetailEditor = ({
                             fieldValidators.guardianEmail,
                           )}
                         />
+                        <FieldErrorAlert error={errors.guardianEmail} />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
@@ -487,6 +493,7 @@ const UserDetailEditor = ({
                             fieldValidators.guardianPhoneNumber,
                           )}
                         />
+                        <FieldErrorAlert error={errors.guardianPhoneNumber} />
                       </Grid>
                     </>
                   )}
@@ -509,11 +516,26 @@ const UserDetailEditor = ({
                       }
                       label={<TermsAndConditionsDisclaimer />}
                     />
+                    <FieldErrorAlert error={errors.agreeToTermsAndConditions} />
                   </Grid>
                 )}
               </>
             )}
           </Grid>
+          {Object.values(errors).length > 0 && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              <AlertTitle>
+                Du må rette opp følgende før du kan gå videre:
+              </AlertTitle>
+              <List sx={{ listStyleType: "disc", pl: 2 }}>
+                {Object.values(errors).map((error) => (
+                  <ListItem sx={{ display: "list-item" }} key={error.message}>
+                    {error.message}
+                  </ListItem>
+                ))}
+              </List>
+            </Alert>
+          )}
           <Button
             data-testid="submit-button"
             type="submit"
