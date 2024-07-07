@@ -7,6 +7,7 @@ import BuybackList from "@/components/info/BuybackList";
 import DynamicNav from "@/components/info/DynamicNav";
 import BL_CONFIG from "@/utils/bl-config";
 import { infoPageTabs } from "@/utils/constants";
+import { assertBlApiError } from "@/utils/types";
 
 export const metadata: Metadata = {
   title: "Innkjøpsliste",
@@ -15,9 +16,14 @@ export const metadata: Metadata = {
 };
 
 const BuybackPage = async () => {
-  const buybackItems = await BlFetcher.get<Item[]>(
-    `${BL_CONFIG.collection.item}?buyback=true&sort=title`,
-  );
+  let buybackItems: Item[] = [];
+  try {
+    buybackItems = await BlFetcher.get<Item[]>(
+      `${BL_CONFIG.collection.item}?buyback=true&sort=title`,
+    );
+  } catch (error) {
+    assertBlApiError(error);
+  }
 
   return (
     <>
