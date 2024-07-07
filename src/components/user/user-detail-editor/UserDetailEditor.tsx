@@ -14,7 +14,6 @@ import {
   IconButton,
   InputAdornment,
   ListItem,
-  Skeleton,
   Stack,
   Tooltip,
 } from "@mui/material";
@@ -72,7 +71,6 @@ const UserDetailEditor = ({
   const [postalCity, setPostalCity] = useState<string | null>(
     userDetails?.postCity ?? null,
   );
-  const [waitingForPostalCity, setWaitingForPostalCity] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -155,10 +153,9 @@ const UserDetailEditor = ({
 
   async function onPostalCodeChange(event: { target: { value: string } }) {
     setPostalCity(null);
-    if (event.target.value.length === 0) {
+    if (event.target.value.length !== 4) {
       return;
     }
-    setWaitingForPostalCity(true);
     const response = await BlFetcher.post<
       [
         {
@@ -169,7 +166,6 @@ const UserDetailEditor = ({
       `${BL_CONFIG.collection.delivery}/${BL_CONFIG.delivery.postalCodeLookup.operation}`,
       { postalCode: event.target.value },
     );
-    setWaitingForPostalCity(false);
 
     if (!response[0].postalCity) {
       setPostalCity(null);
@@ -393,13 +389,6 @@ const UserDetailEditor = ({
                       color="gray"
                       data-testid="postal-city-preview"
                     >
-                      {waitingForPostalCity && (
-                        <Skeleton
-                          variant="rectangular"
-                          width={50}
-                          height="1rem"
-                        />
-                      )}
                       {postalCity}
                     </Typography>
                   </Box>
