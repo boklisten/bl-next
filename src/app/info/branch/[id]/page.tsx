@@ -10,9 +10,14 @@ import { assertBlApiError } from "@/utils/types";
 type Params = { params: { id: string } };
 
 export const generateStaticParams = async () => {
-  return await BlFetcher.get<Branch[]>(
-    `${BL_CONFIG.collection.branch}?active=true`,
-  );
+  try {
+    return await BlFetcher.get<Branch[]>(
+      `${BL_CONFIG.collection.branch}?active=true`,
+    );
+  } catch (error) {
+    assertBlApiError(error);
+  }
+  return [];
 };
 
 export const dynamic = "force-dynamic";
