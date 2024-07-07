@@ -1,18 +1,10 @@
 import { KeyboardDoubleArrowRight, SwapHoriz } from "@mui/icons-material";
 import { SxProps, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Properties } from "csstype";
 import React from "react";
 
 import theme from "@/utils/theme";
 import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
-
-export const sectionStyle: Properties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "1em",
-  marginTop: 2,
-};
 
 export function formatActionsString(handoffItems: number, pickupItems: number) {
   const hasHandoffItems = handoffItems > 0;
