@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "For VGS-elever | Boklisten.no",
+  title: "For VGS-elever",
   description:
     "Er du videregående-elev? Finn dine kontaktelever og når utdeling og innsamling skjer.",
 };

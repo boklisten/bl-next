@@ -6,7 +6,7 @@ import CompanyLogo from "@/components/CompanyLogo";
 import PasswordReset from "@/components/user/PasswordReset";
 
 export const metadata: Metadata = {
-  title: "Lag nytt passord | Boklisten.no",
+  title: "Lag nytt passord",
   description: "Lag et nytt passord, slik at du får tilgang på kontoen din.",
 };
 

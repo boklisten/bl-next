@@ -6,7 +6,7 @@ import React, { Suspense } from "react";
 import Matches from "@/components/matches/Matches";
 
 export const metadata: Metadata = {
-  title: "Mine overleveringer | Boklisten.no",
+  title: "Mine overleveringer",
   description: "Overleveringer av bøker",
 };
 

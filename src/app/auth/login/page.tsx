@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import SignIn from "@/components/user/SignIn";
 
 export const metadata: Metadata = {
-  title: "Logg inn | Boklisten.no",
+  title: "Logg inn",
   description:
     "Logg inn for bestille bøker, samt se status på nåvårende bøker.",
 };

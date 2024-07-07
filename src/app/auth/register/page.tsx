@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
 
 export const metadata: Metadata = {
-  title: "Ny bruker | Boklisten.no",
+  title: "Ny bruker",
   description: "Opprett en ny bruker for å tilgang til å bestille skolebøker.",
 };
 

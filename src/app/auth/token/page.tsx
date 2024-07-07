@@ -7,7 +7,7 @@ import AuthVerifier from "@/components/AuthVerifier";
 import CompanyLogo from "@/components/CompanyLogo";
 
 export const metadata: Metadata = {
-  title: "Logger inn... | Boklisten.no",
+  title: "Logger inn...",
   description: "Du blir nå logget inn. Vennligst vent.",
 };
 

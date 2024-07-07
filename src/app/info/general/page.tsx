@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "Generell informasjon | Boklisten.no",
+  title: "Generell informasjon",
   description:
     "Velkommen til Boklisten.no! Her kan du enkelt kjøpe pensumbøker. Les om vårt konsept, og hvilke tjenester vi tilbyr her.",
 };

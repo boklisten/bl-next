@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import Settings from "@/components/user/Settings";
 
 export const metadata: Metadata = {
-  title: "Innstillinger | Boklisten.no",
+  title: "Innstillinger",
   description: "Endre din informasjon",
 };
 

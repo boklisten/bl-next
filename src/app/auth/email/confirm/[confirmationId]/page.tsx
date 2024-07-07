@@ -6,7 +6,7 @@ import CompanyLogo from "@/components/CompanyLogo";
 import EmailConfirmer from "@/components/EmailConfirmer";
 
 export const metadata: Metadata = {
-  title: "Bekreft e-post | Boklisten.no",
+  title: "Bekreft e-post",
   description:
     "Bekreft din e-post-adresse, slik at du får viktig informasjon fra oss.",
 };

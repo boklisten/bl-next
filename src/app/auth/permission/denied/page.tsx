@@ -6,7 +6,7 @@ import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 
 export const metadata: Metadata = {
-  title: "Du har ikke tilgang til denne siden | Boklisten.no",
+  title: "Du har ikke tilgang til denne siden",
   description:
     "Vi klarte ikke å logge deg inn. Vennligst prøv på nytt eller ta kontakt hvis problemet vedvarer.",
 };

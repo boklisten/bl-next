@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "For skolekunder | Boklisten.no",
+  title: "For skolekunder",
   description:
     "Er du ansvarlig for en videregående eller privatist-skole? Vi tilbyr en rekke nyttige tjenester til dere! Les om våre tilbud til skoler, hvordan utlånsordningen fungrer og hvordan dere kan kjøpe bøker fra skyvearkivet.",
 };

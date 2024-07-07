@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box } from "@mui/system";
+import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 import * as React from "react";
 
@@ -16,6 +17,13 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "@/globals.css";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Boklisten.no",
+    default: "Boklisten.no",
+  },
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

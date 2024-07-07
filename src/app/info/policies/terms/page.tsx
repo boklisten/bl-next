@@ -8,7 +8,7 @@ import { infoPageTabs, termsAndConditionsTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "Vilkår | Boklisten.no",
+  title: "Vilkår",
   description:
     "Når du handler hos oss gjelder noen vilkår. Disse er her for å gi alle parter trygghet for hvilke regler som gjelder.",
 };

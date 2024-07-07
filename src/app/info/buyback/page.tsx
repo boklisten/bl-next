@@ -9,7 +9,7 @@ import BL_CONFIG from "@/utils/bl-config";
 import { infoPageTabs } from "@/utils/constants";
 
 export const metadata: Metadata = {
-  title: "Innkjøpsliste | Boklisten.no",
+  title: "Innkjøpsliste",
   description:
     "Har du pensumbøker du ikke lenger har bruk for? Vi kjøper inn de aller fleste pensumbøker. Se oversikten over hvilke bøker vi tar imot her.",
 };
