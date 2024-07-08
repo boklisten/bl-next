@@ -36,28 +36,28 @@ const theme = responsiveFontSizes(
     typography: {
       fontFamily: roboto.style.fontFamily,
       h1: {
-        fontSize: 4,
+        fontSize: "2rem",
         marginTop: 3.2,
         marginBottom: 1.2,
       },
       h2: {
-        fontSize: 3,
+        fontSize: "1.5rem",
         marginTop: 3.2,
         fontWeight: 400,
         marginBottom: 0.4,
       },
       h3: {
-        fontSize: 2.2,
+        fontSize: "1.1rem",
         marginTop: 0.4,
         marginBottom: 0.4,
       },
       title: {
-        fontSize: 8,
+        fontSize: "4rem",
         marginTop: 8,
         marginBottom: 1.2,
       },
       cardHeader: {
-        fontSize: 2.2,
+        fontSize: "1.1rem",
         marginTop: 1,
         marginBottom: 0.8,
         marginBlockStart: 1,
