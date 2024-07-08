@@ -30,43 +30,44 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="no">
       <body>
         <Suspense>
-          <AuthLinker />
-        </Suspense>
-        <DynamicHeightProvider>
-          <CustomLocalizationProvider>
-            <CustomThemeProvider>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <Box
-                sx={{
-                  minHeight: "100vh",
-                  backgroundColor: "#f9f9f9",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <NavBar />
-                <Container
+          <DynamicHeightProvider>
+            <CustomLocalizationProvider>
+              <CustomThemeProvider>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <Box
                   sx={{
+                    minHeight: "100vh",
+                    backgroundColor: "#f9f9f9",
                     display: "flex",
-                    flexGrow: 1,
-                    alignItems: "stretch",
-                    paddingX: 0,
+                    flexDirection: "column",
                   }}
                 >
-                  <Box sx={{ width: "100%" }}>{children}</Box>
-                </Container>
-              </Box>
-              <Box
-                sx={{
-                  height: 2,
-                  width: "100%",
-                }}
-              />
-              <Footer />
-            </CustomThemeProvider>
-          </CustomLocalizationProvider>
-        </DynamicHeightProvider>
+                  <NavBar />
+                  <Container
+                    sx={{
+                      display: "flex",
+                      flexGrow: 1,
+                      alignItems: "stretch",
+                      paddingX: 0,
+                    }}
+                  >
+                    <Box sx={{ width: "100%" }}>
+                      <AuthLinker>{children}</AuthLinker>
+                    </Box>
+                  </Container>
+                </Box>
+                <Box
+                  sx={{
+                    height: 2,
+                    width: "100%",
+                  }}
+                />
+                <Footer />
+              </CustomThemeProvider>
+            </CustomLocalizationProvider>
+          </DynamicHeightProvider>
+        </Suspense>
       </body>
     </html>
   );

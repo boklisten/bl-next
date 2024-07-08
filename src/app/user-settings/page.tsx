@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 import UserSettings from "@/components/user/UserSettings";
 
@@ -9,11 +8,7 @@ export const metadata: Metadata = {
 };
 
 const SettingsPage = () => {
-  return (
-    <Suspense>
-      <UserSettings />
-    </Suspense>
-  );
+  return <UserSettings />;
 };
 
 export default SettingsPage;

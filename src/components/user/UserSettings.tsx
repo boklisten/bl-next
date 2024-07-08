@@ -2,7 +2,7 @@
 import { UserDetail } from "@boklisten/bl-model";
 import { Card, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
@@ -11,16 +11,10 @@ import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEdi
 import BL_CONFIG from "@/utils/bl-config";
 
 const UserSettings = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetail>();
 
   useEffect(() => {
-    // Wait for AuthLinker to process query params
-    if (searchParams.size > 0) {
-      return;
-    }
-
     try {
       const { details } = getAccessTokenBody();
       const fetchDetails = async () => {
@@ -33,7 +27,7 @@ const UserSettings = () => {
     } catch {
       router.push("/auth/login?redirect=settings");
     }
-  }, [router, searchParams]);
+  }, [router]);
 
   return (
     <Card sx={{ paddingBottom: 4 }}>

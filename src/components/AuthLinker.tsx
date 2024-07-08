@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { isLoggedIn } from "@/api/auth";
 import {
@@ -25,10 +25,11 @@ export function attachTokensToHref(href: string) {
   return href;
 }
 
-export default function AuthLinker() {
+export default function AuthLinker({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParameters = useSearchParams();
+  const [authProcessed, setAuthProcessed] = useState(false);
 
   useEffect(() => {
     const refresh_token = searchParameters.get("refresh_token");
@@ -40,6 +41,11 @@ export default function AuthLinker() {
       // Clear search params
       router.replace(pathname);
     }
+    setAuthProcessed(true);
   }, [pathname, router, searchParameters]);
-  return null;
+
+  if (!authProcessed) {
+    return null;
+  }
+  return <>{children}</>;
 }

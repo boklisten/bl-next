@@ -1,7 +1,6 @@
 import { Card, CircularProgress, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 import AuthVerifier from "@/components/AuthVerifier";
 
@@ -26,9 +25,7 @@ export default function TokenPage() {
             Du blir nå logget inn...
           </Typography>
           <CircularProgress />
-          <Suspense>
-            <AuthVerifier />
-          </Suspense>
+          <AuthVerifier />
         </Box>
       </Container>
     </Card>

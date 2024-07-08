@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { isLoggedIn } from "@/api/auth";
@@ -9,13 +9,8 @@ import { getAccessTokenBody } from "@/api/token";
 import BL_CONFIG from "@/utils/bl-config";
 
 export default function AuthVerifier() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   useEffect(() => {
-    // Wait for AuthLinker
-    if (searchParams.size > 0) {
-      return;
-    }
     if (!isLoggedIn()) {
       router.push("/auth/failure");
     }
@@ -35,6 +30,6 @@ export default function AuthVerifier() {
       }
     };
     checkUserDetailsValid();
-  }, [router, searchParams.size]);
+  }, [router]);
   return null;
 }
