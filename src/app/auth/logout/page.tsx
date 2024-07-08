@@ -22,7 +22,7 @@ export default function LogoutPage() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+          <Typography variant="h5" sx={{ mt: 1 }}>
             Du er nå logget ut
           </Typography>
           <CountdownToRedirect

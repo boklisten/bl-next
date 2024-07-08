@@ -22,7 +22,7 @@ export default function TokenPage() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ my: 1 }}>
+          <Typography variant="h5" sx={{ my: 1 }}>
             Du blir nå logget inn...
           </Typography>
           <CircularProgress />

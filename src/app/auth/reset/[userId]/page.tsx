@@ -25,7 +25,7 @@ export default function PasswordResetPage({
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+          <Typography variant="h5" sx={{ mt: 1 }}>
             Lag nytt passord
           </Typography>
           <PasswordReset userId={params.userId} />

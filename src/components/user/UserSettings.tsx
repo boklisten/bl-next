@@ -46,7 +46,7 @@ const UserSettings = () => {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+          <Typography variant="h5" sx={{ mt: 1 }}>
             Brukerinnstillinger
           </Typography>
           <CircularProgress sx={{ mt: 1 }} />

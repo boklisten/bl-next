@@ -179,7 +179,7 @@ const UserDetailEditor = ({
   return (
     <Container component="main" maxWidth="xs">
       <Stack alignItems={"center"} mt={4}>
-        <Typography component="h1" variant="h5" sx={{ my: 1 }}>
+        <Typography variant="h5" sx={{ my: 1 }}>
           {isSignUp ? "Registrer deg" : "Brukerinnstillinger"}
         </Typography>
         {isSignUp && (
