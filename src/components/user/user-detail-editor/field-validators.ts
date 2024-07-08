@@ -25,8 +25,8 @@ export const fieldValidators: {
   [K in keyof UserEditorFields]: RegisterOptions<UserEditorFields>;
 } = {
   email: {
-    required: "Du må fylle inn epost",
-    validate: (v) => (isEmail(v) ? true : "Du må fylle inn en gyldig epost"),
+    required: "Du må fylle inn e-post",
+    validate: (v) => (isEmail(v) ? true : "Du må fylle inn en gyldig e-post"),
   },
   password: {
     required: "Du må fylle inn passord",

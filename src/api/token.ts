@@ -1,3 +1,4 @@
+import { BlError } from "@boklisten/bl-model";
 import { decodeToken } from "react-jwt";
 
 import BlFetcher from "@/api/blFetcher";
@@ -116,7 +117,7 @@ export const parseTokensFromResponseDataAndStore = (
 
 export const fetchNewTokens = async () => {
   if (!haveRefreshToken()) {
-    throw new Error("Login required");
+    throw new BlError("Login required");
   }
   const tokens = await BlFetcher.post<
     [

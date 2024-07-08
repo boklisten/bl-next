@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import isEmail from "validator/lib/isEmail";
 
 import { login } from "@/api/user";
 import { attachTokensToHref } from "@/components/AuthLinker";
@@ -34,7 +35,7 @@ export default function SignIn() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFields>({ mode: "onTouched" });
+  } = useForm<SignInFields>({ mode: "onBlur" });
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
     try {
@@ -43,11 +44,11 @@ export default function SignIn() {
       if (assertBlApiError(error)) {
         if (error.code === 908) {
           setApiError("Feil brukernavn eller passord");
-        } else {
-          setApiError(
-            "Noe gikk galt! Prøv igjen eller ta kontakt dersom problemet vedvarer.",
-          );
+          return;
         }
+        setApiError(
+          "Noe gikk galt! Prøv igjen eller ta kontakt dersom problemet vedvarer.",
+        );
       }
       return;
     }
@@ -110,7 +111,10 @@ export default function SignIn() {
             id="email"
             label="E-post"
             autoComplete="email"
-            {...register("email")}
+            {...register("email", {
+              validate: (v) =>
+                !v || isEmail(v) ? true : "Du må fylle inn en gyldig e-post",
+            })}
           />
           <TextField
             data-testid="password-field"
@@ -150,7 +154,6 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={Object.entries(errors).length > 0}
           >
             Logg inn
           </Button>

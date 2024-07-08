@@ -1,9 +1,9 @@
-import { BlapiErrorResponse } from "@boklisten/bl-model";
+import { BlapiErrorResponse, BlError } from "@boklisten/bl-model";
 import { HTTP_METHOD } from "next/dist/server/web/http";
 
 import { fetchNewTokens, getAccessToken, haveAccessToken } from "@/api/token";
 import BL_CONFIG from "@/utils/bl-config";
-import { verifyBlApiError } from "@/utils/types";
+import { assertBlApiError, verifyBlApiError } from "@/utils/types";
 
 const createHeaders = (): Headers => {
   const headers = new Headers({ "Content-Type": "application/json" });
@@ -33,7 +33,14 @@ async function blFetch<T>(
   } catch (error: unknown) {
     if (verifyBlApiError(error)) {
       if (error.httpStatus === 401 && !isRetry) {
-        await fetchNewTokens();
+        try {
+          await fetchNewTokens();
+        } catch (tokenError) {
+          // TODO: login required error boundary
+          if (!(tokenError instanceof BlError)) {
+            assertBlApiError(tokenError);
+          }
+        }
         return await blFetch(path, method, body, true);
       }
       throw new BlapiErrorResponse(
