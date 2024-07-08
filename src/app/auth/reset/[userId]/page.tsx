@@ -2,7 +2,6 @@ import { Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
-import CompanyLogo from "@/components/CompanyLogo";
 import PasswordReset from "@/components/user/PasswordReset";
 
 export const metadata: Metadata = {
@@ -26,7 +25,6 @@ export default function PasswordResetPage({
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Lag nytt passord
           </Typography>

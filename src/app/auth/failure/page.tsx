@@ -2,7 +2,6 @@ import { Alert, AlertTitle, Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
-import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function AuthFailurePage() {
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Alert severity={"error"} sx={{ my: 2 }}>
             <AlertTitle>Vi klarte ikke å logge deg inn</AlertTitle>
             Vennligst prøv på nytt eller ta kontakt hvis problemet vedvarer.

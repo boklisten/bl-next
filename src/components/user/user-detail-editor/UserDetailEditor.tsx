@@ -40,7 +40,6 @@ import {
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import { registerUser, updateUserDetails } from "@/api/user";
-import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
@@ -180,7 +179,6 @@ const UserDetailEditor = ({
   return (
     <Container component="main" maxWidth="xs">
       <Stack alignItems={"center"} mt={4}>
-        <CompanyLogo />
         <Typography component="h1" variant="h5" sx={{ my: 1 }}>
           {isSignUp ? "Registrer deg" : "Brukerinnstillinger"}
         </Typography>

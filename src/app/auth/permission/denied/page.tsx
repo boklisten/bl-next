@@ -2,7 +2,6 @@ import { Alert, AlertTitle, Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
-import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function PermissionDeniedPage() {
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Alert severity={"error"} sx={{ my: 2 }}>
             <AlertTitle>Du har tilgang til å se dette innholdet</AlertTitle>
             Du forsøke å logge inn med en annen bruker eller ta kontakt med

@@ -4,7 +4,6 @@ import { Box } from "@mui/system";
 import { useEffect } from "react";
 
 import { logout } from "@/api/auth";
-import CompanyLogo from "@/components/CompanyLogo";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import BL_CONFIG from "@/utils/bl-config";
 
@@ -23,7 +22,6 @@ export default function LogoutPage() {
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Du er nå logget ut
           </Typography>

@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 
 import AuthVerifier from "@/components/AuthVerifier";
-import CompanyLogo from "@/components/CompanyLogo";
 
 export const metadata: Metadata = {
   title: "Logger inn...",
@@ -23,7 +22,6 @@ export default function TokenPage() {
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ my: 1 }}>
             Du blir nå logget inn...
           </Typography>

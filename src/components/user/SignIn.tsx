@@ -14,7 +14,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 import { login } from "@/api/user";
 import { attachTokensToHref } from "@/components/AuthLinker";
-import CompanyLogo from "@/components/CompanyLogo";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
@@ -71,7 +70,6 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <CompanyLogo />
         <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
           Logg inn
         </Typography>

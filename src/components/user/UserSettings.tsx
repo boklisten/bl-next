@@ -7,11 +7,10 @@ import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
-import CompanyLogo from "@/components/CompanyLogo";
 import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
 import BL_CONFIG from "@/utils/bl-config";
 
-const Settings = () => {
+const UserSettings = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetail>();
@@ -47,7 +46,6 @@ const Settings = () => {
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
             Brukerinnstillinger
           </Typography>
@@ -59,4 +57,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default UserSettings;

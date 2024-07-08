@@ -2,7 +2,6 @@ import { Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
-import CompanyLogo from "@/components/CompanyLogo";
 import EmailConfirmer from "@/components/EmailConfirmer";
 
 export const metadata: Metadata = {
@@ -27,7 +26,6 @@ export default function TokenPage({
             alignItems: "center",
           }}
         >
-          <CompanyLogo />
           <EmailConfirmer confirmationId={params.confirmationId} />
         </Box>
       </Container>
