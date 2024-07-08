@@ -182,7 +182,7 @@ const UserDetailEditor = ({
       <Stack alignItems={"center"} mt={4}>
         <CompanyLogo />
         <Typography component="h1" variant="h5" sx={{ my: 1 }}>
-          {isSignUp ? "Registrer deg" : "Innstillinger"}
+          {isSignUp ? "Registrer deg" : "Brukerinnstillinger"}
         </Typography>
         {isSignUp && (
           <>

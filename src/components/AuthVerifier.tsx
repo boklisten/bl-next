@@ -28,7 +28,7 @@ export default function AuthVerifier() {
         if (valid) {
           router.push("/");
         } else {
-          router.push("/settings");
+          router.push("/user-settings");
         }
       } catch {
         router.push("/auth/failure");

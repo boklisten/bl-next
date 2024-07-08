@@ -34,12 +34,12 @@ module.exports = {
       },
       {
         source: "/auth/register/detail",
-        destination: "/settings",
+        destination: "/user-settings",
         permanent: false,
       },
       {
         source: "/u/edit",
-        destination: "/settings",
+        destination: "/user-settings",
         permanent: false,
       },
     ];

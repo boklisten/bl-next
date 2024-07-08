@@ -49,7 +49,7 @@ const Settings = () => {
         >
           <CompanyLogo />
           <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
-            Innstillinger
+            Brukerinnstillinger
           </Typography>
           <CircularProgress sx={{ mt: 1 }} />
         </Box>

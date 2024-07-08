@@ -51,9 +51,11 @@ export default function EmailConfirmer({
         <>
           <Alert severity={"error"} sx={{ my: 1 }}>
             Kunne ikke bekrefte e-post. Lenken kan være utløpt. Du kan prøve å
-            sende en ny lenke fra innstillinger.
+            sende en ny lenke fra brukerinnstillinger.
           </Alert>
-          <DynamicLink href={"/settings"}>Gå til innstillinger</DynamicLink>
+          <DynamicLink href={"/user-settings"}>
+            Gå til brukerinnstillinger
+          </DynamicLink>
         </>
       )}
       {status === "SUCCESS" && (

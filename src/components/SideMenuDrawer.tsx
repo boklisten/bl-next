@@ -117,7 +117,7 @@ export default function SideMenuDrawer() {
               <>
                 <DrawerLink
                   title={"Brukerinnstillinger"}
-                  href={"/settings"}
+                  href={"/user-settings"}
                   icon={<SettingsIcon />}
                 />
                 <DrawerLink
