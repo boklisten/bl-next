@@ -119,7 +119,7 @@ export const fetchNewTokens = async () => {
   if (!haveRefreshToken()) {
     throw new BlError("Login required");
   }
-  const tokens = await BlFetcher.post<
+  const tokens = await BlFetcher.fetch<
     [
       {
         accessToken: string;
@@ -128,9 +128,14 @@ export const fetchNewTokens = async () => {
         refreshToken: string;
       },
     ]
-  >("token", {
-    refreshToken: getRefreshToken(),
-  });
+  >(
+    "token",
+    "POST",
+    {
+      refreshToken: getRefreshToken(),
+    },
+    true,
+  );
   addAccessToken(tokens[0].accessToken);
   addRefreshToken(tokens[1].refreshToken);
 };

@@ -78,6 +78,7 @@ async function put<T>(path: string, body: Record<string, unknown>): Promise<T> {
 }
 
 const BlFetcher = {
+  fetch: blFetch,
   get,
   post,
   patch,
