@@ -1,17 +1,15 @@
 "use client";
 import { Alert } from "@mui/material";
 import Button from "@mui/material/Button";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";
 import { MatchesList } from "@/components/matches/matchesList/MatchesList";
+import useIsHydrated from "@/utils/useIsHydrated";
 
 export default function Matches() {
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  const hydrated = useIsHydrated();
 
   return (
     hydrated &&

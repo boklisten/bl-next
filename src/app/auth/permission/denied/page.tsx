@@ -5,9 +5,9 @@ import { Metadata } from "next";
 import DynamicLink from "@/components/DynamicLink";
 
 export const metadata: Metadata = {
-  title: "Du har ikke tilgang til denne siden",
+  title: "Tilgang avslått",
   description:
-    "Vi klarte ikke å logge deg inn. Vennligst prøv på nytt eller ta kontakt hvis problemet vedvarer.",
+    "Du har ikke tilgang til å se dette innholdet. Du forsøke å logge inn med en annen bruker eller ta kontakt med administrator for spørsmål.",
 };
 
 export default function PermissionDeniedPage() {
@@ -23,7 +23,9 @@ export default function PermissionDeniedPage() {
           }}
         >
           <Alert severity={"error"} sx={{ my: 2 }}>
-            <AlertTitle>Du har tilgang til å se dette innholdet</AlertTitle>
+            <AlertTitle>
+              Du har ikke tilgang til å se dette innholdet
+            </AlertTitle>
             Du forsøke å logge inn med en annen bruker eller ta kontakt med
             administrator for spørsmål.
           </Alert>

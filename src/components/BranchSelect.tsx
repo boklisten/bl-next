@@ -16,7 +16,7 @@ import BL_CONFIG from "@/utils/bl-config";
 import { useGlobalState } from "@/utils/useGlobalState";
 
 const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
-  const { data } = useSWR(
+  const { data: branches } = useSWR(
     `${BL_CONFIG.collection.branch}?active=true&sort=name`,
     BlFetcher.get<Branch[]>,
   );
@@ -52,7 +52,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
           label="Valgt skole"
           onChange={handleChange}
         >
-          {data?.map((branch) => (
+          {branches?.map((branch) => (
             <MenuItem
               data-testid="branchOption"
               value={branch.id}

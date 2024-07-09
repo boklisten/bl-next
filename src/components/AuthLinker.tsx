@@ -13,8 +13,8 @@ import BL_CONFIG from "@/utils/bl-config";
 
 export function attachTokensToHref(href: string) {
   if (
-    (String(href).includes(BL_CONFIG.blWeb.basePath) ||
-      String(href).includes(BL_CONFIG.blAdmin.basePath)) &&
+    (href.includes(BL_CONFIG.blWeb.basePath) ||
+      href.includes(BL_CONFIG.blAdmin.basePath)) &&
     isLoggedIn()
   ) {
     return (

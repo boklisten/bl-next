@@ -51,7 +51,7 @@ const DynamicSubNavInner = ({
             role="tab"
             style={{
               color: "inherit",
-              padding: "1 1.2",
+              padding: "0.5rem 0.6rem",
               textDecoration: "none",
             }}
           >

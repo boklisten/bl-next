@@ -50,11 +50,11 @@ const paymentTypes = {
   cashout: "Uttak",
 };
 
-const fetchPayment = async (payment: string) => {
-  const [data] = await BlFetcher.get<Payment[]>(
-    `${BL_CONFIG.collection.payment}/${payment}`,
+const fetchPayment = async (paymentId: string) => {
+  const [payment] = await BlFetcher.get<[Payment]>(
+    `${BL_CONFIG.collection.payment}/${paymentId}`,
   );
-  return data;
+  return payment;
 };
 
 const OrderHistory = ({ orders }: { orders: Order[] }) => {
