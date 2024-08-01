@@ -38,8 +38,11 @@ export default function AuthLinker({ children }: { children: ReactNode }) {
     if (refresh_token && access_token) {
       addAccessToken(access_token);
       addRefreshToken(refresh_token);
-      // Clear search params
-      router.replace(pathname);
+      // Clear tokens from search params
+      const params = new URLSearchParams(searchParameters.toString());
+      params.delete("refresh_token");
+      params.delete("access_token");
+      router.replace(pathname + "?" + params);
     }
     setAuthProcessed(true);
   }, [pathname, router, searchParameters]);
