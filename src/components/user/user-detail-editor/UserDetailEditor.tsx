@@ -180,7 +180,7 @@ const UserDetailEditor = ({
             <FacebookButton label={"Registrer deg med Facebook"} />
             <GoogleButton label={"Registrer deg med Google"} />
             <Divider sx={{ width: "100%", mt: 3, mb: 1 }}>
-              Eller, registrer deg med med epost
+              Eller, registrer deg med epost
             </Divider>
           </>
         )}
