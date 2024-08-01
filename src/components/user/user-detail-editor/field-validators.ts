@@ -97,7 +97,8 @@ export const fieldValidators: {
   },
   guardianEmail: {
     required: "Du må fylle inn foresatt sin epost",
-    validate: (v) => (isEmail(v) ? true : "Du må fylle inn en gyldig epost"),
+    validate: (v) =>
+      isEmail(v) ? true : "Du må fylle inn en gyldig e-post for foresatt",
   },
   guardianPhoneNumber: {
     required: "Du må fylle inn foresatt sitt telefonnummer",
