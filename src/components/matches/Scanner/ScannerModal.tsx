@@ -152,8 +152,8 @@ const ScannerModal = ({
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
-          flexBasis: 60,
-          maxWidth: 100,
+          flexBasis: "30rem",
+          maxWidth: "50rem",
           maxHeight: "calc(var(--vh, 1vh) * 100)",
           paddingBottom: 2,
           borderRadius: 0,
@@ -162,9 +162,9 @@ const ScannerModal = ({
       >
         <Box
           sx={{
-            maxWidth: 60,
+            maxWidth: "30rem",
             maxHeight: "100%",
-            flexBasis: 0.2,
+            flexBasis: 1.2,
             flexShrink: 0,
           }}
         >
@@ -175,7 +175,7 @@ const ScannerModal = ({
             onScan={handleCodeDetection}
           />
         </Box>
-        <Box width={"90%"}>
+        <Box width={0.9}>
           <ProgressBar
             percentComplete={
               (fulfilledItems.length * 100) / expectedItems.length
@@ -190,7 +190,7 @@ const ScannerModal = ({
         <Box
           sx={{
             overflowY: "auto",
-            maxHeight: 60,
+            maxHeight: "30rem",
             mt: 2,
           }}
         >

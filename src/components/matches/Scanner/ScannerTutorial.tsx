@@ -39,7 +39,7 @@ const ScannerTutorial = () => {
               width: "95%",
             }}
           >
-            <Typography variant="h4" sx={{ mt: 2 }}>
+            <Typography variant="h4" sx={{ my: 2 }}>
               Hvordan scanne bøker
             </Typography>
 
@@ -50,7 +50,7 @@ const ScannerTutorial = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: 40,
+                width: "20rem",
               }}
             >
               <Typography sx={{ mb: 0.8 }}>
@@ -82,7 +82,7 @@ const ScannerTutorial = () => {
                 padding: 2,
                 bgcolor: "#fefefa",
                 mt: 2,
-                width: 40,
+                width: "20rem",
               }}
             >
               <Typography>3. Gjenta til du har scannet alle bøkene </Typography>
@@ -96,7 +96,7 @@ const ScannerTutorial = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "1",
+                width: "20rem",
               }}
             >
               <Typography>

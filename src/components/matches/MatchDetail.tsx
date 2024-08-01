@@ -11,6 +11,7 @@ import DynamicLink from "@/components/DynamicLink";
 import StandMatchDetail from "@/components/matches/StandMatchDetail";
 import UserMatchDetail from "@/components/matches/UserMatchDetail";
 import BL_CONFIG from "@/utils/bl-config";
+import theme from "@/utils/theme";
 
 const MatchDetail = ({ matchId }: { matchId: string }) => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
@@ -51,11 +52,11 @@ const MatchDetail = ({ matchId }: { matchId: string }) => {
   }
 
   return (
-    <Card sx={{ padding: [2, 0, 4, 0] }}>
+    <Card sx={{ padding: theme.spacing(2, 0, 4, 0) }}>
       <Container>
         <DynamicLink
           href={`/${BL_CONFIG.collection.match}`}
-          sx={{ marginTop: 2, marginBottom: 1 }}
+          sx={{ marginBottom: 2, display: "inline-block" }}
         >
           <Button startIcon={<ArrowBack />}>Alle overleveringer</Button>
         </DynamicLink>

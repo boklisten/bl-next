@@ -111,7 +111,7 @@ export const StandMatchTitle = ({ match }: StandMatchTitleProps) => {
 
   const iconStyle: SxProps = {
     verticalAlign: "text-bottom",
-    fontSize: "1.18rem",
+    fontSize: "1.18em",
   };
 
   const left = isMeFirst ? me : stand;
