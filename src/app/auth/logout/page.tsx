@@ -28,6 +28,7 @@ export default function LogoutPage() {
           <CountdownToRedirect
             path={`${BL_CONFIG.blWeb.basePath}?logout=true`}
             seconds={3}
+            shouldReplaceInHistory
           />
         </Box>
       </Container>

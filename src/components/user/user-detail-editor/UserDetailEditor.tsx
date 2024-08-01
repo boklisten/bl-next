@@ -33,6 +33,7 @@ import {
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import { registerUser, updateUserDetails } from "@/api/user";
+import { executeReturnRedirect } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
@@ -140,7 +141,7 @@ const UserDetailEditor = ({
         });
       }
     }
-    router.replace("/" + (searchParams.get("redirect") ?? ""));
+    executeReturnRedirect(searchParams, router);
   };
 
   async function onPostalCodeChange(event: { target: { value: string } }) {

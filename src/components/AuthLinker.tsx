@@ -1,5 +1,11 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
 import { isLoggedIn } from "@/api/auth";
@@ -23,6 +29,22 @@ export function attachTokensToHref(href: string) {
     );
   }
   return href;
+}
+
+export function executeReturnRedirect(
+  searchParams: ReadonlyURLSearchParams,
+  router: AppRouterInstance,
+) {
+  const caller = searchParams.get("caller");
+  const baseUrl =
+    caller === "bl-web"
+      ? BL_CONFIG.blWeb.basePath
+      : caller === "bl-admin"
+        ? BL_CONFIG.blAdmin.basePath
+        : "/";
+  const path =
+    caller == "bl-admin" ? "auth/gateway" : searchParams.get("redirect") ?? "";
+  router.replace(attachTokensToHref(baseUrl + path));
 }
 
 export default function AuthLinker({ children }: { children: ReactNode }) {

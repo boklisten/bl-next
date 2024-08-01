@@ -13,12 +13,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
 import { login } from "@/api/user";
-import { attachTokensToHref } from "@/components/AuthLinker";
+import { executeReturnRedirect } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
 import PasswordField from "@/components/user/PasswordField";
-import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
 interface SignInFields {
@@ -51,13 +50,7 @@ export default function SignIn() {
       }
       return;
     }
-    if (searchParams.get("caller") === "bl-admin") {
-      router.push(
-        attachTokensToHref(BL_CONFIG.blAdmin.basePath + "auth/gateway"),
-      );
-      return;
-    }
-    router.push("/" + (searchParams.get("redirect") ?? ""));
+    executeReturnRedirect(searchParams, router);
   };
 
   return (
