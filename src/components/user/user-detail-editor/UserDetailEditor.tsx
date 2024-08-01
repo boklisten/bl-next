@@ -1,17 +1,10 @@
 "use client";
 import { UserDetail } from "@boklisten/bl-model";
-import {
-  Check,
-  Email,
-  Info,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+import { Check, Email, Info } from "@mui/icons-material";
 import {
   Alert,
   AlertTitle,
   Divider,
-  IconButton,
   InputAdornment,
   ListItem,
   Stack,
@@ -31,10 +24,10 @@ import moment from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import {
-  useForm,
-  SubmitHandler,
   Controller,
   FieldError,
+  SubmitHandler,
+  useForm,
 } from "react-hook-form";
 
 import BlFetcher from "@/api/blFetcher";
@@ -43,6 +36,7 @@ import { registerUser, updateUserDetails } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
+import PasswordField from "@/components/user/PasswordField";
 import {
   fieldValidators,
   UserEditorFields,
@@ -65,7 +59,6 @@ const UserDetailEditor = ({
 }) => {
   const [emailConfirmationRequested, setEmailConfirmationRequested] =
     useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [showDetails, setShowDetails] = useState(!isSignUp);
   const [postalCity, setPostalCity] = useState<string | null>(
     userDetails?.postCity ?? null,
@@ -276,35 +269,8 @@ const UserDetailEditor = ({
             </Grid>
             {isSignUp && (
               <Grid item xs={12}>
-                <TextField
-                  data-testid="password-field"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Tooltip
-                          title={showPassword ? "Skjul passord" : "Vis passord"}
-                        >
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                            onMouseDown={(
-                              event: React.MouseEvent<HTMLButtonElement>,
-                            ) => {
-                              event.preventDefault();
-                            }}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </Tooltip>
-                      </InputAdornment>
-                    ),
-                  }}
+                <PasswordField
                   onFocus={() => setShowDetails(true)}
-                  required
-                  fullWidth
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  label="Passord"
                   autoComplete="new-password"
                   error={!!errors.password}
                   {...register("password", fieldValidators.password)}

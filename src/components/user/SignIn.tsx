@@ -1,6 +1,5 @@
 "use client";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
+import { Alert } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -10,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
 import { login } from "@/api/user";
@@ -18,16 +17,16 @@ import { attachTokensToHref } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
 import GoogleButton from "@/components/user/GoogleButton";
+import PasswordField from "@/components/user/PasswordField";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
-type SignInFields = {
+interface SignInFields {
   email: string;
   password: string;
-};
+}
 
 export default function SignIn() {
-  const [showPassword, setShowPassword] = useState(false);
   const [apiError, setApiError] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,7 +34,7 @@ export default function SignIn() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFields>({ mode: "onBlur" });
+  } = useForm<SignInFields>({ mode: "onTouched" });
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
     try {
@@ -116,35 +115,7 @@ export default function SignIn() {
                 !v || isEmail(v) ? true : "Du må fylle inn en gyldig e-post",
             })}
           />
-          <TextField
-            data-testid="password-field"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Tooltip
-                    title={showPassword ? "Skjul passord" : "Vis passord"}
-                  >
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(!showPassword)}
-                      onMouseDown={(
-                        event: React.MouseEvent<HTMLButtonElement>,
-                      ) => {
-                        event.preventDefault();
-                      }}
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </Tooltip>
-                </InputAdornment>
-              ),
-            }}
-            required
-            margin="normal"
-            fullWidth
-            label="Passord"
-            type={showPassword ? "text" : "password"}
-            id="password"
+          <PasswordField
             autoComplete="current-password"
             {...register("password")}
           />
