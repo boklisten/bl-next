@@ -43,7 +43,7 @@ export const fieldValidators: {
     validate: (v) =>
       isMobilePhone(v, "nb-NO")
         ? true
-        : "Du må fylle inn et lovlig norsk telefonnummer (uten mellomrom og +47)",
+        : "Du må fylle inn et gyldig norsk telefonnummer (uten mellomrom og +47)",
     minLength: {
       value: 8,
       message: "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
@@ -104,7 +104,7 @@ export const fieldValidators: {
     validate: (v) =>
       isMobilePhone(v, "nb-NO")
         ? true
-        : "Du må fylle inn et lovlig norsk telefonnummer (uten mellomrom og +47)",
+        : "Du må fylle inn et gyldig norsk telefonnummer (uten mellomrom og +47)",
     minLength: {
       value: 8,
       message: "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
