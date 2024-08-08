@@ -6,9 +6,8 @@ describe("Register", () => {
   });
 
   it("displays correct initial elements", () => {
-    // TODO: fix me when fb is enabled
-    cy.getBySel("facebook-button").should("not.exist");
-    cy.getBySel("google-button").should("not.exist");
+    cy.getBySel("facebook-button").should("be.visible");
+    cy.getBySel("google-button").should("be.visible");
     cy.getBySel("email-field").should("be.visible");
     cy.getBySel("password-field").should("be.visible");
     cy.getBySel("submit-button").should("be.visible");

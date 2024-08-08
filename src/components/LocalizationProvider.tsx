@@ -1,10 +1,10 @@
 "use client";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterMoment as DateAdapter } from "@mui/x-date-pickers/AdapterMoment/AdapterMoment";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { Moment } from "moment";
 import { ReactNode } from "react";
 
-class OverriddenAdapter extends DateAdapter {
+class OverriddenAdapter extends AdapterMoment {
   // Get years in descending order
   override getYearRange = ([start, end]: [Moment, Moment]) => {
     const startDate = this.moment(start).startOf("year");
@@ -20,13 +20,14 @@ class OverriddenAdapter extends DateAdapter {
     return years.reverse();
   };
 }
+
 export default function CustomLocalizationProvider({
   children,
 }: {
   children: ReactNode;
 }) {
   return (
-    <LocalizationProvider dateAdapter={OverriddenAdapter}>
+    <LocalizationProvider dateAdapter={OverriddenAdapter} adapterLocale={"no"}>
       {children}
     </LocalizationProvider>
   );

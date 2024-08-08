@@ -1,9 +1,10 @@
-import axios from "axios";
+import { BlError } from "@boklisten/bl-model";
 import { decodeToken } from "react-jwt";
 
-import { add, get, remove } from "@/api/storage";
+import BlFetcher from "@/api/blFetcher";
+import { add, get, removeAll } from "@/api/storage";
 import BL_CONFIG from "@/utils/bl-config";
-import { AccessToken } from "@/utils/types";
+import { AccessToken, AuthResponse } from "@/utils/types";
 
 const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;
@@ -57,8 +58,7 @@ export const getRefreshToken = (): string => {
 };
 
 export const removeTokens = (): void => {
-  remove(accessTokenName);
-  remove(refreshTokenName);
+  removeAll();
 };
 
 export const getAccessTokenBody = (): AccessToken => {
@@ -79,23 +79,12 @@ export const getAccessTokenBody = (): AccessToken => {
 };
 
 export const parseTokensFromResponseDataAndStore = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  responseData: any,
+  authResponse: AuthResponse,
 ): boolean => {
   let refreshToken = "";
   let accessToken = "";
 
-  if (!responseData.data) {
-    throw new Error("responseData.data is not defined");
-  }
-
-  if (Object.prototype.toString.call(responseData.data) !== "[object Array]") {
-    throw new Error("responseData.data is not an array");
-  }
-
-  const data = responseData.data;
-
-  for (const d of data) {
+  for (const d of authResponse) {
     if (!d.data || d.data.length <= 0) {
       throw new Error("data of refreshToken is not defined");
     }
@@ -128,11 +117,25 @@ export const parseTokensFromResponseDataAndStore = (
 
 export const fetchNewTokens = async () => {
   if (!haveRefreshToken()) {
-    throw new Error("Login required");
+    throw new BlError("Login required");
   }
-  const response = await axios.post(BL_CONFIG.api.basePath + "token", {
-    refreshToken: getRefreshToken(),
-  });
-  addAccessToken(response.data.data[0].accessToken);
-  addRefreshToken(response.data.data[1].refreshToken);
+  const tokens = await BlFetcher.fetch<
+    [
+      {
+        accessToken: string;
+      },
+      {
+        refreshToken: string;
+      },
+    ]
+  >(
+    "token",
+    "POST",
+    {
+      refreshToken: getRefreshToken(),
+    },
+    true,
+  );
+  addAccessToken(tokens[0].accessToken);
+  addRefreshToken(tokens[1].refreshToken);
 };

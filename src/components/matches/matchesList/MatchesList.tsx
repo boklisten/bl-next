@@ -3,7 +3,7 @@ import { Alert, Skeleton } from "@mui/material";
 import React from "react";
 import useSWR from "swr";
 
-import { apiFetcher } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import {
   isMatchFulfilled,
@@ -20,7 +20,7 @@ export const MatchesList: React.FC = () => {
   const userId = accessToken?.details;
   const { data: matches, error: matchesError } = useSWR(
     `${BL_CONFIG.collection.match}/me`,
-    apiFetcher<MatchWithDetails[]>,
+    BlFetcher.get<MatchWithDetails[]>,
     { refreshInterval: 5000 },
   );
 

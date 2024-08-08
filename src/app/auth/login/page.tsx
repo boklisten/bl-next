@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import SignIn from "@/components/user/SignIn";
 
 export const metadata: Metadata = {
-  title: "Logg inn | Boklisten.no",
+  title: "Logg inn",
   description:
     "Logg inn for bestille bøker, samt se status på nåvårende bøker.",
 };
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const LoginPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <Suspense>
           <SignIn />
         </Suspense>

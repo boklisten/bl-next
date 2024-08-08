@@ -1,24 +1,19 @@
 import { EditableText } from "@boklisten/bl-model";
 
-import { apiFetcher, NotFoundError } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import BL_CONFIG from "@/utils/bl-config";
-import { MaybeEmptyEditableText } from "@/utils/types";
+import { assertBlApiError, MaybeEmptyEditableText } from "@/utils/types";
 
 const useEditableText = async (
   editableTextId: string,
 ): Promise<MaybeEmptyEditableText> => {
   try {
-    const [result] = await apiFetcher<[EditableText]>(
+    const [result] = await BlFetcher.get<[EditableText]>(
       `${BL_CONFIG.collection.editableText}/${editableTextId}`,
     );
     return result;
   } catch (error) {
-    if (!(error instanceof NotFoundError)) {
-      console.error(
-        "Could not fetch EditableText and it was not a 404:",
-        error,
-      );
-    }
+    assertBlApiError(error);
     return {
       id: editableTextId,
       text: null,

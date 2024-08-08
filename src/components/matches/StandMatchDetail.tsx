@@ -48,7 +48,7 @@ const StandMatchDetail = ({ match }: { match: StandMatchWithDetails }) => {
       </Typography>
 
       {isFulfilled && (
-        <Alert sx={{ marginTop: "1rem", marginBottom: "1rem" }}>
+        <Alert sx={{ marginTop: 2, marginBottom: 2 }}>
           Du har mottatt og levert alle bøkene for denne overleveringen.
         </Alert>
       )}

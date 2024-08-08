@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "Generell informasjon | Boklisten.no",
+  title: "Generell informasjon",
   description:
     "Velkommen til Boklisten.no! Her kan du enkelt kjøpe pensumbøker. Les om vårt konsept, og hvilke tjenester vi tilbyr her.",
 };
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.general} />
       </Card>

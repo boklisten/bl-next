@@ -12,7 +12,7 @@ export interface ItemStatus {
 
 export const MatchHeader = ({ children }: { children: ReactNode }) => {
   return (
-    <Typography variant="h2" sx={{ marginTop: "2rem", marginBottom: "1rem" }}>
+    <Typography variant="h2" sx={{ marginTop: 4, marginBottom: 2 }}>
       {children}
     </Typography>
   );

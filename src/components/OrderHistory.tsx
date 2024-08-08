@@ -19,7 +19,8 @@ import Button from "@mui/material/Button";
 import moment from "moment";
 import React, { useState } from "react";
 
-import { get } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
+import BL_CONFIG from "@/utils/bl-config";
 
 // fetchPayments(orders);
 // types are from a business POV
@@ -49,10 +50,11 @@ const paymentTypes = {
   cashout: "Uttak",
 };
 
-const fetchPayment = async (payment: string) => {
-  const paymentsUrl = `payments/${payment}`;
-  const data = await get(paymentsUrl);
-  return data.data.data[0] as Payment;
+const fetchPayment = async (paymentId: string) => {
+  const [payment] = await BlFetcher.get<[Payment]>(
+    `${BL_CONFIG.collection.payment}/${paymentId}`,
+  );
+  return payment;
 };
 
 const OrderHistory = ({ orders }: { orders: Order[] }) => {
@@ -62,9 +64,10 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
 
   const printReceipt = async (orderId: string) => {
     setWait(true);
-    const data = await get(`orders/${orderId}/receipt`);
-    const receiptData = data.data.data[0];
-    const byteCharacters = atob(receiptData.content);
+    const data = await BlFetcher.get<[{ content: string }]>(
+      `${BL_CONFIG.collection.order}/${orderId}/receipt`,
+    );
+    const byteCharacters = atob(data[0].content);
     const byteNumbers = Array.from({ length: byteCharacters.length });
     for (let index = 0; index < byteNumbers.length; index++) {
       byteNumbers[index] = byteCharacters.codePointAt(index);
@@ -108,7 +111,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                     }}
                     open={openOrder === order.id}
                     sx={{
-                      marginY: "1rem",
+                      marginY: 2,
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -123,7 +126,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                     >
                       <Typography
                         variant="h4"
-                        sx={{ textAlign: "center", marginBottom: "1rem" }}
+                        sx={{ textAlign: "center", marginBottom: 2 }}
                       >
                         Ordredetaljer
                       </Typography>
@@ -202,7 +205,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                       </Table>
                       <Typography
                         variant="h5"
-                        sx={{ textAlign: "center", marginY: "1rem" }}
+                        sx={{ textAlign: "center", marginY: 2 }}
                       >
                         Bøker
                       </Typography>
@@ -211,7 +214,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                           display: "flex",
                           flexWrap: "wrap",
                           justifyContent: "center",
-                          gap: "1rem",
+                          gap: 2,
                         }}
                       >
                         {order.orderItems.map((orderItem) => {
@@ -221,16 +224,16 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                             <Card
                               key={orderItem.blid}
                               sx={{
-                                marginBottom: "1rem",
+                                marginBottom: 2,
                                 width: "400px",
-                                marginX: ".5rem",
+                                marginX: 1,
                               }}
                             >
                               <Typography
                                 variant="h6"
                                 sx={{
                                   textAlign: "center",
-                                  marginBottom: ".1rem",
+                                  marginBottom: 0.2,
                                 }}
                               >
                                 {orderItem.title}

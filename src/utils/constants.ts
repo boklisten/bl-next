@@ -4,7 +4,7 @@ export const infoPageTabs: LinkTabProps[] = [
   { label: "Generell informasjon", href: "/info/general" },
   { label: "Spørsmål og svar", href: "/info/faq" },
   { label: "For VGS-elever", href: "/info/pupils" },
-  { label: "Skoler og åpningstider", href: "/info/branch/select" },
+  { label: "Skoler og åpningstider", href: "/info/branch" },
   { label: "Avtaler og betingelser", href: "/info/policies/conditions" },
   { label: "Om oss", href: "/info/about" },
   { label: "For skolekunder", href: "/info/companies" },

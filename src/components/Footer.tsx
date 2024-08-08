@@ -17,11 +17,11 @@ export default function Footer() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "1rem",
+        padding: 2,
       }}
     >
       <ContactInfo />
-      <Box sx={{ marginBottom: ".7rem" }}>
+      <Box sx={{ marginBottom: 1.4 }}>
         <DynamicLink href={"/info/policies/conditions"}>
           Betingelser
         </DynamicLink>
@@ -38,10 +38,10 @@ export default function Footer() {
         src="/DIBS_shop_vertical_EN_10.png"
         alt="Dibs easy logo"
       />
-      <Typography sx={{ marginTop: ".7rem" }}>
+      <Typography sx={{ marginTop: 1.4 }}>
         Organisasjonsnummer: 912047385 MVA
       </Typography>
-      <Typography sx={{ display: "flex", gap: ".4rem" }}>
+      <Typography sx={{ display: "flex", gap: 0.8 }}>
         Boklisten.no AS
         <CopyrightIcon />
         {moment().format("YYYY")}

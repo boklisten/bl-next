@@ -8,7 +8,7 @@ import { infoPageTabs, termsAndConditionsTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "Vilkår | Boklisten.no",
+  title: "Vilkår",
   description:
     "Når du handler hos oss gjelder noen vilkår. Disse er her for å gi alle parter trygghet for hvilke regler som gjelder.",
 };
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const TermsPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <DynamicSubNav tabs={termsAndConditionsTabs} />
         <Editor rawEditorState={editorData.terms} />

@@ -17,12 +17,12 @@ const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "left",
-        my: ".2rem",
+        my: 0.4,
         fontSize: "inherit",
       }}
     >
-      <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
-        <ScheduleIcon sx={{ marginRight: ".2rem" }} />
+      <Box sx={{ display: "flex", marginTop: 0.4, alignItems: "center" }}>
+        <ScheduleIcon sx={{ marginRight: 0.4 }} />
         {(meetingTime && (
           <FormattedDatetime date={new Date(meetingTime)} />
         )) || (
@@ -34,8 +34,8 @@ const MeetingInfo = ({ match }: { match: MatchWithDetails }) => {
           </Typography>
         )}
       </Box>
-      <Box sx={{ display: "flex", marginTop: ".2rem", alignItems: "center" }}>
-        <PlaceIcon sx={{ marginRight: ".2rem" }} />
+      <Box sx={{ display: "flex", marginTop: 0.4, alignItems: "center" }}>
+        <PlaceIcon sx={{ marginRight: 0.4 }} />
         <Typography>{meetingLocation}</Typography>
       </Box>
     </Box>

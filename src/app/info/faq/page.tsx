@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { QNAs } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "Spørsmål og svar | Boklisten.no",
+  title: "Spørsmål og svar",
   description:
     "Hva betyr det at Boklisten alltid leverer riktig bok? Hvordan bestiller jeg bøker som privatist?",
 };
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const FaqPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <EditableQNA QNAs={QNAs} />
       </Card>

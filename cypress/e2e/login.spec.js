@@ -6,9 +6,8 @@ describe("Login", () => {
   });
 
   it("displays all important elements", () => {
-    // TODO: when FB and Google is enabled, change these two
-    cy.getBySel("facebook-button").should("not.exist");
-    cy.getBySel("google-button").should("not.exist");
+    cy.getBySel("facebook-button").should("be.visible");
+    cy.getBySel("google-button").should("be.visible");
     cy.getBySel("error-message").should("not.exist");
     cy.getBySel("email-field").should("be.visible");
     cy.getBySel("password-field").should("be.visible");

@@ -22,7 +22,7 @@ const OtherPersonContact = ({
       key={otherPerson.phone}
       sx={{ display: "flex", alignItems: "center", justifyContent: "left" }}
     >
-      <PhoneIphoneIcon sx={{ marginRight: ".2rem" }} />
+      <PhoneIphoneIcon sx={{ marginRight: 0.4 }} />
       <Typography>
         {otherPerson.name},{" "}
         <DynamicLink
