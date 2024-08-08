@@ -88,7 +88,7 @@ const UserDetailEditor = ({
     setError,
     clearErrors,
     formState: { errors },
-  } = useForm<UserEditorFields>({ mode: "onBlur", defaultValues });
+  } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
   const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
     if (postalCity === null) {
