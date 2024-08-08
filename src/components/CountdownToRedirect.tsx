@@ -28,11 +28,7 @@ const CountdownToRedirect = ({
       setProgress((previousProgress) => {
         if (previousProgress <= 0) {
           clearInterval(interval);
-          if (shouldReplaceInHistory) {
-            router.replace(path);
-          } else {
-            router.push(path);
-          }
+
           return 0;
         }
         return previousProgress - 10 / seconds;
@@ -43,6 +39,16 @@ const CountdownToRedirect = ({
       clearInterval(interval);
     };
   }, [path, router, seconds, shouldReplaceInHistory]);
+
+  useEffect(() => {
+    if (progress <= 0) {
+      if (shouldReplaceInHistory) {
+        router.replace(path);
+      } else {
+        router.push(path);
+      }
+    }
+  }, [progress, shouldReplaceInHistory, router, path]);
 
   return (
     <Box sx={{ width: "100%", mt: 1 }} ref={elementRef}>
