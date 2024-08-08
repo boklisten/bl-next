@@ -30,6 +30,10 @@ const SocialLoginButton = ({
       display: "flex",
       justifyContent: "left",
       textTransform: "none",
+      "&:hover": {
+        backgroundColor: brandColor,
+        opacity: 0.9,
+      },
     }}
     startIcon={
       <Box
