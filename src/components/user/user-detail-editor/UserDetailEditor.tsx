@@ -362,7 +362,7 @@ const UserDetailEditor = ({
                   return (
                     <DatePicker
                       sx={{ width: "100%" }}
-                      label="Fødselsdato"
+                      label="Fødselsdato *"
                       format="DD/MM/YYYY"
                       minDate={moment().subtract(100, "years")}
                       maxDate={moment().subtract(10, "years")}
