@@ -23,7 +23,8 @@ export default function TermsAndConditionsDisclaimer() {
         underline={"hover"}
       >
         vilkår
-      </DynamicLink>
+      </DynamicLink>{" "}
+      *
     </Typography>
   );
 }
