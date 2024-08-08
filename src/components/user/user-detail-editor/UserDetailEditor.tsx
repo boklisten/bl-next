@@ -60,7 +60,6 @@ const UserDetailEditor = ({
 }) => {
   const [emailConfirmationRequested, setEmailConfirmationRequested] =
     useState(false);
-  const [showDetails, setShowDetails] = useState(!isSignUp);
   const [postalCity, setPostalCity] = useState<string | null>(
     userDetails?.postCity ?? null,
   );
@@ -216,7 +215,6 @@ const UserDetailEditor = ({
                 inputProps={{
                   inputMode: "email",
                 }}
-                onFocus={() => setShowDetails(true)}
                 required
                 disabled={!isSignUp}
                 fullWidth
@@ -271,7 +269,6 @@ const UserDetailEditor = ({
             {isSignUp && (
               <Grid item xs={12}>
                 <PasswordField
-                  onFocus={() => setShowDetails(true)}
                   autoComplete="new-password"
                   error={!!errors.password}
                   {...register("password", fieldValidators.password)}
@@ -279,28 +276,159 @@ const UserDetailEditor = ({
                 <FieldErrorAlert error={errors.password} />
               </Grid>
             )}
-            {showDetails && (
+            <Grid item xs={12} sm={12} mt={1}>
+              <Typography variant="body1">Din informasjon</Typography>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                data-testid="name-field"
+                required
+                autoComplete="name"
+                fullWidth
+                id="name"
+                label="Navn"
+                error={!!errors.name}
+                {...register("name", fieldValidators.name)}
+              />
+              <FieldErrorAlert error={errors.name} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                data-testid="phone-field"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">+47</InputAdornment>
+                  ),
+                }}
+                inputProps={{
+                  inputMode: "numeric",
+                  pattern: "[0-9]{8}",
+                }}
+                required
+                fullWidth
+                id="phoneNumber"
+                label="Telefonnummer"
+                autoComplete="tel-national"
+                error={!!errors.phoneNumber}
+                {...register("phoneNumber", fieldValidators.phoneNumber)}
+              />
+              <FieldErrorAlert error={errors.phoneNumber} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                data-testid="address-field"
+                required
+                fullWidth
+                id="address"
+                label="Adresse"
+                autoComplete="street-address"
+                error={!!errors.address}
+                {...register("address", fieldValidators.address)}
+              />
+              <FieldErrorAlert error={errors.address} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                data-testid="postal-code-field"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position={"end"}>
+                      {postalCity}
+                    </InputAdornment>
+                  ),
+                }}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]{4}" }}
+                required
+                fullWidth
+                id="postalCode"
+                label="Postnummer"
+                autoComplete="postal-code"
+                error={!!errors.postalCode}
+                {...register("postalCode", {
+                  // Need to have a separate onChange because of autofill not triggering validation
+                  onChange: onPostalCodeChange,
+                  ...fieldValidators.postalCode,
+                })}
+              />
+              <FieldErrorAlert error={errors.postalCode} />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={control}
+                {...register("birthday", fieldValidators.birthday)}
+                name="birthday"
+                render={() => {
+                  return (
+                    <DatePicker
+                      sx={{ width: "100%" }}
+                      label="Fødselsdato"
+                      format="DD/MM/YYYY"
+                      minDate={moment().subtract(100, "years")}
+                      maxDate={moment().subtract(10, "years")}
+                      openTo="year"
+                      views={["year", "month", "day"]}
+                      value={getValues("birthday")}
+                      onChange={(newValue) => {
+                        setValue("birthday", newValue, {
+                          shouldValidate: true,
+                        });
+                        if (newValue === null || !isUnder18(newValue)) {
+                          clearErrors("guardianName");
+                          clearErrors("guardianEmail");
+                          clearErrors("guardianPhoneNumber");
+                        }
+                      }}
+                    />
+                  );
+                }}
+              />
+              <FieldErrorAlert error={errors.birthday as FieldError} />
+            </Grid>
+            {birthdayFieldValue !== null && isUnder18(birthdayFieldValue) && (
               <>
                 <Grid item xs={12} sm={12} mt={1}>
-                  <Typography variant="body1">Din informasjon</Typography>
+                  <Typography variant="body1">
+                    Siden du er under 18, trenger vi informasjon om en av dine
+                    foresatte.
+                  </Typography>
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    data-testid="name-field"
+                    data-testid="guardian-name-field"
                     required
-                    autoComplete="name"
                     fullWidth
-                    id="name"
-                    label="Navn"
-                    error={!!errors.name}
-                    {...register("name", fieldValidators.name)}
+                    id="lastName"
+                    label="Foresatt sitt fulle navn"
+                    autoComplete="name"
+                    error={!!errors.guardianName}
+                    {...register("guardianName", fieldValidators.guardianName)}
                   />
-                  <FieldErrorAlert error={errors.name} />
+                  <FieldErrorAlert error={errors.guardianName} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    data-testid="phone-field"
+                    data-testid="guardian-email-field"
+                    inputProps={{
+                      inputMode: "email",
+                    }}
+                    required
+                    fullWidth
+                    id="email"
+                    label="Foresatt sin epost"
+                    autoComplete="email"
+                    error={!!errors.guardianEmail}
+                    {...register(
+                      "guardianEmail",
+                      fieldValidators.guardianEmail,
+                    )}
+                  />
+                  <FieldErrorAlert error={errors.guardianEmail} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    data-testid="guardian-phone-field"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">+47</InputAdornment>
@@ -313,180 +441,39 @@ const UserDetailEditor = ({
                     required
                     fullWidth
                     id="phoneNumber"
-                    label="Telefonnummer"
+                    label="Foresatt sitt telefonnummer"
                     autoComplete="tel-national"
-                    error={!!errors.phoneNumber}
-                    {...register("phoneNumber", fieldValidators.phoneNumber)}
+                    error={!!errors.guardianPhoneNumber}
+                    {...register(
+                      "guardianPhoneNumber",
+                      fieldValidators.guardianPhoneNumber,
+                    )}
                   />
-                  <FieldErrorAlert error={errors.phoneNumber} />
+                  <FieldErrorAlert error={errors.guardianPhoneNumber} />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    data-testid="address-field"
-                    required
-                    fullWidth
-                    id="address"
-                    label="Adresse"
-                    autoComplete="street-address"
-                    error={!!errors.address}
-                    {...register("address", fieldValidators.address)}
-                  />
-                  <FieldErrorAlert error={errors.address} />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    data-testid="postal-code-field"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position={"end"}>
-                          {postalCity}
-                        </InputAdornment>
-                      ),
-                    }}
-                    inputProps={{ inputMode: "numeric", pattern: "[0-9]{4}" }}
-                    required
-                    fullWidth
-                    id="postalCode"
-                    label="Postnummer"
-                    autoComplete="postal-code"
-                    error={!!errors.postalCode}
-                    {...register("postalCode", {
-                      // Need to have a separate onChange because of autofill not triggering validation
-                      onChange: onPostalCodeChange,
-                      ...fieldValidators.postalCode,
-                    })}
-                  />
-                  <FieldErrorAlert error={errors.postalCode} />
-                </Grid>
-                <Grid item xs={12}>
-                  <Controller
-                    control={control}
-                    {...register("birthday", fieldValidators.birthday)}
-                    name="birthday"
-                    render={() => {
-                      return (
-                        <DatePicker
-                          sx={{ width: "100%" }}
-                          label="Fødselsdato"
-                          format="DD/MM/YYYY"
-                          minDate={moment().subtract(100, "years")}
-                          maxDate={moment().subtract(10, "years")}
-                          openTo="year"
-                          views={["year", "month", "day"]}
-                          value={getValues("birthday")}
-                          onChange={(newValue) => {
-                            setValue("birthday", newValue, {
-                              shouldValidate: true,
-                            });
-                            if (newValue === null || !isUnder18(newValue)) {
-                              clearErrors("guardianName");
-                              clearErrors("guardianEmail");
-                              clearErrors("guardianPhoneNumber");
-                            }
-                          }}
-                        />
-                      );
-                    }}
-                  />
-                  <FieldErrorAlert error={errors.birthday as FieldError} />
-                </Grid>
-                {birthdayFieldValue !== null &&
-                  isUnder18(birthdayFieldValue) && (
-                    <>
-                      <Grid item xs={12} sm={12} mt={1}>
-                        <Typography variant="body1">
-                          Siden du er under 18, trenger vi informasjon om en av
-                          dine foresatte.
-                        </Typography>
-                        <Divider />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          data-testid="guardian-name-field"
-                          required
-                          fullWidth
-                          id="lastName"
-                          label="Foresatt sitt fulle navn"
-                          autoComplete="name"
-                          error={!!errors.guardianName}
-                          {...register(
-                            "guardianName",
-                            fieldValidators.guardianName,
-                          )}
-                        />
-                        <FieldErrorAlert error={errors.guardianName} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          data-testid="guardian-email-field"
-                          inputProps={{
-                            inputMode: "email",
-                          }}
-                          required
-                          fullWidth
-                          id="email"
-                          label="Foresatt sin epost"
-                          autoComplete="email"
-                          error={!!errors.guardianEmail}
-                          {...register(
-                            "guardianEmail",
-                            fieldValidators.guardianEmail,
-                          )}
-                        />
-                        <FieldErrorAlert error={errors.guardianEmail} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          data-testid="guardian-phone-field"
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                +47
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputProps={{
-                            inputMode: "numeric",
-                            pattern: "[0-9]{8}",
-                          }}
-                          required
-                          fullWidth
-                          id="phoneNumber"
-                          label="Foresatt sitt telefonnummer"
-                          autoComplete="tel-national"
-                          error={!!errors.guardianPhoneNumber}
-                          {...register(
-                            "guardianPhoneNumber",
-                            fieldValidators.guardianPhoneNumber,
-                          )}
-                        />
-                        <FieldErrorAlert error={errors.guardianPhoneNumber} />
-                      </Grid>
-                    </>
-                  )}
-                {isSignUp && (
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          data-testid="tos-field"
-                          sx={{
-                            color: errors.agreeToTermsAndConditions
-                              ? "red"
-                              : "inherit",
-                          }}
-                          {...register(
-                            "agreeToTermsAndConditions",
-                            fieldValidators.agreeToTermsAndConditions,
-                          )}
-                        />
-                      }
-                      label={<TermsAndConditionsDisclaimer />}
-                    />
-                    <FieldErrorAlert error={errors.agreeToTermsAndConditions} />
-                  </Grid>
-                )}
               </>
+            )}
+            {isSignUp && (
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      data-testid="tos-field"
+                      sx={{
+                        color: errors.agreeToTermsAndConditions
+                          ? "red"
+                          : "inherit",
+                      }}
+                      {...register(
+                        "agreeToTermsAndConditions",
+                        fieldValidators.agreeToTermsAndConditions,
+                      )}
+                    />
+                  }
+                  label={<TermsAndConditionsDisclaimer />}
+                />
+                <FieldErrorAlert error={errors.agreeToTermsAndConditions} />
+              </Grid>
             )}
           </Grid>
           {Object.values(errors).length > 0 && (
