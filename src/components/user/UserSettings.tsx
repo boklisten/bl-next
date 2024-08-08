@@ -1,13 +1,13 @@
 "use client";
 import { UserDetail } from "@boklisten/bl-model";
-import { Card, CircularProgress, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Card } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";
 import UserDetailEditor from "@/components/user/user-detail-editor/UserDetailEditor";
+import UserDetailEditorSkeleton from "@/components/user/user-detail-editor/UserDetailEditorSkeleton";
 import BL_CONFIG from "@/utils/bl-config";
 
 const UserSettings = () => {
@@ -31,22 +31,11 @@ const UserSettings = () => {
 
   return (
     <Card sx={{ paddingBottom: 4 }}>
-      {!userDetails && (
-        <Box
-          sx={{
-            marginTop: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h5" sx={{ mt: 1 }}>
-            Brukerinnstillinger
-          </Typography>
-          <CircularProgress sx={{ mt: 1 }} />
-        </Box>
+      {userDetails ? (
+        <UserDetailEditor userDetails={userDetails} />
+      ) : (
+        <UserDetailEditorSkeleton />
       )}
-      {userDetails && <UserDetailEditor userDetails={userDetails} />}
     </Card>
   );
 };
