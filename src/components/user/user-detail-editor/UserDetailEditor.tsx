@@ -366,26 +366,38 @@ const UserDetailEditor = ({
             <Grid item xs={12}>
               <Controller
                 control={control}
-                {...register("birthday", fieldValidators.birthday)}
-                name="birthday"
-                render={({ field: { onChange, onBlur, ref } }) => {
-                  return (
-                    <DatePicker
-                      sx={{ width: "100%" }}
-                      label="Fødselsdato *"
-                      format="DD/MM/YYYY"
-                      minDate={moment().subtract(100, "years")}
-                      maxDate={moment().subtract(10, "years")}
-                      openTo="year"
-                      views={["year", "month", "day"]}
-                      onChange={onBirthdayChange(onChange)}
-                      onAccept={onBirthdayChange(onChange)}
-                      inputRef={ref}
-                      onClose={onBlur}
-                      slotProps={{ field: { onBlur } }}
-                    />
-                  );
+                // Adding ref gives a warning, so don't
+                {...{
+                  ...register("birthday", fieldValidators.birthday),
+                  ref: undefined,
                 }}
+                render={({
+                  field: { onChange, onBlur, ref, ...field },
+                  fieldState: { error },
+                }) => (
+                  <DatePicker
+                    {...field}
+                    sx={{ width: "100%" }}
+                    label="Fødselsdato *"
+                    format="DD/MM/YYYY"
+                    minDate={moment().subtract(100, "years")}
+                    maxDate={moment().subtract(10, "years")}
+                    openTo="year"
+                    views={["year", "month", "day"]}
+                    onChange={onBirthdayChange(onChange)}
+                    onAccept={onBirthdayChange(onChange)}
+                    inputRef={ref}
+                    onClose={onBlur}
+                    slotProps={{
+                      field: { onBlur },
+                      textField: {
+                        onBlur,
+                        error: !!error,
+                        helperText: error?.message,
+                      },
+                    }}
+                  />
+                )}
               />
               <FieldErrorAlert error={errors.birthday as FieldError} />
             </Grid>
