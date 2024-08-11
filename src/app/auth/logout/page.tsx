@@ -1,16 +1,21 @@
 "use client";
-import { Card, Container, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { logout } from "@/api/auth";
-import CountdownToRedirect from "@/components/CountdownToRedirect";
 import BL_CONFIG from "@/utils/bl-config";
 
 export default function LogoutPage() {
+  const router = useRouter();
+
   useEffect(() => {
     logout();
-  }, []);
+    router.replace(`${BL_CONFIG.blWeb.basePath}?logout=true`);
+  }, [router]);
+
+  return null;
+  /**
+     * Use this as the landing page for logout bl-web is deprecated.
   return (
     <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">
@@ -25,13 +30,9 @@ export default function LogoutPage() {
           <Typography variant="h5" sx={{ mt: 1 }}>
             Du er nå logget ut
           </Typography>
-          <CountdownToRedirect
-            path={`${BL_CONFIG.blWeb.basePath}?logout=true`}
-            seconds={3}
-            shouldReplaceInHistory
-          />
         </Box>
       </Container>
     </Card>
   );
+     */
 }
