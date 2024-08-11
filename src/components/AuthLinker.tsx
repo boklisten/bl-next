@@ -23,10 +23,10 @@ export function attachTokensToHref(href: string) {
       href.includes(BL_CONFIG.blAdmin.basePath)) &&
     isLoggedIn()
   ) {
-    return (
-      href +
-      `?refresh_token=${getRefreshToken()}&access_token=${getAccessToken()}`
-    );
+    const url = new URL(href);
+    url.searchParams.append("refresh_token", getRefreshToken());
+    url.searchParams.append("access_token", getAccessToken());
+    return url.toString();
   }
   return href;
 }
