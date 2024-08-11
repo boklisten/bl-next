@@ -12,7 +12,7 @@ export default function FieldErrorAlert({
       key={error.type}
       severity="error"
       data-testid="error-message"
-      sx={{ mt: 1 }}
+      sx={{ my: 1 }}
     >
       {error.message}
     </Alert>
