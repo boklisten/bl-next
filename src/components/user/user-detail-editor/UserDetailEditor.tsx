@@ -20,7 +20,7 @@ import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -82,10 +82,9 @@ const UserDetailEditor = ({
     register,
     handleSubmit,
     control,
-    getValues,
-    setValue,
-    setError,
     clearErrors,
+    setError,
+    watch,
     formState: { errors },
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
@@ -167,7 +166,18 @@ const UserDetailEditor = ({
     setPostalCity(response[0].postalCity);
   }
 
-  const birthdayFieldValue = getValues("birthday");
+  const birthdayFieldValue = watch("birthday");
+
+  const onBirthdayChange =
+    (onChange: (newValue: Moment | null) => void) =>
+    (newValue: Moment | null) => {
+      onChange(newValue);
+      if (newValue === null || !isUnder18(newValue)) {
+        clearErrors("guardianName");
+        clearErrors("guardianEmail");
+        clearErrors("guardianPhoneNumber");
+      }
+    };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -358,7 +368,7 @@ const UserDetailEditor = ({
                 control={control}
                 {...register("birthday", fieldValidators.birthday)}
                 name="birthday"
-                render={() => {
+                render={({ field: { onChange, onBlur, ref } }) => {
                   return (
                     <DatePicker
                       sx={{ width: "100%" }}
@@ -368,17 +378,11 @@ const UserDetailEditor = ({
                       maxDate={moment().subtract(10, "years")}
                       openTo="year"
                       views={["year", "month", "day"]}
-                      value={getValues("birthday")}
-                      onChange={(newValue) => {
-                        setValue("birthday", newValue, {
-                          shouldValidate: true,
-                        });
-                        if (newValue === null || !isUnder18(newValue)) {
-                          clearErrors("guardianName");
-                          clearErrors("guardianEmail");
-                          clearErrors("guardianPhoneNumber");
-                        }
-                      }}
+                      onChange={onBirthdayChange(onChange)}
+                      onAccept={onBirthdayChange(onChange)}
+                      inputRef={ref}
+                      onClose={onBlur}
+                      slotProps={{ field: { onBlur } }}
                     />
                   );
                 }}
