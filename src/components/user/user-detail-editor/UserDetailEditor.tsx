@@ -22,7 +22,7 @@ import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers";
 import moment, { Moment } from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Controller,
   FieldError,
@@ -63,6 +63,7 @@ const UserDetailEditor = ({
   const [postalCity, setPostalCity] = useState<string | null>(
     userDetails?.postCity ?? null,
   );
+  const [isJustSaved, setIsJustSaved] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -85,7 +86,9 @@ const UserDetailEditor = ({
     clearErrors,
     setError,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty, submitCount },
+    reset,
+    getValues,
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
   const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
@@ -139,8 +142,28 @@ const UserDetailEditor = ({
         });
       }
     }
-    executeReturnRedirect(searchParams, router);
+
+    if (isSignUp) {
+      executeReturnRedirect(searchParams, router);
+    } else {
+      setIsJustSaved(true);
+    }
   };
+
+  // Hide the "Just saved"-banner when the form is dirtied again, and clean on submit
+  const values = getValues();
+  useEffect(() => {
+    if (submitCount > 0 && isJustSaved) {
+      reset(values, {
+        keepValues: true,
+        keepErrors: true,
+        keepIsValid: true,
+        keepIsValidating: true,
+      });
+    } else if (isDirty) {
+      setIsJustSaved(false);
+    }
+  }, [isDirty, reset, submitCount, isJustSaved, values]);
 
   async function onPostalCodeChange(event: { target: { value: string } }) {
     setPostalCity(null);
@@ -516,6 +539,15 @@ const UserDetailEditor = ({
                   </ListItem>
                 ))}
               </List>
+            </Alert>
+          )}
+          {isJustSaved && (
+            <Alert
+              sx={{ mt: 2 }}
+              onClose={() => setIsJustSaved(false)}
+              severity="success"
+            >
+              Brukerinnstillingene ble oppdatert
             </Alert>
           )}
           <Button
