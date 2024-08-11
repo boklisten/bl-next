@@ -10,7 +10,7 @@ export default function LogoutPage() {
 
   useEffect(() => {
     logout();
-    router.replace(`${BL_CONFIG.blWeb.basePath}/logout`);
+    router.replace(`${BL_CONFIG.blWeb.basePath}logout`);
   }, [router]);
 
   return null;
