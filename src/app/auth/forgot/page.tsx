@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import isEmail from "validator/lib/isEmail";
 
 import BlFetcher from "@/api/blFetcher";
 import DynamicLink from "@/components/DynamicLink";
@@ -96,7 +97,12 @@ const ForgotPage = () => {
                 id="email"
                 label="Epost"
                 autoComplete="email"
-                {...register("email")}
+                error={!!errors.email}
+                {...register("email", {
+                  required: "Du må fylle inn epost",
+                  validate: (v) =>
+                    isEmail(v) ? true : "Du må fylle inn en gyldig epost",
+                })}
               />
               <Button
                 data-testid="forgot-submit"
