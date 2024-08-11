@@ -189,8 +189,8 @@ const UserDetailEditor = ({
           <>
             <FacebookButton label={"Registrer deg med Facebook"} />
             <GoogleButton label={"Registrer deg med Google"} />
-            <Divider sx={{ width: "100%", mt: 3, mb: 1 }}>
-              Eller, registrer deg med epost
+            <Divider sx={{ width: "100%", my: 3 }}>
+              Eller, registrer deg med e-post
             </Divider>
           </>
         )}
@@ -282,6 +282,7 @@ const UserDetailEditor = ({
                   autoComplete="new-password"
                   error={!!errors.password}
                   {...register("password", fieldValidators.password)}
+                  margin="none"
                 />
                 <FieldErrorAlert error={errors.password} />
               </Grid>

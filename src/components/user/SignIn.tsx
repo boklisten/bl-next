@@ -63,13 +63,13 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5" sx={{ mt: 1 }}>
+        <Typography variant="h5" sx={{ my: 1 }}>
           Logg inn
         </Typography>
         <FacebookButton label={"Logg inn med Facebook"} />
         <GoogleButton label={"Logg inn med Google"} />
 
-        <Divider sx={{ width: "100%", mt: 3 }}>
+        <Divider sx={{ width: "100%", my: 3 }}>
           Eller, logg inn med e-post
         </Divider>
         <Box
@@ -98,7 +98,6 @@ export default function SignIn() {
               inputMode: "email",
             }}
             required
-            margin="normal"
             fullWidth
             id="email"
             label="E-post"
