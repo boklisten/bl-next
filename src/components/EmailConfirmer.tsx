@@ -6,7 +6,6 @@ import BlFetcher from "@/api/blFetcher";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import DynamicLink from "@/components/DynamicLink";
 import BL_CONFIG from "@/utils/bl-config";
-import { assertBlApiError } from "@/utils/types";
 
 function validateEmail(confirmationId: string) {
   return BlFetcher.patch(
@@ -23,18 +22,14 @@ export default function EmailConfirmer({
   const [status, setStatus] = useState<"WAIT" | "SUCCESS" | "ERROR">("WAIT");
 
   useEffect(() => {
-    async function tryValidateEmail() {
-      try {
-        await validateEmail(confirmationId);
-        setStatus("SUCCESS");
-      } catch (error) {
-        if (assertBlApiError(error)) {
-          setStatus("ERROR");
-        }
-        return;
-      }
-    }
-    tryValidateEmail();
+    validateEmail(confirmationId)
+      .then(() => {
+        return setStatus("SUCCESS");
+      })
+      .catch((error) => {
+        console.error(error);
+        setStatus("ERROR");
+      });
   }, [confirmationId]);
 
   return (
