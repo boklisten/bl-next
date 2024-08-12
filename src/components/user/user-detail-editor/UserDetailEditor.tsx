@@ -270,30 +270,41 @@ const UserDetailEditor = ({
                       søppelpost om den ikke dukker opp i inbox.
                     </Alert>
                   ) : (
-                    <Button
-                      onClick={async () => {
-                        try {
-                          await BlFetcher.post(
-                            BL_CONFIG.collection.emailValidation,
-                            {
-                              userDetail: userDetails.id,
-                              email: userDetails.email,
-                            },
-                          );
-                          setEmailConfirmationRequested(true);
-                        } catch (error) {
-                          if (assertBlApiError(error)) {
-                            setError("email", {
-                              message:
-                                "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
-                            });
-                            return;
+                    <>
+                      <Alert
+                        severity={"warning"}
+                        icon={<Info color={"warning"} />}
+                      >
+                        E-postadressen din er ikke bekreftet. En
+                        bekreftelseslenke har blitt sendt til{" "}
+                        {userDetails.email}. Trykk på knappen nedenfor for å
+                        sende en ny lenke.
+                      </Alert>
+                      <Button
+                        onClick={async () => {
+                          try {
+                            await BlFetcher.post(
+                              BL_CONFIG.collection.emailValidation,
+                              {
+                                userDetail: userDetails.id,
+                                email: userDetails.email,
+                              },
+                            );
+                            setEmailConfirmationRequested(true);
+                          } catch (error) {
+                            if (assertBlApiError(error)) {
+                              setError("email", {
+                                message:
+                                  "Klarte ikke sende ny bekreftelseslenke. Vennligst prøv igjen, eller ta kontakt hvis problemet vedvarer.",
+                              });
+                              return;
+                            }
                           }
-                        }
-                      }}
-                    >
-                      Send bekreftelseslenke på nytt
-                    </Button>
+                        }}
+                      >
+                        Send bekreftelseslenke på nytt
+                      </Button>
+                    </>
                   )}
                 </>
               )}
