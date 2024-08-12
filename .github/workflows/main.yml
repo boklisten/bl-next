@@ -143,6 +143,10 @@ jobs:
         with:
           path: ./.next/
           key: ${{ github.sha }}-build
+        env:
+          NEXT_PUBLIC_API_URL: https://staging.api.boklisten.no/
+          NEXT_PUBLIC_BL_WEB_URL: https://staging.boklisten.no/
+          NEXT_PUBLIC_BL_ADMIN_URL: https://staging.bladmin.boklisten.no/
 #  tests:
 #    runs-on: ubuntu-latest
 #    needs: [build]
