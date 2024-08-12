@@ -21,9 +21,7 @@ export default function TokenPage() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h5" sx={{ my: 1 }}>
-            Du blir nå logget inn...
-          </Typography>
+          <Typography variant="h1">Du blir nå logget inn...</Typography>
           <CircularProgress />
           <AuthVerifier />
         </Box>

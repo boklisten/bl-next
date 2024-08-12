@@ -27,7 +27,7 @@ export default function LogoutPage() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h5" sx={{ mt: 1 }}>
+          <Typography variant="h1">
             Du er nå logget ut
           </Typography>
         </Box>

@@ -71,9 +71,7 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5" sx={{ my: 1 }}>
-          Logg inn
-        </Typography>
+        <Typography variant="h1">Logg inn</Typography>
         <FacebookButton label={"Logg inn med Facebook"} />
         <GoogleButton label={"Logg inn med Google"} />
 

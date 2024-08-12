@@ -41,9 +41,7 @@ export default function EmailConfirmer({
     <>
       {status === "WAIT" && (
         <>
-          <Typography variant="h5" sx={{ my: 1 }}>
-            Verifiserer e-post...
-          </Typography>
+          <Typography variant="h1">Verifiserer e-post...</Typography>
           <CircularProgress />
         </>
       )}

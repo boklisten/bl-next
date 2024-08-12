@@ -58,9 +58,7 @@ const ForgotPage = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h5" sx={{ mt: 1 }}>
-              Glemt passord
-            </Typography>
+            <Typography variant="h1">Glemt passord</Typography>
             <Typography sx={{ mt: 1 }}>
               Skriv inn din e-postadresse, så sender vi deg en lenke slik at du
               kan nullstille passordet ditt.

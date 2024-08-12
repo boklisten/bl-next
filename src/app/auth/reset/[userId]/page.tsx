@@ -25,9 +25,7 @@ export default function PasswordResetPage({
             alignItems: "center",
           }}
         >
-          <Typography variant="h5" sx={{ mt: 1 }}>
-            Lag nytt passord
-          </Typography>
+          <Typography variant="h1">Lag nytt passord</Typography>
           <PasswordReset userId={params.userId} />
         </Box>
       </Container>
