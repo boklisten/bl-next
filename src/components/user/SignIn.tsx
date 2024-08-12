@@ -8,10 +8,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
+import { isLoggedIn } from "@/api/auth";
 import { login } from "@/api/user";
 import { executeReturnRedirect } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
@@ -52,6 +53,13 @@ export default function SignIn() {
     }
     executeReturnRedirect(searchParams, router);
   };
+
+  useEffect(() => {
+    // Next might have valid tokens, even though bl-web and bl-admin might not. If so, the user is redirected automatically
+    if (isLoggedIn()) {
+      executeReturnRedirect(searchParams, router);
+    }
+  }, [router, searchParams]);
 
   return (
     <Container component="main" maxWidth="xs">
