@@ -1,5 +1,6 @@
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 
 import StandMatchListItem from "@/components/matches/matchesList/StandMatchListItem";
@@ -11,7 +12,7 @@ export const MatchListItemGroups: React.FC<{
   heading?: string;
 }> = ({ matches, userId, heading }) => {
   return (
-    <Container
+    <Box
       component={"section"}
       sx={{
         display: "flex",
@@ -36,6 +37,6 @@ export const MatchListItemGroups: React.FC<{
           />
         ),
       )}
-    </Container>
+    </Box>
   );
 };
