@@ -35,16 +35,18 @@ export function executeReturnRedirect(
   searchParams: ReadonlyURLSearchParams,
   router: AppRouterInstance,
 ) {
+  let target = "";
+
   const caller = searchParams.get("caller");
-  const baseUrl =
-    caller === "bl-web"
-      ? BL_CONFIG.blWeb.basePath
-      : caller === "bl-admin"
-        ? BL_CONFIG.blAdmin.basePath
-        : "/";
-  const path =
-    caller == "bl-admin" ? "auth/gateway" : searchParams.get("redirect") ?? "";
-  router.replace(attachTokensToHref(baseUrl + path));
+  const redirect = searchParams.get("redirect");
+  if (caller === "bl-web") {
+    target = `${BL_CONFIG.blWeb.basePath}auth/gateway?redirect=${redirect}`;
+  } else if (caller === "bl-admin") {
+    target = `${BL_CONFIG.blAdmin.basePath}auth/gateway`;
+  } else {
+    target = "/";
+  }
+  router.replace(attachTokensToHref(target));
 }
 
 export default function AuthLinker({ children }: { children: ReactNode }) {
