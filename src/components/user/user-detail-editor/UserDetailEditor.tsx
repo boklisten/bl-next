@@ -1,6 +1,7 @@
 "use client";
 import { UserDetail } from "@boklisten/bl-model";
 import { Check, Email, Info } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   AlertTitle,
@@ -64,6 +65,7 @@ const UserDetailEditor = ({
     userDetails?.postCity ?? null,
   );
   const [isJustSaved, setIsJustSaved] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -92,10 +94,12 @@ const UserDetailEditor = ({
   } = useForm<UserEditorFields>({ mode: "onTouched", defaultValues });
 
   const onSubmit: SubmitHandler<UserEditorFields> = async (data) => {
+    setIsSubmitting(true);
     if (postalCity === null) {
       setError("postalCode", {
         message: "Du må oppgi et gyldig postnummer!",
       });
+      setIsSubmitting(false);
       return;
     }
     if (isSignUp) {
@@ -108,6 +112,7 @@ const UserDetailEditor = ({
               message:
                 "Det finnes allerede en bruker med denne e-postadressen!",
             });
+            setIsSubmitting(false);
             return;
           }
           if (error.httpStatus === 500) {
@@ -148,6 +153,8 @@ const UserDetailEditor = ({
     } else {
       setIsJustSaved(true);
     }
+
+    setIsSubmitting(false);
   };
 
   // Hide the "Just saved"-banner when the form is dirtied again, and clean on submit
@@ -561,7 +568,8 @@ const UserDetailEditor = ({
               Brukerinnstillingene ble oppdatert
             </Alert>
           )}
-          <Button
+          <LoadingButton
+            loading={isSubmitting}
             data-testid="submit-button"
             type="submit"
             fullWidth
@@ -569,7 +577,7 @@ const UserDetailEditor = ({
             sx={{ mt: 3, mb: 2 }}
           >
             {isSignUp ? "Registrer deg" : "Lagre"}
-          </Button>
+          </LoadingButton>
           {isSignUp && (
             <DynamicLink href={"/auth/login"}>
               Har du allerede en konto? Logg inn
