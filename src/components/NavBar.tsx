@@ -9,7 +9,6 @@ import React from "react";
 import BranchSelect from "@/components/BranchSelect";
 import DynamicLink from "@/components/DynamicLink";
 import DropDownMenu from "@/components/SideMenuDrawer";
-import BL_CONFIG from "@/utils/bl-config";
 
 interface TabLinkProps {
   title: string;
@@ -43,7 +42,7 @@ const TAB_LINKS: TabLinkProps[] = [
     testID: "infoBtnNav",
   },
   {
-    href: BL_CONFIG.blWeb.basePath + "fastbuy/regions",
+    href: "/order",
     title: "Bestill bøker",
     testID: "",
   },
@@ -54,7 +53,7 @@ export default function NavBar() {
     <Box data-testid="nav-bar">
       <AppBar position="fixed">
         <Toolbar sx={{ paddingY: "10px" }}>
-          <DynamicLink href={BL_CONFIG.blWeb.basePath}>
+          <DynamicLink href={"/"}>
             <Box
               sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
               color="secondary"

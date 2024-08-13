@@ -5,6 +5,10 @@ const BL_CONFIG = {
   blWeb: {
     basePath: process.env["NEXT_PUBLIC_BL_WEB_URL"] ?? "http://localhost:4200/",
   },
+  blAdmin: {
+    basePath:
+      process.env["NEXT_PUBLIC_BL_ADMIN_URL"] ?? "http://localhost:8080/",
+  },
   token: {
     accessToken: "bl-access-token",
     refreshToken: "bl-refresh-token",
@@ -19,9 +23,6 @@ const BL_CONFIG = {
     google: {
       url: "auth/google",
     },
-    feide: {
-      url: "auth/feide",
-    },
   },
   register: {
     local: {
@@ -33,9 +34,6 @@ const BL_CONFIG = {
     google: {
       url: "auth/google",
     },
-    feide: {
-      url: "auth/feide",
-    },
   },
   order: {
     receipt: {
@@ -45,14 +43,19 @@ const BL_CONFIG = {
       operation: "agreement",
     },
   },
-  passwordReset: {
-    setNew: {
-      operation: "new",
+  pendingPasswordReset: {
+    confirm: {
+      operation: "confirm",
     },
   },
   emailValidation: {
     confirm: {
       operation: "confirm",
+    },
+  },
+  delivery: {
+    postalCodeLookup: {
+      operation: "postal-code-lookup",
     },
   },
   collection: {

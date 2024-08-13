@@ -7,7 +7,7 @@ import { infoPageTabs } from "@/utils/constants";
 import { editorData } from "@/utils/mockData";
 
 export const metadata: Metadata = {
-  title: "For VGS-elever | Boklisten.no",
+  title: "For VGS-elever",
   description:
     "Er du videregående-elev? Finn dine kontaktelever og når utdeling og innsamling skjer.",
 };
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Editor rawEditorState={editorData.pupils} />
       </Card>

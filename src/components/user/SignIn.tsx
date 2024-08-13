@@ -1,28 +1,32 @@
 "use client";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Alert, IconButton, InputAdornment, Tooltip } from "@mui/material";
+import { Alert } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import { login } from "@/api/login";
+import { isLoggedIn } from "@/api/auth";
+import { login } from "@/api/user";
+import { executeReturnRedirect } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
+import FacebookButton from "@/components/user/FacebookButton";
+import PasswordField from "@/components/user/fields/PasswordField";
+import GoogleButton from "@/components/user/GoogleButton";
+import { assertBlApiError } from "@/utils/types";
 
-type SignInFields = {
+interface SignInFields {
   email: string;
   password: string;
-};
+}
 
 export default function SignIn() {
-  const [showPassword, setShowPassword] = useState(false);
   const [apiError, setApiError] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,44 +35,52 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFields>({ mode: "onTouched" });
+
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
     try {
       await login(data.email, data.password);
-      router.push("/" + (searchParams.get("redirect") ?? ""));
     } catch (error) {
-      setApiError(String(error));
+      if (assertBlApiError(error)) {
+        if (error.code === 908) {
+          setApiError("Feil brukernavn eller passord");
+          return;
+        }
+        setApiError(
+          "Noe gikk galt! Prøv igjen eller ta kontakt dersom problemet vedvarer.",
+        );
+      }
+      return;
     }
+    executeReturnRedirect(searchParams, router);
   };
+
+  useEffect(() => {
+    // Next might have valid tokens, even though bl-web and bl-admin might not. If so, the user is redirected automatically
+    if (isLoggedIn()) {
+      executeReturnRedirect(searchParams, router);
+    }
+  }, [router, searchParams]);
 
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Image
-          src="/boklisten_logo_v2_icon_blue.png"
-          width={50}
-          height={50}
-          alt="logo"
-        />
-        <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
+        <Typography variant="h1" mb={2}>
           Logg inn
         </Typography>
-        {/*
-        Temporary hide social login for P2P test
         <FacebookButton label={"Logg inn med Facebook"} />
         <GoogleButton label={"Logg inn med Google"} />
 
-        <Divider sx={{ width: "100%", mt: 3 }}>
-          Eller, logg inn med epost
+        <Divider sx={{ width: "100%", my: 3 }}>
+          Eller, logg inn med e-post
         </Divider>
-*/}
         <Box
           component="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -91,62 +103,29 @@ export default function SignIn() {
           ))}
           <TextField
             data-testid="email-field"
+            inputProps={{
+              inputMode: "email",
+            }}
             required
-            margin="normal"
             fullWidth
             id="email"
-            label="Epost"
+            label="E-post"
             autoComplete="email"
-            error={!!errors.email}
             {...register("email", {
-              required: "Du må fylle inn epost",
               validate: (v) =>
-                isEmail(v) ? true : "Du må fylle inn en gyldig epost",
+                !v || isEmail(v) ? true : "Du må fylle inn en gyldig e-post",
             })}
           />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <TextField
-              data-testid="password-field"
-              required
-              margin="normal"
-              fullWidth
-              label="Passord"
-              type={showPassword ? "text" : "password"}
-              id="password"
-              error={!!errors.password}
-              autoComplete="current-password"
-              {...register("password", { required: "Du må fylle inn passord" })}
-            />
-            <InputAdornment
-              position="end"
-              sx={{ position: "absolute", mr: 1, mt: 1 }}
-            >
-              <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShowPassword(!showPassword)}
-                  onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-                    event.preventDefault();
-                  }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </Tooltip>
-            </InputAdornment>
-          </Box>
+          <PasswordField
+            autoComplete="current-password"
+            {...register("password")}
+          />
           <Button
             data-testid="login-submit"
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={Object.entries(errors).length > 0}
           >
             Logg inn
           </Button>

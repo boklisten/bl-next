@@ -6,7 +6,7 @@ import DynamicNav from "@/components/info/DynamicNav";
 import { infoPageTabs } from "@/utils/constants";
 
 export const metadata: Metadata = {
-  title: "Kontakt oss | Boklisten.no",
+  title: "Kontakt oss",
   description:
     "Vi er tilgjengelig for spørsmål og henvendelser både på epost og telefon. Se vår kontaktinformasjon, med epost-adresse, telefonnummer og gateadresse.",
 };
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const ContactPage = () => {
   return (
     <>
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <DynamicNav tabs={infoPageTabs} twoRows />
         <Typography
           variant="h4"

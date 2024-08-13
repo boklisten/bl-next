@@ -1,3 +1,4 @@
+"use client";
 import { LinearProgress, Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -5,9 +6,11 @@ import { useEffect, useRef, useState } from "react";
 const CountdownToRedirect = ({
   path,
   seconds,
+  shouldReplaceInHistory,
 }: {
   path: string;
   seconds: number;
+  shouldReplaceInHistory?: boolean;
 }) => {
   const [progress, setProgress] = useState(100);
   const router = useRouter();
@@ -25,7 +28,7 @@ const CountdownToRedirect = ({
       setProgress((previousProgress) => {
         if (previousProgress <= 0) {
           clearInterval(interval);
-          router.push(path);
+
           return 0;
         }
         return previousProgress - 10 / seconds;
@@ -35,7 +38,17 @@ const CountdownToRedirect = ({
     return () => {
       clearInterval(interval);
     };
-  }, [path, router, seconds]);
+  }, [path, router, seconds, shouldReplaceInHistory]);
+
+  useEffect(() => {
+    if (progress <= 0) {
+      if (shouldReplaceInHistory) {
+        router.replace(path);
+      } else {
+        router.push(path);
+      }
+    }
+  }, [progress, shouldReplaceInHistory, router, path]);
 
   return (
     <Box sx={{ width: "100%", mt: 1 }} ref={elementRef}>

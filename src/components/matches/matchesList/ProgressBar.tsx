@@ -18,24 +18,24 @@ const ProgressBar: React.FC<{
               flexDirection: "row",
               placeItems: "center",
               gap: "0.2rem",
-              marginBottom: "0.5rem",
+              marginBottom: 1,
             }
           : {
-              marginBottom: "0.5rem",
+              marginBottom: 1,
             }
       }
     >
-      {finished && <CheckCircle color="success" sx={{ height: "1.3rem" }} />}
+      {finished && <CheckCircle color="success" sx={{ height: "1.5em" }} />}
       {!finished && (
         <>
           <LinearProgress
             value={percentComplete}
             variant="determinate"
             sx={{
-              marginBottom: "0.4rem",
-              marginTop: "0.8rem",
+              marginBottom: 0.8,
+              marginTop: 1.6,
               height: "0.5rem",
-              borderRadius: "0.2rem",
+              borderRadius: "0.8rem",
               [`&.${linearProgressClasses.colorPrimary}`]: {
                 backgroundColor:
                   theme.palette.grey[

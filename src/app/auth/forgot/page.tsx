@@ -9,12 +9,11 @@ import {
   TextField,
   Alert,
 } from "@mui/material";
-import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 
-import { add } from "@/api/api";
+import BlFetcher from "@/api/blFetcher";
 import DynamicLink from "@/components/DynamicLink";
 import blConfig from "@/utils/bl-config";
 
@@ -34,7 +33,7 @@ const ForgotPage = () => {
     try {
       setError(false);
       setSuccess(false);
-      await add(blConfig.collection.pendingPasswordReset, {
+      await BlFetcher.post(blConfig.collection.pendingPasswordReset, {
         email: data.email,
       });
       setSuccess(true);
@@ -49,7 +48,7 @@ const ForgotPage = () => {
         name="description"
         content="Har du glemt passordet ditt? Få hjep til å opprette et nytt!"
       />
-      <Card sx={{ paddingBottom: "2rem" }}>
+      <Card sx={{ paddingBottom: 4 }}>
         <Container component="main" maxWidth="xs">
           <Box
             sx={{
@@ -59,15 +58,7 @@ const ForgotPage = () => {
               alignItems: "center",
             }}
           >
-            <Image
-              src="/boklisten_logo_v2_icon_blue.png"
-              width={50}
-              height={50}
-              alt="logo"
-            />
-            <Typography component="h1" variant="h5" sx={{ mt: 1 }}>
-              Glemt passord
-            </Typography>
+            <Typography variant="h1">Glemt passord</Typography>
             <Typography sx={{ mt: 1 }}>
               Skriv inn din e-postadresse, så sender vi deg en lenke slik at du
               kan nullstille passordet ditt.
@@ -90,7 +81,7 @@ const ForgotPage = () => {
                 </Alert>
               )}
               {success && (
-                <Alert severity="success">
+                <Alert severity="success" sx={{ mt: 1 }}>
                   Hvis det finnes en bruker med denne e-postaddressen har vi
                   sendt en e-post med instruksjoner for hvordan du kan endre
                   passordet ditt.

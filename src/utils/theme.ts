@@ -38,7 +38,7 @@ const theme = responsiveFontSizes(
       h1: {
         fontSize: "2rem",
         marginTop: "1.6rem",
-        marginBottom: "0.6rem",
+        marginBottom: "0.2rem",
       },
       h2: {
         fontSize: "1.5rem",
@@ -79,7 +79,7 @@ const theme = responsiveFontSizes(
           select: {
             // '&' increases specificity
             "&": {
-              padding: "0.5rem",
+              padding: 1,
             },
           },
         },
@@ -88,7 +88,7 @@ const theme = responsiveFontSizes(
         styleOverrides: {
           nativeInput: {
             "&": {
-              padding: "0.5rem",
+              padding: 1,
             },
           },
         },

@@ -11,21 +11,22 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import useSWR, { SWRResponse } from "swr";
+import useSWR from "swr";
 
-import { fetcher } from "@/api/requests";
+import BlFetcher from "@/api/blFetcher";
 import BL_CONFIG from "@/utils/bl-config";
 import { Item } from "@/utils/types";
-
-export const buybackUrl = `${BL_CONFIG.api.basePath}items?buyback=true&sort=title`;
 
 const BuybackList = ({
   defaultBuybackItems,
 }: {
   defaultBuybackItems: Item[];
 }) => {
-  const { data, error }: SWRResponse = useSWR(buybackUrl, fetcher);
-  const items = (data ?? defaultBuybackItems) as Item[];
+  const { data, error } = useSWR(
+    `${BL_CONFIG.collection.item}?buyback=true&sort=title`,
+    BlFetcher.get<Item[]>,
+  );
+  const items = data ?? defaultBuybackItems;
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}

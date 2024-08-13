@@ -4,7 +4,7 @@ import React from "react";
 import MatchDetail from "@/components/matches/MatchDetail";
 
 export const metadata: Metadata = {
-  title: "Overlevering av bøker | Boklisten.no",
+  title: "Overlevering av bøker",
   description: "Overlevering av bøker",
 };
 

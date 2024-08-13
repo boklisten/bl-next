@@ -43,7 +43,7 @@ const DynamicSubNavInner = ({
           key={href}
           sx={{
             p: 0,
-            borderRadius: "1rem",
+            borderRadius: 2,
           }}
         >
           <NextLink
