@@ -1,25 +1,12 @@
-import moment, { Moment } from "moment/moment";
+import moment from "moment/moment";
 import { RegisterOptions } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
 import isPostalCode from "validator/lib/isPostalCode";
 
 import BlFetcher from "@/api/blFetcher";
+import { UserEditorFields } from "@/components/user/user-detail-editor/useUserDetailEditorForm";
 import BL_CONFIG from "@/utils/bl-config";
-
-export type UserEditorFields = {
-  email: string;
-  password: string;
-  name: string;
-  phoneNumber: string;
-  address: string;
-  postalCode: string;
-  birthday: Moment | null;
-  guardianName: string | undefined;
-  guardianEmail: string | undefined;
-  guardianPhoneNumber: string | undefined;
-  agreeToTermsAndConditions: boolean;
-};
 
 export const fieldValidators: {
   [K in keyof UserEditorFields]: RegisterOptions<UserEditorFields>;

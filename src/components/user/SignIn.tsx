@@ -17,8 +17,8 @@ import { login } from "@/api/user";
 import { executeReturnRedirect } from "@/components/AuthLinker";
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";
+import PasswordField from "@/components/user/fields/PasswordField";
 import GoogleButton from "@/components/user/GoogleButton";
-import PasswordField from "@/components/user/PasswordField";
 import { assertBlApiError } from "@/utils/types";
 
 interface SignInFields {
@@ -35,6 +35,7 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFields>({ mode: "onTouched" });
+
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {
     setApiError("");
     try {
@@ -71,7 +72,9 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h1">Logg inn</Typography>
+        <Typography variant="h1" mb={2}>
+          Logg inn
+        </Typography>
         <FacebookButton label={"Logg inn med Facebook"} />
         <GoogleButton label={"Logg inn med Google"} />
 

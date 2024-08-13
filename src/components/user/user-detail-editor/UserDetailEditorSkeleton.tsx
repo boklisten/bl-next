@@ -14,7 +14,7 @@ export default function UserDetailEditorSkeleton({
         </Typography>
         <Box width="100%">
           <Skeleton width={"100%"} height={80} sx={{ mb: 10 }} />
-          {Array.from({ length: 6 }).map((index) => (
+          {Array.from({ length: 6 }).map((_, index) => (
             <Skeleton
               width={"100%"}
               height={80}
