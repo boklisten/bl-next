@@ -48,7 +48,7 @@ const YourInfoSection = ({
         autoComplete="name"
         fullWidth
         id="name"
-        label="Navn"
+        label="Fullt navn"
         error={!!errors.name}
         {...register("name", fieldValidators.name)}
       />

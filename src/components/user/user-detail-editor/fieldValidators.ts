@@ -23,7 +23,11 @@ export const fieldValidators: {
     },
   },
   name: {
-    required: "Du må fylle inn navn",
+    required: "Du må fylle inn ditt fulle navn",
+    validate: (v: string) =>
+      v.split(" ").length > 1
+        ? true
+        : "Du må fylle inn både fornavn og etternavn",
   },
   phoneNumber: {
     required: "Du må fylle inn telefonnummer",
