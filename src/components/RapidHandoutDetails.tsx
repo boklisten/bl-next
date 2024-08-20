@@ -18,7 +18,7 @@ function calculateUnfulfilledOrderItems(orders: Order[]): OrderItem[] {
       (orderItem) =>
         !orderItem.movedToOrder &&
         !orderItem.handout &&
-        orderItem.type === "rent",
+        (orderItem.type === "rent" || orderItem.type === "partly-payment"),
     );
 }
 
