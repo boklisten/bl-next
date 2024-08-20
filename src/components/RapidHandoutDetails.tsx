@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import BlFetcher from "@/api/blFetcher";
-import CountdownToRedirect from "@/components/CountdownToRedirect";
 import { ItemStatus } from "@/components/matches/matches-helper";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import ScannerModal from "@/components/matches/Scanner/ScannerModal";
@@ -43,10 +42,7 @@ export default function RapidHandoutDetails({
   );
   const [itemStatuses, setItemStatuses] = useState<ItemStatus[]>([]);
   const [scanModalOpen, setScanModalOpen] = useState(false);
-  const [redirectCountdownStarted, setRedirectCountdownStarted] =
-    useState(false);
-
-  const isFulfilled = itemStatuses.every((itemStatus) => itemStatus.fulfilled);
+  useState(false);
 
   useEffect(() => {
     BlFetcher.get<Order[]>(
@@ -93,9 +89,6 @@ export default function RapidHandoutDetails({
         Scan bøker
       </Button>
       <MatchItemTable itemStatuses={itemStatuses} isSender={true} />
-      {redirectCountdownStarted && (
-        <CountdownToRedirect path={"/admin/hurtigutdeling"} seconds={5} />
-      )}
       <ScannerModal
         onScan={(blid) =>
           BlFetcher.post(BL_CONFIG.collection.order + "/rapid-handout", {
@@ -107,7 +100,6 @@ export default function RapidHandoutDetails({
         handleSuccessfulScan={updateOrders}
         handleClose={() => {
           setScanModalOpen(false);
-          setRedirectCountdownStarted(isFulfilled);
         }}
         itemStatuses={itemStatuses}
         expectedItems={itemStatuses.map((itemStatus) => itemStatus.id)}
