@@ -1,13 +1,17 @@
-import { Order, UserDetail } from "@boklisten/bl-model";
-import { Alert, Typography } from "@mui/material";
+import { Order, OrderItem, UserDetail } from "@boklisten/bl-model";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import { Alert, Button, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import BlFetcher from "@/api/blFetcher";
+import CountdownToRedirect from "@/components/CountdownToRedirect";
 import { ItemStatus } from "@/components/matches/matches-helper";
 import MatchItemTable from "@/components/matches/MatchItemTable";
+import ScannerModal from "@/components/matches/Scanner/ScannerModal";
 import BL_CONFIG from "@/utils/bl-config";
 
-function mapOrdersToItemStatuses(orders: Order[]): ItemStatus[] {
+function calculateUnfulfilledOrderItems(orders: Order[]): OrderItem[] {
   return orders
     .filter((order) => order.byCustomer && !order.handoutByDelivery)
     .flatMap((order) => order.orderItems)
@@ -15,15 +19,16 @@ function mapOrdersToItemStatuses(orders: Order[]): ItemStatus[] {
       (orderItem) =>
         !orderItem.movedToOrder &&
         !orderItem.handout &&
-        (orderItem.type === "rent" ||
-          orderItem.type === "buy" ||
-          orderItem.type === "partly-payment"),
-    )
-    .map((oi) => ({
-      id: oi.item,
-      title: oi.title,
-      fulfilled: false,
-    }));
+        orderItem.type === "rent",
+    );
+}
+
+function mapOrdersToItemStatuses(orders: Order[]): ItemStatus[] {
+  return calculateUnfulfilledOrderItems(orders).map((oi) => ({
+    id: oi.item,
+    title: oi.title,
+    fulfilled: false,
+  }));
 }
 
 export default function RapidHandoutDetails({
@@ -31,12 +36,44 @@ export default function RapidHandoutDetails({
 }: {
   customer: UserDetail;
 }) {
-  const { data: orders } = useSWR(
+  const { data: orders, mutate: updateOrders } = useSWR(
     `${BL_CONFIG.collection.order}?placed=true&customer=${customer.id}`,
     BlFetcher.get<Order[]>,
     { refreshInterval: 5000 },
   );
-  const itemStatuses = mapOrdersToItemStatuses(orders ?? []);
+  const [itemStatuses, setItemStatuses] = useState<ItemStatus[]>([]);
+  const [scanModalOpen, setScanModalOpen] = useState(false);
+  const [redirectCountdownStarted, setRedirectCountdownStarted] =
+    useState(false);
+
+  const isFulfilled = itemStatuses.every((itemStatus) => itemStatus.fulfilled);
+
+  useEffect(() => {
+    BlFetcher.get<Order[]>(
+      `${BL_CONFIG.collection.order}?placed=true&customer=${customer.id}`,
+    )
+      .then((originalOrders) => {
+        return setItemStatuses(mapOrdersToItemStatuses(originalOrders));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch original orders, error:", error);
+      });
+  }, [customer.id]);
+
+  useEffect(() => {
+    if (!orders) {
+      return;
+    }
+    const unfulfilledOrderItems = calculateUnfulfilledOrderItems(orders);
+    setItemStatuses((previousState) =>
+      previousState.map((itemStatus) => ({
+        ...itemStatus,
+        fulfilled: !unfulfilledOrderItems.some(
+          (orderItem) => orderItem.item === itemStatus.id,
+        ),
+      })),
+    );
+  }, [orders]);
 
   return itemStatuses.length === 0 ? (
     <Alert severity={"info"} sx={{ mt: 2 }}>
@@ -44,10 +81,40 @@ export default function RapidHandoutDetails({
     </Alert>
   ) : (
     <>
-      <Typography variant={"h2"} textAlign={"center"} mt={6}>
+      <Typography variant={"h2"} textAlign={"center"} mt={6} mb={2}>
         Plukkliste
       </Typography>
+      <Button
+        color="success"
+        startIcon={<QrCodeScannerIcon />}
+        variant={"contained"}
+        onClick={() => setScanModalOpen(true)}
+      >
+        Scan bøker
+      </Button>
       <MatchItemTable itemStatuses={itemStatuses} isSender={true} />
+      {redirectCountdownStarted && (
+        <CountdownToRedirect path={"/matches"} seconds={5} />
+      )}
+      <ScannerModal
+        onScan={(blid) =>
+          BlFetcher.post(BL_CONFIG.collection.order + "/rapid-handout", {
+            blid,
+            customerId: customer.id,
+          })
+        }
+        open={scanModalOpen}
+        handleSuccessfulScan={updateOrders}
+        handleClose={() => {
+          setScanModalOpen(false);
+          setRedirectCountdownStarted(isFulfilled);
+        }}
+        itemStatuses={itemStatuses}
+        expectedItems={itemStatuses.map((itemStatus) => itemStatus.id)}
+        fulfilledItems={itemStatuses
+          .filter((itemStatus) => itemStatus.fulfilled)
+          .map((itemStatus) => itemStatus.id)}
+      />
     </>
   );
 }

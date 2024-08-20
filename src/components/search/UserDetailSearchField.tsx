@@ -18,7 +18,7 @@ export default function UserDetailSearchField({
   return (
     <Box sx={{ width: "100%" }}>
       <Typography sx={{ mt: 2, mb: 1, textAlign: "center" }}>
-        Søk etter en kunde for å se plukkliste
+        Søk etter en kunde for å starte utdeling
       </Typography>
       <Autocomplete
         autoComplete

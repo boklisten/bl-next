@@ -1,10 +1,8 @@
-import { Button, Card, Container, Typography } from "@mui/material";
+import { Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
-import DynamicLink from "@/components/DynamicLink";
 import RapidHandout from "@/components/RapidHandout";
-import BL_CONFIG from "@/utils/bl-config";
 
 export const metadata: Metadata = {
   title: "Hurtigutdeling",
@@ -24,9 +22,6 @@ export default function HandoutPage() {
           }}
         >
           <Typography variant="h1">Hurtigutdeling</Typography>
-          <DynamicLink href={BL_CONFIG.blAdmin.basePath}>
-            <Button sx={{ mt: 2 }}>tilbake til bl-admin</Button>
-          </DynamicLink>
           <RapidHandout />
         </Box>
       </Container>

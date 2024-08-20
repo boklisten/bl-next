@@ -4,13 +4,11 @@ import Typography from "@mui/material/Typography";
 import { Scanner, IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import React, { useEffect, useState } from "react";
 
-import BlFetcher from "@/api/blFetcher";
 import { ItemStatus } from "@/components/matches/matches-helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
 import ManualRegistrationModal from "@/components/matches/Scanner/ManualRegistrationModal";
 import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
-import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError, ScannedTextType, TextType } from "@/utils/types";
 
 function determineScannedTextType(scannedText: string): ScannedTextType {
@@ -30,16 +28,18 @@ type Feedback = {
 };
 
 const ScannerModal = ({
+  onScan,
   open,
   handleClose,
-  handleItemTransferred,
+  handleSuccessfulScan,
   itemStatuses,
   expectedItems,
   fulfilledItems,
 }: {
+  onScan: (blid: string) => Promise<[{ feedback: string }]>;
   open: boolean;
   handleClose: () => void;
-  handleItemTransferred?: (() => void) | undefined;
+  handleSuccessfulScan?: (() => void) | undefined;
   itemStatuses: ItemStatus[];
   expectedItems: string[];
   fulfilledItems: string[];
@@ -73,13 +73,7 @@ const ScannerModal = ({
     }
 
     try {
-      const [{ feedback }] = await BlFetcher.post<
-        [
-          {
-            feedback: string;
-          },
-        ]
-      >(BL_CONFIG.collection.match + "/transfer-item", { blid: scannedText });
+      const [{ feedback }] = await onScan(scannedText);
       try {
         navigator?.vibrate(100);
       } catch {
@@ -90,7 +84,7 @@ const ScannerModal = ({
         severity: feedback ? "info" : "success",
         visible: true,
       });
-      handleItemTransferred?.();
+      handleSuccessfulScan?.();
     } catch (error) {
       if (assertBlApiError(error) && error.msg) {
         setFeedback({

@@ -2,6 +2,7 @@ import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import { Alert, AlertTitle, Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 
+import BlFetcher from "@/api/blFetcher";
 import CountdownToRedirect from "@/components/CountdownToRedirect";
 import {
   calculateFulfilledUserMatchItems,
@@ -16,6 +17,7 @@ import MeetingInfo from "@/components/matches/MeetingInfo";
 import OtherPersonContact from "@/components/matches/OtherPersonContact";
 import ScannerModal from "@/components/matches/Scanner/ScannerModal";
 import ScannerTutorial from "@/components/matches/Scanner/ScannerTutorial";
+import BL_CONFIG from "@/utils/bl-config";
 import { UserMatchWithDetails } from "@/utils/types";
 
 const UserMatchDetail = ({
@@ -147,8 +149,13 @@ const UserMatchDetail = ({
       <MatchItemTable itemStatuses={itemStatuses} isSender={isSender} />
 
       <ScannerModal
+        onScan={(blid) =>
+          BlFetcher.post(BL_CONFIG.collection.match + "/transfer-item", {
+            blid,
+          })
+        }
         open={scanModalOpen}
-        handleItemTransferred={handleItemTransferred}
+        handleSuccessfulScan={handleItemTransferred}
         handleClose={() => {
           setScanModalOpen(false);
           setRedirectCountdownStarted(isFulfilled);
