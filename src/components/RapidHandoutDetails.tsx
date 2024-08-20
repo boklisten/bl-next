@@ -94,7 +94,7 @@ export default function RapidHandoutDetails({
       </Button>
       <MatchItemTable itemStatuses={itemStatuses} isSender={true} />
       {redirectCountdownStarted && (
-        <CountdownToRedirect path={"/matches"} seconds={5} />
+        <CountdownToRedirect path={"/admin/hurtigutdeling"} seconds={5} />
       )}
       <ScannerModal
         onScan={(blid) =>
