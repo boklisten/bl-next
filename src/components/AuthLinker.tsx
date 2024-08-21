@@ -44,7 +44,7 @@ export function executeReturnRedirect(
   } else if (caller === "bl-admin") {
     target = `${BL_CONFIG.blAdmin.basePath}auth/gateway`;
   } else {
-    target = "/";
+    target = `/${redirect ?? ""}`;
   }
   router.replace(attachTokensToHref(target));
 }
