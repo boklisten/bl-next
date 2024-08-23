@@ -8,7 +8,7 @@ import {
 } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
-import { isLoggedIn } from "@/api/auth";
+import { isEmployee, isLoggedIn } from "@/api/auth";
 import {
   addAccessToken,
   addRefreshToken,
@@ -42,7 +42,9 @@ export function executeReturnRedirect(
   if (caller === "bl-web") {
     target = `${BL_CONFIG.blWeb.basePath}auth/gateway?redirect=${redirect}`;
   } else if (caller === "bl-admin") {
-    target = `${BL_CONFIG.blAdmin.basePath}auth/gateway`;
+    target = isEmployee()
+      ? `${BL_CONFIG.blAdmin.basePath}auth/gateway`
+      : "/auth/permission/denied";
   } else {
     target = `/${redirect ?? ""}`;
   }

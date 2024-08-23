@@ -2,6 +2,7 @@ import { Alert, AlertTitle, Card, Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
 
+import AuthAutoLogout from "@/components/AuthLogoutComponent";
 import DynamicLink from "@/components/DynamicLink";
 
 export const metadata: Metadata = {
@@ -32,6 +33,7 @@ export default function PermissionDeniedPage() {
           <DynamicLink href={"/auth/login"}>
             Tilbake til innloggingssiden
           </DynamicLink>
+          <AuthAutoLogout />
         </Box>
       </Container>
     </Card>
