@@ -4,7 +4,11 @@ export const add = (key: string, value: string): boolean => {
 };
 
 export const get = (key: string): string | null => {
-  return localStorage.getItem(key);
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
 };
 
 export const remove = (key: string): boolean => {
