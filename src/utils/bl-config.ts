@@ -23,6 +23,10 @@ const BL_CONFIG = {
     google: {
       url: "auth/google",
     },
+    localStorageKeys: {
+      redirect: "bl-redirect",
+      caller: "bl-caller",
+    },
   },
   register: {
     local: {

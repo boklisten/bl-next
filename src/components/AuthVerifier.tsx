@@ -5,7 +5,9 @@ import { useEffect } from "react";
 
 import { isLoggedIn } from "@/api/auth";
 import BlFetcher from "@/api/blFetcher";
+import { get } from "@/api/storage";
 import { getAccessTokenBody } from "@/api/token";
+import { selectRedirectTarget } from "@/components/AuthLinker";
 import BL_CONFIG from "@/utils/bl-config";
 
 export default function AuthVerifier() {
@@ -21,7 +23,9 @@ export default function AuthVerifier() {
           `${BL_CONFIG.collection.userDetail}/${details}/valid`,
         );
         if (valid) {
-          router.push("/");
+          const caller = get(BL_CONFIG.login.localStorageKeys.caller);
+          const redirect = get(BL_CONFIG.login.localStorageKeys.redirect);
+          router.push(selectRedirectTarget(caller, redirect));
         } else {
           router.push("/user-settings");
         }

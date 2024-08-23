@@ -25,7 +25,7 @@ const UserSettings = () => {
       };
       fetchDetails();
     } catch {
-      router.push("/auth/login?redirect=settings");
+      router.push("/auth/login?redirect=user-settings");
     }
   }, [router]);
 

@@ -24,31 +24,39 @@ export function attachTokensToHref(href: string) {
     isLoggedIn()
   ) {
     const url = new URL(href);
-    url.searchParams.append("refresh_token", getRefreshToken());
-    url.searchParams.append("access_token", getAccessToken());
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
+    if (accessToken && refreshToken) {
+      url.searchParams.append("refresh_token", refreshToken);
+      url.searchParams.append("access_token", accessToken);
+    }
     return url.toString();
   }
   return href;
+}
+
+export function selectRedirectTarget(
+  caller: string | null,
+  redirect: string | null,
+): string {
+  if (caller === "bl-web") {
+    return `${BL_CONFIG.blWeb.basePath}auth/gateway?redirect=${redirect}`;
+  }
+  if (caller === "bl-admin") {
+    return isEmployee()
+      ? `${BL_CONFIG.blAdmin.basePath}auth/gateway`
+      : "/auth/permission/denied";
+  }
+  return `/${redirect ?? ""}`;
 }
 
 export function executeReturnRedirect(
   searchParams: ReadonlyURLSearchParams,
   router: AppRouterInstance,
 ) {
-  let target = "";
-
   const caller = searchParams.get("caller");
   const redirect = searchParams.get("redirect");
-  if (caller === "bl-web") {
-    target = `${BL_CONFIG.blWeb.basePath}auth/gateway?redirect=${redirect}`;
-  } else if (caller === "bl-admin") {
-    target = isEmployee()
-      ? `${BL_CONFIG.blAdmin.basePath}auth/gateway`
-      : "/auth/permission/denied";
-  } else {
-    target = `/${redirect ?? ""}`;
-  }
-  router.replace(attachTokensToHref(target));
+  router.replace(attachTokensToHref(selectRedirectTarget(caller, redirect)));
 }
 
 export default function AuthLinker({ children }: { children: ReactNode }) {

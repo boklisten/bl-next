@@ -21,6 +21,7 @@ import React, { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
 
 import { isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";
+import useIsHydrated from "@/utils/useIsHydrated";
 
 interface DrawerLinkProps {
   title: string;
@@ -40,6 +41,7 @@ const DrawerLink = ({ title, href, icon, onClick }: DrawerLinkProps) => (
 
 export default function SideMenuDrawer() {
   const [open, setOpen] = useState(false);
+  const hydrated = useIsHydrated();
 
   const toggleDrawer =
     (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
@@ -79,7 +81,7 @@ export default function SideMenuDrawer() {
               icon={<BookIcon />}
             />
 
-            {isLoggedIn() && (
+            {hydrated && isLoggedIn() && (
               <>
                 <DrawerLink
                   title={"Dine bøker"}
@@ -113,7 +115,7 @@ export default function SideMenuDrawer() {
 
             <Divider />
 
-            {isLoggedIn() && (
+            {hydrated && isLoggedIn() && (
               <>
                 <DrawerLink
                   title={"Brukerinnstillinger"}
@@ -128,7 +130,7 @@ export default function SideMenuDrawer() {
               </>
             )}
 
-            {!isLoggedIn() && (
+            {hydrated && !isLoggedIn() && (
               <>
                 <DrawerLink
                   title={"Registrer"}

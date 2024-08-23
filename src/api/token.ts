@@ -10,21 +10,11 @@ const accessTokenName = BL_CONFIG.token.accessToken;
 const refreshTokenName = BL_CONFIG.token.refreshToken;
 
 export const haveAccessToken = (): boolean => {
-  try {
-    get(accessTokenName);
-    return true;
-  } catch {
-    return false;
-  }
+  return get(accessTokenName) !== null;
 };
 
 export const haveRefreshToken = (): boolean => {
-  try {
-    get(refreshTokenName);
-    return true;
-  } catch {
-    return false;
-  }
+  return get(refreshTokenName) !== null;
 };
 
 export const addAccessToken = (value: string): void => {
@@ -41,20 +31,12 @@ export const addRefreshToken = (value: string): void => {
   add(refreshTokenName, value);
 };
 
-export const getAccessToken = (): string => {
-  try {
-    return get(accessTokenName);
-  } catch (error) {
-    throw new Error("could not get accessToken: " + error);
-  }
+export const getAccessToken = (): string | null => {
+  return get(accessTokenName);
 };
 
-export const getRefreshToken = (): string => {
-  try {
-    return get(refreshTokenName);
-  } catch (error) {
-    throw new Error("could not get refreshToken: " + error);
-  }
+export const getRefreshToken = (): string | null => {
+  return get(refreshTokenName);
 };
 
 export const removeTokens = (): void => {
