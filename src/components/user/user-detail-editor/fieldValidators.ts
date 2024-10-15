@@ -88,15 +88,26 @@ export const fieldValidators: {
   },
   guardianEmail: {
     required: "Du må fylle inn foresatt sin epost",
-    validate: (v) =>
-      isEmail(v) ? true : "Du må fylle inn en gyldig e-post for foresatt",
+    validate: (v, otherFields) => {
+      if (!isEmail(v)) return "Du må fylle inn en gyldig e-post for foresatt";
+
+      if (v === otherFields.email)
+        return `Foresatt sin e-post må være forskjellig fra kontoens e-post (${otherFields.email})`;
+
+      return true;
+    },
   },
   guardianPhoneNumber: {
     required: "Du må fylle inn foresatt sitt telefonnummer",
-    validate: (v) =>
-      isMobilePhone(v, "nb-NO")
-        ? true
-        : "Du må fylle inn et gyldig norsk telefonnummer (uten mellomrom og +47)",
+    validate: (v, otherFields) => {
+      if (!isMobilePhone(v, "nb-NO"))
+        return "Du må fylle inn et gyldig norsk telefonnummer (uten mellomrom og +47)";
+
+      if (v === otherFields.phoneNumber)
+        return `Foresatt sitt telefonnummer må være forskjellig fra kontoens telefonnummer (${otherFields.phoneNumber})`;
+
+      return true;
+    },
     minLength: {
       value: 8,
       message: "Telefonnummeret må være 8 tegn langt (uten mellomrom og +47)",
