@@ -13,10 +13,11 @@ import {
 import { UserMatchTitle } from "@/components/matches/matchesList/helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MatchItemTable from "@/components/matches/MatchItemTable";
+import MatchScannerContent from "@/components/matches/MatchScannerContent";
 import MeetingInfo from "@/components/matches/MeetingInfo";
 import OtherPersonContact from "@/components/matches/OtherPersonContact";
-import ScannerModal from "@/components/matches/Scanner/ScannerModal";
-import ScannerTutorial from "@/components/matches/Scanner/ScannerTutorial";
+import ScannerModal from "@/components/scanner/ScannerModal";
+import ScannerTutorial from "@/components/scanner/ScannerTutorial";
 import BL_CONFIG from "@/utils/bl-config";
 import { UserMatchWithDetails } from "@/utils/types";
 
@@ -160,10 +161,18 @@ const UserMatchDetail = ({
           setScanModalOpen(false);
           setRedirectCountdownStarted(isFulfilled);
         }}
-        itemStatuses={itemStatuses}
-        expectedItems={match.expectedItems}
-        fulfilledItems={fulfilledItems}
-      />
+      >
+        <MatchScannerContent
+          handleClose={() => {
+            setScanModalOpen(false);
+            setRedirectCountdownStarted(isFulfilled);
+          }}
+          scannerOpen={scanModalOpen}
+          itemStatuses={itemStatuses}
+          expectedItems={match.expectedItems}
+          fulfilledItems={fulfilledItems}
+        />
+      </ScannerModal>
     </>
   );
 };

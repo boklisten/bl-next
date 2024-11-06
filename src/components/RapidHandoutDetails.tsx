@@ -7,7 +7,8 @@ import useSWR from "swr";
 import BlFetcher from "@/api/blFetcher";
 import { ItemStatus } from "@/components/matches/matches-helper";
 import MatchItemTable from "@/components/matches/MatchItemTable";
-import ScannerModal from "@/components/matches/Scanner/ScannerModal";
+import MatchScannerContent from "@/components/matches/MatchScannerContent";
+import ScannerModal from "@/components/scanner/ScannerModal";
 import BL_CONFIG from "@/utils/bl-config";
 
 function calculateUnfulfilledOrderItems(orders: Order[]): OrderItem[] {
@@ -101,12 +102,19 @@ export default function RapidHandoutDetails({
         handleClose={() => {
           setScanModalOpen(false);
         }}
-        itemStatuses={itemStatuses}
-        expectedItems={itemStatuses.map((itemStatus) => itemStatus.id)}
-        fulfilledItems={itemStatuses
-          .filter((itemStatus) => itemStatus.fulfilled)
-          .map((itemStatus) => itemStatus.id)}
-      />
+      >
+        <MatchScannerContent
+          scannerOpen={scanModalOpen}
+          handleClose={() => {
+            setScanModalOpen(false);
+          }}
+          itemStatuses={itemStatuses}
+          expectedItems={itemStatuses.map((itemStatus) => itemStatus.id)}
+          fulfilledItems={itemStatuses
+            .filter((itemStatus) => itemStatus.fulfilled)
+            .map((itemStatus) => itemStatus.id)}
+        />
+      </ScannerModal>
     </>
   );
 }

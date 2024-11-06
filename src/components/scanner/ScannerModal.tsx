@@ -1,25 +1,13 @@
 import { Close, InputRounded } from "@mui/icons-material";
 import { AlertColor, Box, Button, Card, Modal, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { Scanner, IDetectedBarcode } from "@yudiel/react-qr-scanner";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 
-import { ItemStatus } from "@/components/matches/matches-helper";
-import ProgressBar from "@/components/matches/matchesList/ProgressBar";
-import MatchItemTable from "@/components/matches/MatchItemTable";
-import ManualRegistrationModal from "@/components/matches/Scanner/ManualRegistrationModal";
-import ScannerFeedback from "@/components/matches/Scanner/ScannerFeedback";
-import { assertBlApiError, ScannedTextType, TextType } from "@/utils/types";
-
-function determineScannedTextType(scannedText: string): ScannedTextType {
-  if (/^[\dA-Za-z]{12}$|^\d{8}$/.test(scannedText)) {
-    return TextType.BLID;
-  } else if (/^\d{13}$/.test(scannedText)) {
-    return TextType.ISBN;
-  }
-
-  return TextType.UNKNOWN;
-}
+import BlidScanner, {
+  determineScannedTextType,
+} from "@/components/scanner/BlidScanner";
+import ManualBlidSearchModal from "@/components/scanner/ManualBlidSearchModal";
+import ScannerFeedback from "@/components/scanner/ScannerFeedback";
+import { assertBlApiError, TextType } from "@/utils/types";
 
 type Feedback = {
   text: string;
@@ -32,17 +20,15 @@ const ScannerModal = ({
   open,
   handleClose,
   handleSuccessfulScan,
-  itemStatuses,
-  expectedItems,
-  fulfilledItems,
+  allowManualRegistration,
+  children,
 }: {
   onScan: (blid: string) => Promise<[{ feedback: string }]>;
   open: boolean;
   handleClose: () => void;
   handleSuccessfulScan?: (() => void) | undefined;
-  itemStatuses: ItemStatus[];
-  expectedItems: string[];
-  fulfilledItems: string[];
+  allowManualRegistration?: boolean;
+  children?: ReactNode;
 }) => {
   const [manualRegistrationModalOpen, setManualRegistrationModalOpen] =
     useState(false);
@@ -96,46 +82,6 @@ const ScannerModal = ({
     }
   };
 
-  useEffect(() => {
-    if (
-      open &&
-      expectedItems.length === fulfilledItems.length &&
-      !(feedback.visible && feedback.severity === "info")
-    ) {
-      handleClose();
-    }
-  }, [
-    expectedItems.length,
-    fulfilledItems.length,
-    handleClose,
-    open,
-    feedback.visible,
-    feedback.severity,
-  ]);
-
-  const handleCodeDetection = async (
-    detectedCodes: IDetectedBarcode[],
-  ): Promise<void> => {
-    const didFindBlid = detectedCodes.some(
-      (code) => determineScannedTextType(code.rawValue) === TextType.BLID,
-    );
-    const codesToProcess = didFindBlid
-      ? detectedCodes.filter(
-          (code) => determineScannedTextType(code.rawValue) === TextType.BLID,
-        )
-      : detectedCodes;
-
-    for (const code of codesToProcess) {
-      await handleRegistration(code.rawValue).catch((error) =>
-        console.error("Failed to handle scan", error),
-      );
-      // Arbitrary delay to somewhat avoid races the backend isn't smart enough to handle
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 250);
-      });
-    }
-  };
-
   return (
     <Modal
       open={open}
@@ -162,43 +108,20 @@ const ScannerModal = ({
             flexShrink: 0,
           }}
         >
-          <Scanner
-            constraints={{ facingMode: "environment" }}
-            formats={["qr_code", "code_128", "ean_8", "ean_13"]}
-            components={{ torch: true }}
-            onScan={handleCodeDetection}
-          />
+          <BlidScanner onResult={handleRegistration} />
         </Box>
-        <Box width={0.9}>
-          <ProgressBar
-            percentComplete={
-              (fulfilledItems.length * 100) / expectedItems.length
-            }
-            subtitle={
-              <Typography textAlign={"center"}>
-                {fulfilledItems.length} av {expectedItems.length} bøker mottatt
-              </Typography>
-            }
-          />
-        </Box>
-        <Box
-          sx={{
-            overflowY: "auto",
-            maxHeight: "30rem",
-            mt: 2,
-          }}
-        >
-          <MatchItemTable itemStatuses={itemStatuses} isSender={false} />
-        </Box>
+        {children}
         <Stack direction={"row"} gap={1} mt={2}>
-          <Button
-            color={"info"}
-            variant={"outlined"}
-            startIcon={<InputRounded />}
-            onClick={() => setManualRegistrationModalOpen(true)}
-          >
-            Manuell registrering
-          </Button>
+          {allowManualRegistration && (
+            <Button
+              color={"info"}
+              variant={"outlined"}
+              startIcon={<InputRounded />}
+              onClick={() => setManualRegistrationModalOpen(true)}
+            >
+              Skriv inn blid manuelt
+            </Button>
+          )}
           <Button
             color={"info"}
             startIcon={<Close />}
@@ -208,7 +131,7 @@ const ScannerModal = ({
             Lukk
           </Button>
         </Stack>
-        <ManualRegistrationModal
+        <ManualBlidSearchModal
           open={manualRegistrationModalOpen}
           handleClose={() => {
             setManualRegistrationModalOpen(false);

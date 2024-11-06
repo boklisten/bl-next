@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const ManualRegistrationModal = ({
+const ManualBlidSearchModal = ({
   open,
   handleClose,
   handleSubmit,
@@ -69,4 +69,4 @@ const ManualRegistrationModal = ({
   );
 };
 
-export default ManualRegistrationModal;
+export default ManualBlidSearchModal;

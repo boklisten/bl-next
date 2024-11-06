@@ -76,11 +76,8 @@ export interface GroupedMatches<T extends MatchWithDetails> {
 }
 
 export enum TextType {
-  // eslint-disable-next-line no-unused-vars
   BLID,
-  // eslint-disable-next-line no-unused-vars
   ISBN,
-  // eslint-disable-next-line no-unused-vars
   UNKNOWN,
 }
 
