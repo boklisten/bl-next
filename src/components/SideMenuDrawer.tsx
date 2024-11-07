@@ -1,4 +1,5 @@
 "use client";
+import { Search } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BookIcon from "@mui/icons-material/Book";
 import EmailIcon from "@mui/icons-material/Email";
@@ -92,6 +93,11 @@ export default function SideMenuDrawer() {
                   title={"Ordrehistorikk"}
                   href={"/order-history"}
                   icon={<ReceiptIcon />}
+                />
+                <DrawerLink
+                  title={"Boksøk"}
+                  href={"/sjekk"}
+                  icon={<Search />}
                 />
               </>
             )}
