@@ -63,7 +63,10 @@ const BranchPage = async ({ params }: Params) => {
   const { branch, openingHours } = await getBranchData(params.id);
 
   return (
-    <LinkableBranchInfo branch={branch} openingHours={openingHours ?? []} />
+    <LinkableBranchInfo
+      cachedBranch={branch}
+      cachedOpeningHours={openingHours ?? []}
+    />
   );
 };
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 const BranchPage = async () => {
-  return <LinkableBranchInfo branch={null} openingHours={[]} />;
+  return <LinkableBranchInfo cachedBranch={null} cachedOpeningHours={[]} />;
 };
 
 export default BranchPage;
