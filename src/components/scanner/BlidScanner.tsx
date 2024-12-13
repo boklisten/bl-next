@@ -37,7 +37,7 @@ export default function BlidScanner({
       }
       // Arbitrary delay to somewhat avoid races the backend isn't smart enough to handle
       await new Promise((resolve) => {
-        window.setTimeout(resolve, 250);
+        globalThis.setTimeout(resolve, 250);
       });
     }
   };
