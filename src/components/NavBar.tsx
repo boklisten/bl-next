@@ -55,8 +55,12 @@ export default function NavBar() {
         <Toolbar sx={{ paddingY: "10px" }}>
           <DynamicLink href={"/"}>
             <Box
-              sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-              color="secondary"
+              sx={{
+                color: "secondary",
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
             >
               <Image
                 src="/boklisten_logo_v2_icon_white_lg.png"

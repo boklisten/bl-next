@@ -26,11 +26,19 @@ export default function MatchScannerContent({
   }, [expectedItems.length, fulfilledItems.length, handleClose, scannerOpen]);
   return (
     <>
-      <Box width={0.9}>
+      <Box
+        sx={{
+          width: 0.9,
+        }}
+      >
         <ProgressBar
           percentComplete={(fulfilledItems.length * 100) / expectedItems.length}
           subtitle={
-            <Typography textAlign={"center"}>
+            <Typography
+              sx={{
+                textAlign: "center",
+              }}
+            >
               {fulfilledItems.length} av {expectedItems.length} bøker mottatt
             </Typography>
           }

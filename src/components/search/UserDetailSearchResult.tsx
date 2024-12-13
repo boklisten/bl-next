@@ -11,16 +11,38 @@ export default function UserDetailSearchResult({
 }) {
   return (
     <ListItemButton onClick={onClick}>
-      <Stack gap={0.5}>
-        <Stack gap={0.5} direction={"row"} alignItems={"center"}>
+      <Stack
+        sx={{
+          gap: 0.5,
+        }}
+      >
+        <Stack
+          direction={"row"}
+          sx={{
+            gap: 0.5,
+            alignItems: "center",
+          }}
+        >
           <Person />
           <Typography>{userDetail.name}</Typography>
         </Stack>
-        <Stack gap={0.5} direction={"row"} alignItems={"center"}>
+        <Stack
+          direction={"row"}
+          sx={{
+            gap: 0.5,
+            alignItems: "center",
+          }}
+        >
           <Email />
           <Typography>{userDetail.email}</Typography>
         </Stack>
-        <Stack gap={0.5} direction={"row"} alignItems={"center"}>
+        <Stack
+          direction={"row"}
+          sx={{
+            gap: 0.5,
+            alignItems: "center",
+          }}
+        >
           <Phone />
           <Typography>{userDetail.phone}</Typography>
         </Stack>

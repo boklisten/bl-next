@@ -25,14 +25,6 @@ const PostalCodeField = forwardRef(
     return (
       <TextField
         data-testid="postal-code-field"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position={"end"}>
-              <PostalCityStateStatusDisplay postalCityStatus={postCity} />
-            </InputAdornment>
-          ),
-        }}
-        inputProps={{ inputMode: "numeric", pattern: "[0-9]{4}" }}
         required
         fullWidth
         id="postalCode"
@@ -44,6 +36,17 @@ const PostalCodeField = forwardRef(
         }}
         inputRef={ref}
         {...props}
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position={"end"}>
+                <PostalCityStateStatusDisplay postalCityStatus={postCity} />
+              </InputAdornment>
+            ),
+          },
+
+          htmlInput: { inputMode: "numeric", pattern: "[0-9]{4}" },
+        }}
       />
     );
   },

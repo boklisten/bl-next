@@ -14,9 +14,18 @@ export default function PublicBlidSearchPage() {
   return (
     <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">
-        <Stack alignItems={"center"} mt={4}>
+        <Stack
+          sx={{
+            alignItems: "center",
+            mt: 4,
+          }}
+        >
           <Typography variant="h1">Boksøk</Typography>
-          <Box width="100%">
+          <Box
+            sx={{
+              width: "100%",
+            }}
+          >
             <PublicBlidSearch />
           </Box>
         </Stack>

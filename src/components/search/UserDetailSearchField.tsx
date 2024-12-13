@@ -64,9 +64,11 @@ export default function UserDetailSearchField({
           <TextField
             {...params}
             label="Søk etter kunde"
-            InputProps={{
-              ...params.InputProps,
-              type: "search",
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                type: "search",
+              },
             }}
           />
         )}

@@ -78,7 +78,14 @@ export default function RapidHandoutDetails({
     </Alert>
   ) : (
     <>
-      <Typography variant={"h2"} textAlign={"center"} mt={6} mb={2}>
+      <Typography
+        variant={"h2"}
+        sx={{
+          textAlign: "center",
+          mt: 6,
+          mb: 2,
+        }}
+      >
         Plukkliste
       </Typography>
       <Button

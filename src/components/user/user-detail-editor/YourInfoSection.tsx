@@ -37,7 +37,14 @@ const YourInfoSection = ({
   control,
 }: YourInfoSectionProps) => (
   <>
-    <Grid item xs={12} sm={12} mt={1}>
+    <Grid
+      item
+      xs={12}
+      sm={12}
+      sx={{
+        mt: 1,
+      }}
+    >
       <Typography variant="body1">Din informasjon</Typography>
       <Divider />
     </Grid>

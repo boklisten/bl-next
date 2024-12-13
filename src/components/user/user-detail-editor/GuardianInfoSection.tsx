@@ -19,7 +19,14 @@ const GuardianInfoSection = ({
   register: UseFormRegister<UserEditorFields>;
 }) => (
   <>
-    <Grid item xs={12} sm={12} mt={1}>
+    <Grid
+      item
+      xs={12}
+      sm={12}
+      sx={{
+        mt: 1,
+      }}
+    >
       <Typography variant="body1">
         Siden du er under 18, trenger vi informasjon om en av dine foresatte.
       </Typography>

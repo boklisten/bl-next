@@ -58,7 +58,13 @@ export default function PasswordReset({ userId }: { userId: string }) {
       sx={{ width: "100%" }}
     >
       {success ? (
-        <Stack alignItems={"center"} gap={2} mt={1}>
+        <Stack
+          sx={{
+            alignItems: "center",
+            gap: 2,
+            mt: 1,
+          }}
+        >
           <Alert severity="success">
             Passordet ble oppdatert! Du kan nå logge inn.
           </Alert>

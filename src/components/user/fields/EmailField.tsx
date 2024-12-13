@@ -7,15 +7,17 @@ const EmailField = forwardRef(
     <TextField
       data-testid="email-field"
       label="E-post"
-      inputProps={{
-        inputMode: "email",
-      }}
       required
       fullWidth
       id="email"
       autoComplete="email"
       inputRef={ref}
       {...props}
+      slotProps={{
+        htmlInput: {
+          inputMode: "email",
+        },
+      }}
     />
   ),
 );

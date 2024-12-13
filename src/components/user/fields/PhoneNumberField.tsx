@@ -6,13 +6,6 @@ const PhoneNumberField = forwardRef(
   (props: TextFieldProps, ref: Ref<HTMLInputElement>) => (
     <TextField
       data-testid="phone-field"
-      InputProps={{
-        startAdornment: <InputAdornment position="start">+47</InputAdornment>,
-      }}
-      inputProps={{
-        inputMode: "numeric",
-        pattern: "[0-9]{8}",
-      }}
       required
       fullWidth
       label="Telefonnummer"
@@ -20,6 +13,16 @@ const PhoneNumberField = forwardRef(
       autoComplete="tel-national"
       inputRef={ref}
       {...props}
+      slotProps={{
+        input: {
+          startAdornment: <InputAdornment position="start">+47</InputAdornment>,
+        },
+
+        htmlInput: {
+          inputMode: "numeric",
+          pattern: "[0-9]{8}",
+        },
+      }}
     />
   ),
 );

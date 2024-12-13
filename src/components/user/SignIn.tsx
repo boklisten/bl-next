@@ -72,7 +72,12 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h1" mb={2}>
+        <Typography
+          variant="h1"
+          sx={{
+            mb: 2,
+          }}
+        >
           Logg inn
         </Typography>
         <FacebookButton label={"Logg inn med Facebook"} />
@@ -103,9 +108,6 @@ export default function SignIn() {
           ))}
           <TextField
             data-testid="email-field"
-            inputProps={{
-              inputMode: "email",
-            }}
             required
             fullWidth
             id="email"
@@ -115,6 +117,11 @@ export default function SignIn() {
               validate: (v) =>
                 !v || isEmail(v) ? true : "Du må fylle inn en gyldig e-post",
             })}
+            slotProps={{
+              htmlInput: {
+                inputMode: "email",
+              },
+            }}
           />
           <PasswordField
             autoComplete="current-password"

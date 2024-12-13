@@ -82,8 +82,8 @@ export default function PublicBlidSearch() {
       >
         <Typography
           variant="body2"
-          textAlign={"center"}
           sx={{
+            textAlign: "center",
             color: "gray",
             fontSize: 14,
             mb: 1,
@@ -98,18 +98,20 @@ export default function PublicBlidSearch() {
           label={"Unik ID"}
           value={blidSearch}
           onChange={(event) => onBlidSearch(event.target.value)}
-          InputProps={{
-            endAdornment: (
-              <Button onClick={() => setScannerModalOpen(true)}>
-                <QrCodeScannerIcon />
-              </Button>
-            ),
+          slotProps={{
+            input: {
+              endAdornment: (
+                <Button onClick={() => setScannerModalOpen(true)}>
+                  <QrCodeScannerIcon />
+                </Button>
+              ),
+            },
           }}
         />
         <Typography
           variant="body2"
-          textAlign={"center"}
           sx={{
+            textAlign: "center",
             color: "gray",
             fontSize: 14,
             mb: 1,
@@ -123,10 +125,15 @@ export default function PublicBlidSearch() {
             blidSearch.length === 0) &&
             "Venter på unik ID"}
         </Typography>
-
         {searchResult !== "inactive" && searchResult !== null && (
           <>
-            <Typography variant={"h5"} textAlign={"center"} mt={0}>
+            <Typography
+              variant={"h5"}
+              sx={{
+                textAlign: "center",
+                mt: 0,
+              }}
+            >
               Denne boken tilhører
             </Typography>
             <Box
@@ -138,7 +145,13 @@ export default function PublicBlidSearch() {
                 margin: "0 auto",
               }}
             >
-              <Typography variant="h5" gutterBottom textAlign="center">
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                }}
+              >
                 {searchResult.name}
               </Typography>
 
@@ -203,7 +216,6 @@ export default function PublicBlidSearch() {
             </Box>
           </>
         )}
-
         <ScannerModal
           allowManualRegistration={true} // TEMP
           onScan={async (blid) => {

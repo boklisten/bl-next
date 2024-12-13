@@ -58,9 +58,12 @@ const UserMatchDetail = ({
       <Typography variant="h1">
         <UserMatchTitle match={match} isSender={isSender} />
       </Typography>
-
       {isFulfilled && (
-        <Box my={2}>
+        <Box
+          sx={{
+            my: 2,
+          }}
+        >
           <Alert>
             Du har {isSender ? "levert" : "mottatt"} alle bøkene for denne
             overleveringen.
@@ -70,7 +73,6 @@ const UserMatchDetail = ({
           )}
         </Box>
       )}
-
       <ProgressBar
         percentComplete={
           (fulfilledItems.length * 100) / match.expectedItems.length
@@ -82,7 +84,6 @@ const UserMatchDetail = ({
           </>
         }
       />
-
       {isSender &&
         otherPersonFulfilledItems.some(
           (item) => !fulfilledItems.includes(item),
@@ -101,7 +102,6 @@ const UserMatchDetail = ({
             </Typography>
           </Alert>
         )}
-
       {!isFulfilled && (
         <>
           <Box sx={{ my: 2 }}>
@@ -118,7 +118,6 @@ const UserMatchDetail = ({
           <OtherPersonContact match={match} currentUserId={currentUserId} />
         </>
       )}
-
       {!isSender && !isFulfilled && (
         <>
           <MatchHeader>Når du skal motta bøkene</MatchHeader>
@@ -141,14 +140,12 @@ const UserMatchDetail = ({
           </Box>
         </>
       )}
-
       {!isFulfilled && (
         <MatchHeader>
           Du skal {isSender ? "levere" : "motta"} disse bøkene
         </MatchHeader>
       )}
       <MatchItemTable itemStatuses={itemStatuses} isSender={isSender} />
-
       <ScannerModal
         onScan={(blid) =>
           BlFetcher.post(BL_CONFIG.collection.match + "/transfer-item", {

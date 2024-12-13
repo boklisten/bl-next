@@ -21,20 +21,6 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
     return (
       <TextField
         data-testid="password-field"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleShowPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </Tooltip>
-            </InputAdornment>
-          ),
-        }}
         required
         margin="normal"
         fullWidth
@@ -44,6 +30,22 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
         autoComplete={autoComplete}
         ref={ref}
         {...props}
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <Tooltip title={showPassword ? "Skjul passord" : "Vis passord"}>
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleShowPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </Tooltip>
+              </InputAdornment>
+            ),
+          },
+        }}
       />
     );
   },

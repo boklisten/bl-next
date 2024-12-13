@@ -111,7 +111,13 @@ const ScannerModal = ({
           <BlidScanner onResult={handleRegistration} />
         </Box>
         {children}
-        <Stack direction={"row"} gap={1} mt={2}>
+        <Stack
+          direction={"row"}
+          sx={{
+            gap: 1,
+            mt: 2,
+          }}
+        >
           {allowManualRegistration && (
             <Button
               color={"info"}

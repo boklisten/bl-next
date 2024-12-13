@@ -13,7 +13,12 @@ export const metadata: Metadata = {
 export default function MatchesPage() {
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h1" mb={2}>
+      <Typography
+        variant="h1"
+        sx={{
+          mb: 2,
+        }}
+      >
         Mine overleveringer
       </Typography>
       <Suspense>
