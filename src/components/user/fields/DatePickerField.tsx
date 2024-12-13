@@ -12,6 +12,7 @@ type DatePickerFieldProps<T extends FieldValues> = DatePickerProps<Moment> & {
 };
 
 const DatePickerField = forwardRef(
+  // @ts-expect-error type should be fixed
   <T extends FieldValues>(
     { control, name, handleChange, ...props }: DatePickerFieldProps<T>,
     ref: Ref<HTMLInputElement>,

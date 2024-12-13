@@ -10,11 +10,10 @@ export const metadata: Metadata = {
     "Bekreft din e-postadresse, slik at du får viktig informasjon fra oss.",
 };
 
-export default function TokenPage({
-  params,
-}: {
-  params: { confirmationId: string };
+export default async function TokenPage(props: {
+  params: Promise<{ confirmationId: string }>;
 }) {
+  const params = await props.params;
   return (
     <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">

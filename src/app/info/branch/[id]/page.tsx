@@ -7,7 +7,7 @@ import LinkableBranchInfo from "@/components/LinkableBranchInfo";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
-type Params = { params: { id: string } };
+type Params = { params: Promise<{ id: string }> };
 
 export const generateStaticParams = async () => {
   try {
@@ -22,7 +22,8 @@ export const generateStaticParams = async () => {
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const branchData = await BlFetcher.get<Branch[]>(
     `${BL_CONFIG.collection.branch}/${params.id}`,
   );
@@ -59,7 +60,8 @@ async function getBranchData(branchId: string): Promise<BranchData> {
   return branchData;
 }
 
-const BranchPage = async ({ params }: Params) => {
+const BranchPage = async (props: Params) => {
+  const params = await props.params;
   const { branch, openingHours } = await getBranchData(params.id);
 
   return (

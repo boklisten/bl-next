@@ -9,11 +9,10 @@ export const metadata: Metadata = {
   description: "Lag et nytt passord, slik at du får tilgang på kontoen din.",
 };
 
-export default function PasswordResetPage({
-  params,
-}: {
-  params: { userId: string };
+export default async function PasswordResetPage(props: {
+  params: Promise<{ userId: string }>;
 }) {
+  const params = await props.params;
   return (
     <Card sx={{ paddingBottom: 4 }}>
       <Container component="main" maxWidth="xs">

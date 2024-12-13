@@ -43,8 +43,8 @@ const QuestionWithAnswer = ({
   deleteQuestion: (questionId: string) => void;
 }) => {
   const [edit, setEdit] = useState(false);
-  const questionInput = useRef();
-  const answerInput = useRef();
+  const questionInput = useRef(undefined);
+  const answerInput = useRef(undefined);
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
