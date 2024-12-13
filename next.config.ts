@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-module.exports = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   eslint: {
     dirs: ["src", "cypress"],
@@ -45,3 +46,5 @@ module.exports = {
     ];
   },
 };
+
+export default nextConfig;
