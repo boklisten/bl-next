@@ -1,5 +1,5 @@
 "use client";
-import { Search } from "@mui/icons-material";
+import { Search, SwitchAccessShortcut } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BookIcon from "@mui/icons-material/Book";
 import EmailIcon from "@mui/icons-material/Email";
@@ -20,7 +20,7 @@ import ListItemText from "@mui/material/ListItemText";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import React, { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
 
-import { isLoggedIn } from "@/api/auth";
+import { isEmployee, isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";
 import useIsHydrated from "@/utils/useIsHydrated";
 
@@ -133,6 +133,13 @@ export default function SideMenuDrawer() {
                   href={"/auth/logout"}
                   icon={<LogoutIcon />}
                 />
+                {isEmployee() && (
+                  <DrawerLink
+                    title={"Gå til bl-admin"}
+                    href={"/admin/home"}
+                    icon={<SwitchAccessShortcut />}
+                  />
+                )}
               </>
             )}
 

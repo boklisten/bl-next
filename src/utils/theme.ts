@@ -100,6 +100,19 @@ const theme = responsiveFontSizes(
           },
         },
       },
+      MuiAppBar: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#26768f",
+            "& .MuiIconButton-root": {
+              color: "#FFFFFF",
+            },
+            "& .MuiTypography-root": {
+              color: "#FFFFFF",
+            },
+          },
+        },
+      },
     },
     breakpoints: {
       values: {

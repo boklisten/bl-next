@@ -5,7 +5,7 @@ export const isLoggedIn = () => haveAccessToken();
 
 export const logout = () => removeTokens();
 
-const getUserPermission = () => {
+export const getUserPermission = () => {
   if (isLoggedIn()) {
     try {
       getAccessTokenBody();
