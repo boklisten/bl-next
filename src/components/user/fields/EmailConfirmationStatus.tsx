@@ -2,7 +2,7 @@ import { UserDetail } from "@boklisten/bl-model";
 import { Email, Info } from "@mui/icons-material";
 import { Alert } from "@mui/material";
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import BL_CONFIG from "@/utils/bl-config";

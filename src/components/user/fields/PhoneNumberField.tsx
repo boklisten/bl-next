@@ -1,6 +1,6 @@
 import { InputAdornment, TextFieldProps } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import React, { forwardRef, Ref } from "react";
+import { forwardRef, Ref } from "react";
 
 const PhoneNumberField = forwardRef(
   (props: TextFieldProps, ref: Ref<HTMLInputElement>) => (

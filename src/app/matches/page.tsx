@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 import Matches from "@/components/matches/Matches";
 

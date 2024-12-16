@@ -4,11 +4,11 @@ Cypress.Commands.add("logout", () => {
   cy.get(".MuiListItemButton-root")
     .eq(5)
     .invoke("text")
-    .then((btn) => {
-      if (!btn.includes("Logg inn")) {
-        cy.get(".MuiListItemButton-root").eq(7).click();
-      } else {
+    .then((button) => {
+      if (button.includes("Logg inn")) {
         cy.get("html").click("topLeft");
+      } else {
+        cy.get(".MuiListItemButton-root").eq(7).click();
       }
     });
 });
@@ -24,6 +24,6 @@ Cypress.Commands.add("login", (username, password) => {
   cy.wait("@login").its("response.statusCode").should("eq", 200);
 });
 
-Cypress.Commands.add("getBySel", (selector, ...args) => {
-  return cy.get(`[data-testid=${selector}]`, ...args);
+Cypress.Commands.add("getBySel", (selector, ...arguments_) => {
+  return cy.get(`[data-testid=${selector}]`, ...arguments_);
 });

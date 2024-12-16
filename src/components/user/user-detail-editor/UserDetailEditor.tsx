@@ -1,14 +1,12 @@
 "use client";
 import { UserDetail } from "@boklisten/bl-model";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Divider, Stack } from "@mui/material";
+import { Alert, Divider, Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
 import FacebookButton from "@/components/user/FacebookButton";

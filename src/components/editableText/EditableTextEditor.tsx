@@ -2,7 +2,7 @@ import "react-quill/dist/quill.snow.css";
 
 import { Box, Button, Container, styled } from "@mui/material";
 import dynamic from "next/dynamic";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 
 import BlFetcher from "@/api/blFetcher";

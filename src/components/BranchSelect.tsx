@@ -27,7 +27,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
   const pathName = usePathname();
 
   const handleChange = (event: SelectChangeEvent) => {
-    const branchId = event.target.value as string;
+    const branchId = event.target.value;
     selectBranch(branchId);
 
     if (pathName.includes("info/branch")) {
@@ -56,7 +56,7 @@ const BranchSelect = ({ isNav }: { isNav?: boolean }) => {
             <MenuItem
               data-testid="branchOption"
               value={branch.id}
-              key={branch.id as string}
+              key={branch.id}
             >
               {branch.name}
             </MenuItem>

@@ -1,6 +1,5 @@
 import { UserDetail } from "@boklisten/bl-model";
 import Grid from "@mui/material/Grid";
-import React from "react";
 import { FieldErrors, UseFormRegister, UseFormSetError } from "react-hook-form";
 
 import EmailConfirmationStatus from "@/components/user/fields/EmailConfirmationStatus";

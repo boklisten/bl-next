@@ -2,7 +2,7 @@ import { DatePickerProps } from "@mui/lab";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Moment } from "moment";
 import moment from "moment/moment";
-import React, { forwardRef, Ref } from "react";
+import { forwardRef, Ref } from "react";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
 type DatePickerFieldProps<T extends FieldValues> = DatePickerProps<Moment> & {

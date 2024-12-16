@@ -15,10 +15,10 @@ import { infoPageTabs } from "@/utils/constants";
 import { assertBlApiError } from "@/utils/types";
 import { useGlobalState } from "@/utils/useGlobalState";
 
-type BranchData = {
+interface BranchData {
   branch: Branch | null;
   openingHours: OpeningHour[];
-};
+}
 
 async function getBranchData(branchId: string): Promise<BranchData> {
   const branchUrl = `${BL_CONFIG.collection.branch}/${branchId}`;

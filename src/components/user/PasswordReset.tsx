@@ -12,16 +12,16 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/system";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { resetPassword } from "@/api/user";
 import DynamicLink from "@/components/DynamicLink";
 import { assertBlApiError } from "@/utils/types";
 
-type PasswordResetFields = {
+interface PasswordResetFields {
   password: string;
-};
+}
 
 export default function PasswordReset({ userId }: { userId: string }) {
   const searchParams = useSearchParams();

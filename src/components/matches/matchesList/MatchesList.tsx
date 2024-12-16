@@ -1,6 +1,6 @@
 import { MatchWithDetails } from "@boklisten/bl-model";
 import { Alert, Skeleton } from "@mui/material";
-import React from "react";
+import { FC } from "react";
 import useSWR from "swr";
 
 import BlFetcher from "@/api/blFetcher";
@@ -13,7 +13,7 @@ import { MatchListItemGroups } from "@/components/matches/matchesList/MatchListI
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import BL_CONFIG from "@/utils/bl-config";
 
-export const MatchesList: React.FC = () => {
+export const MatchesList: FC = () => {
   const { data: accessToken, error: tokenError } = useSWR("userId", () =>
     getAccessTokenBody(),
   );

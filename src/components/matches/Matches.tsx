@@ -1,7 +1,6 @@
 "use client";
 import { Alert } from "@mui/material";
 import Button from "@mui/material/Button";
-import React from "react";
 
 import { isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";

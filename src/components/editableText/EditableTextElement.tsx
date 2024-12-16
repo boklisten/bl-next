@@ -1,5 +1,3 @@
-import React from "react";
-
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import { isAdmin } from "@/api/auth";

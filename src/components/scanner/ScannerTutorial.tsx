@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ScannerTutorial = () => {
   const [tutorialOpen, setTutorialOpen] = useState(false);

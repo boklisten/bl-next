@@ -1,10 +1,8 @@
 import CopyrightIcon from "@mui/icons-material/Copyright";
-import { Card } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import moment from "moment";
 import Image from "next/image";
-import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
 import ContactInfo from "@/components/info/ContactInfo";

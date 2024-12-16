@@ -1,7 +1,6 @@
-import { red, orange, grey } from "@mui/material/colors";
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material";
+import { grey, orange, red } from "@mui/material/colors";
 import { Roboto } from "next/font/google";
-import type {} from "@mui/lab/themeAugmentation";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -51,29 +50,8 @@ const theme = responsiveFontSizes(
         marginTop: "0.2rem",
         marginBottom: "0.2rem",
       },
-      title: {
-        fontSize: "4rem",
-        marginTop: "4rem",
-        marginBottom: "0.6rem",
-      },
-      cardHeader: {
-        fontSize: "1.1rem",
-        marginTop: "0.5rem",
-        marginBottom: "0.4rem",
-        marginBlockStart: "0.5rem",
-        marginBlockEnd: "0.45rem",
-        fontWeight: "bold",
-      },
     },
     components: {
-      MuiTypography: {
-        defaultProps: {
-          variantMapping: {
-            title: "h1",
-            cardHeader: "h4",
-          },
-        },
-      },
       MuiNativeSelect: {
         styleOverrides: {
           select: {

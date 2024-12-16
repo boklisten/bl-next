@@ -1,6 +1,6 @@
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import { Alert, AlertTitle, Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import CountdownToRedirect from "@/components/CountdownToRedirect";

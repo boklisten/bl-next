@@ -1,5 +1,4 @@
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
-import React from "react";
 
 import SocialLoginButton from "@/components/user/SocialLoginButton";
 

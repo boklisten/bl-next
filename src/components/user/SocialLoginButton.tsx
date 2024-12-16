@@ -3,7 +3,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { add } from "@/api/storage";
 import BL_CONFIG from "@/utils/bl-config";

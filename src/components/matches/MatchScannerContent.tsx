@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import React, { useEffect } from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 
 import { ItemStatus } from "@/components/matches/matches-helper";
 import ProgressBar from "@/components/matches/matchesList/ProgressBar";

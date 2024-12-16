@@ -1,6 +1,5 @@
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
 import { UserMatchWithDetails } from "@/utils/types";

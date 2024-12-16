@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   eslint: {
-    dirs: ["src", "cypress"],
+    dirs: ["src"],
   },
   // TODO: temporary redirects required while in tandem with bl-web / bl-admin
   async redirects() {

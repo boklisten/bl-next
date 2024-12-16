@@ -1,7 +1,7 @@
 "use client";
 import { Order } from "@boklisten/bl-model";
 import { Card } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import { getAccessTokenBody } from "@/api/token";

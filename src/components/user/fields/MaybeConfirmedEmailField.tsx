@@ -1,6 +1,6 @@
 import { Check, Info } from "@mui/icons-material";
 import { InputAdornment, TextFieldProps, Tooltip } from "@mui/material";
-import React, { forwardRef, Ref } from "react";
+import { forwardRef, Ref } from "react";
 
 import EmailField from "@/components/user/fields/EmailField";
 

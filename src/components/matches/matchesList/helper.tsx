@@ -1,7 +1,6 @@
 import { KeyboardDoubleArrowRight, SwapHoriz } from "@mui/icons-material";
 import { SxProps, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
 
 import theme from "@/utils/theme";
 import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
@@ -65,7 +64,7 @@ interface UserMatchTitleProps {
 }
 
 export const UserMatchTitle = ({ match, isSender }: UserMatchTitleProps) => {
-  const arrowSize: string = "1.18em";
+  const arrowSize = "1.18em";
   return (
     <>
       {isSender ? (

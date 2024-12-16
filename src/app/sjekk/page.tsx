@@ -1,7 +1,6 @@
 import { Card, Container, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Metadata } from "next";
-import React from "react";
 
 import PublicBlidSearch from "@/components/search/PublicBlidSearch";
 

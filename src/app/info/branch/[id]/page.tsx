@@ -7,7 +7,9 @@ import LinkableBranchInfo from "@/components/LinkableBranchInfo";
 import BL_CONFIG from "@/utils/bl-config";
 import { assertBlApiError } from "@/utils/types";
 
-type Params = { params: Promise<{ id: string }> };
+interface Params {
+  params: Promise<{ id: string }>;
+}
 
 export const generateStaticParams = async () => {
   try {
@@ -33,10 +35,10 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
       "Skal du hente eller levere bøker? Finn ut når vi står på stand på din skole.",
   };
 }
-type BranchData = {
+interface BranchData {
   branch: Branch | null;
   openingHours: OpeningHour[];
-};
+}
 
 async function getBranchData(branchId: string): Promise<BranchData> {
   const branchUrl = `${BL_CONFIG.collection.branch}/${branchId}`;

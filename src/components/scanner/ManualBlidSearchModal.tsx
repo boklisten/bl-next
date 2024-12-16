@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ManualBlidSearchModal = ({
   open,
@@ -19,7 +19,7 @@ const ManualBlidSearchModal = ({
 }: {
   open: boolean;
   handleClose: () => void;
-  // eslint-disable-next-line no-unused-vars
+
   handleSubmit: (scannedText: string) => void;
 }) => {
   const [manualInput, setManualInput] = useState("");

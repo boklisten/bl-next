@@ -17,9 +17,9 @@ import BlFetcher from "@/api/blFetcher";
 import DynamicLink from "@/components/DynamicLink";
 import blConfig from "@/utils/bl-config";
 
-type ForgotFields = {
+interface ForgotFields {
   email: string;
-};
+}
 
 const ForgotPage = () => {
   const {

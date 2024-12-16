@@ -10,7 +10,6 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
 import stringSimilarity from "string-similarity";
 
 import DynamicLink from "@/components/DynamicLink";

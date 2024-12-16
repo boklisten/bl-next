@@ -6,10 +6,10 @@ import {
   CardContent,
 } from "@mui/material";
 import { green, grey } from "@mui/material/colors";
-import React, { PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import DynamicLink from "@/components/DynamicLink";
-const MatchListItemBox: React.FC<
+const MatchListItemBox: FC<
   PropsWithChildren<{ finished: boolean; matchId: string }>
 > = ({ finished, matchId, children }) => {
   return (

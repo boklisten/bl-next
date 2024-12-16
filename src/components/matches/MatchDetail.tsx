@@ -2,7 +2,6 @@
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { ArrowBack } from "@mui/icons-material";
 import { Alert, Button, Card, Container, Skeleton } from "@mui/material";
-import React from "react";
 import useSWR from "swr";
 
 import BlFetcher from "@/api/blFetcher";

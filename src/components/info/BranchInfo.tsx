@@ -56,7 +56,7 @@ const BranchInfo = ({
   openingHours: OpeningHour[];
 }) => {
   const processedOpeningHours = openingHours
-    .filter(({ id }) => (branch.openingHours as string[])?.includes(id))
+    .filter(({ id }) => branch.openingHours?.includes(id))
     .sort(compareOpeningHours);
   return (
     <Box

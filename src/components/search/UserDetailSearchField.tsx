@@ -59,7 +59,6 @@ export default function UserDetailSearchField({
           />
         )}
         renderInput={(params) => (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error Using example from https://mui.com/material-ui/react-autocomplete/#system-FreeSolo.tsx
           <TextField
             {...params}

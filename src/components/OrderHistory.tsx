@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import BlFetcher from "@/api/blFetcher";
 import BL_CONFIG from "@/utils/bl-config";
@@ -170,37 +170,36 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                 ))}
                               </>
                             )}
-                          {openPayment &&
-                            (openPayment?.order as string) === order.id && (
-                              <>
-                                <TableRow>
-                                  <TableCell align="center">
-                                    <b>Betalingsstatus</b>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {openPayment.confirmed
-                                      ? "Bekreftet"
-                                      : "Ikke bekreftet"}
-                                  </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell align="center">
-                                    <b>Betalingsmiddel</b>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {paymentTypes[openPayment.method]}
-                                  </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                  <TableCell align="center">
-                                    <b>Totalt betalt</b>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    {openPayment.amount} kr
-                                  </TableCell>
-                                </TableRow>
-                              </>
-                            )}
+                          {openPayment && openPayment?.order === order.id && (
+                            <>
+                              <TableRow>
+                                <TableCell align="center">
+                                  <b>Betalingsstatus</b>
+                                </TableCell>
+                                <TableCell align="center">
+                                  {openPayment.confirmed
+                                    ? "Bekreftet"
+                                    : "Ikke bekreftet"}
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell align="center">
+                                  <b>Betalingsmiddel</b>
+                                </TableCell>
+                                <TableCell align="center">
+                                  {paymentTypes[openPayment.method]}
+                                </TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell align="center">
+                                  <b>Totalt betalt</b>
+                                </TableCell>
+                                <TableCell align="center">
+                                  {openPayment.amount} kr
+                                </TableCell>
+                              </TableRow>
+                            </>
+                          )}
                         </TableBody>
                       </Table>
                       <Typography
@@ -271,7 +270,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                   {/**
                                    eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                    @ts-expect-error orderItemInfo type is outdated*/}
-                                  {orderItem.info?.["amountLeftToPay"] && (
+                                  {orderItem.info?.amountLeftToPay && (
                                     <TableRow>
                                       <TableCell align="center">
                                         <b>Betal senere</b>
@@ -280,7 +279,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                                         {/**
                                          eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                          @ts-expect-error orderItemInfo type is outdated*/}
-                                        {orderItem.info["amountLeftToPay"]} kr
+                                        {orderItem.info.amountLeftToPay} kr
                                       </TableCell>
                                     </TableRow>
                                   )}
@@ -312,7 +311,7 @@ const OrderHistory = ({ orders }: { orders: Order[] }) => {
                           setOpenOrder(order.id);
                           if (order.payments && order.payments.length > 0) {
                             const payment = await fetchPayment(
-                              order.payments[0] as string,
+                              order.payments[0] ?? "",
                             );
                             setOpenPayment(payment);
                           }

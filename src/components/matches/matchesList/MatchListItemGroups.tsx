@@ -1,12 +1,12 @@
 import { MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import { FC } from "react";
 
 import StandMatchListItem from "@/components/matches/matchesList/StandMatchListItem";
 import UserMatchListItem from "@/components/matches/matchesList/UserMatchListItem";
 
-export const MatchListItemGroups: React.FC<{
+export const MatchListItemGroups: FC<{
   matches: MatchWithDetails[];
   userId: string;
   heading?: string;

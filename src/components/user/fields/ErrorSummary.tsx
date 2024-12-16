@@ -1,6 +1,5 @@
 import { Alert, AlertTitle, ListItem } from "@mui/material";
 import List from "@mui/material/List";
-import React from "react";
 import { DeepRequired, FieldErrorsImpl, FieldValues } from "react-hook-form";
 
 const ErrorSummary = <T extends FieldValues>({

@@ -21,7 +21,7 @@ import {
 } from "@/components/user/fields/PostalCodeField";
 import { assertBlApiError } from "@/utils/types";
 
-export type UserEditorFields = {
+export interface UserEditorFields {
   email: string;
   password: string;
   name: string;
@@ -33,7 +33,7 @@ export type UserEditorFields = {
   guardianEmail: string | undefined;
   guardianPhoneNumber: string | undefined;
   agreeToTermsAndConditions: boolean;
-};
+}
 
 interface UseUserDetailEditorFormReturn {
   isJustSaved: boolean;

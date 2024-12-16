@@ -1,6 +1,6 @@
 import { Match, MatchVariant, MatchWithDetails } from "@boklisten/bl-model";
 import { Typography } from "@mui/material";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 import { StandMatchWithDetails, UserMatchWithDetails } from "@/utils/types";
 

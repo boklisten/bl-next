@@ -2,7 +2,7 @@
 import { DashboardLayout, Navigation } from "@toolpad/core";
 import { AppProvider } from "@toolpad/core/nextjs";
 import Image from "next/image";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { getUserPermission } from "@/api/auth";
 import PagePermissionGuard from "@/components/PagePermissionGuard";

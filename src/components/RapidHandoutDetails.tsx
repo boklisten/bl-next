@@ -1,7 +1,7 @@
 import { Order, OrderItem, UserDetail } from "@boklisten/bl-model";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import { Alert, Button, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import BlFetcher from "@/api/blFetcher";

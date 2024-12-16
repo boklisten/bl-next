@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { isAdmin } from "@/api/auth";
 
@@ -24,7 +24,6 @@ interface QNA {
   answer: string;
 }
 
-// eslint-disable-next-line no-unused-vars
 const QuestionWithAnswer = ({
   id,
   question,
@@ -35,11 +34,11 @@ const QuestionWithAnswer = ({
   deleteQuestion,
 }: QNA & {
   expanded: boolean;
-  // eslint-disable-next-line no-unused-vars
+
   handleExpand: (questionId: string) => void;
-  // eslint-disable-next-line no-unused-vars
+
   updateQuestion: (QNA: QNA) => void;
-  // eslint-disable-next-line no-unused-vars
+
   deleteQuestion: (questionId: string) => void;
 }) => {
   const [edit, setEdit] = useState(false);

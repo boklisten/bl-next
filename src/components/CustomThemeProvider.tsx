@@ -1,5 +1,5 @@
 "use client";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material";
 import { ReactNode } from "react";
 
 import theme from "@/utils/theme";

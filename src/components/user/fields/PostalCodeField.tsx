@@ -6,7 +6,7 @@ import {
   TextFieldProps,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import React, { forwardRef, Ref, useRef, useState } from "react";
+import { forwardRef, Ref, useRef, useState } from "react";
 import isPostalCode from "validator/lib/isPostalCode";
 
 import BlFetcher from "@/api/blFetcher";
@@ -141,7 +141,10 @@ export type PostalCityState =
       state: "loading";
     };
 
-export type PostalCityStateOk = { state: "ok"; city: string };
+export interface PostalCityStateOk {
+  state: "ok";
+  city: string;
+}
 export type PostalCityStateSettled =
   | PostalCityStateOk
   | { state: "error" | "invalid" };

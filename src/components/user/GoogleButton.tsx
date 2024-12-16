@@ -1,5 +1,4 @@
 import GoogleIcon from "@mui/icons-material/Google";
-import React from "react";
 
 import SocialLoginButton from "@/components/user/SocialLoginButton";
 

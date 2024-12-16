@@ -6,9 +6,9 @@ import {
   DialogActions,
   DialogContent,
   Snackbar,
+  Typography,
 } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import React from "react";
+import { SyntheticEvent } from "react";
 
 const ScannerFeedback = ({
   feedback,
@@ -21,10 +21,7 @@ const ScannerFeedback = ({
   open: boolean;
   handleClose: () => void;
 }) => {
-  const autoClose = (
-    _event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
+  const autoClose = (_event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway" || severity === "info") {
       return;
     }

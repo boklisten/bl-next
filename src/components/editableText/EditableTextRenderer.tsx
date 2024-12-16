@@ -1,6 +1,5 @@
 import "react-quill/dist/quill.core.css";
 import { Box } from "@mui/material";
-import React from "react";
 
 import { sanitizeQuillHtml } from "@/utils/sanitizeHtml";
 import { MaybeEmptyEditableText } from "@/utils/types";

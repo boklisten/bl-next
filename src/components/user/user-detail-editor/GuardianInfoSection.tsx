@@ -1,8 +1,6 @@
-import { Divider } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import React from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import EmailField from "@/components/user/fields/EmailField";

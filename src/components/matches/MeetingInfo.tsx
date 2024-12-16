@@ -2,7 +2,6 @@ import { MatchWithDetails } from "@boklisten/bl-model";
 import PlaceIcon from "@mui/icons-material/Place";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { Box, Typography } from "@mui/material";
-import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
 import { FormattedDatetime } from "@/components/matches/matchesList/helper";

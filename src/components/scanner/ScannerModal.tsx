@@ -1,6 +1,6 @@
 import { Close, InputRounded } from "@mui/icons-material";
 import { AlertColor, Box, Button, Card, Modal, Stack } from "@mui/material";
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import BlidScanner, {
   determineScannedTextType,
@@ -9,11 +9,11 @@ import ManualBlidSearchModal from "@/components/scanner/ManualBlidSearchModal";
 import ScannerFeedback from "@/components/scanner/ScannerFeedback";
 import { assertBlApiError, TextType } from "@/utils/types";
 
-type Feedback = {
+interface Feedback {
   text: string;
   severity: AlertColor;
   visible: boolean;
-};
+}
 
 const ScannerModal = ({
   onScan,

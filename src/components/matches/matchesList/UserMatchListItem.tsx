@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import { FC } from "react";
 
 import {
   calculateFulfilledUserMatchItems,
@@ -16,7 +16,7 @@ import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MeetingInfo from "@/components/matches/MeetingInfo";
 import { UserMatchWithDetails } from "@/utils/types";
 
-const UserMatchListItem: React.FC<{
+const UserMatchListItem: FC<{
   match: UserMatchWithDetails;
   currentUserId: string;
 }> = ({ match, currentUserId }) => {
@@ -27,7 +27,7 @@ const UserMatchListItem: React.FC<{
   const fulfilledItems = calculateFulfilledUserMatchItems(match, isSender);
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
-      <Typography variant="cardHeader" component="h3">
+      <Typography variant="h3">
         <UserMatchTitle match={match} isSender={isSender} />
       </Typography>
 

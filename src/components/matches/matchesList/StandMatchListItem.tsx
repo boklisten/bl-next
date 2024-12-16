@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import { FC } from "react";
 
 import {
   calculateFulfilledStandMatchItems,
@@ -15,7 +15,7 @@ import ProgressBar from "@/components/matches/matchesList/ProgressBar";
 import MeetingInfo from "@/components/matches/MeetingInfo";
 import { StandMatchWithDetails } from "@/utils/types";
 
-const StandMatchListItem: React.FC<{
+const StandMatchListItem: FC<{
   match: StandMatchWithDetails;
   currentUserId: string;
 }> = ({ match }) => {
@@ -29,7 +29,7 @@ const StandMatchListItem: React.FC<{
   const isFulfilled = isMatchFulfilled(match, false);
   return (
     <MatchListItemBox finished={isFulfilled} matchId={match.id}>
-      <Typography variant="cardHeader" component="h3">
+      <Typography variant="h3">
         <StandMatchTitle match={match} />
       </Typography>
       {isBegun && (

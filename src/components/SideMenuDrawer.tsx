@@ -18,7 +18,7 @@ import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import React, { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
+import { useState, KeyboardEvent, MouseEvent, ReactNode } from "react";
 
 import { isEmployee, isLoggedIn } from "@/api/auth";
 import DynamicLink from "@/components/DynamicLink";

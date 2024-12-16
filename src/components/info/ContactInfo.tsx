@@ -4,7 +4,6 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
 
 import DynamicLink from "@/components/DynamicLink";
 import { contactInfo } from "@/utils/constants";
