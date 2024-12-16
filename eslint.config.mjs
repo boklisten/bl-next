@@ -15,6 +15,7 @@ import tseslint from "typescript-eslint";
 //import ts from "@typescript-eslint/eslint-plugin";
 // import globals from "globals";
 
+// TODO: add eslint-plugin-react-compiler when released
 // TODO: enable eslint-plugin-import (absolute imports) when it is properly supported with flat configs
 
 export default tseslint.config(
@@ -31,7 +32,7 @@ export default tseslint.config(
   eslintPluginUnicorn.configs["flat/all"],
   pluginPromise.configs["flat/recommended"],
   {
-    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"], // check if needed
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     plugins: {
       "@next/next": nextPlugin,
       "react-hooks": hooksPlugin,
@@ -44,16 +45,16 @@ export default tseslint.config(
       },
     },
     /*
-        languageOptions: {
-          parser: tsParser,
-          globals: {
-            ...globals.browser,
-          },
-          parserOptions: {
-            project: ["tsconfig.json"],
-          },
-        },
-    */
+                languageOptions: {
+                  parser: tsParser,
+                  globals: {
+                    ...globals.browser,
+                  },
+                  parserOptions: {
+                    project: ["tsconfig.json"],
+                  },
+                },
+            */
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs["core-web-vitals"].rules,
