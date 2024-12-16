@@ -9,6 +9,7 @@ import {
   Equalizer,
   LibraryBooks,
   Notifications,
+  Public,
   QrCode,
   Receipt,
   RequestQuote,
@@ -16,33 +17,41 @@ import {
   ShoppingCart,
   Storage,
   Storefront,
-  SwitchAccessShortcut,
 } from "@mui/icons-material";
 import { Navigation } from "@toolpad/core";
 
 const EMPLOYEE_LINKS: Navigation = [
-  { title: "BL-ID-søk", icon: <Search />, segment: "admin/blid" },
+  { title: "BL-ID-søk", icon: <Search />, segment: "admin/blid", kind: "page" },
   {
     title: "Handlekurv",
     icon: <ShoppingCart />,
     segment: "admin/handlekurv",
+    kind: "page",
   },
   {
-    title: "Hurtiginnsamling",
+    title: "Bulk-innsamling", // TODO: rename to "Hurtiginnsamling"
     icon: <QrCode />,
     segment: "admin/hurtiginnsamling",
+    kind: "page",
   },
   {
     title: "Hurtigutdeling",
     icon: <Checklist />,
     segment: "admin/hurtigutdeling",
+    kind: "page",
   },
   {
     title: "Ordreoversikt",
     icon: <Receipt />,
     segment: "admin/ordreoversikt",
+    kind: "page",
   },
-  { title: "Scanner", icon: <DocumentScanner />, segment: "admin/scanner" },
+  {
+    title: "Scanner",
+    icon: <DocumentScanner />,
+    segment: "admin/scanner",
+    kind: "page",
+  },
 ];
 
 const ADMIN_LINKS: Navigation = [
@@ -50,11 +59,13 @@ const ADMIN_LINKS: Navigation = [
     title: "Faktura",
     icon: <RequestQuote />,
     segment: "admin/faktura",
+    kind: "page",
   },
   {
     title: "Kommunikasjon",
     icon: <Email />,
     segment: "admin/kommunikasjon",
+    kind: "page",
     children: [
       {
         title: "Påminnelser",
@@ -72,6 +83,7 @@ const ADMIN_LINKS: Navigation = [
     title: "Databaseverktøy",
     icon: <Storage />,
     segment: "admin/database",
+    kind: "page",
     children: [
       {
         title: "Rapporter",
@@ -102,10 +114,12 @@ const USER_LINKS: Navigation = [
     title: "Profil",
     icon: <AccountCircle />,
     segment: "admin/profil",
+    kind: "page",
   },
   {
     title: "Gå til Boklisten.no",
-    icon: <SwitchAccessShortcut />,
+    icon: <Public />,
+    kind: "page",
   },
 ];
 

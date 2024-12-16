@@ -1,5 +1,5 @@
 "use client";
-import { Search, SwitchAccessShortcut } from "@mui/icons-material";
+import { AdminPanelSettings, Search } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BookIcon from "@mui/icons-material/Book";
 import EmailIcon from "@mui/icons-material/Email";
@@ -136,8 +136,8 @@ export default function SideMenuDrawer() {
                 {isEmployee() && (
                   <DrawerLink
                     title={"Gå til bl-admin"}
-                    href={"/admin/home"}
-                    icon={<SwitchAccessShortcut />}
+                    href={"/admin/start"}
+                    icon={<AdminPanelSettings color={"primary"} />}
                   />
                 )}
               </>
