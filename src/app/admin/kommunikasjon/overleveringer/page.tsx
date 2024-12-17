@@ -1,9 +1,6 @@
 "use client";
-import { redirect } from "next/navigation";
-
-import { attachTokensToHref } from "@/components/AuthLinker";
-import BL_CONFIG from "@/utils/bl-config";
+import { PageContainer } from "@toolpad/core";
 
 export default function MatchesCommunicationPage() {
-  redirect(attachTokensToHref(BL_CONFIG.blAdmin.basePath + "messenger/match"));
+  return <PageContainer>matches</PageContainer>;
 }

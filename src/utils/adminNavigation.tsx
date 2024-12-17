@@ -54,6 +54,21 @@ const EMPLOYEE_LINKS: Navigation = [
   },
 ];
 
+export const COMMUNICATION_SUB_PAGES: Navigation = [
+  {
+    title: "Påminnelser",
+    icon: <Notifications />,
+    segment: "paaminnelser",
+    kind: "page",
+  },
+  {
+    title: "Overleveringer",
+    icon: <ConnectWithoutContact />,
+    segment: "overleveringer",
+    kind: "page",
+  },
+];
+
 const ADMIN_LINKS: Navigation = [
   {
     title: "Faktura",
@@ -66,18 +81,7 @@ const ADMIN_LINKS: Navigation = [
     icon: <Email />,
     segment: "admin/kommunikasjon",
     kind: "page",
-    children: [
-      {
-        title: "Påminnelser",
-        icon: <Notifications />,
-        segment: "paaminnelser",
-      },
-      {
-        title: "Overleveringer",
-        icon: <ConnectWithoutContact />,
-        segment: "overleveringer",
-      },
-    ],
+    children: COMMUNICATION_SUB_PAGES,
   },
   {
     title: "Databaseverktøy",
@@ -119,6 +123,7 @@ const USER_LINKS: Navigation = [
   {
     title: "Gå til Boklisten.no",
     icon: <Public />,
+    segment: "/",
     kind: "page",
   },
 ];

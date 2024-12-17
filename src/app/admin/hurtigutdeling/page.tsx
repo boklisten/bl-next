@@ -1,30 +1,21 @@
-import { Card, Container, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { Metadata } from "next";
+"use client";
+import { UserDetail } from "@boklisten/bl-model";
+import { PageContainer } from "@toolpad/core";
+import { useState } from "react";
 
-import RapidHandout from "@/components/RapidHandout";
-
-export const metadata: Metadata = {
-  title: "Hurtigutdeling",
-  description: "Adminverktøy for å raskt dele ut bøker.",
-};
+import RapidHandoutDetails from "@/components/RapidHandoutDetails";
+import UserDetailSearchField from "@/components/search/UserDetailSearchField";
 
 export default function HandoutPage() {
+  const [customer, setCustomer] = useState<UserDetail | null>(null);
   return (
-    <Card sx={{ paddingBottom: 4 }}>
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h1">Hurtigutdeling</Typography>
-          <RapidHandout />
-        </Box>
-      </Container>
-    </Card>
+    <PageContainer>
+      <UserDetailSearchField
+        onSelectedResult={(userDetail) => {
+          setCustomer(userDetail);
+        }}
+      />
+      {customer && <RapidHandoutDetails customer={customer} />}
+    </PageContainer>
   );
 }

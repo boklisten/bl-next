@@ -6,7 +6,7 @@ import { ReactNode, useEffect, useState } from "react";
 
 import { getUserPermission } from "@/api/auth";
 import PagePermissionGuard from "@/components/PagePermissionGuard";
-import { getAdminPagesNavigationLinks } from "@/utils/adminPageNavigation";
+import { getAdminPagesNavigationLinks } from "@/utils/adminNavigation";
 import theme from "@/utils/theme";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -32,11 +32,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         homeUrl: "start",
       }}
     >
-      <DashboardLayout
-        defaultSidebarCollapsed={true} // TODO: remove this once we are fully migrated away from bl-admin
-      >
-        {children}
-      </DashboardLayout>
+      <DashboardLayout>{children}</DashboardLayout>
       <PagePermissionGuard requiredPermission={"employee"} />
     </AppProvider>
   );
